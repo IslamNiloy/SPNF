@@ -101,7 +101,7 @@ try{
   );
     await transaction.save();
     req.session.stripeEmail = charge_data.email;
-    logger.info("Payment info saved")
+    logger.info("Payment info saved with req.session.stripeEmail ===== " + req.session.stripeEmail)
   } catch (error) {
     logger.info("error in Charge function in paymentController: " + error)
   }
