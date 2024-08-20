@@ -1,0 +1,134 @@
+.package-section {
+    background-color: #003366; /* Deep blue background */
+    padding: 50px 20px; /* Padding around the section */
+}
+
+.package-container {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap; /* Allows wrapping on smaller screens */
+    gap: 20px; /* Space between cards */
+}
+
+.header{
+    flex: 1;
+    margin-right: 20px;
+    text-align: left;
+    font-size: 3em;
+    color: #ffffff;
+    width: 480px;
+    border-bottom: 7px solid #FF6B00; 
+    padding: 3px; 
+    line-height: 0.37;
+} 
+
+
+.package-card {
+    background-color: #003366; /* White background for the cards */
+    color: #333; /* Dark text color */
+    border-radius: 8px ; /* Rounded corners for cards */
+    border: 2px solid white;
+    width: calc(25% - 20px); /* Adjust width and account for gaps */
+    box-sizing: border-box; /* Includes padding in width calculation */
+    text-align: center;
+    padding-bottom: 10px;
+}
+
+.package-heading {
+    margin: 0 0 10px 0;
+    font-size: 1.5em;
+}
+
+.package-details {
+    background-color: #2196f3;
+    display: flex;
+    border-radius: 8px 8px 0 0;
+    padding: 20px;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  
+}
+
+.package-name {
+    font-size: 1.4em;
+    color: #ffffff;
+    font-weight: bold;
+    
+}
+
+.package-price {
+    font-size: 1em;
+    font-weight: bold;
+    height: 40px;
+    border-radius: 8px;
+    border: 2px solid white;
+}
+
+.package-content1 {
+    margin: 10px 0;
+    color: white;
+    text-align: left;
+    margin-left: 10px;
+}
+
+.package-content2 {
+    margin: 10px 0;
+    color: #FF6B00;
+    text-align: left;
+    margin-left: 10px;
+}
+
+.install-button {
+    background-color: transparent;
+    color: white;
+    border: 2px solid white;
+    width: 18vw;
+    font-size: 1.5vw;
+    height: 50px;
+    border-radius: 8px;
+}
+
+.install-button:hover {
+    background-color: #e65c00; /* Slightly darker color on hover */
+}
+
+/* Mobile Responsive */
+@media (max-width: 1045px) {
+    .package-card {
+        width: calc(50% - 20px); /* Adjust width for tablets */
+    }
+    .header{
+        font-size: 2.1em;
+        width: 160px;
+    }
+    .install-button {
+        background-color: transparent;
+        color: white;
+        border: 2px solid white;
+        width: 18vw;
+        font-size: 2vw;
+        height: 50px;
+        border-radius: 8px;
+    }
+    
+}
+
+@media (max-width: 480px) {
+    .package-card {
+        width: calc(100% - 20px); /* Full width for small screens */
+    }
+    .header{
+        font-size: 2.1em;
+        width: 190px;
+    }
+    .install-button {
+        background-color: transparent;
+        color: white;
+        border: 2px solid white;
+        width: 18vw;
+        font-size: 2.2vw;
+        height: 50px;
+        border-radius: 8px;
+    }
+    
+}

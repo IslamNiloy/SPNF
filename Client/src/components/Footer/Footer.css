@@ -1,0 +1,182 @@
+.footer {
+  background: linear-gradient(to right, #FFDAB9, #ffc4ad, #FFFFFF);
+
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.footer-sections {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 1200px;
+  margin-bottom: 20px;
+}
+
+.footer-section {
+  color: #002D57;
+  flex: 1;
+  padding: 10px;
+  text-align: center;
+}
+
+.footer-section:nth-child(1), .footer-section:nth-child(2) {
+  flex-basis: 30%;
+}
+
+.footer-section:nth-child(3), .footer-section:nth-child(4) {
+  flex-basis: 20%;
+}
+
+.logo img {
+  width: 150px;
+}
+
+.content {
+  margin-top: 20px;
+  font-size: 14px;
+  color: #002D57;
+  text-align: left;
+  font-size: clamp(0.5px, calc((1.471 * var(--one-unit)) - (var(--scrollbar-width) * 0.01471)), calc(0.015 * var(--section-max-width))) !important;
+}
+
+.upwork-section {
+  margin-top: 20px;
+}
+
+.upwork-logo {
+  width: 120px;
+}
+
+.upwork-profile-btn {
+  background-color: #52962F;
+  padding: 10px 20px;
+  border-radius: 20px;
+  color: white;
+  border: none;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.upwork-profile-btn:hover{
+  color: white;
+  background-color: #000;
+  transform: scale(1.1); 
+}
+
+.gold-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.gold-logo {
+  width: 150px;
+}
+
+.white-label-btn {
+  background-color: #fff;
+  padding: 10px 20px;
+  border-radius: 20px;
+  color: #000;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.white-label-btn:hover{
+  transform: scale(1.1);
+  color: white;
+  background-color: #E95532;
+}
+.useful-links {
+  list-style-type: none;
+  padding: 0;
+}
+
+.footer-section h2{
+  text-align: left;
+}
+.GF-Blue{
+  width: 180px;
+}
+
+.useful-links li {
+  text-align: start;
+  margin: 5px 0;
+  margin-bottom: 10px;
+}
+
+.useful-links a {
+  color: #002D57;
+  text-decoration: none;
+}
+
+.social-media {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.social-media a {
+  margin: 0 10px;
+}
+
+.social-media img {
+  width: 30px;
+}
+
+.goodfirms-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.goodfirms-section img {
+  width: 80px;
+  margin-right: 10px;
+}
+
+.footer-copyright {
+  text-align: center;
+  font-size: 12px;
+  color: #666;
+}
+
+.icon {
+  font-size: 1rem;
+  color: #002D57;
+  background-color: #ffffff;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: .5s;
+}
+
+/* Media Query for Mobile Responsiveness */
+@media (max-width: 768px) {
+  .footer-sections {
+    flex-direction: column; /* Stack sections vertically */
+    align-items: center;
+  }
+
+  .footer-section {
+    flex-basis: 100%;
+    margin-bottom: 20px; /* Add some space between the sections */
+  }
+
+  .footer-section:nth-child(1), 
+  .footer-section:nth-child(2),
+  .footer-section:nth-child(3), 
+  .footer-section:nth-child(4) {
+    flex-basis: 100%;
+  }
+}

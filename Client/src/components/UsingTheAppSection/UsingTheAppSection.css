@@ -1,0 +1,112 @@
+.app-section {
+    background-color: hsl(229, 100%, 62%); /* Baby blue background */
+    padding: 50px 20px;
+}
+
+.section-heading {
+    text-align: center;
+    color: #fff;
+    font-size: 2.5em;
+    margin-bottom: 30px;
+}
+
+.steps-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* Space between each step */
+}
+
+.step {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.step.odd .step-image {
+    order: 1; /* Image on the left for odd steps */
+    flex: 0 0 70%; /* 70% width */
+}
+
+.step.even .step-image {
+    order: 2; /* Image on the right for even steps */
+    flex: 0 0 70%; /* 70% width */
+}
+
+.step-image img {
+    width: 100%;
+    border-radius: 8px; /* Rounded corners for images */
+}
+
+.step.odd .step-index {
+    order: 2; /* Index on the right for odd steps */
+    flex: 0 0 30%; 
+}
+
+.step.even .step-index {
+    order: 1; /* Index on the left for even steps */
+    flex: 0 0 30%; /* 30% width */
+}
+
+.step-index {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+.indexing {
+    display: flex;
+    align-items: center;
+    justify-content:flex-start;
+    height: 100%;
+    margin-bottom: 10px;
+}
+
+.step-name{
+    font-size: 1.9em;
+    margin-left: 7px;
+    color: #fff;
+    text-align: start;
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+
+.index-number {
+    background-color: #FF6B00; /* Orange background */
+    color: #fff; /* White text */
+    border-radius: 50%;
+    padding: 10px;
+    font-size: 2em;
+    display: flex;
+    text-align: left;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    margin-bottom: 10px;
+}
+
+@media (max-width: 768px) {
+    .step {
+        flex-direction: column;
+    }
+
+    .step-image, .step-index {
+        order: unset;
+        flex: unset;
+        width: 100%;
+        margin-bottom: 20px;
+    }
+
+    .step-image img {
+        border-radius: 8px;
+    }
+
+    .index-number {
+        width: 60px;
+        height: 60px;
+        font-size: 1.5em;
+    }
+}

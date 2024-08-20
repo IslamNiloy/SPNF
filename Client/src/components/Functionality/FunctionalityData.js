@@ -1,0 +1,1 @@
+export const FunctionalityData = "The Hpne Number Formatter app adds a new action to Hubspot workflow. When triggered, this action sends a phone number extracted from a contact property to our server. Our server then checks if the account has limit then it formats the phone number and send it back to the HubSpot workflow";

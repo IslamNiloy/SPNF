@@ -1,0 +1,131 @@
+/* src/HeroSection.css */
+.hero-section {
+    background-color: #004080;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    position: relative;
+    overflow: hidden; /* Add this to contain the wave elements */
+}
+
+.hero-content {
+    text-align: center;
+    z-index: 1;
+    margin-top: 80px;
+}
+
+.hero-content h1 {
+    font-size: 3.8em;
+    margin-bottom: 5px;
+    margin-top: 0px;
+    border-bottom: 7px solid #FF6B00; 
+    padding: 3px; 
+    line-height: 0.37;
+}
+
+.hero-content h2 {
+    font-size: 2.5em;
+}
+
+.buttons {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    margin-top: 50px;
+}
+
+.btn {
+    padding: 10px 20px;
+    font-size: 1em;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.profile-link{
+    color: bisque;
+}
+
+.install-btn {
+    background-color: #FF6B00; /* Updated color for button */
+    color: white;
+}
+
+.install-btn:hover {
+    background-color: #e65a00; /* Slightly darker shade for hover */
+}
+
+.doc-btn {
+    background-color: transparent;
+    color: white;
+    border: 2px solid white;
+}
+
+.doc-btn:hover {
+    background-color: white;
+    color: black;
+}
+
+.wave-container {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 150px; /* Adjust this height as needed */
+    overflow: hidden;
+    line-height: 0;
+}
+
+.waveCSS1{
+    transform:rotate(180deg); 
+    transition: 0.3s;
+}
+
+.waveCSS2{
+    transform:translate(0, 0px); 
+    opacity:1;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .hero-section {
+        padding: 30px;
+    }
+
+    .hero-section h1 {
+        font-size: 2.5em; 
+      
+    }
+
+    .hero-section p {
+        font-size: 1.2em; 
+      
+    }
+
+    .hero-section .cta-button {
+        padding: 12px 20px;
+        font-size: 1em; 
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-section {
+        padding: 20px;
+    }
+
+    .hero-section h1 {
+        font-size: 1.8em; 
+    }
+
+    .hero-section h2 {
+        font-size: 1.56em; 
+
+    }
+
+    .hero-section .cta-button {
+        padding: 10px 15px; 
+        font-size: 0.9em; 
+    }
+}
