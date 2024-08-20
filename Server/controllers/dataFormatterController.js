@@ -84,12 +84,11 @@ exports.phoneNumber = async (req, res) => {
   const { phoneNumber, country, country_text } = req.body;
   logger.info(`--------logging at phoneNumber func with ${phoneNumber}, ${country}, ${country_text}-------`);
   try {
-    if (isAuthorized(req)) {
-      const accessToken = await getAccessToken(req);
-      const accInfo = await getAccountInfo(accessToken);
-      const check = await packageCondition(accInfo.portalID); 
+      //const accessToken = await getAccessToken(req);
+      //const accInfo = await getAccountInfo(accessToken);
+      const check = await packageCondition(req.body.portalID); 
       
-      const User = await userModel.findOne({portalID : accInfo.portalID });
+      const User = await userModel.findOne({portalID : req.body.portalID });
       console.log("User: ===========" + User.email);
       
       const paymentInfo = await paymentModel.findOne({email : User.email}).sort({ createdAt: -1 });
@@ -99,7 +98,7 @@ exports.phoneNumber = async (req, res) => {
         res.send("you have cancelled your subscription")
       }
       else if(check){
-        await updateAPICount(accInfo.portalID);
+        await updateAPICount(req.body.portalID);
         const formattedNumber = formatPhoneNumber(phoneNumber, country, country_text);
         res.json({
           "outputFields": {
@@ -110,7 +109,6 @@ exports.phoneNumber = async (req, res) => {
       }else{
         res.json("Update your plan");
       }
-    }
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
