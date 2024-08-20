@@ -7,7 +7,7 @@ let STRIPE_DATA_DB = {};
 let payment_DATA_DB = {};
 let { charge } = require('../paymentController');
 
-const endpointSecret = "whsec_SA4V0p49kL10245j8G6S16uI6ljlmPy7";
+const endpointSecret = process.env.webhookEndpoint;
 
 let stripeWebhook = async (request, response) => {
   console.log("logging at webhook");

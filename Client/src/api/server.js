@@ -1,1 +1,1 @@
-export const BackendAPI = 'https://serverhpu-phone-number-fortmatter-32a7ojy4w-hubxperts-projects.vercel.app';
+export const BackendAPI = 'https://serverhpu-phone-number-fortmatter-hubxperts-projects.vercel.app';
