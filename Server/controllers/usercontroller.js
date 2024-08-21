@@ -8,6 +8,7 @@ exports.insertIntoUser = async (req, res, user_info) => {
         console.log("-----req.session.stripeEmail-----"+stripeEmail);
         const userInfo = await User.findOne({ portalID: (req.body.portalID ||  user_info.portalID)});
         if (userInfo){
+            //update if needed
             return "User Already exist";
         }
         if (!userInfo) {

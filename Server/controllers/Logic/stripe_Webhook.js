@@ -67,7 +67,6 @@ let stripeWebhook = async (request, response) => {
         response.status(400).send(`Webhook Error: ${err.message}`);
         return;
     }
-
 };
 
 module.exports = {

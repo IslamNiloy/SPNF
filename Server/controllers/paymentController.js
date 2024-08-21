@@ -51,7 +51,7 @@ exports.createCheckoutSession = async (req, res) => {
           },
         ],
         mode: (req.params.id === '66ba2cf16343bea38ef334ba') ? 'payment' : 'subscription',
-        success_url: `${process.env.SUCCESS_URL_STRIPE}`,
+        success_url: `${process.env.SUCCESS_URL_STRIPE}/email=${encodeURIComponent(userEmail)}`,
         cancel_url: `${process.env.CANCEL_URL_STRIPE}`,
       });
     if(req.params.id === '66ba2cf16343bea38ef334ba'){
@@ -70,9 +70,7 @@ exports.createCheckoutSession = async (req, res) => {
 
 exports.charge = async (charge_data) => {
 try{
-  logger.info("--------ChargeID in charge paymentController---------" + charge_data.amount);
-  logger.info("--------ChargeID in amount paymentController---------" + charge_data.chargeId);
-  logger.info("--------session.stripeEmail---------" + charge_data.email);
+  logger.info("--------ChargeID in charge paymentController---------" + charge_data);
   /*
     1. find all payments history from mongoDB of email ID
     2. if found, set status to cancelled
@@ -129,8 +127,7 @@ exports.cancel_subscription = async(req,res) =>{
 
 
 exports.update_Payment_Info = async (userData) => {
-  console.log("Logging at /update_Payment_Info");
-  console.log(userData);
+  console.log("Logging at /update_Payment_Info: " + userData);
   try {
     const payment_Info = await PaymentModel.findOne({ email: userData.email });
     if (!payment_Info) {

@@ -4,9 +4,9 @@ const dataFormatterController = require('../controllers/dataFormatterController'
 
 /**
  * @swagger
- * /format/phone_number:
+ * /format/check_phone_number:
  *   post:
- *     summary: Phone number formatter
+ *     summary: Phone number checkker
  *     requestBody:
  *       required: true
  *       content:
@@ -18,10 +18,11 @@ const dataFormatterController = require('../controllers/dataFormatterController'
  *                 type: number
  *     responses:
  *       200:
- *         description: Successfully subtracted numbers
+ *         description: Checked phone number
  *       500:
  *         description: Server error
  */
+router.post('/check_phone_number', dataFormatterController.checkPhoneNumber);
 router.post('/phone_number', dataFormatterController.phoneNumber); //phoneNumberWithoutAuth or phoneNumber
 
 //router.put('/package_details_update', packageDetailsUpdate);

@@ -131,3 +131,61 @@ exports.getCountry = async (req, res) => {
     res.status(500).json({ error: 'Server Error' });
   }
 };
+
+
+/////////////////////// Check Phone Number START //////////////////////////////////
+const checkPhoneNumber = (phoneNumber) => {
+
+  // Check if the phone number contains any non-digit text (excluding the '+' symbol)
+  if (/\D/.test(phoneNumber.replace('+', ''))) {
+    return 'Contains Text or Special characters';
+  }
+
+  // Remove all non-digit characters
+  const sanitizedPhoneNumber = phoneNumber.replace(/\D+/g, '');
+
+  // Check if the phone number length is within the valid range
+  if (sanitizedPhoneNumber.length < MIN_PHONE_NUMBER_LENGTH) {
+    return 'Too Short';
+  }
+  if (sanitizedPhoneNumber.length > MAX_PHONE_NUMBER_LENGTH) {
+    return 'Too Long';
+  }
+
+  const parsedNumber = parsePhoneNumberFromString(phoneNumber);
+
+  // Check if the phone number is valid
+  if (!parsedNumber || !parsedNumber.isValid()) {
+    return 'Invalid';
+  }
+
+  // Check if the phone number includes a country code
+  if (!parsedNumber.country) {
+    return 'No Country Code';
+  }
+
+  return 'Correctly Formatted';
+};
+
+exports.checkPhoneNumber = (req, res) => {
+  const { phoneNumber } = req.body;
+
+  if (!phoneNumber) {
+    return res.status(200).json({
+      "outputFields": {
+        "Message": "Empty",
+        "hs_execution_state": "SUCCESS"
+      }
+    });
+  }
+
+  const result = checkPhoneNumber(phoneNumber);
+
+  return res.status(200).json({
+    "outputFields": {
+      "Message": result,
+      "hs_execution_state": "SUCCESS"
+    }
+  });
+};
+/////////////////////// Check Phone Number END //////////////////////////////////

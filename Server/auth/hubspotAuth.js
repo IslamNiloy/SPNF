@@ -1,7 +1,6 @@
 const axios = require('axios');
 const qs = require('qs');
 const logger = require('../utils/logger'); // Add logger
-const { insertIntoUser } = require('../routes/userRoutes');
 let { STRIPE_DATA_DB } = require('../controllers/Logic/stripe_Webhook');
 let userData = {};
 // const BASE_URL = "http://localhost:3000";
