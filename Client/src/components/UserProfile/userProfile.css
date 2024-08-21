@@ -51,7 +51,8 @@
   .subscription-info-form input[type="email"] {
     width: 100%;
     padding: 10px;
-    border: 2px solid #5d9cec; /* Bluish border */
+    background-color: #e9f0fb;
+    border: 2px solid #e9f0fb; /* Bluish border */
     border-radius: 5px;
     box-sizing: border-box;
     font-size: 16px;
@@ -72,7 +73,6 @@
   .user-profile-form p,
   .subscription-info-form p {
     background-color: #e9f0fb; /* Light bluish background */
-    border: 1px solid #5d9cec; /* Bluish border */
     border-radius: 5px;
     padding: 10px;
     color: #333333;
@@ -103,8 +103,7 @@
   }
   
   .cancel_subscription{
-    
-    background-color: #c72426;
+    background-color: #ff3e41;
     color: #ffffff;
     padding: 10px 20px;
     border: none;
@@ -113,7 +112,7 @@
     font-size: 16px;
     transition: background-color 0.3s;
     width: 100%;
-    margin-top: 10px;
+    margin-top: 27px;
   }
   /* Submit button hover */
   .user-profile-form button[type="submit"]:hover,

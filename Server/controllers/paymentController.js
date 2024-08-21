@@ -72,6 +72,7 @@ exports.charge = async (charge_data) => {
 try{
   logger.info("--------ChargeID in charge paymentController111111111---------" + charge_data);
   /*
+  usa case: logged out user changing pro to enterprise
     1. find all payments history from mongoDB of email ID
     2. if found, set status to cancelled
     3. cancel stripe subscription as well using the email address
@@ -79,6 +80,7 @@ try{
   const paymentInfoByEmail = await PaymentModel.findOne({email: charge_data.email}).sort({ createdAt: -1 });
   logger.info("---paymentInfoByEmail in charge function---" + paymentInfoByEmail);
   if(paymentInfoByEmail){
+    
     const paymentInfoUpdate = await PaymentModel.findOneAndUpdate(
       { email: charge_data.email},
       { $set:
@@ -89,18 +91,20 @@ try{
       },
       { new: true } 
     );
+    
     logger.info("All previous Subscriptions has been cancelled for user: "+ charge_data.email+ "paymentInfoUpdate: "+ paymentInfoUpdate);
     logger.info("Calling ${BACKEND_URL}/charge/cancel/${charge_data.email} in charge function");
     //next subscription cancel in stripe
     await axios.get(`${process.env.BACKEND_URL}/charge/cancel/${charge_data.email}`);
   }
+  
   global.stripeEmail = charge_data.email;
-  /*
+  
   const transaction = new PaymentModel(
     charge_data
   );
     await transaction.save();
-    */
+    
     logger.info("Payment info saved with global.stripeEmail ===== " + global.stripeEmail)
   } catch (error) {
     logger.info("error in Charge function in paymentController: " + error)

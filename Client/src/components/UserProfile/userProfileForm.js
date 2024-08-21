@@ -50,9 +50,11 @@ const UserProfileForm = () =>{
 
     const handleSubmitUserProfile = (e) => {
       e.preventDefault();
+      setModalVisible(true);
+      console.log(modalVisible);
       localStorage.setItem("spPhk44lI519pJ",email);
       dispatch(updateUserInfoByID(portalID,email,name,companyName, phoneNumber,countryCode));
-      setModalVisible(true);
+      
     };
 
     const handleCloseModal = () => {
@@ -66,6 +68,8 @@ const UserProfileForm = () =>{
           <div>
             <label>Email:</label>
             <p>{userInfo?email:""}</p>
+            <span style={{color: "#bb2124", fontSize: "12px"}}> **Use this email for any transactions related to portal ID: {portalID}</span> <br/>
+            <span style={{color: "#bb2124", fontSize: "12px"}}> **Do not use this email for purchasing from any other portal id</span>
           </div>
           <div>
             <label>Name:</label>
@@ -124,21 +128,14 @@ const UserProfileForm = () =>{
             <p>{userInfo?uiDomain:""}</p>
           </div>
           <button type="submit">Update Profile</button>
-          {modalVisible && (
-            <div className="modal">
-                <div className="modal-content">
-                  {updateUserLoading?
-                    <h4>Please wait...</h4>
-                    :updateUserErr?
-                    <h4>Something Went Wrong</h4>
-                    : newUserInfo?
-                    <h4>Thanks for updating your informations</h4>:
-                    <h4>Something Went Wrong</h4>
-                  }
+          {modalVisible ? (
+            <div>
+                <div>
+                    <p>Information Updated</p>
                     <button type="submit" onClick={handleCloseModal}>Close</button>
                 </div>
             </div>
-        )}
+        ) : ""}
       </form>
     )
 }

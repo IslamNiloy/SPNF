@@ -10,17 +10,28 @@ exports.insertIntoUser = async (req, res, user_info) => {
         if (userInfo){
             const updateUser = await User.findOneAndUpdate(
                 { portalID: userInfo.portalID },
-                {email: stripeEmail},
+                {
+                    name: req.body.name || user_info.name || "",
+                    companyName: req.body.companyName || user_info.companyName || "",
+                    email: stripeEmail || req.body.email || user_info.email || "",
+                    phoneNumber: req.body.phoneNumber || user_info.phoneNumber || "",
+                    countryCode: req.body.countryCode || user_info.countryCode || "",
+                    accountType: req.body.accountType || user_info.accountType || "",
+                    timeZone: req.body.timeZone || user_info.timeZone || "",
+                    companyCurrency: req.body.companyCurrency || user_info.companyCurrency || "",
+                    uiDomain: req.body.uiDomain || user_info.uiDomain || "",
+                    dataHostingLocation: req.body.dataHostingLocation || user_info.dataHostingLocation || "",
+                    additionalCurrencies: req.body.additionalCurrencies || user_info.additionalCurrencies || "",
+                },
                 {
                     new: true, // Return the updated document
                     upsert: true, // Insert the document if it does not exist
                 }
             );
+            await update_Payment_Info(updateUser);
             return updateUser;
         }
-        logger.info("---where is email?stripeEmail?---" + stripeEmail);
-        logger.info("---where is email?req.body.email?---" + req.body.email);
-        logger.info("---where is email?user_info.email?---" + user_info.email);
+
         if (!userInfo) {
             //insert into user model
             const user = new User({
@@ -41,6 +52,7 @@ exports.insertIntoUser = async (req, res, user_info) => {
             console.log("user data inserted to mongo", user);
             req.session.stripeEmail = null
             logger.info(`New Account signUp | email:${req.body.email}| HS portalid:${req.body.portalID}`);
+            await update_Payment_Info(user);
             return user;
         }
         else{

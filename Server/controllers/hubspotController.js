@@ -54,7 +54,6 @@ exports.home = async (req, res) => {
     const accessToken = await getAccessToken(req);
     const accInfo = await getAccountInfo(accessToken);
     let user = await insertIntoUser(req, res, accInfo);
-    await update_Payment_Info(user);
     res.redirect(`${process.env.FRONTEND_URL}/welcome?portalID=${accInfo.portalID}`);
     logWithDetails('info', 'Displayed home page with account info and access token', req);
   }
