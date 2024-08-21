@@ -28,7 +28,6 @@ exports.insertIntoUser = async (req, res, user_info) => {
                     upsert: true, // Insert the document if it does not exist
                 }
             );
-            await update_Payment_Info(updateUser);
             return updateUser;
         }
 
