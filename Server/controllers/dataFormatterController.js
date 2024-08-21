@@ -133,6 +133,7 @@ exports.getCountry = async (req, res) => {
 };
 
 
+
 /////////////////////// Check Phone Number START //////////////////////////////////
 const checkPhoneNumber = (phoneNumber) => {
 
@@ -154,14 +155,14 @@ const checkPhoneNumber = (phoneNumber) => {
 
   const parsedNumber = parsePhoneNumberFromString(phoneNumber);
 
-  // Check if the phone number is valid
-  if (!parsedNumber || !parsedNumber.isValid()) {
-    return 'Invalid';
-  }
-
   // Check if the phone number includes a country code
   if (!parsedNumber.country) {
     return 'No Country Code';
+  }
+
+  // Check if the phone number is valid
+  if (!parsedNumber || !parsedNumber.isValid()) {
+    return 'Invalid';
   }
 
   return 'Correctly Formatted';

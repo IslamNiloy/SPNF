@@ -58,7 +58,7 @@ exports.createCheckoutSession = async (req, res) => {
       await zeroDollarInfo(session);
     }
       //this.charge(session.id, mainProduct.price);
-    logger.info("-------Session ID -----------" + (session.id));
+    logger.info("-------Session whole -----------" + JSON.stringify(session));
     
    res.redirect(303, session.url);
   } catch (error) {
