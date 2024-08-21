@@ -51,7 +51,7 @@ exports.createCheckoutSession = async (req, res) => {
           },
         ],
         mode: (req.params.id === '66ba2cf16343bea38ef334ba') ? 'payment' : 'subscription',
-        success_url: `${process.env.SUCCESS_URL_STRIPE}/email=${encodeURIComponent(userEmail)}`,
+        success_url: `${process.env.SUCCESS_URL_STRIPE}`,
         cancel_url: `${process.env.CANCEL_URL_STRIPE}`,
       });
     if(req.params.id === '66ba2cf16343bea38ef334ba'){
