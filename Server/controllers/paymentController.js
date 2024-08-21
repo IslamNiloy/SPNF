@@ -99,12 +99,12 @@ try{
   }
   
   global.stripeEmail = charge_data.email;
-  /*
+  
   const transaction = new PaymentModel(
     charge_data
   );
     await transaction.save();
-    */
+    
     logger.info("Payment info saved with global.stripeEmail ===== " + global.stripeEmail)
   } catch (error) {
     logger.info("error in Charge function in paymentController: " + error)
