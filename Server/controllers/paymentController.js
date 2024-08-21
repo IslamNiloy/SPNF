@@ -103,7 +103,7 @@ try{
   const transaction = new PaymentModel(
     charge_data
   );
-    //await transaction.save();
+    await transaction.save();
     
     logger.info("Payment info saved with global.stripeEmail ===== " + global.stripeEmail)
   } catch (error) {
