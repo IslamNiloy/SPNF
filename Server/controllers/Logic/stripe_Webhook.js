@@ -5,6 +5,7 @@ stripe listen --forward-to localhost:3003/stripe/webhook
  */
 let STRIPE_DATA_DB = {};
 let payment_DATA_DB = {};
+const logger = require('../../utils/logger');
 let { charge } = require('../paymentController');
 
 const endpointSecret = process.env.webhookEndpoint;
@@ -53,7 +54,7 @@ let stripeWebhook = async (request, response) => {
         payment_DATA_DB.payment_intent_id = chargeSucceeded.payment_intent;
         payment_DATA_DB.payment_method_id = chargeSucceeded.payment_method;
         console.log("\t logging payment_DATA_DB");
-        console.log(payment_DATA_DB);
+        logger.info("payment_DATA_DB==========="+payment_DATA_DB);
         await charge(payment_DATA_DB); //TO DATABASE IN MONGO
         break;
    // ... handle other event types

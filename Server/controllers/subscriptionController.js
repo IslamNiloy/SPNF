@@ -46,8 +46,8 @@ exports.insertIntoSubscription = async (req, res) => {
             logger.info("Insert data in subscription model");
         }
     }catch(error){
-        logger.info({ error: 'Error in insertIntoSubscription: '+ err });
-        return res.json({ error: 'Error in insertIntoSubscription: '+ err });
+        logger.info({ error: 'Error in insertIntoSubscription: '+ error });
+        return res.json({ error: 'Error in insertIntoSubscription: '+ error });
     }
   }
 

@@ -70,7 +70,7 @@ exports.createCheckoutSession = async (req, res) => {
 
 exports.charge = async (charge_data) => {
 try{
-  logger.info("--------ChargeID in charge paymentController---------" + charge_data);
+  logger.info("--------ChargeID in charge paymentController111111111---------" + charge_data);
   /*
     1. find all payments history from mongoDB of email ID
     2. if found, set status to cancelled
@@ -94,12 +94,14 @@ try{
     //next subscription cancel in stripe
     await axios.get(`${process.env.BACKEND_URL}/charge/cancel/${charge_data.email}`);
   }
+  global.stripeEmail = charge_data.email;
+  /*
   const transaction = new PaymentModel(
     charge_data
   );
     await transaction.save();
-    req.session.stripeEmail = charge_data.email;
-    logger.info("Payment info saved with req.session.stripeEmail ===== " + req.session.stripeEmail)
+    */
+    logger.info("Payment info saved with global.stripeEmail ===== " + global.stripeEmail)
   } catch (error) {
     logger.info("error in Charge function in paymentController: " + error)
   }

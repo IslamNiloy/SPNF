@@ -4,13 +4,23 @@ const { getAccessToken, isAuthorized, getContact, getAccountInfo } = require('..
 
 exports.insertIntoUser = async (req, res, user_info) => {
     try { 
-        const stripeEmail = req.session.stripeEmail;
-        console.log("-----req.session.stripeEmail-----"+stripeEmail);
+        const stripeEmail = global.stripeEmail;
+        logger.info("-----global.stripeEmail1111-----"+stripeEmail);
         const userInfo = await User.findOne({ portalID: (req.body.portalID ||  user_info.portalID)});
         if (userInfo){
-            //update if needed
-            return "User Already exist";
+            const updateUser = await User.findOneAndUpdate(
+                { portalID: userInfo.portalID },
+                {email: stripeEmail},
+                {
+                    new: true, // Return the updated document
+                    upsert: true, // Insert the document if it does not exist
+                }
+            );
+            return updateUser;
         }
+        logger.info("---where is email?stripeEmail?---" + stripeEmail);
+        logger.info("---where is email?req.body.email?---" + req.body.email);
+        logger.info("---where is email?user_info.email?---" + user_info.email);
         if (!userInfo) {
             //insert into user model
             const user = new User({

@@ -136,10 +136,29 @@ exports.getCountry = async (req, res) => {
 
 /////////////////////// Check Phone Number START //////////////////////////////////
 const checkPhoneNumber = (phoneNumber) => {
+  // Check if the phone number contains spaces
+  if (/\s/.test(phoneNumber)) {
+    return 'Space in the Number';
+  }
 
-  // Check if the phone number contains any non-digit text (excluding the '+' symbol)
+  // Check if the phone number contains hyphens
+  if (/-/.test(phoneNumber)) {
+    return 'Hyphen in the Number';
+  }
+
+  // Check if the phone number contains brackets
+  if (/\(|\)/.test(phoneNumber)) {
+    return 'Bracket in the Number';
+  }
+
+  // Check if the phone number contains non-numeric text (excluding the '+' symbol)
+  if (/[^\d\+\s\-()]/.test(phoneNumber)) {
+    return 'Contains Invalid Characters';
+  }
+
+  // Check if the phone number contains any other non-digit text (excluding the '+' symbol)
   if (/\D/.test(phoneNumber.replace('+', ''))) {
-    return 'Contains Text or Special characters';
+    return 'Contains Text or Special Characters';
   }
 
   // Remove all non-digit characters
@@ -156,12 +175,12 @@ const checkPhoneNumber = (phoneNumber) => {
   const parsedNumber = parsePhoneNumberFromString(phoneNumber);
 
   // Check if the phone number includes a country code
-  if (!parsedNumber.country) {
+  if (!parsedNumber || !parsedNumber.country) {
     return 'No Country Code';
   }
 
   // Check if the phone number is valid
-  if (!parsedNumber || !parsedNumber.isValid()) {
+  if (!parsedNumber.isValid()) {
     return 'Invalid';
   }
 
