@@ -70,7 +70,7 @@ exports.createCheckoutSession = async (req, res) => {
 
 exports.charge = async (charge_data) => {
 try{
-  logger.info("--------ChargeID in charge paymentController111111111---------" + charge_data);
+  logger.info("--------ChargeID in charge paymentController1111111112222---------" + charge_data);
   /*
   usa case: logged out user changing pro to enterprise
     1. find all payments history from mongoDB of email ID
@@ -103,7 +103,7 @@ try{
   const transaction = new PaymentModel(
     charge_data
   );
-    await transaction.save();
+    //await transaction.save();
     
     logger.info("Payment info saved with global.stripeEmail ===== " + global.stripeEmail)
   } catch (error) {
