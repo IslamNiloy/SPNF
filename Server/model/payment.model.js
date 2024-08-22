@@ -17,7 +17,7 @@ const PaymentSchema = new mongoose.Schema({
   payment_method_details: { type: Object },
   receipt_url: { type: String},
   status: { type: String, required: true },
-  portalID: { type: Number, required: true },
+  portalID: { type: Number, required: true, unique: true },
 },
   {
     timestamps: true,

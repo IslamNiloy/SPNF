@@ -6,15 +6,17 @@ const axios = require('axios');
 const packagesModel = require('../model/packages.model');
 const userModel = require('../model/user.model');
 const subscriptionModel = require('../model/subscription.model');
+const { insertIntoSubscriptionAfterPayment } = require('./subscriptionController');
 
-//Code Stripe main start
+
 exports.createCheckoutSession = async (req, res) => {
   logger.info("logging at /package/createCheckoutSession ");
+  const packageId = req.params.id;
   const selectedPackage = await packagesModel.findOne({_id: req.params.id}); //getting information from mongodb packageModel
   const stripePrices = await stripe.prices.list(); //getting all price information from stripe
   const filteredStripePrice = stripePrices.data.filter(priceObj =>parseInt(priceObj.unit_amount) === parseInt((selectedPackage.price) * 100));;//filtering from stripe data with price of packageModel findOne
+  const portalID = req.params.portalID;
 
-  //const product = Product_Array.find(product => product.package_id == req.params.id);
   try {
       const session = await stripe.checkout.sessions.create({
         line_items: [
@@ -53,18 +55,24 @@ exports.createCheckoutSession = async (req, res) => {
         mode: (req.params.id === '66ba2cf16343bea38ef334ba') ? 'payment' : 'subscription',
         success_url: `${process.env.SUCCESS_URL_STRIPE}`,
         cancel_url: `${process.env.CANCEL_URL_STRIPE}`,
+        metadata: { 
+          portalID: portalID, 
+          packageId: packageId  // Store the session ID in the metadata
+        },
       });
+
     if(req.params.id === '66ba2cf16343bea38ef334ba'){
       await zeroDollarInfo(session);
     }
-      //this.charge(session.id, mainProduct.price);
+      
     logger.info("-------Session whole -----------" + JSON.stringify(session));
     
-   res.redirect(303, session.url);
+    res.redirect(303, session.url);
   } catch (error) {
     console.log(error);
   }
 }
+
 
 exports.insertIntoPayment = async (user_data) => {
   try{
@@ -148,25 +156,37 @@ exports.cancel_subscription = async(req,res) =>{
 }
 
 
-exports.update_Payment_Info = async (userData) => {
-  console.log("Logging at /update_Payment_Info: " + userData);
+exports.update_Payment_Info = async (chargeData, packageID, portalID) => {
   try {
-    const payment_Info = await PaymentModel.findOne({ email: userData.email });
+    logger.info("Information in update_Payment_Info=====:::" + JSON.stringify(chargeData));
+    logger.info("Information in update_Payment_Info=====:::" + packageID);
+    logger.info("Information in update_Payment_Info=====:::" + portalID);
+    
+    const payment_Info = await PaymentModel.findOne({portalID: portalID});
     if (!payment_Info) {
       return { error: 'Payment Info not found' };
     }
   const paymentUpdate = await PaymentModel.findOneAndUpdate(
-      { email: userData.email },
+      { portalID: portalID },
       {
         $set: {
-          user: userData._id,
-          portalID: userData.portalID,
+          email: chargeData.email,
+          chargeId: chargeData.chargeId,
+          amount: chargeData.amount,
+          currency: chargeData.currency,
+          customer_id: chargeData.customer_id,
+          invoice_id: chargeData.invoice_id,
+          payment_method_details: chargeData.payment_method_details,
+          receipt_url: chargeData.receipt_url,
+          status: "successed",
         },
     },
     { new: true, upsert: false }
     );
+    insertIntoSubscriptionAfterPayment(packageID,paymentUpdate.user)
     console.log(paymentUpdate);
     return paymentUpdate;
+    
   } catch (error) {
     console.error('Error in update_Payment_Info:', error);
     return  error ;

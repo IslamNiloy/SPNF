@@ -103,7 +103,7 @@ const SelectedPackage = (props) => {
                     ?
                     (
                       <>
-                      <form action= {`${BackendAPI}/charge/create-checkout-session/${props.data._id}`} method="POST">
+                      <form action= {`${BackendAPI}/charge/create-checkout-session/${props.data._id}/${portalID}`} method="POST">
                         <button type="submit" className="install-button">
                           Proceed to Checkout
                         </button>
@@ -119,7 +119,7 @@ const SelectedPackage = (props) => {
                     :
                     (
                       <>
-                        <form action= {`${BackendAPI}/charge/create-checkout-session/${props.data._id}`} method="POST">
+                        <form action= {`${BackendAPI}/charge/create-checkout-session/${props.data._id}/${portalID}`} method="POST">
                           <button type="submit" className="install-button">
                             Proceed to Checkout
                           </button>

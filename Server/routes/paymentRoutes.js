@@ -5,7 +5,7 @@ const webhookController = require('../controllers/Logic/stripe_Webhook');
 const customUserController = require('../controllers/Logic/customUser');
 
 router.post('/', paymentController.charge);
-router.post('/create-checkout-session/:id', paymentController.createCheckoutSession);
+router.post('/create-checkout-session/:id/:portalID', paymentController.createCheckoutSession);
 router.post('/webhook', express.raw({ type: 'application/json' }), webhookController.stripeWebhook);
 router.post('/custom/create', customUserController.customUserCreatePrice);
 router.get('/cancel/:email', paymentController.cancel_subscription);

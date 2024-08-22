@@ -6,7 +6,7 @@ stripe listen --forward-to localhost:3003/stripe/webhook
 let STRIPE_DATA_DB = {};
 let payment_DATA_DB = {};
 const logger = require('../../utils/logger');
-let { charge } = require('../paymentController');
+let { charge, update_Payment_Info } = require('../paymentController');
 
 const endpointSecret = process.env.webhookEndpoint;
 
@@ -40,7 +40,7 @@ let stripeWebhook = async (request, response) => {
           break;
       case 'charge.succeeded':
         const chargeSucceeded = event.data.object;
-        console.log("\t logging charge.succeed EVENT"+chargeSucceeded);
+        console.log("\t logging charge.succeed EVENT"+ JSON.stringify(chargeSucceeded));
           console.log(chargeSucceeded.amount);
         payment_DATA_DB.email = chargeSucceeded.billing_details.email;
         payment_DATA_DB.chargeId = chargeSucceeded.id;
@@ -53,9 +53,18 @@ let stripeWebhook = async (request, response) => {
         payment_DATA_DB.status = chargeSucceeded.status;
         payment_DATA_DB.payment_intent_id = chargeSucceeded.payment_intent;
         payment_DATA_DB.payment_method_id = chargeSucceeded.payment_method;
-        console.log("\t logging payment_DATA_DB");
-        logger.info("payment_DATA_DB==========="+payment_DATA_DB);
-        await charge(payment_DATA_DB); //TO DATABASE IN MONGO
+        console.log("\t logging payment_DATA_DB11111111");
+        console.log("payment_DATA_DB==========="+JSON.stringify(payment_DATA_DB));
+        
+        const sessions = await stripe.checkout.sessions.list({
+          limit: -1,
+        });
+        console.log("Session session session session============webhook sessions.data[0].metadata.packageId"+ JSON.stringify(sessions.data[0].metadata.packageId));
+        console.log("Session session session session============webhook sessions.data[0].metadata.portalID"+ JSON.stringify(sessions.data[0].metadata.portalID));
+        console.log("payment_DATA_DB===========" + payment_DATA_DB);
+      
+        await update_Payment_Info(payment_DATA_DB,sessions.data[0].metadata.packageId, sessions.data[0].metadata.portalID); //TO DATABASE IN MONGO
+        //await charge(payment_DATA_DB); //TO DATABASE IN MONGO
         break;
    // ... handle other event types
       default:

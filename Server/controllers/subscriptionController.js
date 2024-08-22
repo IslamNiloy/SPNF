@@ -6,6 +6,50 @@ const logger = require('../utils/logger');
 const ModelPayment = require('../model/payment.model');
 const userModel = require('../model/user.model');
 
+
+exports.insertIntoSubscriptionAfterPayment = async (packageID, userID) => {
+    try{
+         const startDate = new Date();
+         const endDate = new Date();
+         endDate.setDate(startDate.getDate() + 30);
+ 
+         const userInfo = await User.findOne( {_id: userID});
+         const packageInfo = await packagesModel.findOne( {_id: packageID});
+         const subscriptionInfo = await Subscription.findOne( {user: userInfo._id});
+ 
+       
+         if (!userInfo) {
+             logger.error("User not found");
+             return res.status(404).json({ error: 'User not found' });
+         }
+         else if (!packageInfo) {
+             logger.error("Package information not found");
+             return res.json({ error: 'Package information not found' });
+         }
+         if(subscriptionInfo){
+             this.updateSubscriptionInfo(userInfo._id,req.body.packageID);
+         }
+         if (userInfo && !subscriptionInfo) {
+             //insert into Subscription model
+             const subscribe = new Subscription({  
+                 user: userInfo._id,
+                 package: packageID,
+                 //adding total API call count for any reference
+                 totalApiCallCount: 0,
+                 apiCallCount: 0,
+                 joiningDate: startDate.toISOString().split('T')[0],
+                 packageStartDate: startDate.toISOString().split('T')[0],
+                 packageEndDate: endDate.toISOString().split('T')[0],
+             });
+             await subscribe.save();
+             logger.info("Insert data in subscription model");
+         }
+     }catch(error){
+         logger.info({ error: 'Error in insertIntoSubscription: '+ error });
+         return res.json({ error: 'Error in insertIntoSubscription: '+ error });
+     }
+   }
+
 exports.insertIntoSubscription = async (req, res) => {
    try{
         const startDate = new Date();
