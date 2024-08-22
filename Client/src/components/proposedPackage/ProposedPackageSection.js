@@ -12,6 +12,7 @@ const ProposedPackageSection = () => {
     const dispatch = useDispatch();
     const AllPackages = useSelector((state) => state.getAllPackage);
     const { loading, error, packages } = AllPackages;
+    const portalID = localStorage.getItem("I8PD56?#C|NXhSgZ0KE");
     useEffect(() => {
         dispatch(allPackages());
       }, [dispatch]);
@@ -37,7 +38,12 @@ const ProposedPackageSection = () => {
                                 <p className="package-content2">15000+/month</p>:
                                 <p className="package-content2">{pkg.Limit}/month</p>
                         }
-                         {pkg.packageName=='Custom' ? 
+
+                         { portalID? 
+                                <Link to="/payment"  state={{ selectedPackage: pkg }}>
+                                <button className="install-button">Checkout</button>
+                            </Link>:
+                         pkg.packageName=='Custom' ? 
                                 <Link to="/custom"  state={{ selectedPackage: pkg }}>
                                     <button className="install-button">Install</button>
                                 </Link>:
