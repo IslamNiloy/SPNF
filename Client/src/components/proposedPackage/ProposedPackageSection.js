@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { allPackages } from '../../action/packageAction';
 import LoadingBox from '../LoadingBox'
 import MessageBox from '../MessageBox'
+import { BackendAPI } from '../../api/server';
 
 
 const ProposedPackageSection = () => {
@@ -40,7 +41,7 @@ const ProposedPackageSection = () => {
                                 <Link to="/custom"  state={{ selectedPackage: pkg }}>
                                     <button className="install-button">Install</button>
                                 </Link>:
-                                 <Link to="/payment"  state={{ selectedPackage: pkg }}>
+                                 <Link to={`${BackendAPI}/install`}  state={{ selectedPackage: pkg }}>
                                     <button className="install-button">Install</button>
                                 </Link>
                         }

@@ -2,62 +2,36 @@ const User = require('../model/user.model');
 let logger = require('../utils/logger');
 const { getAccessToken, isAuthorized, getContact, getAccountInfo } = require('../auth/hubspotAuth');
 
-exports.insertIntoUser = async (req, res, user_info) => {
+exports.insertIntoUser = async (user_info) => {
     try { 
-        const stripeEmail = global.stripeEmail;
-        logger.info("-----global.stripeEmail in insertIntoUser after installation-----"+stripeEmail);
-        const userInfo = await User.findOne({ portalID: (req.body.portalID ||  user_info.portalID)});
+        const userInfo = await User.findOne({ portalID: user_info.hub_id});
         if (userInfo){
-            const updateUser = await User.findOneAndUpdate(
-                { portalID: userInfo.portalID },
-                {
-                    name: req.body.name || user_info.name || "",
-                    companyName: req.body.companyName || user_info.companyName || "",
-                    email: stripeEmail || req.body.email || user_info.email || "",
-                    phoneNumber: req.body.phoneNumber || user_info.phoneNumber || "",
-                    countryCode: req.body.countryCode || user_info.countryCode || "",
-                    accountType: req.body.accountType || user_info.accountType || "",
-                    timeZone: req.body.timeZone || user_info.timeZone || "",
-                    companyCurrency: req.body.companyCurrency || user_info.companyCurrency || "",
-                    uiDomain: req.body.uiDomain || user_info.uiDomain || "",
-                    dataHostingLocation: req.body.dataHostingLocation || user_info.dataHostingLocation || "",
-                    additionalCurrencies: req.body.additionalCurrencies || user_info.additionalCurrencies || "",
-                },
-                {
-                    new: true, // Return the updated document
-                    upsert: true, // Insert the document if it does not exist
-                }
-            );
-            logger.info("-----update user information if found after installation-----"+updateUser);
-            return updateUser;
+            logger.info("User Already Exist");
+            return "User Already Exist";
         }
 
         if (!userInfo) {
             //insert into user model
             const user = new User({
-                name: req.body.name || user_info.name || "",
-                companyName: req.body.companyName || user_info.companyName || "",
-                email: stripeEmail || req.body.email || user_info.email || "",
-                phoneNumber: req.body.phoneNumber || user_info.phoneNumber || "",
-                countryCode: req.body.countryCode || user_info.countryCode || "",
-                portalID: req.body.portalID || user_info.portalID || "",
-                accountType: req.body.accountType || user_info.accountType || "",
-                timeZone: req.body.timeZone || user_info.timeZone || "",
-                companyCurrency: req.body.companyCurrency || user_info.companyCurrency || "",
-                uiDomain: req.body.uiDomain || user_info.uiDomain || "",
-                dataHostingLocation: req.body.dataHostingLocation || user_info.dataHostingLocation || "",
-                additionalCurrencies: req.body.additionalCurrencies || user_info.additionalCurrencies || "",
+                name: user_info.name || "",
+                companyName: user_info.companyName || "",
+                email:  user_info.user || "",
+                phoneNumber: user_info.phoneNumber || "",
+                countryCode: user_info.countryCode || "",
+                portalID: user_info.hub_id || "",
+                accountType: user_info.accountType || "",
+                timeZone: user_info.timeZone || "",
+                companyCurrency: user_info.companyCurrency || "",
+                uiDomain:  user_info.hub_domain || "",
+                dataHostingLocation: user_info.dataHostingLocation || "",
+                additionalCurrencies: user_info.additionalCurrencies || "",
             });
             await user.save();
-            console.log("user data inserted to mongo", user);
-            req.session.stripeEmail = null
-            logger.info(`New Account signUp | email:${req.body.email}| HS portalid:${req.body.portalID}`);
-            logger.info("-----user information insertion after installation-----"+user);
-            await update_Payment_Info(user);
+            logger.info("user data inserted to mongo", user);
             return user;
         }
         else{
-            logger.info(user_info.portalID + ' already exist');
+            logger.info(user_info.hub_id + ' already exist');
             return "Cannot Insert data into User model";
         }
             //console.log(`user with ${accInfo.email} already exist`);

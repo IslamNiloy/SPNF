@@ -1,7 +1,7 @@
 const { getAccessToken, isAuthorized, getContact, getAccountInfo } = require('../auth/hubspotAuth');
 const logger = require('../utils/logger'); // Add logger
 const { get_all_packages } = require('./packageCotroller');
-const { update_Payment_Info } = require('./paymentController');
+const { update_Payment_Info, insertIntoPayment } = require('./paymentController');
 const { insertIntoSubscription } = require('./subscriptionController');
 const { insertIntoUser } = require('./usercontroller');
 
@@ -53,9 +53,12 @@ exports.home = async (req, res) => {
   if (isAuthorized(req)) {
     const accessToken = await getAccessToken(req);
     const accInfo = await getAccountInfo(accessToken);
-    let user = await insertIntoUser(req, res, accInfo);
-    //await update_Payment_Info(user);
-    res.redirect(`${process.env.FRONTEND_URL}/welcome?portalID=${accInfo.portalID}`);
+    let userInsertion = await insertIntoUser(accInfo);
+    let paymentInsertion = await insertIntoPayment(userInsertion);
+    logger.info("----home accInfo----" + JSON.stringify(accInfo));
+    logger.info("----insert into user mongoDB----" + JSON.stringify(userInsertion));
+    logger.info("----insert into payment mongoDB----" + JSON.stringify(paymentInsertion));
+    res.redirect(`${process.env.FRONTEND_URL}/welcome?portalID=${userInsertion.portalID}`);
     logWithDetails('info', 'Displayed home page with account info and access token', req);
   }
   res.end();

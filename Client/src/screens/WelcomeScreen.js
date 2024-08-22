@@ -23,7 +23,7 @@ const WelcomeScreen = () => {
 
       if(portalID){
         dispatch(userInfoByID(portalID));
-        dispatch(insertIntoSubscriptionCollection(portalID,cookies.subscription));
+        //dispatch(insertIntoSubscriptionCollection(portalID,cookies.subscription));
         navigate('/');
       } 
   }, [dispatch]);

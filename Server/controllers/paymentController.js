@@ -65,9 +65,24 @@ exports.createCheckoutSession = async (req, res) => {
     console.log(error);
   }
 }
+
+exports.insertIntoPayment = async (user_data) => {
+  try{
+    logger.info("insert into payment----insertIntoPayment: " + JSON.stringify(user_data));
+    
+    const transaction = new PaymentModel({
+      user : user_data._id,
+      status: "due",
+      portalID :  user_data.portalID
+    });
+      await transaction.save();
+      
+  }catch (error){
+    logger.info("Something went wrong in insertIntoPayment: " + error);
+  }
+}
+
 //code stripe main ends
-
-
 exports.charge = async (charge_data) => {
 try{
   logger.info("--------getting information from stripe---------" + charge_data);

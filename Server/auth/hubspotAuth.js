@@ -1,11 +1,12 @@
 const axios = require('axios');
 const qs = require('qs');
 const logger = require('../utils/logger'); // Add logger
-let { STRIPE_DATA_DB } = require('../controllers/Logic/stripe_Webhook');
-let userData = {};
+
 // const BASE_URL = "http://localhost:3000";
 // const BASE_URL = "https://hs-app-lemon.vercel.app"
-const BASE_URL = "https://localhost:3003"
+// const BASE_URL = "https://app.dataformatter.my.id"
+const BASE_URL = process.env.BACKEND_URL
+
 const getTokenHeaders = {
   'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
 };
@@ -14,7 +15,7 @@ const exchangeForTokens = async (req, exchangeProof) => {
   try {
     const url_encoded_string = qs.stringify(exchangeProof);
     const responseBody = await axios.post('https://api.hubapi.com/oauth/v1/token', url_encoded_string, {
-      headers: getTokenHeaders
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' }
     });
     const tokens = responseBody.data;
 
@@ -23,11 +24,6 @@ const exchangeForTokens = async (req, exchangeProof) => {
     req.session.expires_in = tokens.expires_in;
     req.session.token_timestamp = Date.now();
 
-    logger.info(`req.session.refresh_token at exchangeForTokens: ${req.session.refresh_token}`)
-    logger.info(`req.session.access_token at exchangeForTokens: ${req.session.access_token}`)
-    logger.info(`req.session.expires_in at exchangeForTokens: ${req.session.expires_in}`)
-    logger.info(`req.session.token_timestamp at exchangeForTokens: ${req.session.token_timestamp}`)
-    
     logger.info(`Received access token and refresh token for session: ${req.sessionID}`);
     return tokens.access_token;
   } catch (e) {
@@ -62,14 +58,12 @@ const isAuthorized = (req) => {
 };
 
 const getContact = async (accessToken) => {
-  console.log("at /getContact profile" + accessToken);
   try {
-    const header= {
+    const headers = {
       Authorization: `Bearer ${accessToken}`,
       'Content-Type': 'application/json'
     };
     const result = await axios.get('https://api.hubapi.com/contacts/v1/lists/all/contacts/all', { headers });
-    console.log("----------getContact-----------"+ result)
     return result.data[0];
   } catch (e) {
     logger.error(`Unable to retrieve contact: ${e.message}`);
@@ -83,21 +77,8 @@ const getAccountInfo = async (accessToken) => {
       Authorization: `Bearer ${accessToken}`,
       'Content-Type': 'application/json'
     };
-    const result = await axios.get('https://api.hubapi.com/account-info/v3/details', { headers });
-   // DATA FOR mongo USER SCHEMA
-    userData = {
-      ...STRIPE_DATA_DB,
-      portalID: result.data.portalId,
-      accountType: result.data.accountType,
-      timeZone: result.data.timeZone,
-      companyCurrency: result.data.companyCurrency,
-      uiDomain: result.data.uiDomain,
-      dataHostingLocation: result.data.dataHostingLocation,
-      additionalCurrencies: result.data.additionalCurrencies,
-     };
-    console.log(userData);
-
-    return userData;
+    const result = await axios.get(`https://api.hubapi.com/oauth/v1/access-tokens/${accessToken}`, { headers });
+    return result.data; // This should include email, user ID, etc.
   } catch (e) {
     logger.error(`Unable to retrieve account info: ${e.message}`);
     return parseErrorResponse(e);
