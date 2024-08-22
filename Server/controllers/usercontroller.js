@@ -7,7 +7,7 @@ exports.insertIntoUser = async (user_info) => {
         const userInfo = await User.findOne({ portalID: user_info.hub_id});
         if (userInfo){
             logger.info("User Already Exist");
-            return "User Already Exist";
+            return {portalID: userInfo.portalID};
         }
 
         if (!userInfo) {
