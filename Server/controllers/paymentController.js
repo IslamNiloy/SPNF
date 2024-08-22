@@ -70,7 +70,7 @@ exports.createCheckoutSession = async (req, res) => {
 
 exports.charge = async (charge_data) => {
 try{
-  logger.info("--------ChargeID in charge paymentController1111111112222---------" + charge_data);
+  logger.info("--------getting information from stripe---------" + charge_data);
   /*
   usa case: logged out user changing pro to enterprise
     1. find all payments history from mongoDB of email ID
@@ -79,6 +79,7 @@ try{
   */
   const paymentInfoByEmail = await PaymentModel.findOne({email: charge_data.email}).sort({ createdAt: -1 });
   logger.info("---paymentInfoByEmail in charge function---" + paymentInfoByEmail);
+  logger.info("----Information in Charge (stripe information)----" + charge_data)
   if(paymentInfoByEmail){
     
     const paymentInfoUpdate = await PaymentModel.findOneAndUpdate(
@@ -104,8 +105,8 @@ try{
     charge_data
   );
     await transaction.save();
-    
-    logger.info("Payment info saved with global.stripeEmail ===== " + global.stripeEmail)
+    logger.info("---insertion in payment Model: "+ transaction);
+    logger.info("Payment info saved with global.stripeEmail (stripe information)===== " + global.stripeEmail)
   } catch (error) {
     logger.info("error in Charge function in paymentController: " + error)
   }

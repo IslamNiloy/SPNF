@@ -1,6 +1,5 @@
 {
   "name": "hs_phone_number_formatter",
-  "proxy": "http://localhost:3003",
   "version": "0.1.0",
   "private": true,
   "dependencies": {

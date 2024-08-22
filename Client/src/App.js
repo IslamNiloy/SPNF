@@ -10,14 +10,10 @@ import CustomUserScreen from './screens/CustomUserScreen';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 
 // Your Stripe public key (get this from your Stripe dashboard)
-const stripePromise = loadStripe('pk_test_51PgQiFC39bb601vJn7f3Hu7A1UrcDwUXodNoxy8rL8YY2AbyIuJ0HH0xAl5p4JCEZlSCutglnGOr3bzVlu2hAYlJ00kIM8Tr2a');
+//const stripePromise = loadStripe('pk_test_51PgQiFC39bb601vJn7f3Hu7A1UrcDwUXodNoxy8rL8YY2AbyIuJ0HH0xAl5p4JCEZlSCutglnGOr3bzVlu2hAYlJ00kIM8Tr2a');
 
 function App() {
 
-  const options = {
-    // passing the client secret obtained from the server
-    clientSecret: 'sk_test_51PgQiFC39bb601vJ9kRxWU1m6AJVYxvEFMWrJZUOJR2vaU9a7mchTVCHuzrvHt2P7XPxOFrCEjBe0wtHkS2unOnU00Orbtn4hN',
-  };
 
   return (
     <BrowserRouter>

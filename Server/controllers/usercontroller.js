@@ -5,7 +5,7 @@ const { getAccessToken, isAuthorized, getContact, getAccountInfo } = require('..
 exports.insertIntoUser = async (req, res, user_info) => {
     try { 
         const stripeEmail = global.stripeEmail;
-        logger.info("-----global.stripeEmail1111-----"+stripeEmail);
+        logger.info("-----global.stripeEmail in insertIntoUser after installation-----"+stripeEmail);
         const userInfo = await User.findOne({ portalID: (req.body.portalID ||  user_info.portalID)});
         if (userInfo){
             const updateUser = await User.findOneAndUpdate(
@@ -28,6 +28,7 @@ exports.insertIntoUser = async (req, res, user_info) => {
                     upsert: true, // Insert the document if it does not exist
                 }
             );
+            logger.info("-----update user information if found after installation-----"+updateUser);
             return updateUser;
         }
 
@@ -51,6 +52,7 @@ exports.insertIntoUser = async (req, res, user_info) => {
             console.log("user data inserted to mongo", user);
             req.session.stripeEmail = null
             logger.info(`New Account signUp | email:${req.body.email}| HS portalid:${req.body.portalID}`);
+            logger.info("-----user information insertion after installation-----"+user);
             await update_Payment_Info(user);
             return user;
         }
