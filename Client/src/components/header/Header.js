@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './Header.css';
 import { Link } from 'react-router-dom';
 import { Link as ScrollLink } from 'react-scroll';
+import { BackendAPI } from '../../api/server';
 
 
 const Header = () => {
@@ -31,11 +32,15 @@ const Header = () => {
                     <li><ScrollLink to="features" smooth={true} duration={500}>Features</ScrollLink></li>
                     <li><ScrollLink to="using-the-app" smooth={true} duration={500}>Using the App</ScrollLink></li>
                 </ul>
-                {portalID && (
+                {portalID ? (
                     <div className="logout-container">
                         <button className="logout-button" onClick={handleLogout}>Logout</button>
                     </div>
-                )}
+                ):
+                    <Link to={`${BackendAPI}/install`}>
+                            <button className="logIn-button">Log In</button>
+                    </Link>
+                }
             </nav>
             <div className="menu-icon" onClick={toggleMenu}>
                 &#9776;
