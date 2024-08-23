@@ -62,7 +62,7 @@ exports.createCheckoutSession = async (req, res) => {
       });
 
     if(req.params.id === '66ba2cf16343bea38ef334ba'){
-      await zeroDollarInfo(session);
+      await zeroDollarInfo(session,portalID,packageId);
     }
       
     logger.info("-------Session whole -----------" + JSON.stringify(session));
@@ -194,22 +194,28 @@ exports.update_Payment_Info = async (chargeData, packageID, portalID) => {
 };
 
 
-const zeroDollarInfo = async(session) =>{
+const zeroDollarInfo = async(session, portalID,packageId) =>{
   try{
-    const transaction = new PaymentModel(
+    const paymentInfoUpdate = await PaymentModel.findOneAndUpdate(
+      { portalID: portalID},
       {
-        "email":"Update Your Plan",
-        "chargeId": session.id,
-        "amount": 0,
-        "currency" :"usd",
-        "customer_id": "Update Your Plan",
-        "invoice_id": "Update Your Plan",
-        "payment_method_details": {"details": "update your plan"},
-        "receipt_url": "update your plan",
-        "status": "Free package"
-      }
+        $set: {
+          "chargeId": session.id,
+          "amount": 0,
+          "currency" :"usd",
+          "customer_id": "Update Your Plan",
+          "invoice_id": "Update Your Plan",
+          "payment_method_details": {"details": "update your plan"},
+          "receipt_url": "update your plan",
+          "status": "Free package"
+        },
+    },
+    { new: true, upsert: false }
     );
-      await transaction.save();
+    const user = await userModel.findOne({portalID: portalID});
+    //inserting into subscription mongodb
+    await insertIntoSubscriptionAfterPayment( packageId, user._id);
+     return paymentInfoUpdate;
   }catch (error){
     console.log(error);
   }

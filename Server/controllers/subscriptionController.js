@@ -27,7 +27,8 @@ exports.insertIntoSubscriptionAfterPayment = async (packageID, userID) => {
              return res.json({ error: 'Package information not found' });
          }
          if(subscriptionInfo){
-             this.updateSubscriptionInfo(userInfo._id,req.body.packageID);
+            logger.info("I am in subscriptionInfo");
+             this.updateSubscriptionInfo(userInfo._id,packageID);
          }
          if (userInfo && !subscriptionInfo) {
              //insert into Subscription model
@@ -45,55 +46,10 @@ exports.insertIntoSubscriptionAfterPayment = async (packageID, userID) => {
              logger.info("Insert data in subscription model");
          }
      }catch(error){
-         logger.info({ error: 'Error in insertIntoSubscription: '+ error });
-         return res.json({ error: 'Error in insertIntoSubscription: '+ error });
+         logger.info('Error in insertIntoSubscription: '+ error);
+         return  error ;
      }
    }
-
-exports.insertIntoSubscription = async (req, res) => {
-   try{
-        const startDate = new Date();
-        const endDate = new Date();
-        endDate.setDate(startDate.getDate() + 30);
-        logger.info("PackageID in insertIntoSubscription packageID-------:"+ req.body.packageID)
-        logger.info("PackageID in insertIntoSubscription portalID-------:"+ req.body.portalID)
-
-        const userInfo = await User.findOne( {portalID: req.body.portalID});
-        const packageInfo = await packagesModel.findOne( {_id: req.body.packageID});
-        const subscriptionInfo = await Subscription.findOne( {user: userInfo._id});
-
-      
-        if (!userInfo) {
-            logger.error("User not found");
-            return res.status(404).json({ error: 'User not found' });
-        }
-        else if (!packageInfo) {
-            logger.error("Package information not found");
-            return res.json({ error: 'Package information not found' });
-        }
-        if(subscriptionInfo){
-            this.updateSubscriptionInfo(userInfo._id,req.body.packageID);
-        }
-        if (userInfo && !subscriptionInfo) {
-            //insert into Subscription model
-            const subscribe = new Subscription({  
-                user: userInfo._id,
-                package: req.body.packageID,
-                //adding total API call count for any reference
-                totalApiCallCount: 0,
-                apiCallCount: 0,
-                joiningDate: startDate.toISOString().split('T')[0],
-                packageStartDate: startDate.toISOString().split('T')[0],
-                packageEndDate: endDate.toISOString().split('T')[0],
-            });
-            await subscribe.save();
-            logger.info("Insert data in subscription model");
-        }
-    }catch(error){
-        logger.info({ error: 'Error in insertIntoSubscription: '+ error });
-        return res.json({ error: 'Error in insertIntoSubscription: '+ error });
-    }
-  }
 
   exports.updateSubscriptionInfo = async (userID, packageID) => {
         let startDate = new Date();
@@ -101,10 +57,13 @@ exports.insertIntoSubscription = async (req, res) => {
         endDate.setDate(startDate.getDate() + 30);
 
         const package_info = await packagesModel.findOne({_id:packageID});
+        //checking the logs
+        logger.info("package information in updateSubscriptionInf: " + package_info);
+        //checking the logs
         if(package_info.packageName == "Free"){
             return ("You are not able to take free subscription again");
         }
-        const subscriptionUpDate = await Subscription.findOneAndUpdate(
+        const subscriptionUpDate = await Subscription.findOneAndUpdate( //need to find problems here
             { user: userID},
             { $set:
                 {
@@ -119,7 +78,6 @@ exports.insertIntoSubscription = async (req, res) => {
           );
           logger.info("Subscription information updated for user: "+ userID);
           return subscriptionUpDate;
-    
   }
 
   exports.updateSubscription = async (req, res) => {
@@ -243,4 +201,53 @@ const updateSubsAutoInfo = async(subscriptionObj) =>{
     }
    
 }
+
+
+
+   
+exports.insertIntoSubscription = async (req, res) => {
+   try{
+        const startDate = new Date();
+        const endDate = new Date();
+        endDate.setDate(startDate.getDate() + 30);
+        logger.info("PackageID in insertIntoSubscription packageID-------:"+ req.body.packageID)
+        logger.info("PackageID in insertIntoSubscription portalID-------:"+ req.body.portalID)
+
+        const userInfo = await User.findOne( {portalID: req.body.portalID});
+        const packageInfo = await packagesModel.findOne( {_id: req.body.packageID});
+        const subscriptionInfo = await Subscription.findOne( {user: userInfo._id});
+
+      
+        if (!userInfo) {
+            logger.error("User not found");
+            return res.status(404).json({ error: 'User not found' });
+        }
+        else if (!packageInfo) {
+            logger.error("Package information not found");
+            return res.json({ error: 'Package information not found' });
+        }
+        if(subscriptionInfo){
+            await this.updateSubscriptionInfo(userInfo._id,req.body.packageID);
+        }
+        if (userInfo && !subscriptionInfo) {
+            //insert into Subscription model
+            const subscribe = new Subscription({  
+                user: userInfo._id,
+                package: req.body.packageID,
+                //adding total API call count for any reference
+                totalApiCallCount: 0,
+                apiCallCount: 0,
+                joiningDate: startDate.toISOString().split('T')[0],
+                packageStartDate: startDate.toISOString().split('T')[0],
+                packageEndDate: endDate.toISOString().split('T')[0],
+            });
+            await subscribe.save();
+            logger.info("Insert data in subscription model");
+        }
+    }catch(error){
+        logger.info('Error in insertIntoSubscription: '+ error );
+        return error;
+    }
+  }
+
   

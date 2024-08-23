@@ -99,7 +99,7 @@ const SubscriptionForm = () => {
                     {loading
                         ? "loading"
                         : error
-                        ? "error"
+                        ? "NOT FOUND"
                         : infos
                         ? packageName
                         : "Package not found"}
@@ -110,7 +110,7 @@ const SubscriptionForm = () => {
                 <p>  {loading
                         ? "loading"
                         : error
-                        ? "error"
+                        ? "NOT FOUND"
                         : infos
                         ? apiCallCount
                         : "Package not found"}</p>
@@ -120,7 +120,7 @@ const SubscriptionForm = () => {
                 <p> {loading
                         ? "loading"
                         : error
-                        ? "error"
+                        ? "NOT FOUND"
                         : infos
                         ? apiCallLimit
                         : "Package not found"}</p>
@@ -130,7 +130,7 @@ const SubscriptionForm = () => {
                 <p>{loading
                         ? "loading"
                         : error
-                        ? "error"
+                        ? "NOT FOUND"
                         : infos
                         ? joiningDate
                         : "Package not found"}</p>
@@ -140,7 +140,7 @@ const SubscriptionForm = () => {
                 <p>{loading
                         ? "loading"
                         : error
-                        ? "error"
+                        ? "NOT FOUND"
                         : infos
                         ? startDate
                         : "Package not found"}</p>
@@ -150,7 +150,7 @@ const SubscriptionForm = () => {
                 <p>{loading
                         ? "loading"
                         : error
-                        ? "error"
+                        ? "NOT FOUND"
                         : infos
                         ? endDate
                         : "Package not found"}</p>
@@ -160,7 +160,7 @@ const SubscriptionForm = () => {
                 <p>{loading
                         ? "loading"
                         : error
-                        ? error
+                        ? "NOT FOUND"
                         : infos
                         ? `$${price}`
                         : "Package not found"}</p>
@@ -170,7 +170,7 @@ const SubscriptionForm = () => {
                 <p>{loading
                         ? "loading"
                         : error
-                        ? "error"
+                        ? "NOT FOUND"
                         : infos
                         ? duration +" days"
                         : "Package not found"}</p>
@@ -181,7 +181,7 @@ const SubscriptionForm = () => {
                 <p>{paymentLoading
                         ? "loading"
                         : paymentErr
-                        ? "error"
+                        ? "NOT FOUND"
                         : status == "Not Found" ? "Free Subscription" : status}</p>
             </div>
             {status == "cancelled" || packageName == "Free"?

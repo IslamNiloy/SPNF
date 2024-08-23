@@ -61,7 +61,7 @@ exports.home = async (req, res) => {
     res.redirect(`${process.env.FRONTEND_URL}/welcome?portalID=${userInsertion.portalID}`);
     logWithDetails('info', 'Displayed home page with account info and access token', req);
   }
-  res.end();
+  res.redirect(process.env.FRONTEND_URL);
 }
 
 exports.error = (req, res) => {
