@@ -24,7 +24,7 @@ const ProposedPackageSection = () => {
             <div className="package-container">
                 {error? <MessageBox>{error}</MessageBox>:
                 loading? <LoadingBox>Loading</LoadingBox>: packages?(
-                packages.slice(0, 5).map((pkg, index) => (
+                packages.slice(0, 6).map((pkg, index) => (
                     <div className="package-card" key={index}>
                         <div className="package-details">
                             <span className="package-name">{pkg.packageName}</span>
