@@ -57,7 +57,8 @@ const Subscription = require('../../model/subscription.model');
       }
       logger.info("-----At packageCondition subscription.apiCallCount-----" + subscription.apiCallCount);
       logger.info("-----At packageCondition user_package.Limit-----" + user_package.Limit);
-      const totalAPICALLS = parseInt(subscription.apiCallCount) + parseInt(checkPhoneNumberApiCallCount)
+      const totalAPICALLS = parseInt(subscription.apiCallCount) + parseInt(subscription.checkPhoneNumberApiCallCount)
+      logger.info("====totalAPICALLS===" + totalAPICALLS);
       if(totalAPICALLS < user_package.Limit){
         return true;
       }else{

@@ -20,6 +20,7 @@ const SubscriptionForm = () => {
     const [modalVisible, setModalVisible] = useState(false);
     const [packageName, setPackageName] = useState("Loading...");
     const [apiCallCount, setAPICallCount] = useState("");
+    const [checkPhnNumberApiCallCount, setCheckPhnNumberApiCallCount] = useState("");
     const [apiCallLimit, setAPICallLimit] = useState("");
     const [joiningDate, setJoiningDate] = useState("");
     const [startDate, setStartDate] = useState("");
@@ -44,6 +45,7 @@ const SubscriptionForm = () => {
             const filteredPackages = allPackageInfo.filter(packages => packages._id === infos.package);
             setPackageName(filteredPackages[0].packageName);
             setAPICallCount(infos.apiCallCount);
+            setCheckPhnNumberApiCallCount(infos.checkPhoneNumberApiCallCount);
             setAPICallLimit(filteredPackages[0].Limit);
             setJoiningDate(infos.joiningDate);
             setStartDate(infos.packageStartDate);
@@ -113,7 +115,7 @@ const SubscriptionForm = () => {
                         : error
                         ? "NOT FOUND"
                         : infos
-                        ? apiCallCount
+                        ? parseInt(apiCallCount) + parseInt(checkPhnNumberApiCallCount)
                         : "Package not found"}</p>
             </div>
             <div>

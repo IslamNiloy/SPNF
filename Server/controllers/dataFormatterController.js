@@ -91,7 +91,7 @@ exports.phoneNumber = async (req, res) => {
       const User = await userModel.findOne({portalID : req.body.portalID });
       console.log("User: ===========" + User.email);
       
-      const paymentInfo = await paymentModel.findOne({email : User.email}).sort({ createdAt: -1 });
+      const paymentInfo = await paymentModel.findOne({portalID : req.body.portalID}).sort({ createdAt: -1 });
       console.log("UpaymentInfoser: ===========" + paymentInfo);
       
       if(paymentInfo && paymentInfo.status == "cancelled"){
@@ -192,13 +192,14 @@ exports.checkPhoneNumber = async(req, res) => {
   const check = await packageCondition(req.body.portalID);
   const User = await userModel.findOne({portalID : req.body.portalID });
   console.log("User in checkPhoneNumber: ===========" + User.email);
-  const paymentInfo = await paymentModel.findOne({email : User.email}).sort({ createdAt: -1 });
-        console.log("UpaymentInfoser: ===========" + paymentInfo);
+  const paymentInfo = await paymentModel.findOne({portalID : req.body.portalID}).sort({ createdAt: -1 });
+        console.log("UpaymentInfoser: ===========" + paymentInfo + "check ==="+ check);
         
         if(paymentInfo && paymentInfo.status == "cancelled"){
           res.send("you have cancelled your subscription")
         }
         else if(check){
+          console.log("checking is fine in check phone number");
           await CheckPhoneNumberUpdateAPICount(req.body.portalID);
           if (!phoneNumber) {
             return res.status(200).json({
