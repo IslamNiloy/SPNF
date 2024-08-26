@@ -39,11 +39,15 @@ const ProposedPackageSection = () => {
                                 <p className="package-content2">{pkg.Limit}/month</p>
                         }
 
-                         { portalID? 
+                         { portalID?
+                                pkg.packageName=='Custom' ? 
+                                <Link to="/custom"  state={{ selectedPackage: pkg }}>
+                                    <button className="install-button">Install</button>
+                                </Link>: 
                                 <Link to="/payment"  state={{ selectedPackage: pkg }}>
                                 <button className="install-button">Checkout</button>
                             </Link>:
-                         pkg.packageName=='Custom' ? 
+                             pkg.packageName=='Custom' ? 
                                 <Link to="/custom"  state={{ selectedPackage: pkg }}>
                                     <button className="install-button">Install</button>
                                 </Link>:
@@ -51,8 +55,6 @@ const ProposedPackageSection = () => {
                                     <button className="install-button">Install</button>
                                 </Link>
                         }
-                       
-                       
                     </div>
                 ))):""}
             </div>
