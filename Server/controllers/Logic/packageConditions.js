@@ -57,7 +57,8 @@ const Subscription = require('../../model/subscription.model');
       }
       logger.info("-----At packageCondition subscription.apiCallCount-----" + subscription.apiCallCount);
       logger.info("-----At packageCondition user_package.Limit-----" + user_package.Limit);
-      if(subscription.apiCallCount < user_package.Limit){
+      const totalAPICALLS = parseInt(subscription.apiCallCount) + parseInt(checkPhoneNumberApiCallCount)
+      if(totalAPICALLS < user_package.Limit){
         return true;
       }else{
         return false;
@@ -102,37 +103,7 @@ const Subscription = require('../../model/subscription.model');
       }
     };
   
-    exports.CheckPhoneNumberpackageCondition = async (portalID) => {
-      try{
-        logger.info("At CheckPhoneNumberpackageCondition");
-        const user = await User.findOne( {portalID: portalID});
-        logger.info("At CheckPhoneNumberpackageCondition user infos: "+ user);
-        if (!user) {
-          // Handle case where user is not found
-          logger.info("At CheckPhoneNumberpackageCondition User not found for portalID: " + portalID);
-          return false;
-        }
-        //this user's subscription subscription
-        const subscription = await Subscription.findOne( {user: user._id});
-        logger.info("At CheckPhoneNumberpackageCondition subscription infos: "+ subscription);
-        //This user's package
-        const user_package = await Package.findOne( {_id: subscription.package});
-        const today = new Date();
-        if (today >  (subscription.packageEndDate)) {
-          logger.info("At CheckPhoneNumberpackageCondition returning false date condition: "+ today + " "+ subscription.packageEndDate);
-          return false;
-        }
-        logger.info("-----At CheckPhoneNumberpackageCondition subscription.apiCallCount-----" + subscription.checkPhoneNumberApiCallCount);
-        logger.info("-----At CheckPhoneNumberpackageCondition user_package.Limit-----" + user_package.Limit);
-        if(subscription.checkPhoneNumberApiCallCount < user_package.Limit){
-          return true;
-        }else{
-          return false;
-        }
-      }catch (e) {
-        logger.error("error in condition function: " + e);
-      }
-    }
+  
   /*  
     check phone number API checking condition ends
   */

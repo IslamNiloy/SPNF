@@ -58,7 +58,7 @@ exports.home = async (req, res) => {
     logger.info("----home accInfo----" + JSON.stringify(accInfo));
     logger.info("----insert into user mongoDB----" + JSON.stringify(userInsertion));
     logger.info("----insert into payment mongoDB----" + JSON.stringify(paymentInsertion));
-    res.redirect(`${process.env.FRONTEND_URL}/welcome?portalID=${userInsertion.portalID}`);
+    //res.redirect(`${process.env.FRONTEND_URL}/welcome?portalID=${userInsertion.portalID}`);
     logWithDetails('info', 'Displayed home page with account info and access token', req);
   }
   res.redirect(process.env.FRONTEND_URL);

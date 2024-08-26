@@ -189,7 +189,7 @@ const checkPhoneNumber = (phoneNumber) => {
 
 exports.checkPhoneNumber = async(req, res) => {
   const { phoneNumber } = req.body;
-  const check = await CheckPhoneNumberpackageCondition(req.body.portalID);
+  const check = await packageCondition(req.body.portalID);
   const User = await userModel.findOne({portalID : req.body.portalID });
   console.log("User in checkPhoneNumber: ===========" + User.email);
   const paymentInfo = await paymentModel.findOne({email : User.email}).sort({ createdAt: -1 });
