@@ -36,9 +36,9 @@ const SubscriptionForm = () => {
 
     useEffect(() => {
         if (!infos) {
-            const emailForPaymentInfo = localStorage.getItem("spPhk44lI519pJ");
+            //const emailForPaymentInfo = localStorage.getItem("spPhk44lI519pJ");
             dispatch(subscriptionInfoByID(portalID));
-            dispatch(paymentInfoByEmail(emailForPaymentInfo));
+            dispatch(paymentInfoByEmail(portalID));
         }
         if(infos){
             const filteredPackages = allPackageInfo.filter(packages => packages._id === infos.package);
@@ -50,6 +50,7 @@ const SubscriptionForm = () => {
             setEndDate(infos.packageEndDate);
             setPrice(filteredPackages[0].price);
             setDuration(filteredPackages[0].duration);
+            console.log("============Payment INFO==========="+ paymentInfo);
             if(filteredPackages[0].packageName == "Free"){
                 setStatus("Not Found");
             }

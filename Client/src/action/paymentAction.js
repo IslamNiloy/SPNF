@@ -2,10 +2,10 @@ import { GET_BY_EMAIL_PAYMENT_FAIL, GET_BY_EMAIL_PAYMENT_REQUEST, GET_BY_EMAIL_P
 import { BackendAPI } from "../api/server";
 import Axios from 'axios';
 
-export const paymentInfoByEmail = (email) => async (dispatch) => {
-    dispatch({ type: GET_BY_EMAIL_PAYMENT_REQUEST, payload: { email } });
+export const paymentInfoByEmail = (portalID) => async (dispatch) => {
+    dispatch({ type: GET_BY_EMAIL_PAYMENT_REQUEST, payload: { portalID } });
     try {
-      const { data } = await Axios.get(`${BackendAPI}/charge/get/info/${email}`);
+      const { data } = await Axios.get(`${BackendAPI}/charge/get/info/${portalID}`);
   
       dispatch({ type: GET_BY_EMAIL_PAYMENT_SUCCESS, payload: data });
      

@@ -9,7 +9,7 @@ router.post('/create-checkout-session/:id/:portalID', paymentController.createCh
 router.post('/webhook', express.raw({ type: 'application/json' }), webhookController.stripeWebhook);
 router.post('/custom/create', customUserController.customUserCreatePrice);
 router.get('/cancel/:email', paymentController.cancel_subscription);
-router.get('/get/info/:email', paymentController.get_payment_info_user);
+router.get('/get/info/:portalID', paymentController.get_payment_info_user);
 //router.post('/free/remained/:apiCallCount/:portalID', paymentController.chargeRemainedFree);
 
 module.exports = router;
