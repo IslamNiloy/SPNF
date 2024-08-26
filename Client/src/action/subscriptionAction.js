@@ -44,11 +44,11 @@ export const insertIntoSubscriptionCollection = (portalID,packageID) => async (d
   
 
     //ACTION FOR GETTING SUBSCRIPTION BY ID
-    export const cancelSubscription = (email) => async (dispatch) => {
-      dispatch({ type: CANCEL_SUBSCRIPTION_REQUEST, payload: { email } });
+    export const cancelSubscription = (portalID) => async (dispatch) => {
+      dispatch({ type: CANCEL_SUBSCRIPTION_REQUEST, payload: { portalID } });
       try {
         // Include portalID in the query string
-        const { data } = await Axios.get(`${BackendAPI}/charge/cancel/${email}`);
+        const { data } = await Axios.get(`${BackendAPI}/charge/cancel/${portalID}`);
     
         dispatch({ type: CANCEL_SUBSCRIPTION_SUCCESS, payload: data });
       } catch (error) {

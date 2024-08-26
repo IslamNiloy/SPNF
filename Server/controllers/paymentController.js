@@ -138,7 +138,7 @@ try{
 exports.cancel_subscription = async(req,res) =>{
   try{
     //should get the invoice number
-    const paymentInfo = await PaymentModel.findOne({ email: req.params.email }).sort({ createdAt: -1 })
+    const paymentInfo = await PaymentModel.findOne({ portalID: req.params.portalID }).sort({ createdAt: -1 })
     if(!paymentInfo){
       res.send("Payment information not found!");
     }

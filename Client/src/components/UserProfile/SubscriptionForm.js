@@ -76,8 +76,8 @@ const SubscriptionForm = () => {
       const handleConfirmModal = (e) => {
         setshowPopup(false);
         // Add your cancel subscription logic here
-        const email = localStorage.getItem("spPhk44lI519pJ");
-        dispatch(cancelSubscription(email));
+        const portalID = localStorage.getItem("I8PD56?#C|NXhSgZ0KE");
+        dispatch(cancelSubscription(portalID));
         setStatus("cancelled");
         setModalVisible(true);
       };
