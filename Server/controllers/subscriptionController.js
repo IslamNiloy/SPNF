@@ -38,6 +38,8 @@ exports.insertIntoSubscriptionAfterPayment = async (packageID, userID) => {
                  //adding total API call count for any reference
                  totalApiCallCount: 0,
                  apiCallCount: 0,
+                 checkPhoneNumberApiCallCount: 0,
+                 checkPhoneNumberTotalApiCallCount: 0,
                  joiningDate: startDate.toISOString().split('T')[0],
                  packageStartDate: startDate.toISOString().split('T')[0],
                  packageEndDate: endDate.toISOString().split('T')[0],

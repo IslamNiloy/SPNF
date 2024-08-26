@@ -5,7 +5,7 @@ const { getAccessToken, isAuthorized, getContact, getAccountInfo } = require('..
 const logger = require('../utils/logger'); // Add logger
 const userModel = require('../model/user.model');
 const paymentModel = require('../model/payment.model');
-const { updateAPICount, packageCondition } = require('./Logic/packageConditions');
+const { updateAPICount, packageCondition, CheckPhoneNumberpackageCondition, CheckPhoneNumberUpdateAPICount } = require('./Logic/packageConditions');
 
 
 
@@ -187,25 +187,36 @@ const checkPhoneNumber = (phoneNumber) => {
   return 'Correctly Formatted';
 };
 
-exports.checkPhoneNumber = (req, res) => {
+exports.checkPhoneNumber = async(req, res) => {
   const { phoneNumber } = req.body;
+  const check = await CheckPhoneNumberpackageCondition(req.body.portalID);
+  const User = await userModel.findOne({portalID : req.body.portalID });
+  console.log("User in checkPhoneNumber: ===========" + User.email);
+  const paymentInfo = await paymentModel.findOne({email : User.email}).sort({ createdAt: -1 });
+        console.log("UpaymentInfoser: ===========" + paymentInfo);
+        
+        if(paymentInfo && paymentInfo.status == "cancelled"){
+          res.send("you have cancelled your subscription")
+        }
+        else if(check){
+          await CheckPhoneNumberUpdateAPICount(req.body.portalID);
+          if (!phoneNumber) {
+            return res.status(200).json({
+              "outputFields": {
+                "Message": "Empty",
+                "hs_execution_state": "SUCCESS"
+              }
+            });
+          }
 
-  if (!phoneNumber) {
-    return res.status(200).json({
-      "outputFields": {
-        "Message": "Empty",
-        "hs_execution_state": "SUCCESS"
-      }
-    });
-  }
+          const result = checkPhoneNumber(phoneNumber);
 
-  const result = checkPhoneNumber(phoneNumber);
-
-  return res.status(200).json({
-    "outputFields": {
-      "Message": result,
-      "hs_execution_state": "SUCCESS"
-    }
-  });
+          return res.status(200).json({
+            "outputFields": {
+              "Message": result,
+              "hs_execution_state": "SUCCESS"
+            }
+          });
+        }
 };
 /////////////////////// Check Phone Number END //////////////////////////////////
