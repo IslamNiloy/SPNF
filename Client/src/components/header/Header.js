@@ -38,7 +38,7 @@ const Header = () => {
                     </div>
                 ):
                     <Link to={`${BackendAPI}/install`}>
-                            <button className="logIn-button">Log In</button>
+                            <button className="logIn-button">Log In/install</button>
                     </Link>
                 }
             </nav>
