@@ -43,6 +43,7 @@ exports.insertIntoSubscriptionAfterPayment = async (packageID, userID) => {
                  joiningDate: startDate.toISOString().split('T')[0],
                  packageStartDate: startDate.toISOString().split('T')[0],
                  packageEndDate: endDate.toISOString().split('T')[0],
+                 hubspotDealId: ""
              });
              await subscribe.save();
              logger.info("Insert data in subscription model");
