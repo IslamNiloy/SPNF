@@ -5,7 +5,7 @@
 
 .package-container {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     flex-wrap: wrap; /* Allows wrapping on smaller screens */
     gap: 20px; /* Space between cards */
 }

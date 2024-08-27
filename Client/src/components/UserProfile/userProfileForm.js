@@ -68,8 +68,6 @@ const UserProfileForm = () =>{
           <div>
             <label>Email:</label>
             <p>{userInfo?email:""}</p>
-            <span style={{color: "#bb2124", fontSize: "12px"}}> **Use this email for any transactions related to portal ID: {portalID}</span> <br/>
-            <span style={{color: "#bb2124", fontSize: "12px"}}> **Do not use this email for purchasing from any other portal id</span>
           </div>
           <div>
             <label>Name:</label>
@@ -111,6 +109,7 @@ const UserProfileForm = () =>{
             <label>Portal ID:</label>
             <p>{portalID}</p>
           </div>
+          {/*
           <div>
             <label>Account Type:</label>
             <p>{userInfo?accountType:""}</p>
@@ -123,6 +122,7 @@ const UserProfileForm = () =>{
             <label>Company Currency:</label>
             <p>{userInfo?companyCurrency:""}</p>
           </div>
+           */}
           <div>
             <label>UI Domain:</label>
             <p>{userInfo?uiDomain:""}</p>

@@ -1,10 +1,10 @@
 /* General body styles */
 .profile_form-main{
-    background-color: #1E597B;
+    background-color: #a3c7eb;
     padding: 20px;
 }
 .h1_user-profile{
-    color: #e9f0fb;
+    color: #1d3e72;
     text-decoration: underline #FF6B00;
 }
   /* Container for the forms */
@@ -13,19 +13,26 @@
     gap: 20px; /* Space between the forms */
     flex-wrap: nowrap; /* Allows forms to wrap on smaller screens */
     width: 100%;
+    justify-content: center;
     box-sizing: border-box;
-    margin: 0 auto;
-    
   }
   
   /* Form container */
-  .user-profile-form,
+  .user-profile-form{
+    background-color: #ffffff;
+    padding: 20px;
+    width: 30%;
+    margin: auto 0;
+    border-radius: 10px;
+    box-sizing: border-box;
+  }
   .subscription-info-form {
     background-color: #ffffff;
     padding: 20px;
-    width: 100%;
+    width: 30%;
     margin-bottom: 20px;
-    border-radius: 3px;
+    border-radius: 8px;
+    border: 2px solid rgb(207, 207, 207);
     box-sizing: border-box;
   }
   
@@ -36,12 +43,18 @@
   }
   
   /* Form labels */
-  .user-profile-form label,
   .subscription-info-form label {
     display: block;
     font-weight: bold;
     margin-bottom: 5px;
-    color: #333333; /* Darker text for better readability */
+    color: #2e2e2e; /* Darker text for better readability */
+  }
+
+  .user-profile-form label{
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #2e2e2e; /* Darker text for better readability */
   }
   
   /* Text inputs */
@@ -53,7 +66,7 @@
     padding: 10px;
     background-color: #e9f0fb;
     border: 2px solid #e9f0fb; /* Bluish border */
-    border-radius: 5px;
+    border-radius: 20px;
     box-sizing: border-box;
     font-size: 16px;
     color: #333333; /* Darker text */
@@ -73,7 +86,7 @@
   .user-profile-form p,
   .subscription-info-form p {
     background-color: #e9f0fb; /* Light bluish background */
-    border-radius: 5px;
+    border-radius: 20px;
     padding: 10px;
     color: #333333;
     font-size: 16px;
@@ -129,11 +142,12 @@
   @media (max-width: 800px) {
     .forms-container {
       flex-direction: column;
+      width: 100%;
     }
   
     .user-profile-form,
     .subscription-info-form {
-      max-width: 100%;
+      width: 100%;
     }
   }
   
