@@ -160,7 +160,7 @@ exports.cancel_subscription = async(req,res) =>{
 exports.update_Payment_Info = async (chargeData, extraChargeData, packageID, portalID) => {
   try {
     logger.info("Information in update_Payment_Info=====:::" + JSON.stringify(chargeData));
-    logger.info("Information in update_Payment_Info=====:::" + packageID);
+    logger.info("Information in update_Payment_Info=====:::extraChargeDataextraChargeData" + JSON.stringify(extraChargeData));
     logger.info("Information in update_Payment_Info=====:::" + portalID);
     
     const payment_Info = await PaymentModel.findOne({portalID: portalID});
