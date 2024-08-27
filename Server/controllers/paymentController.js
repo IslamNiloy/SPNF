@@ -184,8 +184,8 @@ exports.update_Payment_Info = async (chargeData, extraChargeData, packageID, por
     },
     { new: true, upsert: false }
     );
-    insertIntoSubscriptionAfterPayment(packageID,paymentUpdate.user);
-    updateUserInfoAfterPayment(portalID, extraChargeData);
+    await insertIntoSubscriptionAfterPayment(packageID,paymentUpdate.user);
+    await updateUserInfoAfterPayment(portalID, extraChargeData);
     console.log(paymentUpdate);
     return paymentUpdate;
     
