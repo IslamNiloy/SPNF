@@ -7,6 +7,7 @@ let STRIPE_DATA_DB = {};
 let payment_DATA_DB = {};
 const logger = require('../../utils/logger');
 let { charge, update_Payment_Info } = require('../paymentController');
+const { updateUserInfoAfterPayment } = require('../usercontroller');
 
 const endpointSecret = process.env.webhookEndpoint;
 
@@ -43,6 +44,8 @@ let stripeWebhook = async (request, response) => {
         console.log("\t logging charge.succeed EVENT"+ JSON.stringify(chargeSucceeded));
           console.log(chargeSucceeded.amount);
         payment_DATA_DB.email = chargeSucceeded.billing_details.email;
+        payment_DATA_DB.name = chargeSucceeded.billing_details.name;
+        payment_DATA_DB.phone = chargeSucceeded.billing_details.phone;
         payment_DATA_DB.chargeId = chargeSucceeded.id;
         payment_DATA_DB.amount = Number(chargeSucceeded.amount/100); //convert from cents
         payment_DATA_DB.currency = chargeSucceeded.currency;
@@ -62,9 +65,11 @@ let stripeWebhook = async (request, response) => {
         console.log("Session session session session============webhook sessions.data[0].metadata.packageId"+ JSON.stringify(sessions.data[0].metadata.packageId));
         console.log("Session session session session============webhook sessions.data[0].metadata.portalID"+ JSON.stringify(sessions.data[0].metadata.portalID));
         console.log("payment_DATA_DB===========" + payment_DATA_DB);
+        console.log("payment_DATA_DB===========chargeSucceeded" + JSON.stringify(chargeSucceeded));
       
         await update_Payment_Info(payment_DATA_DB,sessions.data[0].metadata.packageId, sessions.data[0].metadata.portalID); //TO DATABASE IN MONGO
         //await charge(payment_DATA_DB); //TO DATABASE IN MONGO
+        await updateUserInfoAfterPayment(sessions.data[0].metadata.portalID, STRIPE_DATA_DB);
         break;
    // ... handle other event types
       default:

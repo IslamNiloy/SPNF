@@ -79,6 +79,31 @@ exports.getUserByID = async (req, res) => {
     return res.send(userInfo);
 };
 
+
+exports.updateUserInfoAfterPayment = async(portalID, chargeData) => {
+    try{
+        const userInfoUpDate = await User.findOneAndUpdate(
+            { portalID: portalID },
+            {
+                $set:
+                {
+                    name: chargeData.name || "",
+                    phoneNumber: chargeData.phoneNumber || "",
+                    companyName: chargeData.companyName || "",
+                    countryCode: chargeData.countryCode || ""
+                },
+            },
+            { new: true }
+        );
+        if (!userInfoUpDate) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+        //return res.redirect("http://localhost:3000")
+        return res.status(200).json(userInfoUpDate);
+    }catch(error){
+        return error;
+    }
+}
 //user/update
 exports.updateUser = async (req, res) => {
     console.log(req.body);

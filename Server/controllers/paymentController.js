@@ -7,6 +7,7 @@ const packagesModel = require('../model/packages.model');
 const userModel = require('../model/user.model');
 const subscriptionModel = require('../model/subscription.model');
 const { insertIntoSubscriptionAfterPayment } = require('./subscriptionController');
+const { updateUserInfoAfterPayment } = require('./usercontroller');
 
 
 exports.createCheckoutSession = async (req, res) => {
@@ -183,7 +184,8 @@ exports.update_Payment_Info = async (chargeData, packageID, portalID) => {
     },
     { new: true, upsert: false }
     );
-    insertIntoSubscriptionAfterPayment(packageID,paymentUpdate.user)
+    insertIntoSubscriptionAfterPayment(packageID,paymentUpdate.user);
+    
     console.log(paymentUpdate);
     return paymentUpdate;
     
