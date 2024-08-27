@@ -81,28 +81,28 @@ exports.getUserByID = async (req, res) => {
 
 
 exports.updateUserInfoAfterPayment = async(portalID, chargeData) => {
-    try{
-        console.log("--------in updateUserInfoAfterPayment====="+ JSON.stringify(chargeData));
-        const userInfoUpDate = await User.findOneAndUpdate(
-            { portalID: portalID },
-            {
-                $set:
-                {
-                    name: chargeData.name,
-                    phoneNumber: chargeData.phoneNumber,
-                    companyName: chargeData.companyName,
-                    countryCode: chargeData.countryCode
-                },
-            },
-            { new: true }
-        );
-        if (!userInfoUpDate) {
-            return res.status(404).json({ error: 'User not found' });
+    try {
+        console.log("--------in updateUserInfoAfterPayment=====" + JSON.stringify(chargeData));
+        let user = await User.findOne({ portalID });
+        if (!user) {
+            user = new User({
+                portalID,
+                name: chargeData.name,
+                phoneNumber: chargeData.phoneNumber,
+                companyName: chargeData.companyName,
+                countryCode: chargeData.countryCode
+            });
+        } else {
+            user.name = chargeData.name;
+            user.phoneNumber = chargeData.phoneNumber;
+            user.companyName = chargeData.companyName;
+            user.countryCode = chargeData.countryCode;
         }
-        //return res.redirect("http://localhost:3000")
-        return res.status(200).json(userInfoUpDate);
-    }catch(error){
-        return error;
+        await user.save();
+        return res.status(200).json(user);
+    } catch (error) {
+        console.error("Error updating user information:", error);
+        return res.status(500).json({ error: 'Internal Server Error' });
     }
 }
 //user/update
