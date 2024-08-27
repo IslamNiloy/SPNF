@@ -157,7 +157,7 @@ exports.cancel_subscription = async(req,res) =>{
 }
 
 
-exports.update_Payment_Info = async (chargeData, packageID, portalID) => {
+exports.update_Payment_Info = async (chargeData, extraChargeData, packageID, portalID) => {
   try {
     logger.info("Information in update_Payment_Info=====:::" + JSON.stringify(chargeData));
     logger.info("Information in update_Payment_Info=====:::" + packageID);
@@ -185,7 +185,7 @@ exports.update_Payment_Info = async (chargeData, packageID, portalID) => {
     { new: true, upsert: false }
     );
     insertIntoSubscriptionAfterPayment(packageID,paymentUpdate.user);
-    
+    await updateUserInfoAfterPayment(portalID, extraChargeData);
     console.log(paymentUpdate);
     return paymentUpdate;
     
