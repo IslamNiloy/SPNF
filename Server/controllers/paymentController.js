@@ -65,7 +65,7 @@ exports.createCheckoutSession = async (req, res) => {
     if(req.params.id === '66ba2cf16343bea38ef334ba'){
       await zeroDollarInfo(session,portalID,packageId);
     }
-      
+
     logger.info("-------Session whole -----------" + JSON.stringify(session));
     
     res.redirect(303, session.url);
