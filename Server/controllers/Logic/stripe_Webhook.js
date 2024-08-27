@@ -67,10 +67,11 @@ let stripeWebhook = async (request, response) => {
         console.log("Session session session session============webhook sessions.data[0].metadata.portalID"+ JSON.stringify(sessions.data[0].metadata.portalID));
         console.log("payment_DATA_DB===========" + payment_DATA_DB);
         console.log("payment_DATA_DB===========STRIPE_DATA_DB" + JSON.stringify(STRIPE_DATA_DB));
-      
+
+        await updateUserInfoAfterPayment(sessions.data[0].metadata.portalID, STRIPE_DATA_DB);
         await update_Payment_Info(payment_DATA_DB,sessions.data[0].metadata.packageId, sessions.data[0].metadata.portalID); //TO DATABASE IN MONGO
         //await charge(payment_DATA_DB); //TO DATABASE IN MONGO
-        await updateUserInfoAfterPayment(sessions.data[0].metadata.portalID, payment_DATA_DB);
+       
         break;
    // ... handle other event types
       default:

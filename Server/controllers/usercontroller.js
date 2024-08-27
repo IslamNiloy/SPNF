@@ -88,10 +88,10 @@ exports.updateUserInfoAfterPayment = async(portalID, chargeData) => {
             {
                 $set:
                 {
-                    name: chargeData.name || "",
-                    phoneNumber: chargeData.phoneNumber || "",
-                    companyName: chargeData.companyName || "",
-                    countryCode: chargeData.countryCode || ""
+                    name: chargeData.name,
+                    phoneNumber: chargeData.phoneNumber,
+                    companyName: chargeData.companyName,
+                    countryCode: chargeData.countryCode
                 },
             },
             { new: true }
