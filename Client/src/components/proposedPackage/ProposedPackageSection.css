@@ -20,6 +20,19 @@
     border-bottom: 7px solid #FF6B00; 
     padding: 3px; 
     line-height: 0.37;
+}
+
+
+.headerSub{
+    flex: 1;
+    margin-right: 20px;
+    text-align: left;
+    font-size: 3em;
+    color: #ffffff;
+    width: 380px;
+    border-bottom: 7px solid #FF6B00; 
+    padding: 3px; 
+    line-height: 0.37;
 } 
 
 
@@ -102,7 +115,12 @@
     .header{
         font-size: 2.1em;
         width: 360px;
-    }    
+    }  
+    
+    .headerSub{
+        font-size: 1.9em;
+        width: 290px;
+    }  
 }
 
 @media (max-width: 480px) {
@@ -112,5 +130,9 @@
     .header{
         font-size: 2.1em;
         width: 340px;
+    }
+    .headerSub{
+        font-size: 1.9em;
+        width: 270px;
     }    
 }
