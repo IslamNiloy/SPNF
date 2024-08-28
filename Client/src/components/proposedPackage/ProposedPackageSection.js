@@ -63,7 +63,7 @@ const ProposedPackageSection = () => {
             </div>
         }
         <hr/>
-        <h3>Yearly</h3>
+        <h3 className='headerSub'>Yearly</h3>
             {
             <div className="package-container">
                 {error? <MessageBox>{error}</MessageBox>:
