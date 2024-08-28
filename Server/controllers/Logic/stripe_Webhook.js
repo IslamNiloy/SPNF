@@ -32,6 +32,10 @@ let stripeWebhook = async (request, response) => {
         STRIPE_DATA_DB.email = checkout_session_completed_data.customer_details.email;
         STRIPE_DATA_DB.countryCode = checkout_session_completed_data.customer_details?.address?.country || '';
         console.log("logging STRIPE_DATA_DB");
+        const sessionsCompleted = await stripe.checkout.sessions.list({
+          limit: -1,
+        });
+        await updateUserInfoAfterPayment(sessionsCompleted.data[0].metadata.portalID, STRIPE_DATA_DB);
         console.log(STRIPE_DATA_DB);
         break;
       case 'payment_intent.succeeded':
@@ -58,17 +62,13 @@ let stripeWebhook = async (request, response) => {
         payment_DATA_DB.payment_intent_id = chargeSucceeded.payment_intent;
         payment_DATA_DB.payment_method_id = chargeSucceeded.payment_method;
         console.log("\t logging payment_DATA_DB111111112222");
-        console.log("payment_DATA_DB222222222222==========="+JSON.stringify(payment_DATA_DB));
-        
+
         const sessions = await stripe.checkout.sessions.list({
           limit: -1,
         });
-        console.log("Session session session session============webhook sessions.data[0].metadata.packageId"+ JSON.stringify(sessions.data[0].metadata.packageId));
-        console.log("Session session session session============webhook sessions.data[0].metadata.portalID"+ JSON.stringify(sessions.data[0].metadata.portalID));
-        console.log("payment_DATA_DB===========" + payment_DATA_DB);
+       
+        console.log("payment_DATA_DB222222222222==========="+JSON.stringify(payment_DATA_DB));
         console.log("payment_DATA_DB===========STRIPE_DATA_DB" + JSON.stringify(STRIPE_DATA_DB));
-
-        //await updateUserInfoAfterPayment(sessions.data[0].metadata.portalID, STRIPE_DATA_DB);
         await update_Payment_Info(payment_DATA_DB, STRIPE_DATA_DB, sessions.data[0].metadata.packageId, sessions.data[0].metadata.portalID); //TO DATABASE IN MONGO
         //await charge(payment_DATA_DB); //TO DATABASE IN MONGO
        
