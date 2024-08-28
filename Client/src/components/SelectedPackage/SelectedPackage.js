@@ -49,7 +49,6 @@ const SelectedPackage = (props) => {
   return(
       <section>
         <section className="package-section">
-              <h2 className='header'>Checkout</h2>
               <div className="package-container">
                 <div className="package-card">
                   <div className="package-details">
