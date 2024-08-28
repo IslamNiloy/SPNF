@@ -12,7 +12,7 @@ const ProposedPackageSection = () => {
     const dispatch = useDispatch();
     const AllPackages = useSelector((state) => state.getAllPackage);
     const { loading, error, packages } = AllPackages;
-    const monghtPackages = packages.find({ subscription: 'monthly' }).sort({ index: 1 });
+    //const monghtPackages = packages.find({ subscription: 'monthly' }).sort({ index: 1 });
 
     const portalID = localStorage.getItem("I8PD56?#C|NXhSgZ0KE");
     useEffect(() => {
@@ -26,7 +26,7 @@ const ProposedPackageSection = () => {
             <div className="package-container">
                 {error? <MessageBox>{error}</MessageBox>:
                 loading? <LoadingBox>Loading</LoadingBox>: packages?(
-                monghtPackages.map((pkg, index) => (
+                    packages.map((pkg, index) => (
                     <div className="package-card" key={index}>
                         <div className="package-details">
                             <span className="package-name">{pkg.packageName}</span>
