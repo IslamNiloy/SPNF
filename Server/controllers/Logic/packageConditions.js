@@ -4,7 +4,7 @@ const User = require('../../model/user.model');
 const Package = require('../../model/packages.model');
 const Subscription = require('../../model/subscription.model');
   
-  exports.updateAPICount = async (portalID,count) => {
+  exports.updateAPICount = async (portalID) => {
     try {
       // Find the user by portalID
       logger.info("---------------------logging at update API Count start-------------------");
