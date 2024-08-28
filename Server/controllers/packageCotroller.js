@@ -36,7 +36,7 @@ let update_Package_Details = async (inputData) => {
         console.log('Document upserted in Mongo:', updatedPackage);
         return res.status(200).json({ updateData });
     } catch (error) {
-        console.error('Error upserting document:', error);
+        console.error('Error inserting document:', error);
         return res.status(400).json({ error });
     }
 }
