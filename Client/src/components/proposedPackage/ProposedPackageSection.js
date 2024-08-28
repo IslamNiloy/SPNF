@@ -24,7 +24,7 @@ const ProposedPackageSection = () => {
             <div className="package-container">
                 {error? <MessageBox>{error}</MessageBox>:
                 loading? <LoadingBox>Loading</LoadingBox>: packages?(
-                packages.map((pkg, index) => (
+                packages.find({ subscription: 'monthly' }).sort({ index: 1 }).map((pkg, index) => (
                     <div className="package-card" key={index}>
                         <div className="package-details">
                             <span className="package-name">{pkg.packageName}</span>
