@@ -22,7 +22,7 @@ const ProposedPackageSection = () => {
     return (
         <section className="package-section" id="features">
             <h2 className='header'>Packages</h2>
-            <h3 className='headerSub'>Monthly</h3>
+            <h3>Monthly</h3>
             {
             <div className="package-container">
                 {error? <MessageBox>{error}</MessageBox>:
@@ -63,7 +63,7 @@ const ProposedPackageSection = () => {
             </div>
         }
         <hr/>
-        <h3 className='headerSub'>Yearly</h3>
+        <h3>Yearly</h3>
             {
             <div className="package-container">
                 {error? <MessageBox>{error}</MessageBox>:
