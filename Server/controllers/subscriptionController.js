@@ -5,10 +5,9 @@ const packagesModel = require('../model/packages.model');
 const logger = require('../utils/logger');
 const ModelPayment = require('../model/payment.model');
 const userModel = require('../model/user.model');
-const { updateUserInfoAfterPayment } = require('./usercontroller');
 
 
-exports.insertIntoSubscriptionAfterPayment = async (packageID, userID,extraChargeData) => {
+exports.insertIntoSubscriptionAfterPayment = async (packageID, userID) => {
     try{
          const startDate = new Date();
          const endDate = new Date();
@@ -28,7 +27,7 @@ exports.insertIntoSubscriptionAfterPayment = async (packageID, userID,extraCharg
              return res.json({ error: 'Package information not found' });
          }
          if(subscriptionInfo){
-          
+            logger.info("I am in subscriptionInfo");
              this.updateSubscriptionInfo(userInfo._id,packageID);
          }
          if (userInfo && !subscriptionInfo) {
@@ -47,8 +46,7 @@ exports.insertIntoSubscriptionAfterPayment = async (packageID, userID,extraCharg
                  hubspotDealId: ""
              });
              await subscribe.save();
-             await updateUserInfoAfterPayment(userInfo.portalID, extraChargeData);
-             logger.info("Insert data in subscription model and updateUserInfoAfterPayment");
+             logger.info("Insert data in subscription model");
          }
      }catch(error){
          logger.info('Error in insertIntoSubscription: '+ error);
