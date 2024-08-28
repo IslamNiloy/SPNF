@@ -22,7 +22,7 @@
     background-color: #ffffff;
     padding: 20px;
     width: 30%;
-    margin: auto 0;
+    max-height: 800px;
     border-radius: 10px;
     box-sizing: border-box;
   }
