@@ -43,7 +43,7 @@ let update_Package_Details = async (inputData) => {
 
 
 exports.get_all_packages = async (req, res) => {
-    const packages = await Package.find();
+    const packages = await Package.find().sort({ index: 1 });
         if (!packages) {
             return res.status(404).json({ error: 'packages not found' });
         }
