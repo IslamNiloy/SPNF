@@ -11,11 +11,18 @@ exports.insertIntoSubscriptionAfterPayment = async (packageID, userID) => {
     try{
          const startDate = new Date();
          const endDate = new Date();
-         endDate.setDate(startDate.getDate() + 30);
+         
  
          const userInfo = await User.findOne( {_id: userID});
          const packageInfo = await packagesModel.findOne( {_id: packageID});
          const subscriptionInfo = await Subscription.findOne( {user: userInfo._id});
+
+         if(packageInfo.subscription == 'monthly'){
+            endDate.setDate(startDate.getDate() + 30);
+         }
+         if(packageInfo.subscription == 'yearly'){
+            endDate.setDate(startDate.getDate() + 365);
+         }
  
        
          if (!userInfo) {
@@ -57,9 +64,14 @@ exports.insertIntoSubscriptionAfterPayment = async (packageID, userID) => {
   exports.updateSubscriptionInfo = async (userID, packageID) => {
         let startDate = new Date();
         const endDate = new Date();
-        endDate.setDate(startDate.getDate() + 30);
 
         const package_info = await packagesModel.findOne({_id:packageID});
+        if(package_info.subscription == 'monthly'){
+            endDate.setDate(startDate.getDate() + 30);
+         }
+         else if(package_info.subscription == 'yearly'){
+            endDate.setDate(startDate.getDate() + 365);
+         }
         //checking the logs
         logger.info("package information in updateSubscriptionInf: " + package_info);
         //checking the logs
@@ -83,6 +95,7 @@ exports.insertIntoSubscriptionAfterPayment = async (packageID, userID) => {
           return subscriptionUpDate;
   }
 
+  /*
   exports.updateSubscription = async (req, res) => {
     if (isAuthorized(req)) {
         const accessToken = await getAccessToken(req);
@@ -112,6 +125,7 @@ exports.insertIntoSubscriptionAfterPayment = async (packageID, userID) => {
           res.send(subscriptionUpDate);
     }
   }
+    */
 
 //subscribe/getSubscriptionDetails
   exports.getSubscription = async (req, res) => {
@@ -158,6 +172,7 @@ exports.updateAutoSubsCription = async (req,res) => {
     }
 }
 
+//need to work here
 const updateSubsAutoInfo = async(subscriptionObj) =>{
     try{
         let startDate = new Date();
@@ -212,12 +227,19 @@ exports.insertIntoSubscription = async (req, res) => {
    try{
         const startDate = new Date();
         const endDate = new Date();
-        endDate.setDate(startDate.getDate() + 30);
+        //endDate.setDate(startDate.getDate() + 30);
         logger.info("PackageID in insertIntoSubscription packageID-------:"+ req.body.packageID)
         logger.info("PackageID in insertIntoSubscription portalID-------:"+ req.body.portalID)
 
         const userInfo = await User.findOne( {portalID: req.body.portalID});
         const packageInfo = await packagesModel.findOne( {_id: req.body.packageID});
+
+        if(packageInfo.subscription == 'monthly'){
+            endDate.setDate(startDate.getDate() + 30);
+         }
+         else if(packageInfo.subscription == 'yearly'){
+            endDate.setDate(startDate.getDate() + 365);
+         }
         const subscriptionInfo = await Subscription.findOne( {user: userInfo._id});
 
       
