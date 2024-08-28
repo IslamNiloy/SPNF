@@ -97,13 +97,7 @@ const UserProfileForm = () =>{
             />
           </div>
           <div>
-            <label>Country Code:</label>
-            <input
-              type="text"
-              name="countryCode"
-              value={userInfo?countryCode:""}
-              onChange={(e) => setCountryCode(e.target.value)}
-            />
+            <p>{userInfo?countryCode:""}</p>
           </div>
           <div>
             <label>Portal ID:</label>
