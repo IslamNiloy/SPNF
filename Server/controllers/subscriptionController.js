@@ -20,7 +20,7 @@ exports.insertIntoSubscriptionAfterPayment = async (packageID, userID) => {
          if(packageInfo.subscription == 'monthly'){
             endDate.setDate(startDate.getDate() + 30);
          }
-         if(packageInfo.subscription == 'yearly'){
+         else if(packageInfo.subscription == 'yearly'){
             endDate.setDate(startDate.getDate() + 365);
          }
  
@@ -95,7 +95,7 @@ exports.insertIntoSubscriptionAfterPayment = async (packageID, userID) => {
           return subscriptionUpDate;
   }
 
-  /*
+  
   exports.updateSubscription = async (req, res) => {
     if (isAuthorized(req)) {
         const accessToken = await getAccessToken(req);
@@ -125,7 +125,7 @@ exports.insertIntoSubscriptionAfterPayment = async (packageID, userID) => {
           res.send(subscriptionUpDate);
     }
   }
-    */
+
 
 //subscribe/getSubscriptionDetails
   exports.getSubscription = async (req, res) => {
