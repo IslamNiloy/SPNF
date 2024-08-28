@@ -4,7 +4,7 @@ const User = require('../../model/user.model');
 const Package = require('../../model/packages.model');
 const Subscription = require('../../model/subscription.model');
   
-  exports.updateAPICount = async (portalID) => {
+  exports.updateAPICount = async (portalID,count) => {
     try {
       // Find the user by portalID
       logger.info("---------------------logging at update API Count start-------------------");
@@ -19,7 +19,7 @@ const Subscription = require('../../model/subscription.model');
       // Find the subscription and update the apiCallCount
       const subscriptionInfoUpdate = await Subscription.findOneAndUpdate(
         { user: user._id },
-        { $inc: { apiCallCount: 1 , totalApiCallCount: 1} }, // Increment apiCallCount by 1 //total also increase
+        { $inc: { apiCallCount: parseInt(count) , totalApiCallCount: parseInt(count)} }, // Increment apiCallCount by 1 //total also increase
         { new: true, upsert: false }  // upsert: false ensures it won't create a new document
       );
   
