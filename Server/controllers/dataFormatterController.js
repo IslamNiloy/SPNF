@@ -49,6 +49,37 @@ const getCountryCode = (country, country_text) => {
   return DEFAULT_COUNTRY;
 };
 
+/*adding redis code starts for phone number*/
+
+const incrementAPICount = (portalID) => {
+  redisClient.incr(`apiUsage:${portalID}`, (err, reply) => {
+    if (err) {
+      console.error('Redis increment error:', err);
+    }
+  });
+};
+
+const flushAPICountsToDatabase = async () => {
+  const keys = await redisClient.keys('apiUsage:*');
+  
+  for (const key of keys) {
+    const portalID = key.split(':')[1];
+    const count = await redisClient.get(key);
+    
+    await userModel.updateOne(
+      { portalID },
+      { $inc: { apiCallCount: parseInt(count) } }
+    );
+
+    // Remove the key from Redis after flushing
+    redisClient.del(key);
+  }
+};
+
+// Schedule this to run every hour
+setInterval(flushAPICountsToDatabase, 60 * 60 * 1000);
+/*adding redis code ends for phone number*/
+
 
 const formatPhoneNumber = (phoneNumber, country, country_text) => {
   const countryCode = getCountryCode(country, country_text);

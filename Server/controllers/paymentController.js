@@ -15,6 +15,7 @@ exports.createCheckoutSession = async (req, res) => {
   const packageId = req.params.id;
   const selectedPackage = await packagesModel.findOne({_id: req.params.id}); //getting information from mongodb packageModel
   const stripePrices = await stripe.prices.list(); //getting all price information from stripe
+  console.log("stripePricesstripePricesstripePricesstripePrices== "+ JSON.stringify(stripePrices));
   const filteredStripePrice = stripePrices.data.filter(priceObj =>parseInt(priceObj.unit_amount) === parseInt((selectedPackage.price) * 100));;//filtering from stripe data with price of packageModel findOne
   const portalID = req.params.portalID;
 
@@ -174,6 +175,7 @@ exports.update_Payment_Info = async (chargeData, extraChargeData, packageID, por
           email: chargeData.email,
           chargeId: chargeData.chargeId,
           amount: chargeData.amount,
+          $inc: { totalAmount:chargeData.amount },
           currency: chargeData.currency,
           customer_id: chargeData.customer_id,
           invoice_id: chargeData.invoice_id,

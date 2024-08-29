@@ -11,6 +11,7 @@ const PaymentSchema = new mongoose.Schema({
   email: { type: String },
   chargeId: { type: String},
   amount: { type: Number},
+  totalAmount :  { type: Number},
   currency: { type: String},
   customer_id: { type: String},
   invoice_id: { type: String},
