@@ -71,7 +71,8 @@ exports.phoneNumber = async (req, res) => {
       
       const User = await userModel.findOne({portalID : req.body.portalID });
       console.log("User: ===========" + User.email);
-      
+      logger.info("req.body in phoneNumber: === " + JSON.stringify(req.body));
+      logger.info("phoneNumber in phoneNumber: === " + phoneNumber);
       const paymentInfo = await paymentModel.findOne({portalID : req.body.portalID}).sort({ createdAt: -1 });
       console.log("UpaymentInfoser: ===========" + paymentInfo);
       if(!check){
@@ -216,7 +217,8 @@ exports.checkPhoneNumber = async(req, res) => {
   console.log("User in checkPhoneNumber: ===========" + User.email);
   const paymentInfo = await paymentModel.findOne({portalID : req.body.portalID}).sort({ createdAt: -1 });
   console.log("UpaymentInfoser: ===========" + paymentInfo + "check ==="+ check);
-  
+  logger.info("req.body in checkPhoneNumber: === " + JSON.stringify(req.body));
+  logger.info("phoneNumber in checkPhoneNumber: === " + phoneNumber);
   if(!check){
     return res.status(200).json({
       "outputFields": {
