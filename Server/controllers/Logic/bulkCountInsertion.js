@@ -127,6 +127,7 @@ const clearJsonFile = () => {
     cache = []
 };
 
+/*
 
 const updateAPICount = async (portalID, count) => {
     try {
@@ -189,5 +190,5 @@ const updateAPICount = async (portalID, count) => {
     }
   };
 
-
+*/
 module.exports = { incrAsync, getAsync, getCacheData };

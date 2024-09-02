@@ -81,8 +81,8 @@ exports.phoneNumber = async (req, res) => {
         res.send("you have cancelled your subscription")
       }
       else if(check){
-        //await updateAPICount(req.body.portalID);
-        incrementAPICount(req.body.portalID, "phoneNumber");
+        await updateAPICount(req.body.portalID);
+        //incrementAPICount(req.body.portalID, "phoneNumber");
         const formattedNumber = formatPhoneNumber(phoneNumber, country, country_text);
         res.json({
           "outputFields": {
@@ -215,8 +215,8 @@ exports.checkPhoneNumber = async(req, res) => {
   }
   else if(check){
     console.log("checking is fine in check phone number");
-    //await CheckPhoneNumberUpdateAPICount(req.body.portalID);
-    incrementAPICount(req.body.portalID, "checkPhoneNumber");
+    await CheckPhoneNumberUpdateAPICount(req.body.portalID);
+    //incrementAPICount(req.body.portalID, "checkPhoneNumber");
     if (!phoneNumber) {
       return res.status(200).json({
         "outputFields": {
