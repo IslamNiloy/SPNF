@@ -50,4 +50,4 @@ async function loadDatabaseConnection() {
 
 loadDatabaseConnection();
 
-setInterval(getAsync, 3 * 60 * 1000); 
+setInterval(getAsync,  60 * 60 * 1000); 
