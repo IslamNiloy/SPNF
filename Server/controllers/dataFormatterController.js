@@ -222,7 +222,7 @@ exports.checkPhoneNumber = async(req, res) => {
   if(!check){
     return res.status(200).json({
       "outputFields": {
-        "Message": "API Limit Exceeded",
+        "quality": "API Limit Exceeded",
         "hs_execution_state": "FAILED"
       }
     });
@@ -230,7 +230,7 @@ exports.checkPhoneNumber = async(req, res) => {
   if(paymentInfo && paymentInfo.status == "cancelled"){
     return res.status(200).json({
       "outputFields": {
-        "Message": "You have cancelled your subscription",
+        "quality": "You have cancelled your subscription",
         "hs_execution_state": "FAILED"
       }
     });
@@ -242,7 +242,7 @@ exports.checkPhoneNumber = async(req, res) => {
     if (!phoneNumber) {
       return res.status(200).json({
         "outputFields": {
-          "Message": "Empty",
+          "quality": "Empty",
           "hs_execution_state": "SUCCESS"
         }
       });
@@ -252,7 +252,7 @@ exports.checkPhoneNumber = async(req, res) => {
 
     return res.status(200).json({
       "outputFields": {
-        "Message": result,
+        "quality": result,
         "hs_execution_state": "SUCCESS"
       }
     });
