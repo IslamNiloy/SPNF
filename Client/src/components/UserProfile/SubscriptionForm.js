@@ -42,7 +42,7 @@ const SubscriptionForm = () => {
         if(infos){
             const filteredPackages = allPackageInfo.filter(packages => packages._id === infos.package);
             setPackageName(filteredPackages[0].packageName);
-            setAPICallCount(infos.apiCallCount);
+            setAPICallCount(parseInt(infos.apiCallCount) + parseInt(infos.checkPhoneNumberApiCallCount));
             setAPICallLimit(filteredPackages[0].Limit);
             setJoiningDate(infos.joiningDate);
             setStartDate(infos.packageStartDate);
