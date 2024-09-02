@@ -75,10 +75,20 @@ exports.phoneNumber = async (req, res) => {
       const paymentInfo = await paymentModel.findOne({portalID : req.body.portalID}).sort({ createdAt: -1 });
       console.log("UpaymentInfoser: ===========" + paymentInfo);
       if(!check){
-        res.send("Please update your subscription");
+        return res.status(200).json({
+          "outputFields": {
+            "Message": "API Limit Exceeded",
+            "hs_execution_state": "FAILED"
+          }
+        });
       }
       if(paymentInfo && paymentInfo.status == "cancelled"){
-        res.send("you have cancelled your subscription")
+        return res.status(200).json({
+          "outputFields": {
+            "Message": "API Limit Exceeded",
+            "hs_execution_state": "FAILED"
+          }
+        });
       }
       else if(check){
         await updateAPICount(req.body.portalID);
@@ -208,10 +218,20 @@ exports.checkPhoneNumber = async(req, res) => {
   console.log("UpaymentInfoser: ===========" + paymentInfo + "check ==="+ check);
   
   if(!check){
-    res.send("Please update your subscription");
+    return res.status(200).json({
+      "outputFields": {
+        "Message": "API Limit Exceeded",
+        "hs_execution_state": "FAILED"
+      }
+    });
   }
   if(paymentInfo && paymentInfo.status == "cancelled"){
-    res.send("you have cancelled your subscription")
+    return res.status(200).json({
+      "outputFields": {
+        "Message": "You have cancelled your subscription",
+        "hs_execution_state": "FAILED"
+      }
+    });
   }
   else if(check){
     console.log("checking is fine in check phone number");
