@@ -30,6 +30,7 @@ const WelcomeScreen = () => {
 
     return(
         <div>
+            <Header />
             <ProposedPackageSection/>
             <Footer/>
         </div>
