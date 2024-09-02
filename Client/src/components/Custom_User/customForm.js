@@ -23,6 +23,7 @@ const CustomUser = () => {
 
     return (
         <div className="hubspotForm_main">
+            <h1>Custom Form</h1>
             <div id="hubspotForm"></div>
         </div>
     );

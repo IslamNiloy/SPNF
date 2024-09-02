@@ -1,4 +1,8 @@
 .hubspotForm_main{
-    margin-left: 30px;
-    margin-right: 30px;
+    margin-left: 100px;
+    margin-right: 100px;
+}
+
+.hubspotForm_main h1{
+    text-align: center;
 }
