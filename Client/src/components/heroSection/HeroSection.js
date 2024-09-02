@@ -30,8 +30,10 @@ const HeroSection = () => {
                                     Install The App
                                 </button>
                             </ScrollLink>
-                            
-                        <button className="btn doc-btn">Read The Documentation</button>
+                        <Link to="https://hubxpert.gitbook.io/phone-number-formator/getting-started/installing-the-app" target='_blank'>
+                            <button className="btn doc-btn">Read The Documentation</button>
+                        </Link>   
+                        
                     </div>
                 </div>
             </section>
