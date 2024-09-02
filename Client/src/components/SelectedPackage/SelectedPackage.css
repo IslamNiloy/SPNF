@@ -5,7 +5,7 @@
 
 .package-container {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     flex-wrap: wrap; /* Allows wrapping on smaller screens */
     gap: 20px; /* Space between cards */
 }
@@ -107,7 +107,7 @@
         border: 2px solid white;
         width: 18vw;
         font-size: 2vw;
-        height: 50px;
+        height: 70px;
         border-radius: 8px;
     }
     
