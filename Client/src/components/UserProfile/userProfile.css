@@ -1,168 +1,181 @@
 /* General body styles */
 .profile_form-main{
-    background-color: #1E597B;
-    padding: 20px;
+  background-color: #a3c7eb;
+  padding: 20px;
 }
 .h1_user-profile{
-    color: #e9f0fb;
-    text-decoration: underline #FF6B00;
+  color: #1d3e72;
+  text-decoration: underline #FF6B00;
 }
-  /* Container for the forms */
+/* Container for the forms */
+.forms-container {
+  display: flex;
+  gap: 20px; /* Space between the forms */
+  flex-wrap: nowrap; /* Allows forms to wrap on smaller screens */
+  width: 100%;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+/* Form container */
+.user-profile-form{
+  background-color: #ffffff;
+  padding: 20px;
+  width: 30%;
+  max-height: 800px;
+  border-radius: 10px;
+  box-sizing: border-box;
+}
+.subscription-info-form {
+  background-color: #ffffff;
+  padding: 20px;
+  width: 30%;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  border: 2px solid rgb(207, 207, 207);
+  box-sizing: border-box;
+}
+
+/* Form elements */
+.user-profile-form div,
+.subscription-info-form div {
+  margin-bottom: 15px;
+}
+
+/* Form labels */
+.subscription-info-form label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: #2e2e2e; /* Darker text for better readability */
+}
+
+.user-profile-form label{
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: #2e2e2e; /* Darker text for better readability */
+}
+
+/* Text inputs */
+.user-profile-form input[type="text"],
+.user-profile-form input[type="email"],
+.subscription-info-form input[type="text"],
+.subscription-info-form input[type="email"] {
+  width: 100%;
+  padding: 10px;
+  background-color: #e9f0fb;
+  border: 2px solid #e9f0fb; /* Bluish border */
+  border-radius: 20px;
+  box-sizing: border-box;
+  font-size: 16px;
+  color: #333333; /* Darker text */
+  transition: border-color 0.3s;
+}
+
+/* Input focus */
+.user-profile-form input[type="text"]:focus,
+.user-profile-form input[type="email"]:focus,
+.subscription-info-form input[type="text"]:focus,
+.subscription-info-form input[type="email"]:focus {
+  border-color: #1c6ed9; /* Darker blue on focus */
+  outline: none; /* Remove default outline */
+}
+
+/* Non-editable fields */
+.user-profile-form p,
+.subscription-info-form p {
+  background-color: #e9f0fb; /* Light bluish background */
+  border-radius: 20px;
+  padding: 10px;
+  color: #333333;
+  font-size: 16px;
+}
+
+/* Section titles */
+.user-profile-form h3,
+.subscription-info-form h3 {
+  color: #5d9cec;
+  font-size: 18px;
+  margin-bottom: 15px;
+}
+
+/* Submit button */
+.user-profile-form button[type="submit"],
+.subscription-info-form button[type="submit"] {
+  background-color: #5d9cec;
+  color: #ffffff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s;
+  width: 100%;
+  margin-top: 10px;
+}
+
+.cancel_subscription{
+  background-color: #ff3e41;
+  color: #ffffff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s;
+  width: 100%;
+  margin-top: 27px;
+}
+/* Submit button hover */
+.user-profile-form button[type="submit"]:hover,
+.subscription-info-form button[type="submit"]:hover {
+  background-color: #1c6ed9; /* Darker blue on hover */
+}
+
+.cancel_subscription:hover{
+  background-color: #bb2124; /* Darker blue on hover */
+}
+
+
+/* Responsive design */
+@media (max-width: 800px) {
   .forms-container {
-    display: flex;
-    gap: 20px; /* Space between the forms */
-    flex-wrap: nowrap; /* Allows forms to wrap on smaller screens */
+    flex-direction: column;
     width: 100%;
-    box-sizing: border-box;
-    margin: 0 auto;
-    
   }
-  
-  /* Form container */
+
   .user-profile-form,
   .subscription-info-form {
-    background-color: #ffffff;
-    padding: 20px;
     width: 100%;
-    margin-bottom: 20px;
-    border-radius: 3px;
-    box-sizing: border-box;
   }
-  
-  /* Form elements */
-  .user-profile-form div,
-  .subscription-info-form div {
-    margin-bottom: 15px;
-  }
-  
-  /* Form labels */
+}
+
+@media (max-width: 600px) {
   .user-profile-form label,
-  .subscription-info-form label {
-    display: block;
-    font-weight: bold;
-    margin-bottom: 5px;
-    color: #333333; /* Darker text for better readability */
-  }
-  
-  /* Text inputs */
   .user-profile-form input[type="text"],
   .user-profile-form input[type="email"],
-  .subscription-info-form input[type="text"],
-  .subscription-info-form input[type="email"] {
-    width: 100%;
-    padding: 10px;
-    background-color: #e9f0fb;
-    border: 2px solid #e9f0fb; /* Bluish border */
-    border-radius: 5px;
-    box-sizing: border-box;
-    font-size: 16px;
-    color: #333333; /* Darker text */
-    transition: border-color 0.3s;
-  }
-  
-  /* Input focus */
-  .user-profile-form input[type="text"]:focus,
-  .user-profile-form input[type="email"]:focus,
-  .subscription-info-form input[type="text"]:focus,
-  .subscription-info-form input[type="email"]:focus {
-    border-color: #1c6ed9; /* Darker blue on focus */
-    outline: none; /* Remove default outline */
-  }
-  
-  /* Non-editable fields */
   .user-profile-form p,
+  .subscription-info-form label,
+  .subscription-info-form input[type="text"],
+  .subscription-info-form input[type="email"],
   .subscription-info-form p {
-    background-color: #e9f0fb; /* Light bluish background */
-    border-radius: 5px;
-    padding: 10px;
-    color: #333333;
-    font-size: 16px;
+    font-size: 14px;
   }
-  
-  /* Section titles */
+
   .user-profile-form h3,
   .subscription-info-form h3 {
-    color: #5d9cec;
-    font-size: 18px;
-    margin-bottom: 15px;
+    font-size: 16px;
   }
-  
-  /* Submit button */
+
   .user-profile-form button[type="submit"],
   .subscription-info-form button[type="submit"] {
-    background-color: #5d9cec;
-    color: #ffffff;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: background-color 0.3s;
-    width: 100%;
-    margin-top: 10px;
+    font-size: 14px;
+    padding: 8px 16px;
   }
-  
+
   .cancel_subscription{
-    background-color: #ff3e41;
-    color: #ffffff;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: background-color 0.3s;
-    width: 100%;
-    margin-top: 27px;
+    font-size: 14px;
+    padding: 8px 16px;
   }
-  /* Submit button hover */
-  .user-profile-form button[type="submit"]:hover,
-  .subscription-info-form button[type="submit"]:hover {
-    background-color: #1c6ed9; /* Darker blue on hover */
-  }
-
-  .cancel_subscription:hover{
-    background-color: #bb2124; /* Darker blue on hover */
-  }
-  
-  
-  /* Responsive design */
-  @media (max-width: 800px) {
-    .forms-container {
-      flex-direction: column;
-    }
-  
-    .user-profile-form,
-    .subscription-info-form {
-      max-width: 100%;
-    }
-  }
-  
-  @media (max-width: 600px) {
-    .user-profile-form label,
-    .user-profile-form input[type="text"],
-    .user-profile-form input[type="email"],
-    .user-profile-form p,
-    .subscription-info-form label,
-    .subscription-info-form input[type="text"],
-    .subscription-info-form input[type="email"],
-    .subscription-info-form p {
-      font-size: 14px;
-    }
-  
-    .user-profile-form h3,
-    .subscription-info-form h3 {
-      font-size: 16px;
-    }
-  
-    .user-profile-form button[type="submit"],
-    .subscription-info-form button[type="submit"] {
-      font-size: 14px;
-      padding: 8px 16px;
-    }
-
-    .cancel_subscription{
-      font-size: 14px;
-      padding: 8px 16px;
-    }
-  }
-  
+}

@@ -36,9 +36,9 @@ const SubscriptionForm = () => {
 
     useEffect(() => {
         if (!infos) {
-            const emailForPaymentInfo = localStorage.getItem("spPhk44lI519pJ");
+
             dispatch(subscriptionInfoByID(portalID));
-            dispatch(paymentInfoByEmail(emailForPaymentInfo));
+            dispatch(paymentInfoByEmail(portalID));
         }
         if(infos){
             const filteredPackages = allPackageInfo.filter(packages => packages._id === infos.package);
@@ -55,6 +55,8 @@ const SubscriptionForm = () => {
             }
             else if(paymentInfo){
                 setStatus(paymentInfo.status);
+            }else{
+                setStatus("Not Found");
             }
                 
         }
@@ -72,11 +74,12 @@ const SubscriptionForm = () => {
     
       const handleConfirmModal = (e) => {
         setshowPopup(false);
-        // Add your cancel subscription logic here
-        const email = localStorage.getItem("spPhk44lI519pJ");
-        dispatch(cancelSubscription(email));
+        //ancel subscription logic here
+        const portalID = localStorage.getItem('I8PD56?#C|NXhSgZ0KE');
+        dispatch(cancelSubscription(portalID));
         setStatus("cancelled");
         setModalVisible(true);
+        //window.location.reload();
       };
 
     const handleCloseModal = () => {

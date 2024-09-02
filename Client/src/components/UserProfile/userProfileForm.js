@@ -68,8 +68,6 @@ const UserProfileForm = () =>{
           <div>
             <label>Email:</label>
             <p>{userInfo?email:""}</p>
-            <span style={{color: "#bb2124", fontSize: "12px"}}> **Use this email for any transactions related to portal ID: {portalID}</span> <br/>
-            <span style={{color: "#bb2124", fontSize: "12px"}}> **Do not use this email for purchasing from any other portal id</span>
           </div>
           <div>
             <label>Name:</label>
@@ -100,29 +98,13 @@ const UserProfileForm = () =>{
           </div>
           <div>
             <label>Country Code:</label>
-            <input
-              type="text"
-              name="countryCode"
-              value={userInfo?countryCode:""}
-              onChange={(e) => setCountryCode(e.target.value)}
-            />
+            <p>{userInfo?countryCode:""}</p>
           </div>
           <div>
             <label>Portal ID:</label>
             <p>{portalID}</p>
           </div>
-          <div>
-            <label>Account Type:</label>
-            <p>{userInfo?accountType:""}</p>
-          </div>
-          <div>
-            <label>Time Zone:</label>
-            <p>{userInfo?timeZone:""}</p>
-          </div>
-          <div>
-            <label>Company Currency:</label>
-            <p>{userInfo?companyCurrency:""}</p>
-          </div>
+        
           <div>
             <label>UI Domain:</label>
             <p>{userInfo?uiDomain:""}</p>

@@ -248,9 +248,10 @@ const zeroDollarInfo = async(session, portalID,packageId) =>{
 }
 
 exports.get_payment_info_user = async (req,res) => {
-  logger.info("Logging at /get_payment_info_user");
+  logger.info("Logging at /get_payment_info_user" + JSON.stringify(req.params.portalID));
   try{
     const payment_Info = await PaymentModel.findOne({ portalID:req.params.portalID }).sort({ createdAt: -1 });
+    console.log("Logging at /get_payment_info_user: "+ JSON.stringify(payment_Info));
     res.json((payment_Info));
   }catch (error){
     res.send(error);
