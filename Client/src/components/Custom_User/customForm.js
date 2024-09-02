@@ -12,9 +12,9 @@ const CustomUser = () => {
             if (window.hbspt) {
                 // @TS-ignore
                 window.hbspt.forms.create({
-                    region: "na1",
-                    portalId: "47070065",
-                    formId: "65d4dfb8-f308-4ed5-af8d-2e00a33ab64b",
+                    region: "eu1",
+                    portalId: "26291308",
+                    formId: "2d161d8c-dbf4-45af-849a-38928baf6b06",
                     target: '#hubspotForm'
                 })
             }
@@ -23,7 +23,6 @@ const CustomUser = () => {
 
     return (
         <div className="hubspotForm_main">
-            <h1>Custom Form</h1>
             <div id="hubspotForm"></div>
         </div>
     );
