@@ -5,8 +5,8 @@ const { getAccessToken, isAuthorized, getContact, getAccountInfo } = require('..
 const logger = require('../utils/logger'); // Add logger
 const userModel = require('../model/user.model');
 const paymentModel = require('../model/payment.model');
-const { updateAPICount, packageCondition } = require('./Logic/packageConditions');
-
+const { updateAPICount, packageCondition, CheckPhoneNumberpackageCondition, CheckPhoneNumberUpdateAPICount } = require('./Logic/packageConditions');
+const redisClient = require('./Logic/bulkCountInsertion');
 
 
 //////////////////////// PHONE NUMBER //////////////////////////
@@ -49,7 +49,54 @@ const getCountryCode = (country, country_text) => {
   return DEFAULT_COUNTRY;
 };
 
+/*adding redis code starts for phone number*/
+const incrementAPICount = async (portalID, funcName) => {
+  try {
+    const result = await redisClient.incrAsync(portalID,funcName);
+    console.log('After increment:', result); // Should log the incremented value
 
+  } catch (err) {
+    console.error('Redis increment error:', err);
+  }
+};
+/*end of redis code*/
+
+exports.phoneNumber = async (req, res) => {
+  const { phoneNumber, country, country_text } = req.body;
+  logger.info(`--------logging at phoneNumber func with ${phoneNumber}, ${country}, ${country_text}-------`);
+  try {
+      //const accessToken = await getAccessToken(req);
+      //const accInfo = await getAccountInfo(accessToken);
+      const check = await packageCondition(req.body.portalID); 
+      
+      const User = await userModel.findOne({portalID : req.body.portalID });
+      console.log("User: ===========" + User.email);
+      
+      const paymentInfo = await paymentModel.findOne({portalID : req.body.portalID}).sort({ createdAt: -1 });
+      console.log("UpaymentInfoser: ===========" + paymentInfo);
+      if(!check){
+        res.send("Please update your subscription");
+      }
+      if(paymentInfo && paymentInfo.status == "cancelled"){
+        res.send("you have cancelled your subscription")
+      }
+      else if(check){
+        //await updateAPICount(req.body.portalID);
+        incrementAPICount(req.body.portalID, "phoneNumber");
+        const formattedNumber = formatPhoneNumber(phoneNumber, country, country_text);
+        res.json({
+          "outputFields": {
+            "Formatted_Phone_Number": formattedNumber,
+            "hs_execution_state": "SUCCESS"
+          }
+        });
+      }else{
+        res.json("Update your plan");
+      }
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
 const formatPhoneNumber = (phoneNumber, country, country_text) => {
   const countryCode = getCountryCode(country, country_text);
 
@@ -77,41 +124,6 @@ const formatPhoneNumber = (phoneNumber, country, country_text) => {
   }
 
   throw new Error('Invalid phone number');
-};
-
-
-exports.phoneNumber = async (req, res) => {
-  const { phoneNumber, country, country_text } = req.body;
-  logger.info(`--------logging at phoneNumber func with ${phoneNumber}, ${country}, ${country_text}-------`);
-  try {
-      //const accessToken = await getAccessToken(req);
-      //const accInfo = await getAccountInfo(accessToken);
-      const check = await packageCondition(req.body.portalID); 
-      
-      const User = await userModel.findOne({portalID : req.body.portalID });
-      console.log("User: ===========" + User.email);
-      
-      const paymentInfo = await paymentModel.findOne({email : User.email}).sort({ createdAt: -1 });
-      console.log("UpaymentInfoser: ===========" + paymentInfo);
-      
-      if(paymentInfo && paymentInfo.status == "cancelled"){
-        res.send("you have cancelled your subscription")
-      }
-      else if(check){
-        await updateAPICount(req.body.portalID);
-        const formattedNumber = formatPhoneNumber(phoneNumber, country, country_text);
-        res.json({
-          "outputFields": {
-            "Formatted_Phone_Number": formattedNumber,
-            "hs_execution_state": "SUCCESS"
-          }
-        });
-      }else{
-        res.json("Update your plan");
-      }
-  } catch (error) {
-    res.status(400).json({ error: error.message });
-  }
 };
 
 
@@ -187,25 +199,41 @@ const checkPhoneNumber = (phoneNumber) => {
   return 'Correctly Formatted';
 };
 
-exports.checkPhoneNumber = (req, res) => {
+exports.checkPhoneNumber = async(req, res) => {
   const { phoneNumber } = req.body;
+  const check = await packageCondition(req.body.portalID);
+  const User = await userModel.findOne({portalID : req.body.portalID });
+  console.log("User in checkPhoneNumber: ===========" + User.email);
+  const paymentInfo = await paymentModel.findOne({portalID : req.body.portalID}).sort({ createdAt: -1 });
+  console.log("UpaymentInfoser: ===========" + paymentInfo + "check ==="+ check);
+  
+  if(!check){
+    res.send("Please update your subscription");
+  }
+  if(paymentInfo && paymentInfo.status == "cancelled"){
+    res.send("you have cancelled your subscription")
+  }
+  else if(check){
+    console.log("checking is fine in check phone number");
+    //await CheckPhoneNumberUpdateAPICount(req.body.portalID);
+    incrementAPICount(req.body.portalID, "checkPhoneNumber");
+    if (!phoneNumber) {
+      return res.status(200).json({
+        "outputFields": {
+          "Message": "Empty",
+          "hs_execution_state": "SUCCESS"
+        }
+      });
+    }
 
-  if (!phoneNumber) {
+    const result = checkPhoneNumber(phoneNumber);
+
     return res.status(200).json({
       "outputFields": {
-        "Message": "Empty",
+        "Message": result,
         "hs_execution_state": "SUCCESS"
       }
     });
   }
-
-  const result = checkPhoneNumber(phoneNumber);
-
-  return res.status(200).json({
-    "outputFields": {
-      "Message": result,
-      "hs_execution_state": "SUCCESS"
-    }
-  });
 };
 /////////////////////// Check Phone Number END //////////////////////////////////

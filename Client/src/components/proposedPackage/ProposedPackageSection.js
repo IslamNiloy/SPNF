@@ -33,7 +33,7 @@ const ProposedPackageSection = () => {
                                 <button className="package-price">${pkg.price}/month</button>
                             }
                         </div>
-                        <p className="package-content1">API Call Limit</p>
+                        <p className="package-content1">Number of Actions</p>
                         {pkg.packageName=='Custom' ? 
                                 <p className="package-content2">15000+/month</p>:
                                 <p className="package-content2">{pkg.Limit}/month</p>

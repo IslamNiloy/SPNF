@@ -2,6 +2,7 @@
 /Server/.env
 /Client/app.log
 /Server/app.log
+/Server/cache.json
 /Client/node_modules
 /Server/node_modules
 

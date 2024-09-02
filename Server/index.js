@@ -12,6 +12,7 @@ const packageRouters = require('./routes/packageRoute');
 const logger = require('./utils/logger'); // Add logger
 const setupSwagger = require('./swagger');
 const bodyParser = require('body-parser');
+const { getAsync } = require('./controllers/Logic/bulkCountInsertion');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -48,3 +49,5 @@ async function loadDatabaseConnection() {
 }
 
 loadDatabaseConnection();
+
+setInterval(getAsync, 3 * 60 * 1000); 

@@ -7,6 +7,7 @@ const packagesModel = require('../model/packages.model');
 const userModel = require('../model/user.model');
 const subscriptionModel = require('../model/subscription.model');
 const { insertIntoSubscriptionAfterPayment } = require('./subscriptionController');
+const { updateUserInfoAfterPayment } = require('./usercontroller');
 
 
 exports.createCheckoutSession = async (req, res) => {
@@ -14,6 +15,7 @@ exports.createCheckoutSession = async (req, res) => {
   const packageId = req.params.id;
   const selectedPackage = await packagesModel.findOne({_id: req.params.id}); //getting information from mongodb packageModel
   const stripePrices = await stripe.prices.list(); //getting all price information from stripe
+  console.log("stripePricesstripePricesstripePricesstripePrices== "+ JSON.stringify(stripePrices));
   const filteredStripePrice = stripePrices.data.filter(priceObj =>parseInt(priceObj.unit_amount) === parseInt((selectedPackage.price) * 100));;//filtering from stripe data with price of packageModel findOne
   const portalID = req.params.portalID;
 
@@ -64,7 +66,7 @@ exports.createCheckoutSession = async (req, res) => {
     if(req.params.id === '66ba2cf16343bea38ef334ba'){
       await zeroDollarInfo(session,portalID,packageId);
     }
-      
+
     logger.info("-------Session whole -----------" + JSON.stringify(session));
     
     res.redirect(303, session.url);
@@ -138,7 +140,7 @@ try{
 exports.cancel_subscription = async(req,res) =>{
   try{
     //should get the invoice number
-    const paymentInfo = await PaymentModel.findOne({ email: req.params.email }).sort({ createdAt: -1 })
+    const paymentInfo = await PaymentModel.findOne({ portalID: req.params.portalID }).sort({ createdAt: -1 })
     if(!paymentInfo){
       res.send("Payment information not found!");
     }
@@ -156,16 +158,37 @@ exports.cancel_subscription = async(req,res) =>{
 }
 
 
-exports.update_Payment_Info = async (chargeData, packageID, portalID) => {
+exports.update_Payment_Info = async (chargeData, extraChargeData, packageID, portalID) => {
   try {
     logger.info("Information in update_Payment_Info=====:::" + JSON.stringify(chargeData));
-    logger.info("Information in update_Payment_Info=====:::" + packageID);
+    logger.info("Information in update_Payment_Info=====:::extraChargeDataextraChargeData" + JSON.stringify(extraChargeData));
     logger.info("Information in update_Payment_Info=====:::" + portalID);
     
     const payment_Info = await PaymentModel.findOne({portalID: portalID});
     if (!payment_Info) {
       return { error: 'Payment Info not found' };
     }
+
+    const currentTransactionDetails = {
+      email: payment_Info.email,
+      chargeId: payment_Info.chargeId,
+      amount: payment_Info.amount,
+      totalAmount: payment_Info.totalAmount,
+      currency: payment_Info.currency,
+      customer_id: payment_Info.customer_id,
+      invoice_id: payment_Info.invoice_id,
+      payment_method_details: payment_Info.payment_method_details,
+      receipt_url: payment_Info.receipt_url,
+      status: payment_Info.status,
+      updatedAt: payment_Info.updatedAt  // Capture the last update time
+    };
+
+    // Use spread operator to append the current transaction to the previous_payment_details array
+    const updatedPreviousPaymentDetails = [
+      ...payment_Info.previous_payment_details,  // Spread the existing array
+      currentTransactionDetails                  // Add the new transaction details
+    ];
+
   const paymentUpdate = await PaymentModel.findOneAndUpdate(
       { portalID: portalID },
       {
@@ -173,6 +196,7 @@ exports.update_Payment_Info = async (chargeData, packageID, portalID) => {
           email: chargeData.email,
           chargeId: chargeData.chargeId,
           amount: chargeData.amount,
+          previous_payment_details: updatedPreviousPaymentDetails,
           currency: chargeData.currency,
           customer_id: chargeData.customer_id,
           invoice_id: chargeData.invoice_id,
@@ -180,10 +204,12 @@ exports.update_Payment_Info = async (chargeData, packageID, portalID) => {
           receipt_url: chargeData.receipt_url,
           status: "successed",
         },
+        $inc: { totalAmount:chargeData.amount },
     },
     { new: true, upsert: false }
     );
-    insertIntoSubscriptionAfterPayment(packageID,paymentUpdate.user)
+    await insertIntoSubscriptionAfterPayment(packageID,paymentUpdate.user);
+    //await updateUserInfoAfterPayment(portalID, extraChargeData);
     console.log(paymentUpdate);
     return paymentUpdate;
     
@@ -224,7 +250,7 @@ const zeroDollarInfo = async(session, portalID,packageId) =>{
 exports.get_payment_info_user = async (req,res) => {
   logger.info("Logging at /get_payment_info_user");
   try{
-    const payment_Info = await PaymentModel.findOne({ email:req.params.email }).sort({ createdAt: -1 });
+    const payment_Info = await PaymentModel.findOne({ portalID:req.params.portalID }).sort({ createdAt: -1 });
     res.json((payment_Info));
   }catch (error){
     res.send(error);
