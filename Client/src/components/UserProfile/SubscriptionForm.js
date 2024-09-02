@@ -36,8 +36,7 @@ const SubscriptionForm = () => {
 
     useEffect(() => {
         if (!infos) {
-
-            dispatch(subscriptionInfoByID(portalID));
+            dispatch(subscriptionInfoByID(portalID)) 
             dispatch(paymentInfoByEmail(portalID));
         }
         if(infos){
@@ -50,14 +49,11 @@ const SubscriptionForm = () => {
             setEndDate(infos.packageEndDate);
             setPrice(filteredPackages[0].price);
             setDuration(filteredPackages[0].duration);
-            if(filteredPackages[0].packageName == "Free"){
-                setStatus("Not Found");
-            }
-            else if(paymentInfo){
+          if(paymentInfo){
                 setStatus(paymentInfo.status);
-            }else{
-                setStatus("Not Found");
-            }
+         
+          }
+            
                 
         }
     }, [dispatch, infos, portalID, allPackageInfo]);
@@ -77,6 +73,7 @@ const SubscriptionForm = () => {
         //ancel subscription logic here
         const portalID = localStorage.getItem('I8PD56?#C|NXhSgZ0KE');
         dispatch(cancelSubscription(portalID));
+        
         setStatus("cancelled");
         setModalVisible(true);
         //window.location.reload();
@@ -181,11 +178,7 @@ const SubscriptionForm = () => {
 
             <div>
                 <label>Subscription Status:</label>
-                <p>{paymentLoading
-                        ? "loading"
-                        : paymentErr
-                        ? "NOT FOUND"
-                        : status == "Not Found" ? "Free Subscription" : status}</p>
+                <p>{status}</p>
             </div>
             {status == "cancelled" || packageName == "Free"?
             <></>:

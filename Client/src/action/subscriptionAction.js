@@ -1,6 +1,7 @@
 import { BackendAPI } from "../api/server";
 import Axios from 'axios';
 import { CANCEL_SUBSCRIPTION_FAIL, CANCEL_SUBSCRIPTION_REQUEST, CANCEL_SUBSCRIPTION_SUCCESS, GET_BY_ID_SUBSCRIPTION_FAIL, GET_BY_ID_SUBSCRIPTION_REQUEST, GET_BY_ID_SUBSCRIPTION_SUCCESS, INSERT_INTO_SUBSCRIPTION_FAIL, INSERT_INTO_SUBSCRIPTION_REQUEST, INSERT_INTO_SUBSCRIPTION_SUCCESS } from "../constants/subscriptionConstant";
+import { paymentInfoByEmail } from "./paymentAction";
 
 export const insertIntoSubscriptionCollection = (portalID,packageID) => async (dispatch) => {
     dispatch({ type: INSERT_INTO_SUBSCRIPTION_REQUEST });
@@ -49,7 +50,7 @@ export const insertIntoSubscriptionCollection = (portalID,packageID) => async (d
       try {
         // Include portalID in the query string
         const { data } = await Axios.get(`${BackendAPI}/charge/cancel/${portalID}`);
-    
+        dispatch(paymentInfoByEmail(portalID));
         dispatch({ type: CANCEL_SUBSCRIPTION_SUCCESS, payload: data });
       } catch (error) {
         dispatch({
