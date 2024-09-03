@@ -211,6 +211,7 @@ const checkPhoneNumber = (phoneNumber) => {
 };
 
 exports.checkPhoneNumber = async(req, res) => {
+exports.checkPhoneNumber = async(req, res) => {
   const { phoneNumber } = req.body;
   const check = await packageCondition(req.body.portalID);
   const User = await userModel.findOne({portalID : req.body.portalID });

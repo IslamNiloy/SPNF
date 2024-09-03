@@ -20,6 +20,7 @@
     "mongoose": "^8.5.1",
     "node-cache": "^4.2.0",
     "qs": "^6.11.2",
+    "redis": "^4.7.0",
     "stripe": "^16.4.0",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.1",

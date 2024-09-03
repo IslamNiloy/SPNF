@@ -8,7 +8,7 @@ import './userProfile.css'
 const UserProfile = () => {
   return (
     <div className='profile_form-main'>
-        <h1 className='h1_user-profile'>Profile</h1>
+       
         <div className="forms-container">
             {/* User Profile Form */}
             <UserProfileForm/>
