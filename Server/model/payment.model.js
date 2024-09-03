@@ -19,6 +19,7 @@ const PaymentSchema = new mongoose.Schema({
   receipt_url: { type: String},
   status: { type: String, required: true },
   portalID: { type: Number, required: true, unique: true },
+  previous_payment_details: { type: [mongoose.Schema.Types.Mixed], default: [] }, // Array of mixed objects
 },
   {
     timestamps: true,

@@ -97,27 +97,14 @@ const UserProfileForm = () =>{
             />
           </div>
           <div>
-          <label>countryCode:</label>
+            <label>Country Code:</label>
             <p>{userInfo?countryCode:""}</p>
           </div>
           <div>
             <label>Portal ID:</label>
             <p>{portalID}</p>
           </div>
-          {/*
-          <div>
-            <label>Account Type:</label>
-            <p>{userInfo?accountType:""}</p>
-          </div>
-          <div>
-            <label>Time Zone:</label>
-            <p>{userInfo?timeZone:""}</p>
-          </div>
-          <div>
-            <label>Company Currency:</label>
-            <p>{userInfo?companyCurrency:""}</p>
-          </div>
-           */}
+        
           <div>
             <label>UI Domain:</label>
             <p>{userInfo?uiDomain:""}</p>

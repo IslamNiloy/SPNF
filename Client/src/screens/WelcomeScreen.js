@@ -24,18 +24,14 @@ const WelcomeScreen = () => {
       if(portalID){
         dispatch(userInfoByID(portalID));
         //dispatch(insertIntoSubscriptionCollection(portalID,cookies.subscription));
-        navigate('/');
+        //navigate('/');
       } 
   }, [dispatch]);
 
     return(
         <div>
             <Header />
-            <HeroSection/>
-            <OverviewSection/>
-            <FunctionalitySection/>
             <ProposedPackageSection/>
-            <UsingTheAppSection/>
             <Footer/>
         </div>
     )

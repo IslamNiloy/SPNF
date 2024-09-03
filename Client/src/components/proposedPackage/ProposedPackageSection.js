@@ -14,6 +14,8 @@ const ProposedPackageSection = () => {
     const { loading, error, packages } = AllPackages;
     //const monghtPackages = packages.find({ subscription: 'monthly' }).sort({ index: 1 });
 
+    //const monghtPackages = packages.find({ subscription: 'monthly' }).sort({ index: 1 });
+
     const portalID = localStorage.getItem("I8PD56?#C|NXhSgZ0KE");
     useEffect(() => {
         dispatch(allPackages());
@@ -23,10 +25,12 @@ const ProposedPackageSection = () => {
         <section className="package-section" id="features">
             <h2 className='header'>Packages</h2>
             <h3 className='headerSub'>Monthly</h3>
+            <h3 className='headerSub'>Monthly</h3>
             {
             <div className="package-container">
                 {error? <MessageBox>{error}</MessageBox>:
                 loading? <LoadingBox>Loading</LoadingBox>: packages?(
+                    packages.filter(pkg => pkg.subscription === 'monthly').map((pkg, index) => (
                     packages.filter(pkg => pkg.subscription === 'monthly').map((pkg, index) => (
                     <div className="package-card" key={index}>
                         <div className="package-details">
@@ -36,7 +40,7 @@ const ProposedPackageSection = () => {
                                 <button className="package-price">${pkg.price}/month</button>
                             }
                         </div>
-                        <p className="package-content1">API Call Limit</p>
+                        <p className="package-content1">Number of Actions</p>
                         {pkg.packageName=='Custom' ? 
                                 <p className="package-content2">15000+/month</p>:
                                 <p className="package-content2">{pkg.Limit}/month</p>
@@ -47,9 +51,15 @@ const ProposedPackageSection = () => {
                                 <Link to="/custom"  state={{ selectedPackage: pkg }}>
                                     <button className="install-button">Install</button>
                                 </Link>: 
+                         { portalID?
+                                pkg.packageName=='Custom' ? 
+                                <Link to="/custom"  state={{ selectedPackage: pkg }}>
+                                    <button className="install-button">Install</button>
+                                </Link>: 
                                 <Link to="/payment"  state={{ selectedPackage: pkg }}>
                                 <button className="install-button">Checkout</button>
                             </Link>:
+                             pkg.packageName=='Custom' ? 
                              pkg.packageName=='Custom' ? 
                                 <Link to="/custom"  state={{ selectedPackage: pkg }}>
                                     <button className="install-button">Install</button>
@@ -77,7 +87,7 @@ const ProposedPackageSection = () => {
                                 <button className="package-price">${pkg.price}/yearly</button>
                             }
                         </div>
-                        <p className="package-content1">API Call Limit</p>
+                        <p className="package-content1">Number of Actions</p>
                         {pkg.packageName=='Custom' ? 
                                 <p className="package-content2">15000+/yearly</p>:
                                 <p className="package-content2">{pkg.Limit}/yearly</p>

@@ -37,28 +37,24 @@ const SubscriptionForm = () => {
 
     useEffect(() => {
         if (!infos) {
-            //const emailForPaymentInfo = localStorage.getItem("spPhk44lI519pJ");
-            dispatch(subscriptionInfoByID(portalID));
+            dispatch(subscriptionInfoByID(portalID)) 
             dispatch(paymentInfoByEmail(portalID));
         }
         if(infos){
             const filteredPackages = allPackageInfo.filter(packages => packages._id === infos.package);
             setPackageName(filteredPackages[0].packageName);
-            setAPICallCount(infos.apiCallCount);
-            setCheckPhnNumberApiCallCount(infos.checkPhoneNumberApiCallCount);
+            setAPICallCount(parseInt(infos.apiCallCount) + parseInt(infos.checkPhoneNumberApiCallCount));
             setAPICallLimit(filteredPackages[0].Limit);
             setJoiningDate(infos.joiningDate);
             setStartDate(infos.packageStartDate);
             setEndDate(infos.packageEndDate);
             setPrice(filteredPackages[0].price);
             setDuration(filteredPackages[0].duration);
-            console.log("============Payment INFO==========="+ paymentInfo);
-            if(filteredPackages[0].packageName == "Free"){
-                setStatus("Not Found");
-            }
-            else if(paymentInfo){
+          if(paymentInfo){
                 setStatus(paymentInfo.status);
-            }
+         
+          }
+            
                 
         }
     }, [dispatch, infos, portalID, allPackageInfo]);
@@ -75,11 +71,13 @@ const SubscriptionForm = () => {
     
       const handleConfirmModal = (e) => {
         setshowPopup(false);
-        // Add your cancel subscription logic here
-        const portalID = localStorage.getItem("I8PD56?#C|NXhSgZ0KE");
+        //ancel subscription logic here
+        const portalID = localStorage.getItem('I8PD56?#C|NXhSgZ0KE');
         dispatch(cancelSubscription(portalID));
+        
         setStatus("cancelled");
         setModalVisible(true);
+        //window.location.reload();
       };
 
     const handleCloseModal = () => {
@@ -181,11 +179,7 @@ const SubscriptionForm = () => {
 
             <div>
                 <label>Subscription Status:</label>
-                <p>{paymentLoading
-                        ? "loading"
-                        : paymentErr
-                        ? "NOT FOUND"
-                        : status == "Not Found" ? "Free Subscription" : status}</p>
+                <p>{status}</p>
             </div>
             {status == "cancelled" || packageName == "Free"?
             <></>:
