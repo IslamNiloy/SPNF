@@ -1,5 +1,6 @@
 {
   "name": "hs_phone_number_formatter",
+  "proxy" :"https://dev-hpu-phonenumber-fortmatter.vercel.app",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
