@@ -5,7 +5,9 @@ import { ALL_PACKAGE_FAIL, ALL_PACKAGE_REQUEST, ALL_PACKAGE_SUCCESS } from "../c
 export const allPackages = () => async (dispatch) => {
     dispatch({ type: ALL_PACKAGE_REQUEST });
     try {
-      const { data } = await Axios.get(`${BackendAPI}/package/all`);
+      const { data } = await Axios.get(`${BackendAPI}/package/all`,{
+        'my-url' : BackendAPI,
+      });
       dispatch({ type: ALL_PACKAGE_SUCCESS, payload: data });
       localStorage.setItem('lSYs~K@jx}DS1YG>/57Kuj', JSON.stringify(data).toString());
     } catch (error) {
