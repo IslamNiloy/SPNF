@@ -17,10 +17,17 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Use CORS middleware
-app.use(cors());
+//app.use(cors());
 /* 
   STRIPE WEBHOOK MUST BE HANDLED BEFORE ANY JSON{} DATA IS PARSED FROM SERVER 
 */
+
+// Configure CORS to allow requests from your frontend domain
+app.use(cors({
+  origin: 'https://dev-frontend-hpu-phone-number-fortmatter.vercel.app', // Your frontend URL
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  credentials: true // If you need to send cookies or authentication headers
+}));
 app.use('/stripe', paymentRoutes);
 
 app.use(express.json());
