@@ -47,8 +47,6 @@ export const insertIntoSubscriptionCollection = (portalID,packageID) => async (d
     //ACTION FOR GETTING SUBSCRIPTION BY ID
     export const cancelSubscription = (portalID) => async (dispatch) => {
       dispatch({ type: CANCEL_SUBSCRIPTION_REQUEST, payload: { portalID } });
-    export const cancelSubscription = (portalID) => async (dispatch) => {
-      dispatch({ type: CANCEL_SUBSCRIPTION_REQUEST, payload: { portalID } });
       try {
         // Include portalID in the query string
         const { data } = await Axios.get(`${BackendAPI}/charge/cancel/${portalID}`);
