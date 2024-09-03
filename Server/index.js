@@ -17,16 +17,14 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Use CORS middleware
-const options = [
-  cors({
-    origin: '*',
-    methods: '*',
-    allowedHeaders: ['Content-Type', 'Authorization'],
-    credentials: true,
-  })
-];
+const corsOptions = {
+  origin: '*', // Allow all origins
+  methods: '*', // Allow all HTTP methods
+  allowedHeaders: ['Content-Type', 'Authorization'], // Allow specific headers
+  credentials: true // Enable credentials (e.g., cookies, authorization headers)
+};
 
-app.use(options);
+app.use(cors(corsOptions)); // Apply CORS middleware correctly
 /* 
   STRIPE WEBHOOK MUST BE HANDLED BEFORE ANY JSON{} DATA IS PARSED FROM SERVER 
 */
