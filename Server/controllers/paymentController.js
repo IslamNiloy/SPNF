@@ -5,10 +5,7 @@ const logger = require('../utils/logger'); // Add logger
 const axios = require('axios');
 const packagesModel = require('../model/packages.model');
 const userModel = require('../model/user.model');
-const subscriptionModel = require('../model/subscription.model');
 const { insertIntoSubscriptionAfterPayment } = require('./subscriptionController');
-const { updateUserInfoAfterPayment } = require('./usercontroller');
-const { updateUserInfoAfterPayment } = require('./usercontroller');
 
 
 exports.createCheckoutSession = async (req, res) => {
@@ -16,7 +13,6 @@ exports.createCheckoutSession = async (req, res) => {
   const packageId = req.params.id;
   const selectedPackage = await packagesModel.findOne({_id: req.params.id}); //getting information from mongodb packageModel
   const stripePrices = await stripe.prices.list(); //getting all price information from stripe
-  console.log("stripePricesstripePricesstripePricesstripePrices== "+ JSON.stringify(stripePrices));
   console.log("stripePricesstripePricesstripePricesstripePrices== "+ JSON.stringify(stripePrices));
   const filteredStripePrice = stripePrices.data.filter(priceObj =>parseInt(priceObj.unit_amount) === parseInt((selectedPackage.price) * 100));;//filtering from stripe data with price of packageModel findOne
   const portalID = req.params.portalID;
@@ -68,7 +64,6 @@ exports.createCheckoutSession = async (req, res) => {
     if(req.params.id === '66ba2cf16343bea38ef334ba'){
       await zeroDollarInfo(session,portalID,packageId);
     }
-
 
     logger.info("-------Session whole -----------" + JSON.stringify(session));
     
@@ -144,7 +139,6 @@ exports.cancel_subscription = async(req,res) =>{
   try{
     //should get the invoice number
     const paymentInfo = await PaymentModel.findOne({ portalID: req.params.portalID }).sort({ createdAt: -1 })
-    const paymentInfo = await PaymentModel.findOne({ portalID: req.params.portalID }).sort({ createdAt: -1 })
     if(!paymentInfo){
       res.send("Payment information not found!");
     }
@@ -163,12 +157,8 @@ exports.cancel_subscription = async(req,res) =>{
 
 
 exports.update_Payment_Info = async (chargeData, extraChargeData, packageID, portalID) => {
-exports.update_Payment_Info = async (chargeData, extraChargeData, packageID, portalID) => {
   try {
-    logger.info("Information in update_Payment_Info=====:::" + JSON.stringify(chargeData));
-    logger.info("Information in update_Payment_Info=====:::extraChargeDataextraChargeData" + JSON.stringify(extraChargeData));
-    logger.info("Information in update_Payment_Info=====:::extraChargeDataextraChargeData" + JSON.stringify(extraChargeData));
-    logger.info("Information in update_Payment_Info=====:::" + portalID);
+
     
     const payment_Info = await PaymentModel.findOne({portalID: portalID});
     if (!payment_Info) {
@@ -214,8 +204,6 @@ exports.update_Payment_Info = async (chargeData, extraChargeData, packageID, por
     },
     { new: true, upsert: false }
     );
-    await insertIntoSubscriptionAfterPayment(packageID,paymentUpdate.user);
-    //await updateUserInfoAfterPayment(portalID, extraChargeData);
     await insertIntoSubscriptionAfterPayment(packageID,paymentUpdate.user);
     //await updateUserInfoAfterPayment(portalID, extraChargeData);
     console.log(paymentUpdate);
