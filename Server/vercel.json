@@ -2,13 +2,18 @@
   "version": 2,
   "builds": [
     {
-      "src": "./index.js",
+      "src": "index.js",
       "use": "@vercel/node"
     }
   ],
   "routes": [
     {
       "src": "/(.*)",
+      "headers": {
+        "Access-Control-Allow-Origin": "https://dev-frontend-hpu-phone-number-fortmatter.vercel.app",
+        "Access-Control-Allow-Methods": "GET, OPTIONS, POST, PUT, DELETE",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization"
+      },
       "dest": "/"
     }
   ]

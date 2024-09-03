@@ -17,7 +17,11 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Use CORS middleware
-app.use(cors());
+app.use(cors({
+  origin: 'https://dev-frontend-hpu-phone-number-fortmatter.vercel.app', // Replace with your frontend URL
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  credentials: true // Include this if you need to allow credentials (e.g., cookies, authorization headers)
+}));
 /* 
   STRIPE WEBHOOK MUST BE HANDLED BEFORE ANY JSON{} DATA IS PARSED FROM SERVER 
 */
