@@ -17,13 +17,13 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Use CORS middleware
-//app.use(cors());
+app.use(cors());
 /* 
   STRIPE WEBHOOK MUST BE HANDLED BEFORE ANY JSON{} DATA IS PARSED FROM SERVER 
 */
 
 // Configure CORS to allow requests from your frontend domain
-app.options('*', cors()); // Preflight request handling
+//app.options('*', cors()); // Preflight request handling
 app.use('/stripe', paymentRoutes);
 
 app.use(express.json());
