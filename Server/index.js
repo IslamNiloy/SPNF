@@ -19,7 +19,7 @@ const PORT = process.env.PORT || 3000;
 // Use CORS middleware
 app.use(cors());
 /* 
-  STRIPE WEBHOOK MUST BE HANDLED BEFORE ANY JSON{} DATA IS PARSED FROM SERVER 
+  ////STRIPE WEBHOOK MUST BE HANDLED BEFORE ANY JSON{} DATA IS PARSED FROM SERVER 
 */
 app.use('/stripe', paymentRoutes);
 
