@@ -5,7 +5,9 @@ const logger = require('../utils/logger'); // Add logger
 const axios = require('axios');
 const packagesModel = require('../model/packages.model');
 const userModel = require('../model/user.model');
+const subscriptionModel = require('../model/subscription.model');
 const { insertIntoSubscriptionAfterPayment } = require('./subscriptionController');
+const { updateUserInfoAfterPayment } = require('./usercontroller');
 
 
 exports.createCheckoutSession = async (req, res) => {
@@ -158,7 +160,9 @@ exports.cancel_subscription = async(req,res) =>{
 
 exports.update_Payment_Info = async (chargeData, extraChargeData, packageID, portalID) => {
   try {
-
+    logger.info("Information in update_Payment_Info=====:::" + JSON.stringify(chargeData));
+    logger.info("Information in update_Payment_Info=====:::extraChargeDataextraChargeData" + JSON.stringify(extraChargeData));
+    logger.info("Information in update_Payment_Info=====:::" + portalID);
     
     const payment_Info = await PaymentModel.findOne({portalID: portalID});
     if (!payment_Info) {

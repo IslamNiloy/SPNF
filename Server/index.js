@@ -17,18 +17,10 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Use CORS middleware
-const corsOptions ={
-  origin:'https://dev-frontend-hpu-phone-number-fortmatter.vercel.app', 
-  credentials:true,            //access-control-allow-credentials:true
-  optionSuccessStatus:200
-}
-app.use(cors(corsOptions));
+app.use(cors());
 /* 
   STRIPE WEBHOOK MUST BE HANDLED BEFORE ANY JSON{} DATA IS PARSED FROM SERVER 
 */
-
-// Configure CORS to allow requests from your frontend domain
-//app.options('*', cors()); // Preflight request handling
 app.use('/stripe', paymentRoutes);
 
 app.use(express.json());
