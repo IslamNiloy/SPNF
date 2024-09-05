@@ -222,7 +222,8 @@ const checkPhoneNumber = (phoneNumber, country) => {
 };
 
 exports.checkPhoneNumber = async (req, res) => {
-  const { phoneNumber, country } = req.body;
+  const { phoneNumber, country, propertyName, portalId, object } = req.body;
+  console.log(req.body)
   const check = await packageCondition(req.body.portalID);
   const User = await userModel.findOne({ portalID: req.body.portalID });
   console.log("User in checkPhoneNumber: ===========" + User.email);
