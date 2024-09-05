@@ -226,11 +226,11 @@ exports.checkPhoneNumber = async (req, res) => {
   console.log("******** Req body *********", phoneNumber, country, propertyName, portalId, object, req.body, "******************")
   const check = await packageCondition(req.body.portalID);
   const User = await userModel.findOne({ portalID: req.body.portalID });
-  console.log("User in checkPhoneNumber: ===========" + User.email);
+  // console.log("User in checkPhoneNumber: ===========" + User.email);
   const paymentInfo = await paymentModel.findOne({ portalID: req.body.portalID }).sort({ createdAt: -1 });
-  console.log("UpaymentInfoser: ===========" + paymentInfo + "check ===" + check);
-  logger.info("req.body in checkPhoneNumber: === " + JSON.stringify(req.body));
-  logger.info("phoneNumber in checkPhoneNumber: === " + phoneNumber);
+  // console.log("UpaymentInfoser: ===========" + paymentInfo + "check ===" + check);
+  // logger.info("req.body in checkPhoneNumber: === " + JSON.stringify(req.body));
+  // logger.info("phoneNumber in checkPhoneNumber: === " + phoneNumber);
   if (!check) {
     return res.status(200).json({
       "outputFields": {
@@ -248,7 +248,7 @@ exports.checkPhoneNumber = async (req, res) => {
     });
   }
   else if (check) {
-    console.log("checking is fine in check phone number");
+    // console.log("checking is fine in check phone number");
     await CheckPhoneNumberUpdateAPICount(req.body.portalID);
     //incrementAPICount(req.body.portalID, "checkPhoneNumber");
     if (!phoneNumber) {
