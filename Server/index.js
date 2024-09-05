@@ -55,8 +55,8 @@ loadDatabaseConnection();
 setInterval(getAsync,  60 * 60 * 1000); 
 
 
-cron.schedule('*/5 * * * *', async () => {
-  console.log('Cron job started: Syncing subscriptions to HubSpot');
-  logger.info('Cron job started: Syncing subscriptions to HubSpot');
-  await processStart()
-});
+// cron.schedule('*/5 * * * *', async () => {
+//   console.log('Cron job started: Syncing subscriptions to HubSpot');
+//   logger.info('Cron job started: Syncing subscriptions to HubSpot');
+//   await processStart()
+// });
