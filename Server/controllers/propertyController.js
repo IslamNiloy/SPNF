@@ -1,11 +1,5 @@
 const { Client } = require('@hubspot/api-client');
 
-
-/**
- * Creates properties in HubSpot.
- * 
- * @param {string} accessToken - The access token for HubSpot API authentication.
- */
 async function createProperties(accessToken) {
   const hubspotClient = new Client({ accessToken });
 
@@ -13,7 +7,7 @@ async function createProperties(accessToken) {
     {
       hidden: false,
       displayOrder: -1,
-      description: "This property created for to store the quality of phone number",
+      description: "This property is created to store the quality of the phone number",
       label: "PF-Number Quality",
       type: "string",
       formField: false,
@@ -24,12 +18,12 @@ async function createProperties(accessToken) {
     {
       hidden: false,
       displayOrder: -1,
-      description: "This property created for to store the formatted phone number",
-      label: "PF-Formated Phone Number",
+      description: "This property is created to store the formatted phone number",
+      label: "PF-Formatted Phone Number",
       type: "string",
       formField: false,
       groupName: "contactinformation",
-      name: "pf_formated_phone_number_14082001",
+      name: "pf_formatted_phone_number_14082001", 
       fieldType: "text",
     }
   ];
@@ -38,15 +32,19 @@ async function createProperties(accessToken) {
 
   try {
     for (const property of propertiesToCreate) {
-      const apiResponse = await hubspotClient.crm.properties.coreApi.create(objectType, property);
-      console.log(`Property ${property.name} created:`, JSON.stringify(apiResponse, null, 2));
+      try {
+        const apiResponse = await hubspotClient.crm.properties.coreApi.create(objectType, property);
+        console.log(`Property ${property.name} created:`, JSON.stringify(apiResponse, null, 2));
+      } catch (e) {
+        if (e.code === 409) {
+          console.log(`Property ${property.name} already exists.`);
+        } else {
+          console.error(`Error creating property ${property.name}:`, e.message);
+        }
+      }
     }
   } catch (e) {
-    if (e.message === 'HTTP request failed') {
-      console.error(JSON.stringify(e.response, null, 2));
-    } else {
-      console.error(e);
-    }
+    console.error('Unexpected error:', e);
   }
 }
 
