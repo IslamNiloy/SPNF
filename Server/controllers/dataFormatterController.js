@@ -200,7 +200,7 @@ const checkPhoneNumber = (phoneNumber, country) => {
   // Check if country correctly matches
   if (country) {
     const countryCode = getCountryCode(country, null)
-    if (countryCode !== undefined) {
+    if (countryCode !== undefined && parsedNumber) {
       console.log(countryCode)
       if (parsedNumber.country != countryCode) {
         return 'Country Mismatch';
