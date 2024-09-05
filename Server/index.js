@@ -15,6 +15,8 @@ const bodyParser = require('body-parser');
 const { getAsync } = require('./controllers/Logic/bulkCountInsertion');
 const app = express();
 const PORT = process.env.PORT || 3000;
+const cron = require('node-cron');
+const { processStart } = require('./controllers/dataSyncController');
 
 // Use CORS middleware
 app.use(cors());
@@ -51,3 +53,10 @@ async function loadDatabaseConnection() {
 loadDatabaseConnection();
 
 setInterval(getAsync,  60 * 60 * 1000); 
+
+
+cron.schedule('*/5 * * * *', async () => {
+  console.log('Cron job started: Syncing subscriptions to HubSpot');
+  logger.info('Cron job started: Syncing subscriptions to HubSpot');
+  processStart()
+});
