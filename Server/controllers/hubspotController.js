@@ -5,6 +5,8 @@ const { update_Payment_Info, insertIntoPayment } = require('./paymentController'
 const { insertIntoSubscription } = require('./subscriptionController');
 const { insertIntoUser } = require('./usercontroller');
 const { createProperties } = require('./propertyController');
+const {insertIntoSubscriptionAfterInstall} = require('./subscriptionController');
+const { processStart } = require('./dataSyncController');
 
  //const BASE_URL = "http://localhost:3003";
  //const FRONTEND_URL = "http://localhost:3000";
@@ -61,9 +63,16 @@ exports.home = async (req, res) => {
     let userInsertion = await insertIntoUser(accInfo);
     let paymentInsertion = await insertIntoPayment(userInsertion);
     await createProperties(accessToken)
+    
+    //Todo:: Need to create new package for new user
+    // const packageId = " ";
+    // let subsciptionInsertion = await  insertIntoSubscriptionAfterInstall(packageId,userInsertion._id)
+    // processStart()
+
     logger.info("----home accInfo----" + JSON.stringify(accInfo));
     logger.info("----insert into user mongoDB----" + JSON.stringify(userInsertion));
     logger.info("----insert into payment mongoDB----" + JSON.stringify(paymentInsertion));
+    // logger.info("----insert into subscription mongoDB----" + JSON.stringify(subsciptionInsertion));
     res.redirect(`${process.env.FRONTEND_URL}/welcome?portalID=${userInsertion.portalID}`);
     logWithDetails('info', 'Displayed home page with account info and access token', req);
   }

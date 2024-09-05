@@ -34,7 +34,7 @@ exports.insertIntoSubscriptionAfterPayment = async (packageID, userID) => {
              return res.json({ error: 'Package information not found' });
          }
          if(subscriptionInfo){
-            logger.info("I am in subscriptionInfo");
+
              this.updateSubscriptionInfo(userInfo._id,packageID);
          }
          if (userInfo && !subscriptionInfo) {
@@ -275,4 +275,45 @@ exports.insertIntoSubscription = async (req, res) => {
     }
   }
 
-  
+  exports.insertIntoSubscriptionAfterInstall = async (packageID,userID) => {
+    try{
+         const startDate = new Date();
+         const endDate = new Date();
+         const userInfo = await User.findOne( {_id: userID});
+         const packageInfo = await packagesModel.findOne( {_id: packageID});
+         const subscriptionInfo = await Subscription.findOne( {user: userInfo._id});
+
+         if (!userInfo) {
+             logger.error("User not found");
+             return res.status(404).json({ error: 'User not found' });
+         }
+         else if (!packageInfo) {
+             logger.error("Package information not found");
+             return res.json({ error: 'Package information not found' });
+         }
+         if(subscriptionInfo){
+            return res.status(200).json({ message: 'Already Exist' });
+         }
+         if (userInfo && !subscriptionInfo) {
+             //insert into Subscription model
+             const subscribe = new Subscription({  
+                 user: userInfo._id,
+                 package: packageID,
+                 //adding total API call count for any reference
+                 totalApiCallCount: 0,
+                 apiCallCount: 0,
+                 checkPhoneNumberApiCallCount: 0,
+                 checkPhoneNumberTotalApiCallCount: 0,
+                 joiningDate: startDate.toISOString().split('T')[0],
+                 packageStartDate: startDate.toISOString().split('T')[0],
+                 packageEndDate: endDate.toISOString().split('T')[0],
+                 hubspotDealId: ""
+             });
+             await subscribe.save();
+             logger.info("Insert data in subscription model");
+         }
+     }catch(error){
+         logger.info('Error in insertIntoSubscription: '+ error);
+         return  error ;
+     }
+   }
