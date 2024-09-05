@@ -1,4 +1,4 @@
-const { parsePhoneNumberFromString, AsYouType } = require('libphonenumber-js');
+const { parsePhoneNumberFromString, isValidPhoneNumber, AsYouType } = require('libphonenumber-js');
 const countries = require('i18n-iso-countries');
 countries.registerLocale(require("i18n-iso-countries/langs/en.json"));
 const { getAccessToken, isAuthorized, getContact, getAccountInfo } = require('../auth/hubspotAuth');
@@ -52,7 +52,7 @@ const getCountryCode = (country, country_text) => {
 /*adding redis code starts for phone number*/
 const incrementAPICount = async (portalID, funcName) => {
   try {
-    const result = await redisClient.incrAsync(portalID,funcName);
+    const result = await redisClient.incrAsync(portalID, funcName);
     console.log('After increment:', result); // Should log the incremented value
 
   } catch (err) {
@@ -65,45 +65,45 @@ exports.phoneNumber = async (req, res) => {
   const { phoneNumber, country, country_text } = req.body;
   logger.info(`--------logging at phoneNumber func with ${phoneNumber}, ${country}, ${country_text}-------`);
   try {
-      //const accessToken = await getAccessToken(req);
-      //const accInfo = await getAccountInfo(accessToken);
-      const check = await packageCondition(req.body.portalID); 
-      
-      const User = await userModel.findOne({portalID : req.body.portalID });
-      console.log("User: ===========" + User.email);
-      logger.info("req.body in phoneNumber: === " + JSON.stringify(req.body));
-      logger.info("phoneNumber in phoneNumber: === " + phoneNumber);
-      const paymentInfo = await paymentModel.findOne({portalID : req.body.portalID}).sort({ createdAt: -1 });
-      console.log("UpaymentInfoser: ===========" + paymentInfo);
-      if(!check){
-        return res.status(200).json({
-          "outputFields": {
-            "Message": "API Limit Exceeded",
-            "hs_execution_state": "FAILED"
-          }
-        });
-      }
-      if(paymentInfo && paymentInfo.status == "cancelled"){
-        return res.status(200).json({
-          "outputFields": {
-            "Message": "API Limit Exceeded",
-            "hs_execution_state": "FAILED"
-          }
-        });
-      }
-      else if(check){
-        await updateAPICount(req.body.portalID);
-        //incrementAPICount(req.body.portalID, "phoneNumber");
-        const formattedNumber = formatPhoneNumber(phoneNumber, country, country_text);
-        res.json({
-          "outputFields": {
-            "Formatted_Phone_Number": formattedNumber,
-            "hs_execution_state": "SUCCESS"
-          }
-        });
-      }else{
-        res.json("Update your plan");
-      }
+    //const accessToken = await getAccessToken(req);
+    //const accInfo = await getAccountInfo(accessToken);
+    const check = await packageCondition(req.body.portalID);
+
+    const User = await userModel.findOne({ portalID: req.body.portalID });
+    console.log("User: ===========" + User.email);
+    logger.info("req.body in phoneNumber: === " + JSON.stringify(req.body));
+    logger.info("phoneNumber in phoneNumber: === " + phoneNumber);
+    const paymentInfo = await paymentModel.findOne({ portalID: req.body.portalID }).sort({ createdAt: -1 });
+    console.log("UpaymentInfoser: ===========" + paymentInfo);
+    if (!check) {
+      return res.status(200).json({
+        "outputFields": {
+          "Message": "API Limit Exceeded",
+          "hs_execution_state": "FAILED"
+        }
+      });
+    }
+    if (paymentInfo && paymentInfo.status == "cancelled") {
+      return res.status(200).json({
+        "outputFields": {
+          "Message": "API Limit Exceeded",
+          "hs_execution_state": "FAILED"
+        }
+      });
+    }
+    else if (check) {
+      await updateAPICount(req.body.portalID);
+      //incrementAPICount(req.body.portalID, "phoneNumber");
+      const formattedNumber = formatPhoneNumber(phoneNumber, country, country_text);
+      res.json({
+        "outputFields": {
+          "Formatted_Phone_Number": formattedNumber,
+          "hs_execution_state": "SUCCESS"
+        }
+      });
+    } else {
+      res.json("Update your plan");
+    }
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
@@ -158,7 +158,7 @@ exports.getCountry = async (req, res) => {
 
 
 /////////////////////// Check Phone Number START //////////////////////////////////
-const checkPhoneNumber = (phoneNumber) => {
+const checkPhoneNumber = (phoneNumber, country) => {
   // Check if the phone number contains spaces
   if (/\s/.test(phoneNumber)) {
     return 'Space in the Number';
@@ -197,6 +197,17 @@ const checkPhoneNumber = (phoneNumber) => {
 
   const parsedNumber = parsePhoneNumberFromString(phoneNumber);
 
+  // Check if country correctly matches
+  if (country) {
+    const countryCode = getCountryCode(country, null)
+    if (countryCode !== undefined) {
+      console.log(countryCode)
+      if (parsedNumber.country != countryCode) {
+        return 'Country Mismatch';
+      }
+    }
+  }
+
   // Check if the phone number includes a country code
   if (!parsedNumber || !parsedNumber.country) {
     return 'No Country Code';
@@ -210,16 +221,16 @@ const checkPhoneNumber = (phoneNumber) => {
   return 'Correctly Formatted';
 };
 
-exports.checkPhoneNumber = async(req, res) => {
-  const { phoneNumber } = req.body;
+exports.checkPhoneNumber = async (req, res) => {
+  const { phoneNumber, country } = req.body;
   const check = await packageCondition(req.body.portalID);
-  const User = await userModel.findOne({portalID : req.body.portalID });
+  const User = await userModel.findOne({ portalID: req.body.portalID });
   console.log("User in checkPhoneNumber: ===========" + User.email);
-  const paymentInfo = await paymentModel.findOne({portalID : req.body.portalID}).sort({ createdAt: -1 });
-  console.log("UpaymentInfoser: ===========" + paymentInfo + "check ==="+ check);
+  const paymentInfo = await paymentModel.findOne({ portalID: req.body.portalID }).sort({ createdAt: -1 });
+  console.log("UpaymentInfoser: ===========" + paymentInfo + "check ===" + check);
   logger.info("req.body in checkPhoneNumber: === " + JSON.stringify(req.body));
   logger.info("phoneNumber in checkPhoneNumber: === " + phoneNumber);
-  if(!check){
+  if (!check) {
     return res.status(200).json({
       "outputFields": {
         "quality": "API Limit Exceeded",
@@ -227,7 +238,7 @@ exports.checkPhoneNumber = async(req, res) => {
       }
     });
   }
-  if(paymentInfo && paymentInfo.status == "cancelled"){
+  if (paymentInfo && paymentInfo.status == "cancelled") {
     return res.status(200).json({
       "outputFields": {
         "quality": "You have cancelled your subscription",
@@ -235,7 +246,7 @@ exports.checkPhoneNumber = async(req, res) => {
       }
     });
   }
-  else if(check){
+  else if (check) {
     console.log("checking is fine in check phone number");
     await CheckPhoneNumberUpdateAPICount(req.body.portalID);
     //incrementAPICount(req.body.portalID, "checkPhoneNumber");
@@ -248,7 +259,7 @@ exports.checkPhoneNumber = async(req, res) => {
       });
     }
 
-    const result = checkPhoneNumber(phoneNumber);
+    const result = checkPhoneNumber(phoneNumber, country);
 
     return res.status(200).json({
       "outputFields": {
