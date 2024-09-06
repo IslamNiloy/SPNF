@@ -233,8 +233,8 @@ exports.checkPhoneNumber = async (req, res) => {
     propertyName = "pf_number_quality_14082001"
   }
   // console.log("******** Req body *********", phoneNumber, country, propertyName, portalID, object, req.body, "******************")
-  console.log(req)
-  
+  console.log(req.body)
+
   const check = await packageCondition(req.body.portalID);
   const User = await userModel.findOne({ portalID: req.body.portalID });
   // console.log("User in checkPhoneNumber: ===========" + User.email);

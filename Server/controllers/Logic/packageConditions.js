@@ -78,7 +78,7 @@ const Subscription = require('../../model/subscription.model');
       try {
         // Find the user by portalID
         // logger.info("---------------------logging at CheckPhoneNumberUpdateAPICount start-------------------");
-        logger.info("Portal id: "+ portalID);
+        // logger.info("Portal id: "+ portalID);
         const user = await User.findOne({ portalID: portalID });
         // logger.info("---------------------logging at CheckPhoneNumberUpdateAPICount update API Count end-------------------");
         if (!user) {
