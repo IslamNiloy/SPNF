@@ -58,12 +58,12 @@ const SelectedPackage = (props) => {
                   <p className="package-content1">API Call Limit</p>
                   <p className="package-content2">{props.data.Limit}/month</p>
                   {
-                    (endDate!="" && today > endDate && props.data.packageName=="Free" )?
+                    (endDate!="" && today > endDate && props.data.packageName=="Free" && packageName != "Installation Package")?
                     ( 
                       <Link to='/profile'>
                           <Link to='/profile'>
                           <button type="submit" className="install-button">
-                              upgrade plan 1
+                              upgrade plan
                           </button>
                         </Link>
                       </Link>
@@ -78,7 +78,7 @@ const SelectedPackage = (props) => {
                     (
                       <Link to='/profile'>
                       <button type="submit" className="install-button">
-                          upgrade plan 2
+                          upgrade plan
                       </button>
                     </Link>
                     ):
@@ -94,7 +94,7 @@ const SelectedPackage = (props) => {
                     (
                       <>
                         <button type="submit" className="install-button">
-                            upgrade plan 3
+                            upgrade plan
                         </button>
                       </>
                     ):
