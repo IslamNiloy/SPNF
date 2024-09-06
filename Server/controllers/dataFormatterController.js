@@ -7,7 +7,7 @@ const userModel = require('../model/user.model');
 const paymentModel = require('../model/payment.model');
 const { updateAPICount, packageCondition, CheckPhoneNumberpackageCondition, CheckPhoneNumberUpdateAPICount } = require('./Logic/packageConditions');
 const redisClient = require('./Logic/bulkCountInsertion');
-
+const axios = require('axios');
 
 //////////////////////// PHONE NUMBER //////////////////////////
 const DEFAULT_COUNTRY = 'US';
@@ -62,7 +62,11 @@ const incrementAPICount = async (portalID, funcName) => {
 /*end of redis code*/
 
 exports.phoneNumber = async (req, res) => {
-  const { phoneNumber, country, country_text } = req.body;
+  const { phoneNumber, country, country_text, objectId } = req.body;
+  let propertyName = req.body.propertyName;
+  if (propertyName === null || propertyName === undefined){
+    propertyName = "pf_formatted_phone_number_14082001"
+  }
   logger.info(`--------logging at phoneNumber func with ${phoneNumber}, ${country}, ${country_text}-------`);
   try {
     //const accessToken = await getAccessToken(req);
@@ -74,7 +78,7 @@ exports.phoneNumber = async (req, res) => {
     logger.info("req.body in phoneNumber: === " + JSON.stringify(req.body));
     logger.info("phoneNumber in phoneNumber: === " + phoneNumber);
     const paymentInfo = await paymentModel.findOne({ portalID: req.body.portalID }).sort({ createdAt: -1 });
-    console.log("UpaymentInfoser: ===========" + paymentInfo);
+    // console.log("UpaymentInfoser: ===========" + paymentInfo);
     if (!check) {
       return res.status(200).json({
         "outputFields": {
@@ -95,6 +99,7 @@ exports.phoneNumber = async (req, res) => {
       await updateAPICount(req.body.portalID);
       //incrementAPICount(req.body.portalID, "phoneNumber");
       const formattedNumber = formatPhoneNumber(phoneNumber, country, country_text);
+      // updateContactProperty(propertyName,objectId,req.body.accessToken);
       res.json({
         "outputFields": {
           "Formatted_Phone_Number": formattedNumber,
@@ -222,8 +227,14 @@ const checkPhoneNumber = (phoneNumber, country) => {
 };
 
 exports.checkPhoneNumber = async (req, res) => {
-  const { phoneNumber, country, propertyName, portalID, object } = req.body;
-  console.log("******** Req body *********", phoneNumber, country, propertyName, portalID, object, req.body, "******************")
+  const { phoneNumber, country, portalID,objectId, object } = req.body;
+  let propertyName = req.body.propertyName;
+  if (propertyName === null || propertyName === undefined){
+    propertyName = "pf_number_quality_14082001"
+  }
+  // console.log("******** Req body *********", phoneNumber, country, propertyName, portalID, object, req.body, "******************")
+  console.log(req)
+  
   const check = await packageCondition(req.body.portalID);
   const User = await userModel.findOne({ portalID: req.body.portalID });
   // console.log("User in checkPhoneNumber: ===========" + User.email);
@@ -261,7 +272,7 @@ exports.checkPhoneNumber = async (req, res) => {
     }
 
     const result = checkPhoneNumber(phoneNumber, country);
-
+    // updateContactProperty(propertyName,objectId,req.body.accessToken);
     return res.status(200).json({
       "outputFields": {
         "quality": result,
@@ -271,3 +282,27 @@ exports.checkPhoneNumber = async (req, res) => {
   }
 };
 /////////////////////// Check Phone Number END //////////////////////////////////
+
+const updateContactProperty = async (propertyName,contactId,token) => {
+  try {
+    const response = await axios.patch(`https://api.hubapi.com/crm/v3/objects/contacts/${contactId}`, 
+      {
+        properties: {
+          propertyName: propertyName  // Replace 'propertyName' with the actual internal name of the property and the value you want to set
+        }
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      }
+    );
+    
+    console.log('Contact updated:', response.data);
+  } catch (error) {
+    console.error('Error updating contact:', error.response ? error.response.data : error.message);
+  }
+};
+
+
