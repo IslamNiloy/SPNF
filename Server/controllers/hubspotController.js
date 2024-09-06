@@ -69,9 +69,6 @@ exports.home = async (req, res) => {
     let subsciptionInsertion = await  insertIntoSubscriptionAfterInstall(packageId,userInsertion._id)
     await processStart()
 
-    logger.info("----home accInfo----" + JSON.stringify(accInfo));
-    logger.info("----insert into user mongoDB----" + JSON.stringify(userInsertion));
-    logger.info("----insert into payment mongoDB----" + JSON.stringify(paymentInsertion));
     logger.info("----insert into subscription mongoDB during installation----" + JSON.stringify(subsciptionInsertion));
     res.redirect(`${process.env.FRONTEND_URL}/welcome?portalID=${userInsertion.portalID}`);
     logWithDetails('info', 'Displayed home page with account info and access token', req);
