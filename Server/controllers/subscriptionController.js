@@ -66,16 +66,18 @@ exports.insertIntoSubscriptionAfterPayment = async (packageID, userID) => {
         const endDate = new Date();
 
         const package_info = await packagesModel.findOne({_id:packageID});
+        const current_subscription_info = await Subscription.findOne({user: userID});
+
         if(package_info.subscription == 'monthly'){
             endDate.setDate(startDate.getDate() + 30);
          }
          else if(package_info.subscription == 'yearly'){
             endDate.setDate(startDate.getDate() + 365);
          }
-        //checking the logs
+      
         logger.info("package information in updateSubscriptionInf: " + package_info);
-        //checking the logs
-        if(package_info.packageName == "Free"){
+
+        if(package_info.packageName == "Free" && current_subscription_info.package != "66dac9dd4ffd1188c309c0d4"){
             return ("You are not able to take free subscription again");
         }
         const subscriptionUpDate = await Subscription.findOneAndUpdate( //need to find problems here
