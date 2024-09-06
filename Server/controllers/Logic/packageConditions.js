@@ -39,7 +39,7 @@ const Subscription = require('../../model/subscription.model');
     try{
       logger.info("At packageCondition");
       const user = await User.findOne( {portalID: portalID});
-      logger.info("At packageCondition user infos: "+ user);
+      // logger.info("At packageCondition user infos: "+ user);
       if (!user) {
         // Handle case where user is not found
         logger.info("At packageCondition User not found for portalID: " + portalID);

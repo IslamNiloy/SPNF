@@ -99,7 +99,7 @@ exports.phoneNumber = async (req, res) => {
       await updateAPICount(req.body.portalID);
       //incrementAPICount(req.body.portalID, "phoneNumber");
       const formattedNumber = formatPhoneNumber(phoneNumber, country, country_text);
-      // updateContactProperty(propertyName,objectId,req.body.accessToken);
+      await updateContactProperty(propertyName,formattedNumber,objectId,User.accessToken);
       res.json({
         "outputFields": {
           "Formatted_Phone_Number": formattedNumber,
@@ -272,7 +272,7 @@ exports.checkPhoneNumber = async (req, res) => {
     }
 
     const result = checkPhoneNumber(phoneNumber, country);
-    // updateContactProperty(propertyName,objectId,req.body.accessToken);
+    await updateContactProperty(propertyName,result,objectId,User.accessToken);
     return res.status(200).json({
       "outputFields": {
         "quality": result,
@@ -283,12 +283,12 @@ exports.checkPhoneNumber = async (req, res) => {
 };
 /////////////////////// Check Phone Number END //////////////////////////////////
 
-const updateContactProperty = async (propertyName,contactId,token) => {
+const updateContactProperty = async (propertyName,value,contactId,token) => {
   try {
     const response = await axios.patch(`https://api.hubapi.com/crm/v3/objects/contacts/${contactId}`, 
       {
         properties: {
-          propertyName: propertyName  // Replace 'propertyName' with the actual internal name of the property and the value you want to set
+          [propertyName]: value 
         }
       },
       {
