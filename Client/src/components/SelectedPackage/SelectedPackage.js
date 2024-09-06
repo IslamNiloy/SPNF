@@ -63,7 +63,7 @@ const SelectedPackage = (props) => {
                       <Link to='/profile'>
                           <Link to='/profile'>
                           <button type="submit" className="install-button">
-                              upgrade plan
+                              upgrade plan 1
                           </button>
                         </Link>
                       </Link>
@@ -78,7 +78,7 @@ const SelectedPackage = (props) => {
                     (
                       <Link to='/profile'>
                       <button type="submit" className="install-button">
-                          upgrade plan
+                          upgrade plan 2
                       </button>
                     </Link>
                     ):
@@ -94,7 +94,7 @@ const SelectedPackage = (props) => {
                     (
                       <>
                         <button type="submit" className="install-button">
-                            upgrade plan
+                            upgrade plan 3
                         </button>
                       </>
                     ):
