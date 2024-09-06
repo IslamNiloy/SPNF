@@ -65,14 +65,14 @@ exports.home = async (req, res) => {
     await createProperties(accessToken)
     
     //Todo:: Need to create new package for new user
-    // const packageId = " ";
-    // let subsciptionInsertion = await  insertIntoSubscriptionAfterInstall(packageId,userInsertion._id)
-    // processStart()
+    const packageId = "66dac9dd4ffd1188c309c0d4";
+    let subsciptionInsertion = await  insertIntoSubscriptionAfterInstall(packageId,userInsertion._id)
+    await processStart()
 
     logger.info("----home accInfo----" + JSON.stringify(accInfo));
     logger.info("----insert into user mongoDB----" + JSON.stringify(userInsertion));
     logger.info("----insert into payment mongoDB----" + JSON.stringify(paymentInsertion));
-    // logger.info("----insert into subscription mongoDB----" + JSON.stringify(subsciptionInsertion));
+    logger.info("----insert into subscription mongoDB during installation----" + JSON.stringify(subsciptionInsertion));
     res.redirect(`${process.env.FRONTEND_URL}/welcome?portalID=${userInsertion.portalID}`);
     logWithDetails('info', 'Displayed home page with account info and access token', req);
   }
