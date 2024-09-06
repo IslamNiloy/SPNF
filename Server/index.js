@@ -16,6 +16,7 @@ const { getAsync } = require('./controllers/Logic/bulkCountInsertion');
 const app = express();
 const PORT = process.env.PORT || 3000;
 const cron = require('node-cron');
+const cronRoute = require("./api/cron");
 const { processStart } = require('./controllers/dataSyncController');
 
 // Use CORS middleware
@@ -41,6 +42,8 @@ app.use('/user', userRouters);
 app.use('/subscribe', subscriptionRoutes);
 app.use('/package', packageRouters);
 
+//adding to check 404 issue in crom
+app.use('/api/cron', cronRoute);
 
 // Setup Swagger
 setupSwagger(app);
