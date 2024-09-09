@@ -306,7 +306,7 @@ const updateContactProperty = async (propertyName, value, contactId, token, req,
     if (error.response && error.response.data.category === 'EXPIRED_AUTHENTICATION') {
       console.log('Token expired, refreshing access token...');
       try {
-        console.log('refresh token testing:',req.session.refresh_token)
+        req.session.refresh_token = refresh_token;
         const newTokenData = await refreshAccessToken(req);
 
         console.log('Retrying with new access token...');
