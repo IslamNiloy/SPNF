@@ -1,3 +1,4 @@
+import FeaturesAndBenefits from '../components/FeaturesAndBenefits/FeaturesAndBenefits';
 import Footer from '../components/Footer/Footer';
 import FunctionalitySection from '../components/Functionality/Functionality';
 import Header from '../components/header/Header';
@@ -11,6 +12,7 @@ const HomeSreen = () => {
         <div>
             <Header />
             <HeroSection/>
+            <FeaturesAndBenefits/>
             <OverviewSection/>
             <FunctionalitySection/>
             <ProposedPackageSection/>
