@@ -335,9 +335,6 @@ const updateContactProperty = async (propertyName, value, contactId, token, req,
 };
 
 
-
-
-
 ///////////////TEST ROUTE/////////////////////////
 exports.test = async (req, res) => {
   console.log(req.body)
