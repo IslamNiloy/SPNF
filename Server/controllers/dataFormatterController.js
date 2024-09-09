@@ -1,7 +1,7 @@
 const { parsePhoneNumberFromString, isValidPhoneNumber, AsYouType } = require('libphonenumber-js');
 const countries = require('i18n-iso-countries');
 countries.registerLocale(require("i18n-iso-countries/langs/en.json"));
-const { getAccessToken, isAuthorized, getContact, getAccountInfo } = require('../auth/hubspotAuth');
+const { refreshAccessToken,getAccessToken, isAuthorized, getContact, getAccountInfo } = require('../auth/hubspotAuth');
 const logger = require('../utils/logger'); // Add logger
 const userModel = require('../model/user.model');
 const paymentModel = require('../model/payment.model');
@@ -99,7 +99,7 @@ exports.phoneNumber = async (req, res) => {
       await updateAPICount(req.body.portalID);
       //incrementAPICount(req.body.portalID, "phoneNumber");
       const formattedNumber = formatPhoneNumber(phoneNumber, country, country_text);
-      await updateContactProperty(propertyName,formattedNumber,hs_object_id,User.accessToken);
+      await updateContactProperty(propertyName,formattedNumber,hs_object_id,User.accessToken, req);
       res.json({
         "outputFields": {
           "Formatted_Phone_Number": formattedNumber,
@@ -272,7 +272,7 @@ exports.checkPhoneNumber = async (req, res) => {
     }
 
     const result = checkPhoneNumber(phoneNumber, country);
-    await updateContactProperty(propertyName,result,hs_object_id,User.accessToken);
+    await updateContactProperty(propertyName,result,hs_object_id,User.accessToken, req);
     return res.status(200).json({
       "outputFields": {
         "quality": result,
@@ -283,7 +283,7 @@ exports.checkPhoneNumber = async (req, res) => {
 };
 /////////////////////// Check Phone Number END //////////////////////////////////
 
-const updateContactProperty = async (propertyName,value,contactId,token) => {
+const updateContactProperty = async (propertyName, value, contactId, token, req) => {
   try {
     const response = await axios.patch(`https://api.hubapi.com/crm/v3/objects/contacts/${contactId}`, 
       {
@@ -301,8 +301,37 @@ const updateContactProperty = async (propertyName,value,contactId,token) => {
     
     console.log('Contact updated:', response.data);
   } catch (error) {
-    console.error('Error updating contact:', error.response ? error.response.data : error.message);
+    if (error.response && error.response.data.category === 'EXPIRED_AUTHENTICATION') {
+      console.log('Token expired, refreshing access token...');
+      try {
+        const newTokenData = await refreshAccessToken(req);
+        const newAccessToken = newTokenData.access_token;
+
+        req.session.access_token = newTokenData.access_token;
+        req.session.refresh_token = newTokenData.refresh_token;
+
+        console.log('Retrying with new access token...');
+        const retryResponse = await axios.patch(`https://api.hubapi.com/crm/v3/objects/contacts/${contactId}`, 
+          {
+            properties: {
+              [propertyName]: value 
+            }
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${newAccessToken}`,
+              'Content-Type': 'application/json'
+            }
+          }
+        );
+        
+        console.log('Contact updated on retry:', retryResponse.data);
+      } catch (refreshError) {
+        console.error('Error refreshing token:', refreshError.response ? refreshError.response.data : refreshError.message);
+      }
+    } else {
+      console.error('Error updating contact:', error.response ? error.response.data : error.message);
+    }
   }
 };
-
 
