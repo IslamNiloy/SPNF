@@ -63,20 +63,21 @@ const incrementAPICount = async (portalID, funcName) => {
 
 exports.phoneNumber = async (req, res) => {
   const { phoneNumber, country, country_text, hs_object_id } = req.body;
+  console.log("request Body: ", req.body)
   let propertyName = req.body.propertyName;
   if (propertyName === null || propertyName === undefined){
     propertyName = "pf_formatted_phone_number_14082001"
   }
-  logger.info(`--------logging at phoneNumber func with ${phoneNumber}, ${country}, ${country_text}-------`);
+  // logger.info(`--------logging at phoneNumber func with ${phoneNumber}, ${country}, ${country_text}-------`);
   try {
     //const accessToken = await getAccessToken(req);
     //const accInfo = await getAccountInfo(accessToken);
     const check = await packageCondition(req.body.portalID);
 
     const User = await userModel.findOne({ portalID: req.body.portalID });
-    console.log("User: ===========" + User.email);
-    logger.info("req.body in phoneNumber: === " + JSON.stringify(req.body));
-    logger.info("phoneNumber in phoneNumber: === " + phoneNumber);
+    // console.log("User: ===========" + User.email);
+    // logger.info("req.body in phoneNumber: === " + JSON.stringify(req.body));
+    // logger.info("phoneNumber in phoneNumber: === " + phoneNumber);
     const paymentInfo = await paymentModel.findOne({ portalID: req.body.portalID }).sort({ createdAt: -1 });
     // console.log("UpaymentInfoser: ===========" + paymentInfo);
     if (!check) {
