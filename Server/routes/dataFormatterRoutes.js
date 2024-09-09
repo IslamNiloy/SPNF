@@ -29,5 +29,7 @@ router.post('/phone_number', dataFormatterController.phoneNumber); //phoneNumber
 
 router.get('/get_country_code', dataFormatterController.getCountry);
 
+router.post('/test', dataFormatterController.test)
+
 
 module.exports = router;

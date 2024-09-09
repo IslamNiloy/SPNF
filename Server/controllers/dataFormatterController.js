@@ -1,7 +1,7 @@
 const { parsePhoneNumberFromString, isValidPhoneNumber, AsYouType } = require('libphonenumber-js');
 const countries = require('i18n-iso-countries');
 countries.registerLocale(require("i18n-iso-countries/langs/en.json"));
-const { refreshAccessToken,getAccessToken, isAuthorized, getContact, getAccountInfo } = require('../auth/hubspotAuth');
+const { refreshAccessToken, getAccessToken, isAuthorized, getContact, getAccountInfo } = require('../auth/hubspotAuth');
 const logger = require('../utils/logger'); // Add logger
 const userModel = require('../model/user.model');
 const paymentModel = require('../model/payment.model');
@@ -65,7 +65,7 @@ exports.phoneNumber = async (req, res) => {
   const { phoneNumber, country, country_text, hs_object_id } = req.body;
   console.log("request Body: ", req.body)
   let propertyName = req.body.propertyName;
-  if (propertyName === null || propertyName === undefined){
+  if (propertyName === null || propertyName === undefined) {
     propertyName = "pf_formatted_phone_number_14082001"
   }
   // logger.info(`--------logging at phoneNumber func with ${phoneNumber}, ${country}, ${country_text}-------`);
@@ -100,7 +100,7 @@ exports.phoneNumber = async (req, res) => {
       await updateAPICount(req.body.portalID);
       //incrementAPICount(req.body.portalID, "phoneNumber");
       const formattedNumber = formatPhoneNumber(phoneNumber, country, country_text);
-      await updateContactProperty(propertyName,formattedNumber,hs_object_id,User.accessToken, req, User.refreshToken);
+      await updateContactProperty(propertyName, formattedNumber, hs_object_id, User.accessToken, req, User.refreshToken);
       res.json({
         "outputFields": {
           "Formatted_Phone_Number": formattedNumber,
@@ -228,10 +228,10 @@ const checkPhoneNumber = (phoneNumber, country) => {
 };
 
 exports.checkPhoneNumber = async (req, res) => {
-  const { phoneNumber, country, portalID,hs_object_id, object } = req.body;
+  const { phoneNumber, country, portalID, hs_object_id, object } = req.body;
   let propertyName = req.body.propertyName;
-  console.log("Property Name: ",propertyName)
-  if (propertyName === null || propertyName === undefined){
+  console.log("Property Name: ", propertyName)
+  if (propertyName === null || propertyName === undefined) {
     propertyName = "pf_number_quality_14082001"
   }
   // console.log("******** Req body *********", phoneNumber, country, propertyName, portalID, object, req.body, "******************")
@@ -274,7 +274,7 @@ exports.checkPhoneNumber = async (req, res) => {
     }
 
     const result = checkPhoneNumber(phoneNumber, country);
-    await updateContactProperty(propertyName,result,hs_object_id,User.accessToken, req, User.refreshToken);
+    await updateContactProperty(propertyName, result, hs_object_id, User.accessToken, req, User.refreshToken);
     return res.status(200).json({
       "outputFields": {
         "quality": result,
@@ -287,10 +287,10 @@ exports.checkPhoneNumber = async (req, res) => {
 
 const updateContactProperty = async (propertyName, value, contactId, token, req, refresh_token) => {
   try {
-    const response = await axios.patch(`https://api.hubapi.com/crm/v3/objects/contacts/${contactId}`, 
+    const response = await axios.patch(`https://api.hubapi.com/crm/v3/objects/contacts/${contactId}`,
       {
         properties: {
-          [propertyName]: value 
+          [propertyName]: value
         }
       },
       {
@@ -300,7 +300,7 @@ const updateContactProperty = async (propertyName, value, contactId, token, req,
         }
       }
     );
-    
+
     console.log('Contact updated:', response.data);
   } catch (error) {
     if (error.response && error.response.data.category === 'EXPIRED_AUTHENTICATION') {
@@ -310,10 +310,10 @@ const updateContactProperty = async (propertyName, value, contactId, token, req,
         const newTokenData = await refreshAccessToken(req);
 
         console.log('Retrying with new access token...');
-        const retryResponse = await axios.patch(`https://api.hubapi.com/crm/v3/objects/contacts/${contactId}`, 
+        const retryResponse = await axios.patch(`https://api.hubapi.com/crm/v3/objects/contacts/${contactId}`,
           {
             properties: {
-              [propertyName]: value 
+              [propertyName]: value
             }
           },
           {
@@ -323,7 +323,7 @@ const updateContactProperty = async (propertyName, value, contactId, token, req,
             }
           }
         );
-        
+
         console.log('Contact updated on retry:', retryResponse.data);
       } catch (refreshError) {
         console.error('Error refreshing token:', refreshError.response ? refreshError.response.data : refreshError.message);
@@ -336,3 +336,11 @@ const updateContactProperty = async (propertyName, value, contactId, token, req,
 
 
 
+
+
+///////////////TEST ROUTE/////////////////////////
+exports.test = async (req, res) => {
+  console.log(req.body)
+  res.status(200).json({ message: 'Test Route', "REQBODY": req.body });
+}
+///////////////TEST ROUTE END/////////////////////////
