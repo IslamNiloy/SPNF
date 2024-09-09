@@ -1,7 +1,7 @@
 const { parsePhoneNumberFromString, isValidPhoneNumber, AsYouType } = require('libphonenumber-js');
 const countries = require('i18n-iso-countries');
 countries.registerLocale(require("i18n-iso-countries/langs/en.json"));
-const { getAccessToken, isAuthorized, getContact, getAccountInfo } = require('../auth/hubspotAuth');
+const { refreshAccessToken, getAccessToken, isAuthorized, getContact, getAccountInfo } = require('../auth/hubspotAuth');
 const logger = require('../utils/logger'); // Add logger
 const userModel = require('../model/user.model');
 const paymentModel = require('../model/payment.model');
@@ -62,21 +62,22 @@ const incrementAPICount = async (portalID, funcName) => {
 /*end of redis code*/
 
 exports.phoneNumber = async (req, res) => {
-  const { phoneNumber, country, country_text, objectId } = req.body;
+  const { phoneNumber, country, country_text, hs_object_id } = req.body;
+  console.log("request Body: ", req.body)
   let propertyName = req.body.propertyName;
-  if (propertyName === null || propertyName === undefined){
+  if (propertyName === null || propertyName === undefined) {
     propertyName = "pf_formatted_phone_number_14082001"
   }
-  logger.info(`--------logging at phoneNumber func with ${phoneNumber}, ${country}, ${country_text}-------`);
+  // logger.info(`--------logging at phoneNumber func with ${phoneNumber}, ${country}, ${country_text}-------`);
   try {
     //const accessToken = await getAccessToken(req);
     //const accInfo = await getAccountInfo(accessToken);
     const check = await packageCondition(req.body.portalID);
 
     const User = await userModel.findOne({ portalID: req.body.portalID });
-    console.log("User: ===========" + User.email);
-    logger.info("req.body in phoneNumber: === " + JSON.stringify(req.body));
-    logger.info("phoneNumber in phoneNumber: === " + phoneNumber);
+    // console.log("User: ===========" + User.email);
+    // logger.info("req.body in phoneNumber: === " + JSON.stringify(req.body));
+    // logger.info("phoneNumber in phoneNumber: === " + phoneNumber);
     const paymentInfo = await paymentModel.findOne({ portalID: req.body.portalID }).sort({ createdAt: -1 });
     // console.log("UpaymentInfoser: ===========" + paymentInfo);
     if (!check) {
@@ -99,7 +100,7 @@ exports.phoneNumber = async (req, res) => {
       await updateAPICount(req.body.portalID);
       //incrementAPICount(req.body.portalID, "phoneNumber");
       const formattedNumber = formatPhoneNumber(phoneNumber, country, country_text);
-      await updateContactProperty(propertyName,formattedNumber,objectId,User.accessToken);
+      await updateContactProperty(propertyName, formattedNumber, hs_object_id, User.accessToken, req, User.refreshToken);
       res.json({
         "outputFields": {
           "Formatted_Phone_Number": formattedNumber,
@@ -227,15 +228,16 @@ const checkPhoneNumber = (phoneNumber, country) => {
 };
 
 exports.checkPhoneNumber = async (req, res) => {
-  const { phoneNumber, country, portalID,objectId, object } = req.body;
+  const { phoneNumber, country, portalID, hs_object_id, object } = req.body;
   let propertyName = req.body.propertyName;
-  if (propertyName === null || propertyName === undefined){
+  console.log("Property Name: ", propertyName)
+  if (propertyName === null || propertyName === undefined) {
     propertyName = "pf_number_quality_14082001"
   }
   // console.log("******** Req body *********", phoneNumber, country, propertyName, portalID, object, req.body, "******************")
   console.log(req.body)
 
-  const check = await packageCondition(req.body.portalID);
+  const check = await packageCondition(portalID);
   const User = await userModel.findOne({ portalID: req.body.portalID });
   // console.log("User in checkPhoneNumber: ===========" + User.email);
   const paymentInfo = await paymentModel.findOne({ portalID: req.body.portalID }).sort({ createdAt: -1 });
@@ -272,7 +274,7 @@ exports.checkPhoneNumber = async (req, res) => {
     }
 
     const result = checkPhoneNumber(phoneNumber, country);
-    await updateContactProperty(propertyName,result,objectId,User.accessToken);
+    await updateContactProperty(propertyName, result, hs_object_id, User.accessToken, req, User.refreshToken);
     return res.status(200).json({
       "outputFields": {
         "quality": result,
@@ -283,12 +285,12 @@ exports.checkPhoneNumber = async (req, res) => {
 };
 /////////////////////// Check Phone Number END //////////////////////////////////
 
-const updateContactProperty = async (propertyName,value,contactId,token) => {
+const updateContactProperty = async (propertyName, value, contactId, token, req, refresh_token) => {
   try {
-    const response = await axios.patch(`https://api.hubapi.com/crm/v3/objects/contacts/${contactId}`, 
+    const response = await axios.patch(`https://api.hubapi.com/crm/v3/objects/contacts/${contactId}`,
       {
         properties: {
-          [propertyName]: value 
+          [propertyName]: value
         }
       },
       {
@@ -298,11 +300,44 @@ const updateContactProperty = async (propertyName,value,contactId,token) => {
         }
       }
     );
-    
+
     console.log('Contact updated:', response.data);
   } catch (error) {
-    console.error('Error updating contact:', error.response ? error.response.data : error.message);
+    if (error.response && error.response.data.category === 'EXPIRED_AUTHENTICATION') {
+      console.log('Token expired, refreshing access token...');
+      try {
+        req.session.refresh_token = refresh_token;
+        const newTokenData = await refreshAccessToken(req);
+
+        console.log('Retrying with new access token...');
+        const retryResponse = await axios.patch(`https://api.hubapi.com/crm/v3/objects/contacts/${contactId}`,
+          {
+            properties: {
+              [propertyName]: value
+            }
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${newTokenData}`,
+              'Content-Type': 'application/json'
+            }
+          }
+        );
+
+        console.log('Contact updated on retry:', retryResponse.data);
+      } catch (refreshError) {
+        console.error('Error refreshing token:', refreshError.response ? refreshError.response.data : refreshError.message);
+      }
+    } else {
+      console.error('Error updating contact:', error.response ? error.response.data : error.message);
+    }
   }
 };
 
 
+///////////////TEST ROUTE/////////////////////////
+exports.test = async (req, res) => {
+  console.log(req.body)
+  res.status(200).json({ message: 'Test Route', "REQBODY": req.body });
+}
+///////////////TEST ROUTE END/////////////////////////

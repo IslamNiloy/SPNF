@@ -126,5 +126,6 @@ module.exports = {
   getAccessToken,
   isAuthorized,
   getContact,
-  getAccountInfo
+  getAccountInfo,
+  refreshAccessToken
 };
