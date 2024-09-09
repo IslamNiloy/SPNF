@@ -1,133 +1,135 @@
-.package-section {
-    background-color: #003366; /* Deep blue background */
-    padding: 50px 20px; /* Padding around the section */
-}
+/* PricingPlan.css */
 
-.package-container {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap; /* Allows wrapping on smaller screens */
-    gap: 20px; /* Space between cards */
-}
-
-.header{
-    flex: 1;
-    margin-right: 20px;
-    text-align: left;
-    font-size: 3em;
-    color: #ffffff;
-    width: 480px;
-    border-bottom: 7px solid #FF6B00; 
-    padding: 3px; 
-    line-height: 0.37;
-}
-
-
-.headerSub{
-    margin-right: 20px;
-    text-align: left;
-    font-size: 2.4em;
-    color: #ffffff;
-} 
-
-
-.package-card {
-    background-color: #003366; /* White background for the cards */
-    color: #333; /* Dark text color */
-    border-radius: 8px ; /* Rounded corners for cards */
-    border: 2px solid white;
-    width: calc(25% - 20px); /* Adjust width and account for gaps */
-    box-sizing: border-box; /* Includes padding in width calculation */
+.pricing-section {
+   /* background-image: url('/path-to-your-image.png');  Background image */
+    background-size: cover;
+    background-position: center;
+    padding: 60px 20px;
     text-align: center;
-    padding-bottom: 10px;
-}
-
-.package-heading {
-    margin: 0 0 10px 0;
-    font-size: 1.5em;
-}
-
-.package-details {
-    background-color: #2196f3;
-    display: flex;
-    border-radius: 8px 8px 0 0;
-    padding: 20px;
-    justify-content: space-between;
-    margin-bottom: 20px;
+  }
   
-}
-
-.package-name {
-    font-size: 1.4em;
+  .header {
+    font-size: 2.5rem;
     color: #ffffff;
-    font-weight: bold;
-    
-}
-
-.package-price {
-    font-size: 1.2em;
-    font-weight: bold;
-    width: 120px;
-    height: 40px;
-    border-radius: 8px;
-    border: 2px solid white;
-}
-
-.package-content1 {
-    margin: 10px 0;
+  }
+  
+  .header .highlight {
+    color: #0099ff;
+  }
+  
+  .toggle-buttons {
+    margin: 30px 0;
+    display: inline-block;
+  }
+  
+  .toggle-button {
+    background-color: #ffffff;
+    border: none;
+    color: #0099ff;
+    padding: 10px 20px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .toggle-button.active {
+    background-color: #0099ff;
     color: white;
-    text-align: left;
-    margin-left: 10px;
-}
-
-.package-content2 {
-    margin: 10px 0;
-    color: #ffffff;
-    font-weight: bold;
-    text-align: left;
-    margin-left: 10px;
-}
-
-.install-button {
-    background-color: transparent;
+  }
+  
+  .package-container {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-top: 30px;
+  }
+  
+  .package-card {
+    background-color: white;
+    color: black;
+    width: 220px;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.3s;
+  }
+  
+  .package-card:hover {
+    transform: scale(1.05);
+  }
+  
+  .package-card.most-popular {
+    border: 2px solid #0099ff;
+    position: relative;
+  }
+  
+  .package-card.most-popular::before {
+    content: "Most Popular";
+    background-color: #0099ff;
     color: white;
-    border: 2px solid white;
-    width: 250px;
-    font-size: 1.2em;
-    height: 50px;
+    position: absolute;
+    top: -15px;
+    right: -15px;
+    padding: 5px;
+    font-size: 0.8rem;
+    border-radius: 5px;
+  }
+  
+  .package-details {
+    margin-bottom: 20px;
+  }
+  
+  .package-name {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .package-price {
+    display: block;
+    background-color: #f0f8ff;
+    color: #0099ff;
+    padding: 8px;
+    font-size: 1.4rem;
+    border-radius: 10px;
+    margin-top: 10px;
+  }
+  
+  .package-content1 {
+    color: #0099ff;
+    margin: 10px 0;
+  }
+  
+  .package-content2 {
+    color: #666;
+  }
+  
+  .install-button {
+    background-color: #0099ff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
     border-radius: 8px;
-}
-
-.install-button:hover {
-    background-color: #e65c00; /* Slightly darker color on hover */
-}
-
-/* Mobile Responsive */
-@media (max-width: 777px) {
+    cursor: pointer;
+    margin-top: 20px;
+  }
+  
+  .install-button:hover {
+    background-color: #006bb3;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .package-container {
+      flex-direction: column;
+      align-items: center;
+    }
+  
     .package-card {
-        width: calc(100% - 20px); /* Adjust width for tablets */
+      width: 100%;
+      max-width: 350px;
     }
-    .header{
-        font-size: 2.1em;
-        width: 360px;
-    }  
-    
-    .headerSub{
-        font-size: 1.9em;
-        width: 290px;
-    }  
-}
-
-@media (max-width: 480px) {
-    .package-card {
-        width: calc(100% - 20px); /* Full width for small screens */
-    }
-    .header{
-        font-size: 2.1em;
-        width: 340px;
-    }
-    .headerSub{
-        font-size: 1.9em;
-        width: 270px;
-    }    
-}
+  }
+  
