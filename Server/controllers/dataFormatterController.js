@@ -99,7 +99,7 @@ exports.phoneNumber = async (req, res) => {
       await updateAPICount(req.body.portalID);
       //incrementAPICount(req.body.portalID, "phoneNumber");
       const formattedNumber = formatPhoneNumber(phoneNumber, country, country_text);
-      await updateContactProperty(propertyName,formattedNumber,hs_object_id,User.accessToken, req);
+      await updateContactProperty(propertyName,formattedNumber,hs_object_id,User.accessToken, req, User.refreshToken);
       res.json({
         "outputFields": {
           "Formatted_Phone_Number": formattedNumber,
@@ -272,7 +272,7 @@ exports.checkPhoneNumber = async (req, res) => {
     }
 
     const result = checkPhoneNumber(phoneNumber, country);
-    await updateContactProperty(propertyName,result,hs_object_id,User.accessToken, req);
+    await updateContactProperty(propertyName,result,hs_object_id,User.accessToken, req, User.refreshToken);
     return res.status(200).json({
       "outputFields": {
         "quality": result,
@@ -283,7 +283,7 @@ exports.checkPhoneNumber = async (req, res) => {
 };
 /////////////////////// Check Phone Number END //////////////////////////////////
 
-const updateContactProperty = async (propertyName, value, contactId, token, req) => {
+const updateContactProperty = async (propertyName, value, contactId, token, req, refresh_token) => {
   try {
     const response = await axios.patch(`https://api.hubapi.com/crm/v3/objects/contacts/${contactId}`, 
       {
@@ -304,6 +304,10 @@ const updateContactProperty = async (propertyName, value, contactId, token, req)
     if (error.response && error.response.data.category === 'EXPIRED_AUTHENTICATION') {
       console.log('Token expired, refreshing access token...');
       try {
+        console.log('refresh token testing:',req.session.refresh_token)
+        if (req.session.refresh_token === null || req.session.refresh_token === undefined){
+          req.session.refresh_token = refresh_token
+        }
         const newTokenData = await refreshAccessToken(req);
         const newAccessToken = newTokenData.access_token;
 
