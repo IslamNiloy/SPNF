@@ -15,7 +15,10 @@ const UserSchema = new mongoose.Schema({
   dataHostingLocation: { type: String },
   additionalCurrencies: {
     type: [ String ],
-  }
+  },
+  refreshToken: { type: String },
+  accessToken: { type: String },
+  expiresIn: { type: Number },
 },
   {
     timestamps: true,

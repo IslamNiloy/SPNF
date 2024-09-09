@@ -15,11 +15,14 @@ const bodyParser = require('body-parser');
 const { getAsync } = require('./controllers/Logic/bulkCountInsertion');
 const app = express();
 const PORT = process.env.PORT || 3000;
+const cron = require('node-cron');
+const cronRoute = require("./api/cron");
+const { processStart } = require('./controllers/dataSyncController');
 
 // Use CORS middleware
 app.use(cors());
 /* 
-  STRIPE WEBHOOK MUST BE HANDLED BEFORE ANY JSON{} DATA IS PARSED FROM SERVER 
+  ////STRIPE WEBHOOK MUST BE HANDLED BEFORE ANY JSON{} DATA IS PARSED FROM SERVER 
 */
 app.use('/stripe', paymentRoutes);
 
@@ -39,6 +42,8 @@ app.use('/user', userRouters);
 app.use('/subscribe', subscriptionRoutes);
 app.use('/package', packageRouters);
 
+//adding to check 404 issue in crom
+app.use('/api/cron', cronRoute);
 
 // Setup Swagger
 setupSwagger(app);
@@ -51,3 +56,10 @@ async function loadDatabaseConnection() {
 loadDatabaseConnection();
 
 setInterval(getAsync,  60 * 60 * 1000); 
+
+
+// cron.schedule('*/5 * * * *', async () => {
+//   console.log('Cron job started: Syncing subscriptions to HubSpot');
+//   logger.info('Cron job started: Syncing subscriptions to HubSpot');
+//   await processStart()
+// });

@@ -4,6 +4,9 @@ const { get_all_packages } = require('./packageCotroller');
 const { update_Payment_Info, insertIntoPayment } = require('./paymentController');
 const { insertIntoSubscription } = require('./subscriptionController');
 const { insertIntoUser } = require('./usercontroller');
+const { createProperties } = require('./propertyController');
+const {insertIntoSubscriptionAfterInstall} = require('./subscriptionController');
+const { processStart } = require('./dataSyncController');
 
  //const BASE_URL = "http://localhost:3003";
  //const FRONTEND_URL = "http://localhost:3000";
@@ -20,7 +23,11 @@ const logWithDetails = (level, message, req) => {
 
 exports.install = async (req, res) => {
   //here got the packageID in req param and send it to /oauth-callback/packageID 
-  const authUrl = `https://app.hubspot.com/oauth/authorize?client_id=${process.env.CLIENT_ID}&redirect_uri=${process.env.BACKEND_URL}/oauth-callback&scope=oauth`;
+  const authUrl =
+        'https://app.hubspot.com/oauth/authorize' +
+        `?client_id=${encodeURIComponent(process.env.CLIENT_ID)}` +
+        `&scope=${encodeURIComponent(process.env.SCOPES)}` +
+        `&redirect_uri=${encodeURIComponent(process.env.BACKEND_URL)+ "/oauth-callback"}`;
   res.redirect(authUrl);
   logWithDetails('info', 'Redirected user to HubSpot OAuth URL for installation', req);
 };
@@ -55,9 +62,14 @@ exports.home = async (req, res) => {
     const accInfo = await getAccountInfo(accessToken);
     let userInsertion = await insertIntoUser(accInfo);
     let paymentInsertion = await insertIntoPayment(userInsertion);
-    logger.info("----home accInfo----" + JSON.stringify(accInfo));
-    logger.info("----insert into user mongoDB----" + JSON.stringify(userInsertion));
-    logger.info("----insert into payment mongoDB----" + JSON.stringify(paymentInsertion));
+    await createProperties(accessToken)
+    
+    //Todo:: Need to create new package for new user
+    const packageId = "66dac9dd4ffd1188c309c0d4";
+    let subsciptionInsertion = await  insertIntoSubscriptionAfterInstall(packageId,userInsertion._id)
+    await processStart()
+
+    logger.info("----insert into subscription mongoDB during installation----" + JSON.stringify(subsciptionInsertion));
     res.redirect(`${process.env.FRONTEND_URL}/welcome?portalID=${userInsertion.portalID}`);
     logWithDetails('info', 'Displayed home page with account info and access token', req);
   }

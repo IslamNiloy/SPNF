@@ -58,7 +58,7 @@ const SelectedPackage = (props) => {
                   <p className="package-content1">API Call Limit</p>
                   <p className="package-content2">{props.data.Limit}/month</p>
                   {
-                    (endDate!="" && today > endDate && props.data.packageName=="Free" )?
+                    (endDate!="" && today > endDate && props.data.packageName=="Free" && packageName != "Installation Package")?
                     ( 
                       <Link to='/profile'>
                           <Link to='/profile'>
@@ -70,10 +70,10 @@ const SelectedPackage = (props) => {
              
                     )
                     :
-                    (props.data.packageName=="Free" && packageName == "Free") ||
-                    (status != 'cancelled' && packageName == "Enterprise") ||
-                    (status != 'cancelled' && (props.data.packageName=="Free" || props.data.packageName=="Pro") && packageName == "Pro") ||
-                    (apiCallCount >= 500 && props.data.packageName=="Free" && status == 'cancelled')
+                    (props.data.packageName=="Free" && packageName == "Free" && packageName != "Installation Package") ||
+                    (status != 'cancelled' && packageName == "Enterprise" && packageName != "Installation Package") ||
+                    (status != 'cancelled' && (props.data.packageName=="Free" || props.data.packageName=="Pro") && packageName == "Pro" && packageName != "Installation Package") ||
+                    (apiCallCount >= 500 && props.data.packageName=="Free" && status == 'cancelled' && packageName != "Installation Package")
                     ?
                     (
                       <Link to='/profile'>
@@ -82,13 +82,14 @@ const SelectedPackage = (props) => {
                       </button>
                     </Link>
                     ):
-                    (status == "cancelled" && (packageName == "Pro" || packageName == "Enterprise" || /custom/i.test(packageName) ) 
+                    (status == "cancelled" && (packageName == "Pro" || packageName == "Enterprise" || /custom/i.test(packageName) && packageName != "Installation Package") 
                     && props.data.packageName=="Free" 
                     && parseInt(apiCallCount) < parseInt(props.data.Limit)
                     && today < endDate
+                    && packageName != "Installation Package"
                   )
                     ||
-                    (endDate > today && props.data.packageName=="Free" && status != "cancelled" && parseInt(apiCallCount) < parseInt(props.data.Limit))
+                    (endDate > today && props.data.packageName=="Free" && packageName != "Installation Package" && status != "cancelled" && parseInt(apiCallCount) < parseInt(props.data.Limit))
                     ?
                     (
                       <>
@@ -97,8 +98,8 @@ const SelectedPackage = (props) => {
                         </button>
                       </>
                     ):
-                    (status == "cancelled" && packageName == "Pro" && props.data.packageName!="Free") ||
-                    (status == "cancelled" && apiCallCount < 500 && endDate > today)
+                    (status == "cancelled" && packageName == "Pro" && props.data.packageName!="Free" && packageName != "Installation Package") ||
+                    (status == "cancelled" && apiCallCount < 500 && endDate > today && packageName != "Installation Package")
                     ?
                     (
                       <>
@@ -109,7 +110,7 @@ const SelectedPackage = (props) => {
                       </form>  
                       </>
                     ):
-                    (status != "cancelled" && status != "" && packageName != "Free")?
+                    (status != "cancelled" && status != "" && packageName != "Free" && packageName != "Installation Package")?
                           (<Link to='/profile'>
                             <button type="submit" className="install-button">
                               cancel subscription to Proceed

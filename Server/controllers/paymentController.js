@@ -80,6 +80,16 @@ exports.insertIntoPayment = async (user_data) => {
   try{
     logger.info("insert into payment----insertIntoPayment: " + JSON.stringify(user_data));
     
+    const existingPayment = await PaymentModel.findOne({
+      user: user_data._id,
+      portalID: user_data.portalID
+    });
+
+    if (existingPayment) {
+      logger.info("Payment record already Created for user: " + user_data._id);
+      return; // Exit the function without creating a new record
+    }
+
     const transaction = new PaymentModel({
       user : user_data._id,
       status: "due",

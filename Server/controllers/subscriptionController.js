@@ -34,7 +34,7 @@ exports.insertIntoSubscriptionAfterPayment = async (packageID, userID) => {
              return res.json({ error: 'Package information not found' });
          }
          if(subscriptionInfo){
-            logger.info("I am in subscriptionInfo");
+
              this.updateSubscriptionInfo(userInfo._id,packageID);
          }
          if (userInfo && !subscriptionInfo) {
@@ -66,16 +66,18 @@ exports.insertIntoSubscriptionAfterPayment = async (packageID, userID) => {
         const endDate = new Date();
 
         const package_info = await packagesModel.findOne({_id:packageID});
+        const current_subscription_info = await Subscription.findOne({user: userID});
+
         if(package_info.subscription == 'monthly'){
             endDate.setDate(startDate.getDate() + 30);
          }
          else if(package_info.subscription == 'yearly'){
             endDate.setDate(startDate.getDate() + 365);
          }
-        //checking the logs
+      
         logger.info("package information in updateSubscriptionInf: " + package_info);
-        //checking the logs
-        if(package_info.packageName == "Free"){
+
+        if(package_info.packageName == "Free" && current_subscription_info.package != "66dac9dd4ffd1188c309c0d4"){
             return ("You are not able to take free subscription again");
         }
         const subscriptionUpDate = await Subscription.findOneAndUpdate( //need to find problems here
@@ -275,4 +277,45 @@ exports.insertIntoSubscription = async (req, res) => {
     }
   }
 
-  
+  exports.insertIntoSubscriptionAfterInstall = async (packageID,userID) => {
+    try{
+         const startDate = new Date();
+         const endDate = new Date();
+         const userInfo = await User.findOne( {_id: userID});
+         const packageInfo = await packagesModel.findOne( {_id: packageID});
+         const subscriptionInfo = await Subscription.findOne( {user: userInfo._id});
+
+         if (!userInfo) {
+             logger.error("User not found");
+             return res.status(404).json({ error: 'User not found' });
+         }
+         else if (!packageInfo) {
+             logger.error("Package information not found");
+             return res.json({ error: 'Package information not found' });
+         }
+         if(subscriptionInfo){
+            return res.status(200).json({ message: 'Already Exist' });
+         }
+         if (userInfo && !subscriptionInfo) {
+             //insert into Subscription model
+             const subscribe = new Subscription({  
+                 user: userInfo._id,
+                 package: packageID,
+                 //adding total API call count for any reference
+                 totalApiCallCount: 0,
+                 apiCallCount: 0,
+                 checkPhoneNumberApiCallCount: 0,
+                 checkPhoneNumberTotalApiCallCount: 0,
+                 joiningDate: startDate.toISOString().split('T')[0],
+                 packageStartDate: startDate.toISOString().split('T')[0],
+                 packageEndDate: endDate.toISOString().split('T')[0],
+                 hubspotDealId: ""
+             });
+             await subscribe.save();
+             logger.info("Insert data in subscription model");
+         }
+     }catch(error){
+         logger.info('Error in insertIntoSubscription: '+ error);
+         return  error ;
+     }
+   }

@@ -39,7 +39,7 @@ const Subscription = require('../../model/subscription.model');
     try{
       logger.info("At packageCondition");
       const user = await User.findOne( {portalID: portalID});
-      logger.info("At packageCondition user infos: "+ user);
+      // logger.info("At packageCondition user infos: "+ user);
       if (!user) {
         // Handle case where user is not found
         logger.info("At packageCondition User not found for portalID: " + portalID);
@@ -77,10 +77,10 @@ const Subscription = require('../../model/subscription.model');
     exports.CheckPhoneNumberUpdateAPICount = async (portalID) => {
       try {
         // Find the user by portalID
-        logger.info("---------------------logging at CheckPhoneNumberUpdateAPICount start-------------------");
-        logger.info("Portal id: "+ portalID);
+        // logger.info("---------------------logging at CheckPhoneNumberUpdateAPICount start-------------------");
+        // logger.info("Portal id: "+ portalID);
         const user = await User.findOne({ portalID: portalID });
-        logger.info("---------------------logging at CheckPhoneNumberUpdateAPICount update API Count end-------------------");
+        // logger.info("---------------------logging at CheckPhoneNumberUpdateAPICount update API Count end-------------------");
         if (!user) {
           console.log('User not found in updateAPICount');
           return;
@@ -98,7 +98,7 @@ const Subscription = require('../../model/subscription.model');
           return;
         }
         
-        console.log('Updated subscription:', subscriptionInfoUpdate);
+        // console.log('Updated subscription:', subscriptionInfoUpdate);
       } catch (e) {
         console.error('Error in condition function:', e);
       }

@@ -5,30 +5,25 @@ const { getAccessToken, isAuthorized, getContact, getAccountInfo } = require('..
 exports.insertIntoUser = async (user_info) => {
     try { 
         const userInfo = await User.findOne({ portalID: user_info.hub_id});
-        if (userInfo){
-            logger.info("User Already Exist");
-            return {portalID: userInfo.portalID};
-        }
+        console.log("exist:",user_info)
+        if (userInfo) {
+            // If the user exists, update their information
+            userInfo.name = user_info.name || "";
+            userInfo.companyName = user_info.companyName || "";
+            userInfo.email = user_info.user || User.email;
+            userInfo.phoneNumber = user_info.phoneNumber || "";
+            userInfo.countryCode = user_info.countryCode || "";
+            userInfo.accountType = user_info.accountType || "";
+            userInfo.timeZone = user_info.timeZone || "";
+            userInfo.companyCurrency = user_info.companyCurrency || "";
+            userInfo.uiDomain = user_info.hub_domain || "";
+            userInfo.dataHostingLocation = user_info.dataHostingLocation || "";
+            userInfo.additionalCurrencies = user_info.additionalCurrencies || "";
 
-        if (!userInfo) {
-            //insert into user model
-            const user = new User({
-                name: user_info.name || "",
-                companyName: user_info.companyName || "",
-                email:  user_info.user || "",
-                phoneNumber: user_info.phoneNumber || "",
-                countryCode: user_info.countryCode || "",
-                portalID: user_info.hub_id || "",
-                accountType: user_info.accountType || "",
-                timeZone: user_info.timeZone || "",
-                companyCurrency: user_info.companyCurrency || "",
-                uiDomain:  user_info.hub_domain || "",
-                dataHostingLocation: user_info.dataHostingLocation || "",
-                additionalCurrencies: user_info.additionalCurrencies || "",
-            });
-            await user.save();
-            logger.info("user data inserted to mongo", user);
-            return user;
+            // Save the updated user
+            await userInfo.save();
+            logger.info("user data inserted to mongo", User);
+            return userInfo;
         }
         else{
             logger.info(user_info.hub_id + ' already exist');
