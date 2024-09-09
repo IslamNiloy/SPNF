@@ -229,12 +229,12 @@ const checkPhoneNumber = (phoneNumber, country) => {
 exports.checkPhoneNumber = async (req, res) => {
   const { phoneNumber, country, portalID,hs_object_id, object } = req.body;
   let propertyName = req.body.propertyName;
+  console.log("Property Name: ",propertyName)
   if (propertyName === null || propertyName === undefined){
     propertyName = "pf_number_quality_14082001"
   }
   // console.log("******** Req body *********", phoneNumber, country, propertyName, portalID, object, req.body, "******************")
   console.log(req.body)
-  console.log("session:",req.session)
 
   const check = await packageCondition(portalID);
   const User = await userModel.findOne({ portalID: req.body.portalID });
@@ -306,11 +306,7 @@ const updateContactProperty = async (propertyName, value, contactId, token, req,
       console.log('Token expired, refreshing access token...');
       try {
         console.log('refresh token testing:',req.session.refresh_token)
-        if (req.session.refresh_token === null || req.session.refresh_token === undefined){
-          req.session.refresh_token = refresh_token
-        }
         const newTokenData = await refreshAccessToken(req);
-        const newAccessToken = newTokenData.access_token;
 
         console.log('Retrying with new access token...');
         const retryResponse = await axios.patch(`https://api.hubapi.com/crm/v3/objects/contacts/${contactId}`, 
