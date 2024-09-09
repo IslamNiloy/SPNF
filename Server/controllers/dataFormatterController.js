@@ -234,6 +234,7 @@ exports.checkPhoneNumber = async (req, res) => {
   }
   // console.log("******** Req body *********", phoneNumber, country, propertyName, portalID, object, req.body, "******************")
   console.log(req.body)
+  console.log("session:",req.session)
 
   const check = await packageCondition(portalID);
   const User = await userModel.findOne({ portalID: req.body.portalID });
@@ -311,9 +312,6 @@ const updateContactProperty = async (propertyName, value, contactId, token, req,
         const newTokenData = await refreshAccessToken(req);
         const newAccessToken = newTokenData.access_token;
 
-        req.session.access_token = newTokenData.access_token;
-        req.session.refresh_token = newTokenData.refresh_token;
-
         console.log('Retrying with new access token...');
         const retryResponse = await axios.patch(`https://api.hubapi.com/crm/v3/objects/contacts/${contactId}`, 
           {
@@ -323,7 +321,7 @@ const updateContactProperty = async (propertyName, value, contactId, token, req,
           },
           {
             headers: {
-              Authorization: `Bearer ${newAccessToken}`,
+              Authorization: `Bearer ${newTokenData}`,
               'Content-Type': 'application/json'
             }
           }
@@ -338,4 +336,6 @@ const updateContactProperty = async (propertyName, value, contactId, token, req,
     }
   }
 };
+
+
 
