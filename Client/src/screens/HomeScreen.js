@@ -4,8 +4,11 @@ import FunctionalitySection from '../components/Functionality/Functionality';
 import Header from '../components/header/Header';
 import HeroSection from '../components/heroSection/HeroSection';
 import OverviewSection from '../components/overview/OverviewSection';
+import PreferredChoice from '../components/PreferredChoice/PreferredChoice';
 import ProposedPackageSection from '../components/proposedPackage/ProposedPackageSection';
+import QualityCheckSection from '../components/QualityCheckSection/QualityCheckSection';
 import UsingTheAppSection from '../components/UsingTheAppSection/UsingTheAppSection';
+import WorkflowSection from '../components/WorkFlowFunctionality/WorkflowSection';
 
 const HomeSreen = () => {
     return(
@@ -13,6 +16,10 @@ const HomeSreen = () => {
             <Header />
             <HeroSection/>
             <FeaturesAndBenefits/>
+            <WorkflowSection/>
+            <QualityCheckSection/>
+            <PreferredChoice/>
+
             <OverviewSection/>
             <FunctionalitySection/>
             <ProposedPackageSection/>
