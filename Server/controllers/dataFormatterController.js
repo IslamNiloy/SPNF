@@ -62,7 +62,7 @@ const incrementAPICount = async (portalID, funcName) => {
 /*end of redis code*/
 
 exports.phoneNumber = async (req, res) => {
-  const { phoneNumber, country, country_text, objectId } = req.body;
+  const { phoneNumber, country, country_text, hs_object_id } = req.body;
   let propertyName = req.body.propertyName;
   if (propertyName === null || propertyName === undefined){
     propertyName = "pf_formatted_phone_number_14082001"
@@ -99,7 +99,7 @@ exports.phoneNumber = async (req, res) => {
       await updateAPICount(req.body.portalID);
       //incrementAPICount(req.body.portalID, "phoneNumber");
       const formattedNumber = formatPhoneNumber(phoneNumber, country, country_text);
-      await updateContactProperty(propertyName,formattedNumber,objectId,User.accessToken);
+      await updateContactProperty(propertyName,formattedNumber,hs_object_id,User.accessToken);
       res.json({
         "outputFields": {
           "Formatted_Phone_Number": formattedNumber,
@@ -227,7 +227,7 @@ const checkPhoneNumber = (phoneNumber, country) => {
 };
 
 exports.checkPhoneNumber = async (req, res) => {
-  const { phoneNumber, country, portalID,objectId, object } = req.body;
+  const { phoneNumber, country, portalID,hs_object_id, object } = req.body;
   let propertyName = req.body.propertyName;
   if (propertyName === null || propertyName === undefined){
     propertyName = "pf_number_quality_14082001"
@@ -235,7 +235,7 @@ exports.checkPhoneNumber = async (req, res) => {
   // console.log("******** Req body *********", phoneNumber, country, propertyName, portalID, object, req.body, "******************")
   console.log(req.body)
 
-  const check = await packageCondition(req.body.portalID);
+  const check = await packageCondition(portalID);
   const User = await userModel.findOne({ portalID: req.body.portalID });
   // console.log("User in checkPhoneNumber: ===========" + User.email);
   const paymentInfo = await paymentModel.findOne({ portalID: req.body.portalID }).sort({ createdAt: -1 });
@@ -272,7 +272,7 @@ exports.checkPhoneNumber = async (req, res) => {
     }
 
     const result = checkPhoneNumber(phoneNumber, country);
-    await updateContactProperty(propertyName,result,objectId,User.accessToken);
+    await updateContactProperty(propertyName,result,hs_object_id,User.accessToken);
     return res.status(200).json({
       "outputFields": {
         "quality": result,
