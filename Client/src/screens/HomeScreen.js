@@ -23,19 +23,10 @@ const HomeSreen = () => {
             <WorkflowSection/>
             <QualityCheckSection/>
             <PreferredChoice/>
+            <HowToUseSection/>
             <Testimonials/>
             <PricingPlan/>
-            <HowToUseSection/>
             <FAQ/>
-
-
-
-            <ProposedPackageSection/>
-
-            <OverviewSection/>
-            <FunctionalitySection/>
-            
-            <UsingTheAppSection/>
             <Footer/>
         </div>
     )

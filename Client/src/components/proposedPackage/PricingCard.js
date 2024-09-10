@@ -9,7 +9,7 @@ import './PricingCards.css'; // Import the CSS file
 import { subscriptionInfoByID } from "../../action/subscriptionAction";
 import { paymentInfoByEmail } from "../../action/paymentAction";
 
-const PricingCard = ({ planName, monthlyPrice, yearlyPrice, limit, countries, buttonText, isPopular, isChosen, isMonthly }) => {
+const PricingCard = ({ id, planName, monthlyPrice, yearlyPrice, limit, countries, buttonText, isPopular, isChosen, isMonthly }) => {
   const today = new Date();
   const portalID = localStorage.getItem('I8PD56?#C|NXhSgZ0KE');
   const [old_price, setOld_Price] = useState("");
@@ -34,10 +34,6 @@ const PricingCard = ({ planName, monthlyPrice, yearlyPrice, limit, countries, bu
       dispatch(paymentInfoByEmail(emailForPaymentInfo));
   }
   if(infos){
-      const filteredPackages = allPackageInfo.filter(packages => packages._id === infos.package);
-      setOld_Price(filteredPackages[0].price);
-      setPackageName(filteredPackages[0].packageName);
-      setPrice(filteredPackages[0].price);
       setAPICallCount(infos.apiCallCount);
       setEndDate(new Date(infos.packageEndDate));
       if(paymentInfo)
@@ -96,11 +92,63 @@ const PricingCard = ({ planName, monthlyPrice, yearlyPrice, limit, countries, bu
           ?
           (
             <Link to='/profile'>
-            <button type="submit" className="install-button">
+            <button className={`plan-button ${isChosen ? 'chosen' : ''}`}>
                 upgrade plan
             </button>
           </Link>
-        ):""
+        ):
+        (status == "cancelled" && 
+          (planName == "Pro" || planName == "Enterprise" || /custom/i.test(planName) 
+          && planName != "Installation Package") 
+          && planName=="Free" 
+          && parseInt(apiCallCount) < parseInt(limit)
+          && today < endDate
+          && planName != "Installation Package"
+      )
+        ||
+        (endDate > today && planName=="Free" && planName != "Installation Package" 
+          && status != "cancelled" && parseInt(apiCallCount) < parseInt(limit))
+        ?
+        (
+          <>
+            <button className={`plan-button ${isChosen ? 'chosen' : ''}`}>
+                upgrade plan
+            </button>
+          </>
+        ):
+        (status == "cancelled" 
+          && planName == "Pro" && planName!="Free" 
+          && planName != "Installation Package") ||
+        (status == "cancelled" && apiCallCount < 500 
+          && endDate > today && planName != "Installation Package")
+        ?
+        (
+          <>
+          <form action= {`${BackendAPI}/charge/create-checkout-session/${id}/${portalID}`} method="POST">
+          <button className={`plan-button ${isChosen ? 'chosen' : ''}`}>
+              Proceed to Checkout
+            </button>
+          </form>  
+          </>
+        ):
+        (status != "cancelled" && 
+          status != "" && 
+          planName != "Free" && 
+          planName != "Installation Package")?
+              (<Link to='/profile'>
+               <button className={`plan-button ${isChosen ? 'chosen' : ''}`}>
+                  cancel subscription to Proceed
+                </button>
+                </Link>)
+        :                (
+          <>
+            <form action= {`${BackendAPI}/charge/create-checkout-session/${id}}/${portalID}`} method="POST">
+            <button className={`plan-button ${isChosen ? 'chosen' : ''}`}>
+                Proceed to Checkout
+              </button>
+          </form>  
+          </>
+        )
 
       }
 
@@ -116,10 +164,12 @@ const PricingCard = ({ planName, monthlyPrice, yearlyPrice, limit, countries, bu
 
 
 
-
+      {/* 
       <button className={`plan-button ${isChosen ? 'chosen' : ''}`}>
         {buttonText}
       </button>
+      */}
+
     </div>
   );
 };
@@ -170,6 +220,7 @@ const PricingCards = () => {
             .map((pkg, index) => (
               <PricingCard
                 key={index}
+                id={pkg._id}
                 planName={pkg.packageName}
                 monthlyPrice={pkg.packageName === 'Custom' ? "" : `$${pkg.price}`}
                 yearlyPrice={pkg.packageName === 'Custom'? "" :`$${pkg.price}`} 
