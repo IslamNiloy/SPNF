@@ -107,6 +107,20 @@
     font-size: 1rem;
     color: #666;
   }
+
+  .cancel_subscription{
+    background-color: #ff6f72;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+
+  .cancel_subscription:hover{
+    background-color: #bb2124; /* Darker blue on hover */
+  }
+  
   
   /* Mobile Responsive */
   @media (max-width: 768px) {

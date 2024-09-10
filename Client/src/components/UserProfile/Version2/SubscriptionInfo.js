@@ -4,6 +4,7 @@ import { cancelSubscription, subscriptionInfoByID } from "../../../action/subscr
 import { paymentInfoByEmail } from '../../../action/paymentAction';
 import CancelModal from '../CancelModal';
 import './SubscriptionInfo.css'; // Import the CSS file
+import PricingCards from '../../proposedPackage/PricingCard';
 
 const SubscriptionInfo = () => {
   const [showPopup, setshowPopup] = useState(false);
@@ -28,6 +29,13 @@ const SubscriptionInfo = () => {
     const [price, setPrice] = useState("");
     const [duration, setDuration] = useState("");
     const [status, setStatus] = useState("");
+    const [changePlan, setChangePlan] = useState(false);
+
+
+    const toggleplanChange = () => {
+      setChangePlan(!changePlan); // Toggles the state between true and false
+    };
+  
 
     const cancelSubscriptionInfo =  useSelector((state) => state.cancelSubscription);
     const { loading: cancelSubscriptionLoading, 
@@ -81,6 +89,7 @@ const SubscriptionInfo = () => {
   };
 
   return (
+    <div>
     <section className="subscription-section">
       <div className="subscription-container">
         {/* Left Side - Plan Details */}
@@ -112,7 +121,7 @@ const SubscriptionInfo = () => {
                         : "Package not found"}</li>
             <li>✔ All Countries</li>
           </ul>
-          <button className="change-plan-btn">Change Plan</button>
+          <button className="change-plan-btn" onClick={toggleplanChange}>Change Plan</button>
         </div>
 
         {/* Right Side - Subscription Info */}
@@ -187,6 +196,11 @@ const SubscriptionInfo = () => {
         </div>
       </div>
     </section>
+
+{changePlan &&
+  <PricingCards/>
+}
+</div>
   );
 };
 
