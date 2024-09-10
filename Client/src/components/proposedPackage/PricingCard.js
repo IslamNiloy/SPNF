@@ -1,7 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect} from 'react';
+import { useDispatch,useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import { allPackages } from '../../action/packageAction';
+import LoadingBox from '../LoadingBox'
+import MessageBox from '../MessageBox'
+import { BackendAPI } from '../../api/server';
 import './PricingCards.css'; // Import the CSS file
 
 const PricingCard = ({ planName, monthlyPrice, yearlyPrice, limit, countries, buttonText, isPopular, isChosen, isMonthly }) => {
+   const dispatch = useDispatch();
+
+  useEffect(() => {
+      dispatch(allPackages());
+    }, [dispatch]);
+  
   return (
     <div className={`pricing-card ${isPopular ? 'most-popular' : ''}`}>
       <div className="plan-header">
@@ -27,7 +39,13 @@ const PricingCard = ({ planName, monthlyPrice, yearlyPrice, limit, countries, bu
 
 const PricingCards = () => {
   const [isMonthly, setIsMonthly] = useState(true); // State for toggling between monthly/yearly
+  const AllPackages = useSelector((state) => state.getAllPackage);
+  const { loading, error, packages } = AllPackages;
+  //const monghtPackages = packages.find({ subscription: 'monthly' }).sort({ index: 1 });
 
+  const portalID = localStorage.getItem("I8PD56?#C|NXhSgZ0KE");
+  const plans = packages.map;
+  /*
   const plans = [
     { planName: 'Free', monthlyPrice: '$ 0.00', yearlyPrice: '$ 0.00', limit: '100 formatting/month', countries: 'All countries', buttonText: 'Change Plan', isPopular: false, isChosen: false },
     { planName: 'Pro', monthlyPrice: '$ 15.00', yearlyPrice: '$ 150.00', limit: '20,000 formatting/month', countries: 'All countries', buttonText: 'Change Plan', isPopular: false, isChosen: false },
@@ -35,7 +53,7 @@ const PricingCards = () => {
     { planName: 'Enterprise', monthlyPrice: '$ 50.00', yearlyPrice: '$ 500.00', limit: '100,000 formatting/month', countries: 'All countries', buttonText: 'Chosen Plan', isPopular: true, isChosen: true },
     { planName: 'Custom', monthlyPrice: 'Custom Pricing', yearlyPrice: 'Custom Pricing', limit: 'Custom formatting/month', countries: 'All countries', buttonText: 'Proceed', isPopular: false, isChosen: false }
   ];
-
+  */
   return (
     <section className="pricing-section">
       <h2 className="pricing-title">Our <span className="highlight">Pricing</span> Plan</h2>

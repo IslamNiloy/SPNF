@@ -41,37 +41,37 @@ const ProposedPackageSection = () => {
             </div>
 
             <div className="package-container">
-                {error ? (
-                    <div className="error-box">{error}</div>
-                ) : loading ? (
-                    <div className="loading-box">Loading...</div>
-                ) : packages ? (
-                    packages
-                        .filter(pkg => pkg.subscription === (isMonthly ? 'monthly' : 'yearly'))
-                        .map((pkg, index) => (
-                            <div className={`package-card ${pkg.mostPopular ? 'most-popular' : ''}`} key={index}>
-                                <div className="package-details">
-                                    <span className="package-name">{pkg.packageName}</span>
-                                    <span className="package-price">
-                                        {pkg.packageName === 'Custom'
-                                            ? 'Custom Pricing'
-                                            : `$${pkg.price}/month`}
-                                    </span>
-                                </div>
-                                <p className="package-content1">{pkg.packageName === 'Custom' ? 'Custom formatting/month' : `${pkg.Limit} formatting/month`}</p>
-                                <p className="package-content2">All countries</p>
-
-                                {portalID ? (
-                                    <Link to={pkg.packageName === 'Custom' ? '/custom' : '/payment'} state={{ selectedPackage: pkg }}>
-                                        <button className="install-button">{pkg.packageName === 'Custom' ? 'Proceed' : 'Choose Plan'}</button>
-                                    </Link>
-                                ) : (
-                                    <Link to="/login">
-                                        <button className="install-button">Login to Continue</button>
-                                    </Link>
-                                )}
+            {error ? (
+                <div className="error-box">{error}</div>
+            ) : loading ? (
+                <div className="loading-box">Loading...</div>
+            ) : packages ? (
+                packages
+                    .filter(pkg => pkg.subscription === (isMonthly ? 'monthly' : 'yearly'))
+                    .map((pkg, index) => (
+                        <div className={`package-card ${pkg.mostPopular ? 'most-popular' : ''}`} key={index}>
+                            <div className="package-details">
+                                <span className="package-name">{pkg.packageName}</span>
+                                <span className="package-price">
+                                    {pkg.packageName === 'Custom'
+                                        ? 'Custom Pricing'
+                                        : `$${pkg.price}/month`}
+                                </span>
                             </div>
-                        ))
+                            <p className="package-content1">{pkg.packageName === 'Custom' ? 'Custom formatting/month' : `${pkg.Limit} formatting/month`}</p>
+                            <p className="package-content2">All countries</p>
+
+                            {portalID ? (
+                                <Link to={pkg.packageName === 'Custom' ? '/custom' : '/payment'} state={{ selectedPackage: pkg }}>
+                                    <button className="install-button">{pkg.packageName === 'Custom' ? 'Proceed' : 'Choose Plan'}</button>
+                                </Link>
+                            ) : (
+                                <Link to="/login">
+                                    <button className="install-button">Login to Continue</button>
+                                </Link>
+                            )}
+                        </div>
+                    ))
                 ) : (
                     <div>No Packages Available</div>
                 )}
