@@ -6,6 +6,18 @@ import { BackendAPI } from '../../api/server';
 
 
 const Header = () => {
+    const [dropdownOpen, setDropdownOpen] = useState(false);
+
+    // Toggle dropdown visibility
+    const toggleDropdown = () => {
+        setDropdownOpen(!dropdownOpen);
+    };
+
+    // Handle clicking outside of dropdown (optional)
+    const closeDropdown = () => {
+        setDropdownOpen(false);
+    };
+
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const portalID = localStorage.getItem("I8PD56?#C|NXhSgZ0KE");
 
@@ -34,7 +46,20 @@ const Header = () => {
                 </ul>
                 {portalID ? (
                     <div className="logout-container">
-                        <button className="logout-button" onClick={handleLogout}>Logout</button>
+                              {/* Dropdown for Profile */}
+                        <div className="dropdown">
+                            <button className="dropdown-btn" onClick={toggleDropdown}>
+                            Profile <i className="fas fa-chevron-down"></i>
+                            </button>
+
+                            {dropdownOpen && (
+                            <div className="dropdown-menu">
+                                <Link to="/profile" className="dropdown-item">Your Profile</Link>
+                                <Link to="/profile" className="dropdown-item" onClick={handleLogout}>Logout</Link>
+                            </div>
+                            )}
+                        </div>
+                      
                     </div>
                 ):
                     <Link to={`${BackendAPI}/install`}>

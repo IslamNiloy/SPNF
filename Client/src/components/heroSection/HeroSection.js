@@ -22,9 +22,6 @@ const HeroSection = () => {
                     HubSpot Phone Number Formatter
                 </button>
                 <h1>Format Phone Numbers <span style={{color: "#000000"}}>with Ease</span></h1>
-                {localUserInfo?
-                    <h2>App is installed in <Link className='profile-link' to='/profile'>{localUserInfo}</Link></h2> : ""
-                }
                 <p>Automatically format phone numbers from any country, with a simple click.</p>
                 <div className="buttons">
                     <ScrollLink to="features">
