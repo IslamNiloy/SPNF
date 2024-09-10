@@ -10,6 +10,7 @@ import PricingPlan from '../components/proposedPackage/PricingCard';
 import ProposedPackageSection from '../components/proposedPackage/ProposedPackageSection';
 import QualityCheckSection from '../components/QualityCheckSection/QualityCheckSection';
 import Testimonials from '../components/TestimonialsSection/TestimonialsSection';
+import HowToUseSection from '../components/UsingTheAppSection/HowToUseSection';
 import UsingTheAppSection from '../components/UsingTheAppSection/UsingTheAppSection';
 import WorkflowSection from '../components/WorkFlowFunctionality/WorkflowSection';
 
@@ -24,6 +25,7 @@ const HomeSreen = () => {
             <PreferredChoice/>
             <Testimonials/>
             <PricingPlan/>
+            <HowToUseSection/>
             <FAQ/>
 
 
