@@ -122,13 +122,7 @@ const SubscriptionInfo = () => {
             <li>✔ All Countries</li>
           </ul>
           <button className="change-plan-btn" onClick={toggleplanChange}>Change Plan</button>
-        </div>
-
-        {/* Right Side - Subscription Info */}
-        <div className="subscription-info">
-          <h2 className="subscription-title">
-            Subscription <span className="highlight">Information</span>
-            {status == "cancelled" || packageName == "Free"?
+          {status == "cancelled" || packageName == "Free"?
             <></>:
             status && (
                 <>
@@ -142,6 +136,12 @@ const SubscriptionInfo = () => {
                 /> 
                 </>
             )}
+        </div>
+
+        {/* Right Side - Subscription Info */}
+        <div className="subscription-info">
+          <h2 className="subscription-title">
+            Subscription <span className="highlight">Information</span>
           </h2>
           <div className="info-grid">
             <div className="info-item">

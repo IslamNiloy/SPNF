@@ -109,16 +109,19 @@
   }
 
   .cancel_subscription{
-    background-color: #ff6f72;
-    color: #ffffff;
-    border: none;
-    border-radius: 5px;
+    background-color: #ffffff;
+    color: rgb(253, 147, 147);
+    border: 1px solid  rgb(253, 147, 147);
+    padding: 10px 15px;
+    border-radius: 8px;
+    margin-top: 5px;
     cursor: pointer;
-    transition: background-color 0.3s;
+    font-size: 1rem;
   }
 
   .cancel_subscription:hover{
     background-color: #bb2124; /* Darker blue on hover */
+    color: #ddd;
   }
   
   
