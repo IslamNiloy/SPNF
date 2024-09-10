@@ -41,8 +41,9 @@
 
 .pricing-container {
   display: flex;
-  justify-content: space-between;
-  gap: 2.5px;
+  justify-content: center;
+  margin-top: 10px;
+  gap: 25px;
   flex-wrap: wrap;
 }
 
