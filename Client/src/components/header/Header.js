@@ -3,10 +3,16 @@ import './Header.css';
 import { Link } from 'react-router-dom';
 import { Link as ScrollLink } from 'react-scroll';
 import { BackendAPI } from '../../api/server';
+import { useLocation } from 'react-router-dom';
 
 
 const Header = () => {
     const [dropdownOpen, setDropdownOpen] = useState(false);
+    const location = useLocation();
+
+    // Function to extract query parameters from the URL
+    const queryParams = new URLSearchParams(location.search);
+    const portalIDFromWeb = queryParams.get('portalID');
 
     // Toggle dropdown visibility
     const toggleDropdown = () => {
@@ -44,7 +50,7 @@ const Header = () => {
                     <li><ScrollLink to="features" smooth={true} duration={500}>Pricing</ScrollLink></li>
                     <li><ScrollLink to="using-the-app" smooth={true} duration={500}>FAQs</ScrollLink></li>
                 </ul>
-                {portalID ? (
+                {portalID || portalIDFromWeb ? (
                     <div className="logout-container">
                               {/* Dropdown for Profile */}
                         <div className="dropdown">
@@ -63,7 +69,7 @@ const Header = () => {
                     </div>
                 ):
                     <Link to={`${BackendAPI}/install`}>
-                            <button className="logIn-button">Get Your Formatter Now!</button>
+                        <button className="logIn-button">Get Your Formatter Now!</button>
                     </Link>
                 }
             </nav>

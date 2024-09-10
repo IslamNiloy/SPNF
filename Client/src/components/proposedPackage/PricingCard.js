@@ -14,7 +14,7 @@ const PricingCard = ({ id, planName, monthlyPrice, yearlyPrice, limit, countries
   const portalID = localStorage.getItem('I8PD56?#C|NXhSgZ0KE');
   const [old_price, setOld_Price] = useState("");
   const [apiCallCount, setAPICallCount] = useState("");
-  const [packageName, setPackageName] = useState("");
+  const [UserPackageName, setUserPackageName] = useState("");
   const [price, setPrice] = useState("");
   const [status, setStatus] = useState("");
   const [endDate, setEndDate] = useState("");
@@ -23,7 +23,7 @@ const PricingCard = ({ id, planName, monthlyPrice, yearlyPrice, limit, countries
 
   const paymentInfoFromAction = useSelector((state) => state.paymentInfoByEmail);
   const { loading : paymentLoading, error: paymentErr, paymentInfo } = paymentInfoFromAction;
-   
+
   const dispatch = useDispatch();
   const allPackageInfo = useMemo(() => JSON.parse(localStorage.getItem('lSYs~K@jx}DS1YG>/57Kuj')), []);
 
@@ -32,14 +32,19 @@ const PricingCard = ({ id, planName, monthlyPrice, yearlyPrice, limit, countries
       //const emailForPaymentInfo = localStorage.getItem("spPhk44lI519pJ");
       dispatch(subscriptionInfoByID(portalID));
       dispatch(paymentInfoByEmail(portalID));
-  }
-  if(infos){
-      setAPICallCount(infos.apiCallCount);
-      setEndDate(new Date(infos.packageEndDate));
-      if(paymentInfo)
-        setStatus(paymentInfo.status);
-  }
-}, [dispatch, infos, portalID, allPackageInfo]);
+    }
+
+    if(infos){
+   
+        const userPackage = allPackageInfo.filter(pkg => pkg._id === infos.package);
+        setUserPackageName(userPackage[0].packageName);
+      
+        setAPICallCount(infos.apiCallCount);
+        setEndDate(new Date(infos.packageEndDate));
+        if(paymentInfo)
+          setStatus(paymentInfo.status);
+    }
+  }, [dispatch, infos, portalID, allPackageInfo]);
 
   return (
     <div className={`pricing-card ${isPopular ? 'most-popular' : ''}`}>
@@ -67,28 +72,28 @@ const PricingCard = ({ id, planName, monthlyPrice, yearlyPrice, limit, countries
         </Link>
         :
         (endDate!="" && today > endDate && 
-          planName=="Free" && 
-          planName != "Installation Package")?
+          UserPackageName=="Free" && 
+          UserPackageName != "Installation Package")?
         ( 
           <Link to='/profile'>
               <button className={`plan-button ${isChosen ? 'chosen' : ''}`}>
-                  upgrade plan
+                  upgrade plan 1
               </button>
             </Link>
         
   
         ):
-        (planName=="Free" 
-          && planName == "Free" 
-          && planName != "Installation Package") ||
+        (UserPackageName=="Free" 
+          && UserPackageName == "Free" 
+          && UserPackageName != "Installation Package") ||
           (status != 'cancelled' 
-            && planName == "Enterprise" 
-            && planName != "Installation Package") ||
+            && UserPackageName == "Enterprise" 
+            && UserPackageName != "Installation Package") ||
           (status != 'cancelled' 
-            && (planName=="Free" || planName=="Pro") 
-            && planName == "Pro" && planName != "Installation Package") ||
-          (apiCallCount >= 500 && planName=="Free" 
-            && status == 'cancelled' && planName != "Installation Package")
+            && (UserPackageName=="Free" || UserPackageName=="Pro") 
+            && UserPackageName == "Pro" && UserPackageName != "Installation Package") ||
+          (apiCallCount >= 500 && UserPackageName=="Free" 
+            && status == 'cancelled' && UserPackageName != "Installation Package")
           ?
           (
             <Link to='/profile'>
@@ -98,15 +103,15 @@ const PricingCard = ({ id, planName, monthlyPrice, yearlyPrice, limit, countries
           </Link>
         ):
         (status == "cancelled" && 
-          (planName == "Pro" || planName == "Enterprise" || /custom/i.test(planName) 
-          && planName != "Installation Package") 
-          && planName=="Free" 
+          (UserPackageName == "Pro" || UserPackageName == "Enterprise" || /custom/i.test(UserPackageName) 
+          && UserPackageName != "Installation Package") 
+          && UserPackageName=="Free" 
           && parseInt(apiCallCount) < parseInt(limit)
           && today < endDate
-          && planName != "Installation Package"
+          && UserPackageName != "Installation Package"
       )
         ||
-        (endDate > today && planName=="Free" && planName != "Installation Package" 
+        (endDate > today && UserPackageName=="Free" && UserPackageName != "Installation Package" 
           && status != "cancelled" && parseInt(apiCallCount) < parseInt(limit))
         ?
         (
@@ -117,10 +122,10 @@ const PricingCard = ({ id, planName, monthlyPrice, yearlyPrice, limit, countries
           </>
         ):
         (status == "cancelled" 
-          && planName == "Pro" && planName!="Free" 
-          && planName != "Installation Package") ||
+          && UserPackageName == "Pro" && UserPackageName!="Free" 
+          && UserPackageName != "Installation Package") ||
         (status == "cancelled" && apiCallCount < 500 
-          && endDate > today && planName != "Installation Package")
+          && endDate > today && UserPackageName != "Installation Package")
         ?
         (
           <>
@@ -133,11 +138,11 @@ const PricingCard = ({ id, planName, monthlyPrice, yearlyPrice, limit, countries
         ):
         (status != "cancelled" && 
           status != "" && 
-          planName != "Free" && 
-          planName != "Installation Package")?
+          UserPackageName != "Free" && 
+          UserPackageName != "Installation Package")?
               (<Link to='/profile'>
                <button className={`plan-button ${isChosen ? 'chosen' : ''}`}>
-                  cancel subscription to Proceed
+                  cancel subscription to Proceed 1 {UserPackageName}
                 </button>
                 </Link>)
         :                (
