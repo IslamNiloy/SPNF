@@ -232,7 +232,7 @@ exports.checkPhoneNumber = async (req, res) => {
   let propertyName = req.body.propertyName;
   console.log("Property Name: ", propertyName)
   if (propertyName === null || propertyName === undefined) {
-    propertyName = "pf_number_quality_14082001"
+    propertyName = "pf_phone_number_quality_14082001"
   }
   // console.log("******** Req body *********", phoneNumber, country, propertyName, portalID, object, req.body, "******************")
   console.log(req.body)
