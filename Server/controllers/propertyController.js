@@ -1,4 +1,5 @@
 const { Client } = require('@hubspot/api-client');
+//
 
 async function createProperties(accessToken) {
   const hubspotClient = new Client({ accessToken });
