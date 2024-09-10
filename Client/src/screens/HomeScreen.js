@@ -25,6 +25,15 @@ const HomeSreen = () => {
             <Testimonials/>
             <PricingPlan/>
             <FAQ/>
+
+
+
+            <ProposedPackageSection/>
+
+            <OverviewSection/>
+            <FunctionalitySection/>
+            
+            <UsingTheAppSection/>
             <Footer/>
         </div>
     )
