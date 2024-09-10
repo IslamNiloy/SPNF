@@ -44,7 +44,6 @@ const UserProfileForm = () =>{
       setUIDomain(userInfo.uiDomain);
       setDataHostingLocation(userInfo.dataHostingLocation);
     }
-    console.log("-------------userInfo--------------"+ loading? "loading" : error? "error": userInfo);
   }, [dispatch, userInfo, portalID]);
 
 
