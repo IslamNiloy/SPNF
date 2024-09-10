@@ -91,21 +91,20 @@ nav {
 /* LogIn button styling */
 .logIn-button {
     padding: 10px 20px;
-    border: 1px solid #6ABAE2;
+    border: 2px solid #004080;
     border-radius: 5px;
-    background-color:#6ABAE2;
-    color: #FFFFFF;
+    background-color:#004080;
+    color: white;
     font-size: 16px;
     font-weight: bold;
     cursor: pointer;
     transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 }
 
-
-
 .logIn-button:hover {
     background-color: white;
     color: #004080;
+    border-color: #004080;
 }
 
 /* Container for the logout button */

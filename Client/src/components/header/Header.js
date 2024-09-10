@@ -27,10 +27,10 @@ const Header = () => {
             </div>
             <nav className={isMenuOpen ? 'nav-links active' : 'nav-links'}>
                 <ul>
-                    <li><ScrollLink to="overview" smooth={true} duration={500}>Features</ScrollLink></li>
-                    <li><ScrollLink to="functionality" smooth={true} duration={500}>How To Use</ScrollLink></li>
-                    <li><ScrollLink to="features" smooth={true} duration={500}>Pricing</ScrollLink></li>
-                    <li><ScrollLink to="using-the-app" smooth={true} duration={500}>FAQs</ScrollLink></li>
+                    <li><ScrollLink to="overview" smooth={true} duration={500}>Overview</ScrollLink></li>
+                    <li><ScrollLink to="functionality" smooth={true} duration={500}>Functionality</ScrollLink></li>
+                    <li><ScrollLink to="features" smooth={true} duration={500}>Features</ScrollLink></li>
+                    <li><ScrollLink to="using-the-app" smooth={true} duration={500}>Using the App</ScrollLink></li>
                 </ul>
                 {portalID ? (
                     <div className="logout-container">
@@ -38,7 +38,7 @@ const Header = () => {
                     </div>
                 ):
                     <Link to={`${BackendAPI}/install`}>
-                            <button className="logIn-button">Get Your Formatter Now!</button>
+                            <button className="logIn-button">Log In/Install</button>
                     </Link>
                 }
             </nav>
