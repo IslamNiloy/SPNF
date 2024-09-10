@@ -6,13 +6,16 @@ import { BackendAPI } from "../../api/server";
 import LoadingBox from '../LoadingBox';
 import MessageBox from '../MessageBox';
 import './PricingCards.css'; // Import the CSS file
-import { subscriptionInfoByID } from "../../action/subscriptionAction";
+import { subscriptionInfoByID,cancelSubscription } from "../../action/subscriptionAction";
 import { paymentInfoByEmail } from "../../action/paymentAction";
+import CancelModal from '../UserProfile/CancelModal';
 
 const PricingCard = ({ id, planName, monthlyPrice, yearlyPrice, limit, countries, buttonText, isPopular, isChosen, isMonthly }) => {
   const today = new Date();
   const portalID = localStorage.getItem('I8PD56?#C|NXhSgZ0KE');
   const [old_price, setOld_Price] = useState("");
+  const [modalVisible, setModalVisible] = useState(false);
+  const [showPopup, setshowPopup] = useState(false);
   const [apiCallCount, setAPICallCount] = useState("");
   const [UserPackageName, setUserPackageName] = useState("");
   const [price, setPrice] = useState("");
@@ -26,6 +29,11 @@ const PricingCard = ({ id, planName, monthlyPrice, yearlyPrice, limit, countries
 
   const dispatch = useDispatch();
   const allPackageInfo = useMemo(() => JSON.parse(localStorage.getItem('lSYs~K@jx}DS1YG>/57Kuj')), []);
+
+  const cancelSubscriptionInfo =  useSelector((state) => state.cancelSubscription);
+  const { loading: cancelSubscriptionLoading, 
+    error: cancelSubscriptionErr, 
+    infos:  subInfo} = cancelSubscriptionInfo;
 
   useEffect(() => {
     if (!infos) {
@@ -46,7 +54,38 @@ const PricingCard = ({ id, planName, monthlyPrice, yearlyPrice, limit, countries
     }
   }, [dispatch, infos, portalID, allPackageInfo]);
 
+  const handleCancelSubscription = (e) => {
+    e.preventDefault();
+    setshowPopup(true);
+  };
+
+  const handleClosePopup = () => {
+      setshowPopup(false);
+    };
+
+  const handleConfirmModal = (e) => {
+    setshowPopup(false);
+    //ancel subscription logic here
+    const portalID = localStorage.getItem('I8PD56?#C|NXhSgZ0KE');
+    dispatch(cancelSubscription(portalID));
+    
+    setStatus("cancelled");
+    setModalVisible(true);
+  };
+
+  const handleCloseModal = () => {
+    setModalVisible(false);
+  };
+
+
   return (
+    <>
+        <CancelModal
+      show={showPopup}
+      handleClose={handleClosePopup}
+      handleConfirm={(e) => handleConfirmModal (e)}
+    />
+
     <div className={`pricing-card ${isPopular ? 'most-popular' : ''}`}>
       <div className="plan-header">
         {isPopular && <span className="popular-badge">Most Popular</span>}
@@ -94,26 +133,7 @@ const PricingCard = ({ id, planName, monthlyPrice, yearlyPrice, limit, countries
               upgrade plan
           </button>
          </Link>
-        :
-        (UserPackageName=="Free" 
-          && UserPackageName == "Free" 
-          && UserPackageName != "Installation Package") ||
-          (status != 'cancelled' 
-            && UserPackageName == "Enterprise" 
-            && UserPackageName != "Installation Package") ||
-          (status != 'cancelled' 
-            && (UserPackageName=="Free" || UserPackageName=="Pro") 
-            && UserPackageName == "Pro" && UserPackageName != "Installation Package") ||
-          (apiCallCount >= 500 && UserPackageName=="Free" 
-            && status == 'cancelled' && UserPackageName != "Installation Package")
-          ?
-          (
-            <Link to='/profile'>
-            <button className={`plan-button ${isChosen ? 'chosen' : ''}`}>
-                upgrade plan
-            </button>
-          </Link>
-        ):
+       :
         (status == "cancelled" && 
           (UserPackageName == "Pro" || UserPackageName == "Enterprise" || /custom/i.test(UserPackageName) 
           && UserPackageName != "Installation Package") 
@@ -134,9 +154,9 @@ const PricingCard = ({ id, planName, monthlyPrice, yearlyPrice, limit, countries
           </>
         ):
         (status == "cancelled" 
-          && UserPackageName == "Pro" && UserPackageName!="Free" 
+          && UserPackageName!="Free" 
           && UserPackageName != "Installation Package") ||
-        (status == "cancelled" && apiCallCount < 500 
+        (status == "cancelled" && apiCallCount < 100 
           && endDate > today && UserPackageName != "Installation Package")
         ?
         (
@@ -152,11 +172,13 @@ const PricingCard = ({ id, planName, monthlyPrice, yearlyPrice, limit, countries
           status != "" && 
           UserPackageName != "Free" && 
           UserPackageName != "Installation Package")?
-              (<Link to='/profile'>
-               <button className={`plan-button ${isChosen ? 'chosen' : ''}`}>
-                  Cancel Current Subscription
-                </button>
-                </Link>) 
+              (
+                <>
+                  <button className={`plan-button ${isChosen ? 'chosen' : ''}`} onClick={handleCancelSubscription}>
+                    Cancel Subscription
+                  </button>
+                </> 
+               ) 
         :                (
           <>
             <form action= {`${BackendAPI}/charge/create-checkout-session/${id}}/${portalID}`} method="POST">
@@ -166,9 +188,9 @@ const PricingCard = ({ id, planName, monthlyPrice, yearlyPrice, limit, countries
           </form>  
           </>
         )
-
       }
     </div>
+    </>
   );
 };
 
