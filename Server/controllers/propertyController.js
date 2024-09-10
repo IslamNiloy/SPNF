@@ -1,4 +1,5 @@
 const { Client } = require('@hubspot/api-client');
+//
 
 async function createProperties(accessToken) {
   const hubspotClient = new Client({ accessToken });
@@ -8,11 +9,11 @@ async function createProperties(accessToken) {
       hidden: false,
       displayOrder: -1,
       description: "This property is created to store the quality of the phone number",
-      label: "PF-Number Quality",
+      label: "PF-Phone Number Quality",
       type: "string",
       formField: false,
       groupName: "contactinformation",
-      name: "pf_number_quality_14082001",
+      name: "pf_phone_number_quality_14082001",
       fieldType: "text",
     },
     {
