@@ -1,6 +1,8 @@
 import React from 'react';
 import './PreferredChoice.css'; // Import the CSS file for styling
-
+import { BackendAPI } from "../../api/server";
+import {Link } from 'react-router-dom';
+  
 const PreferredChoice = () => {
   const companies = [
     { name: 'Lyrebird Health', logo: '/PreferredChoice/1.png' },
@@ -34,7 +36,9 @@ const PreferredChoice = () => {
 
       {/* Call-to-action button */}
       <div className="cta-container">
-        <button className="cta-button">Get Your Formatter Now!</button>
+        <Link to={`${BackendAPI}/install`}>
+          <button className="cta-button">Get Your Formatter Now!</button>
+        </Link>
       </div>
     </section>
   );

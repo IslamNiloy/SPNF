@@ -5,6 +5,7 @@ import './HeroSection.css';
 import { useCookies } from 'react-cookie'
 import { Link } from 'react-router-dom';
 import { Link as ScrollLink } from 'react-scroll';
+import { BackendAPI } from "../../api/server";
 
 const HeroSection = () => {
     const userDetails = useSelector((state) => state.userInfo);
@@ -25,9 +26,11 @@ const HeroSection = () => {
                 <p>Automatically format phone numbers from any country, with a simple click.</p>
                 <div className="buttons">
                     <ScrollLink to="features">
-                        <button className="btn hero-btn2">
-                            Get Your Formatter Now!
-                        </button>
+                    
+
+                        <Link to={`${BackendAPI}/install`}>
+                            <button className="btn hero-btn2">Get Your Formatter Now!</button>
+                        </Link>
                     </ScrollLink>
                 </div>
             </div>

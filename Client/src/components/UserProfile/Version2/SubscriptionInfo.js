@@ -124,7 +124,7 @@ const SubscriptionInfo = () => {
           <button className="change-plan-btn" onClick={toggleplanChange}>Change Plan</button>
           {status == "cancelled" || packageName == "Free"?
             <></>:
-            status && (
+            status && apiCallLimit!=0 && (
                 <>
                 <button className='cancel_subscription' onClick={handleCancelSubscription}>
                     Cancel Subscription

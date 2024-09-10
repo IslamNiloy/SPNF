@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from "react-redux";
-import {Link, useNavigate } from 'react-router-dom';
+import {Link } from 'react-router-dom';
 import { allPackages } from '../../action/packageAction';
 import { BackendAPI } from "../../api/server";
 import LoadingBox from '../LoadingBox';
@@ -29,9 +29,9 @@ const PricingCard = ({ id, planName, monthlyPrice, yearlyPrice, limit, countries
 
   useEffect(() => {
     if (!infos) {
-      const emailForPaymentInfo = localStorage.getItem("spPhk44lI519pJ");
+      //const emailForPaymentInfo = localStorage.getItem("spPhk44lI519pJ");
       dispatch(subscriptionInfoByID(portalID));
-      dispatch(paymentInfoByEmail(emailForPaymentInfo));
+      dispatch(paymentInfoByEmail(portalID));
   }
   if(infos){
       setAPICallCount(infos.apiCallCount);
@@ -58,24 +58,24 @@ const PricingCard = ({ id, planName, monthlyPrice, yearlyPrice, limit, countries
         <li>✔ {countries}</li>
       </ul>
 
-
-
-
-
-
-
       {
+        !portalID ?
+        <Link to={`${BackendAPI}/install`}>
+          <button className={`plan-button ${isChosen ? 'chosen' : ''}`}>
+            Get Your Formatter
+          </button>
+        </Link>
+        :
         (endDate!="" && today > endDate && 
           planName=="Free" && 
           planName != "Installation Package")?
         ( 
           <Link to='/profile'>
-              <Link to='/profile'>
               <button className={`plan-button ${isChosen ? 'chosen' : ''}`}>
                   upgrade plan
               </button>
             </Link>
-          </Link>
+        
   
         ):
         (planName=="Free" 
@@ -151,25 +151,6 @@ const PricingCard = ({ id, planName, monthlyPrice, yearlyPrice, limit, countries
         )
 
       }
-
-
-
-
-
-
-
-
-
-
-
-
-
-      {/* 
-      <button className={`plan-button ${isChosen ? 'chosen' : ''}`}>
-        {buttonText}
-      </button>
-      */}
-
     </div>
   );
 };
