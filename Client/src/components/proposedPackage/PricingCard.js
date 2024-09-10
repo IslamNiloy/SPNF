@@ -71,18 +71,30 @@ const PricingCard = ({ id, planName, monthlyPrice, yearlyPrice, limit, countries
           </button>
         </Link>
         :
+        planName == "Custom" ?
+          <Link to='/custom'>
+              <button className={`plan-button ${isChosen ? 'chosen' : ''}`}>
+                  Contact Us
+              </button>
+            </Link>:
         (endDate!="" && today > endDate && 
           UserPackageName=="Free" && 
           UserPackageName != "Installation Package")?
         ( 
           <Link to='/profile'>
               <button className={`plan-button ${isChosen ? 'chosen' : ''}`}>
-                  upgrade plan 1
+                  upgrade plan
               </button>
             </Link>
         
-  
         ):
+        status == "cancelled" && planName == "Free" ?
+          <Link to='/profile'>
+          <button className={`plan-button ${isChosen ? 'chosen' : ''}`}>
+              upgrade plan
+          </button>
+         </Link>
+        :
         (UserPackageName=="Free" 
           && UserPackageName == "Free" 
           && UserPackageName != "Installation Package") ||
@@ -142,9 +154,9 @@ const PricingCard = ({ id, planName, monthlyPrice, yearlyPrice, limit, countries
           UserPackageName != "Installation Package")?
               (<Link to='/profile'>
                <button className={`plan-button ${isChosen ? 'chosen' : ''}`}>
-                  cancel subscription to Proceed 1 {UserPackageName}
+                  Cancel Current Subscription
                 </button>
-                </Link>)
+                </Link>) 
         :                (
           <>
             <form action= {`${BackendAPI}/charge/create-checkout-session/${id}}/${portalID}`} method="POST">
