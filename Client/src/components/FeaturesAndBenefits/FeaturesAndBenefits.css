@@ -13,7 +13,7 @@ h1{
 .features-container {
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
+  align-items: center;
   gap: 20px;
   padding: 20px;
   background-color: #f0f8ff; /* Optional background color */
@@ -63,6 +63,11 @@ h1{
       flex-direction: column; /* Stack the items vertically */
       gap: 10px; /* Adjust spacing between cards */
     }
+
+    .features-container-main{
+      padding: 15px;
+    }
+    
   
     .feature-card {
       width: 100%; /* Make each card take full width on mobile */
