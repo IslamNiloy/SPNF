@@ -12,9 +12,6 @@ const HeroSection = () => {
     const { loading, error, userInfo } = userDetails;
     const localUserInfo = localStorage.getItem('I8PD56?#C|NXhSgZ0KE');
     const [cookies, setCookie] = useCookies(['subscription']);
-
-
-
     return (
         <div>
             <section className="hero-section">
