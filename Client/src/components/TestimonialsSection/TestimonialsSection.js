@@ -6,7 +6,7 @@ const Testimonials = () => {
     <section className="testimonials-section">
       {/* First Testimonial */}
       <div className="testimonial-card" >
-        <div className="testimonial-quote"  style={{marginRight: "18px"}}>
+        <div className="testimonial-quote"  style={{marginRight: "30px"}}>
           <p>
             <div className="quote-main">
               <div className="quote-icon">
@@ -29,8 +29,8 @@ const Testimonials = () => {
       </div>
 
       {/* Second Testimonial */}
-      <div className="testimonial-card reverse" style={{marginTop: "-80px"}}>
-      <div className="testimonial-quote" style={{marginLeft: "18px"}}>
+      <div className="testimonial-card reverse" style={{marginTop: "-60px"}}>
+      <div className="testimonial-quote" style={{marginLeft: "30px"}}>
           <p >
             <div className="quote-main">
               <div>
