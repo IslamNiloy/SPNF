@@ -12,6 +12,16 @@
   margin-bottom: 20px;
 }
 
+.price-amount{
+  font-size: 62px;
+}
+
+.dollar{
+  color: #000;
+  font-size: 20px;
+  margin-bottom: 100px;
+}
+
 .highlight {
   color: #0099ff; /* Blue highlight for "Pricing" */
 }
@@ -67,7 +77,7 @@
 .plan-name {
   font-size: 1.5rem;
   font-weight: bold;
-  color: #003366;
+  color: #04587A;
 }
 
 .popular-badge {

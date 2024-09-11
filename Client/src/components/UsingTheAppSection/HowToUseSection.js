@@ -32,7 +32,7 @@ const HowToUseSection = () => {
   ];
 
   return (
-    <div className="how-to-use-dev">
+    <div className="how-to-use-dev" id='howToUse'>
          {/* Main Title */}
       <div className="main-title">
         <h2>How to <span className="highlight">Use</span> the App</h2>
