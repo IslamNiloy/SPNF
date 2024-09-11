@@ -1,13 +1,13 @@
 /* src/HeroSection.css */
 .hero-section {
-    background-color: #004080;
+    background-image: url("./HeroSection.png");
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    color: white;
-    position: relative;
-    overflow: hidden; /* Add this to contain the wave elements */
+    background-size: cover;
+    background-position: center;
+    height: 850px;
+    width: 100%;
 }
 
 .hero-content {
@@ -18,15 +18,18 @@
 
 .hero-content h1 {
     font-size: 3.8em;
-    margin-bottom: 5px;
-    margin-top: 0px;
-    border-bottom: 7px solid #FF6B00; 
-    padding: 3px; 
-    line-height: 0.37;
+    margin-top: 15px;
+    margin-bottom: 25px;
+    padding: 3px;
+    color: #1D587A; 
 }
 
 .hero-content h2 {
     font-size: 2.5em;
+}
+
+.hero-content p {
+    font-size: 1.3em;
 }
 
 .buttons {
@@ -49,13 +52,38 @@
     color: bisque;
 }
 
-.install-btn {
-    background-color: #FF6B00; /* Updated color for button */
-    color: white;
+.hero-btn1 {
+    background-color: #E1E5E4; /* Updated color for button */
+    color: #1D587A;
+    font-weight: bold;
 }
 
-.install-btn:hover {
-    background-color: #e65a00; /* Slightly darker shade for hover */
+.hero-btn1:hover {
+    background-color: #5893a8; /* Slightly darker shade for hover */
+    color: #ffffff;
+}
+
+.hero-btn1 {
+    background-color: #E1E5E4; /* Updated color for button */
+    color: #1D587A;
+    font-weight: bold;
+}
+
+.hero-btn1:hover {
+    background-color: #5893a8; /* Slightly darker shade for hover */
+    color: #ffffff;
+}
+
+.hero-btn2 {
+    border: 1px solid #6ABAE2;
+    border-radius: 5px;
+    background-color:#6ABAE2;
+    color: #ffffff;
+}
+
+.hero-btn2:hover {
+    background-color: white;
+    color: #004080;
 }
 
 .doc-btn {
