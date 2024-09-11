@@ -3,25 +3,27 @@
 .preferred-choice-container {
     text-align: center;
     padding: 40px;
-    background-color: #f9faff;
+    padding-bottom: 100px;
+    background-color: #ffffff;
   }
   
   .preferred-choice-text h2 {
     font-size: 2.5rem;
     font-weight: bold;
     margin-bottom: 30px;
-    color: #003366;
+    color: #000;
   }
   
   .preferred-choice-text .highlight {
-    color: #0099ff; /* Highlight the important text */
+    color: #6ABAE2; /* Highlight the important text */
   }
   
   .company-logos {
     display: flex;
     justify-content: center;
-    flex-wrap: wrap; /* Allows the logos to wrap on smaller screens */
-    gap: 20px;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 30px;
     margin-bottom: 40px;
   }
   
@@ -51,6 +53,10 @@
   
   /* Media query for mobile devices */
   @media screen and (max-width: 768px) {
+    .preferred-choice-container{
+      padding: 15px;
+      padding-bottom: 100px;
+    }
     .preferred-choice-text h2 {
       font-size: 2rem; /* Reduce heading size on mobile */
     }

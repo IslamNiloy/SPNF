@@ -4,8 +4,9 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    justify-content: center;
     padding: 50px;
-    background-color: #f5fafd; /* Optional light background color */
+    background-color: #ffffff; /* Optional light background color */
   }
   
   .quality-check-image {
@@ -26,11 +27,11 @@
   .quality-check-title {
     font-size: 2.5rem;
     font-weight: bold;
-    color: #003366;
+    color: #6ABAE2;
   }
   
   .quality-check-title span {
-    color: #0099ff; /* Optional highlight color */
+    color: #000; /* Optional highlight color */
   }
   
   .quality-check-description {
@@ -56,6 +57,7 @@
   @media screen and (max-width: 768px) {
     .quality-check-container {
       flex-direction: column;
+      padding: 60px 15px;
       text-align: center;
     }
   
