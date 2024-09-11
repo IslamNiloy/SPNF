@@ -19,6 +19,7 @@ exports.createCheckoutSession = async (req, res) => {
   const filteredStripePrice = stripePrices.data.filter(priceObj =>parseInt(priceObj.unit_amount) === parseInt((selectedPackage.price) * 100));;//filtering from stripe data with price of packageModel findOne
   const portalID = req.params.portalID;
 
+  console.log("selectedPackage.packageName======>" + selectedPackage.packageName);
   try {
       const session = await stripe.checkout.sessions.create({
         line_items: [
@@ -54,7 +55,7 @@ exports.createCheckoutSession = async (req, res) => {
             optional: true,
           },
         ],
-        mode: (req.params.id === '66ba2cf16343bea38ef334ba') ? 'payment' : 'subscription',
+        mode: (selectedPackage.packageName == "Free") ? 'payment' : 'subscription',
         success_url: `${process.env.SUCCESS_URL_STRIPE}`,
         cancel_url: `${process.env.CANCEL_URL_STRIPE}`,
         metadata: { 

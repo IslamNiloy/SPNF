@@ -110,6 +110,16 @@ const PricingCard = ({ id, planName, monthlyPrice, yearlyPrice, limit, countries
           </button>
         </Link>
         :
+        UserPackageName == "Free" && planName!="Free" ?
+        (
+          <>
+          <form action= {`${BackendAPI}/charge/create-checkout-session/${id}/${portalID}`} method="POST">
+          <button className={`plan-button ${isChosen ? 'chosen' : ''}`}>
+              Proceed to Checkout
+            </button>
+          </form>  
+          </>
+        ):
         planName == "Custom" ?
           <Link to='/custom'>
               <button className={`plan-button ${isChosen ? 'chosen' : ''}`}>
@@ -130,7 +140,7 @@ const PricingCard = ({ id, planName, monthlyPrice, yearlyPrice, limit, countries
         status == "cancelled" && planName == "Free" ?
           <Link to='/profile'>
           <button className={`plan-button ${isChosen ? 'chosen' : ''}`}>
-              upgrade plan
+              upgrade plan 
           </button>
          </Link>
        :
@@ -181,7 +191,7 @@ const PricingCard = ({ id, planName, monthlyPrice, yearlyPrice, limit, countries
                ) 
         :                (
           <>
-            <form action= {`${BackendAPI}/charge/create-checkout-session/${id}/${portalID}`} method="POST">
+            <form action= {`${BackendAPI}/charge/create-checkout-session/${id}}/${portalID}`} method="POST">
             <button className={`plan-button ${isChosen ? 'chosen' : ''}`}>
                 Proceed to Checkout
               </button>
