@@ -5,7 +5,7 @@
     justify-content: space-between;
     align-items: center;
     padding: 50px;
-    background-color: #f5fafd; /* Optional light background color */
+    background-color: #ffffff; /* Optional light background color */
   }
   
   .workflow-content {
@@ -15,11 +15,11 @@
   .workflow-title {
     font-size: 2.5rem;
     font-weight: bold;
-    color: #003366;
+    color: #6ABAE2;
   }
   
   .workflow-title span {
-    color: #0099ff; /* Optional color for 'Functionality' */
+    color: black; /* Optional color for 'Functionality' */
   }
   
   .workflow-description {
@@ -56,8 +56,10 @@
   /* Responsive for mobile devices */
   @media (max-width: 768px) {
     .workflow-container {
-      flex-direction: column;
+      flex-direction: column-reverse;
       text-align: center;
+      padding: 15px;
+      justify-content: center;
     }
   
     .workflow-content {
@@ -74,3 +76,6 @@
     }
   }
   
+
+
+
