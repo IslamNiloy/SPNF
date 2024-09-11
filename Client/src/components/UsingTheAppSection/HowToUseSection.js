@@ -33,36 +33,36 @@ const HowToUseSection = () => {
 
   return (
     <div className="how-to-use-dev" id='howToUse'>
-         {/* Main Title */}
+      {/* Main Title */}
       <div className="main-title">
         <h2>How to <span className="highlight">Use</span> the App</h2>
       </div>
-       <section className="how-to-use-section">
-      <div className="steps-container">
-        {steps.map((step, index) => (
-          <div
-            className={`step-item ${index === currentStep ? 'active' : ''}`}
-            key={index}
-            onClick={() => setCurrentStep(index)}
-          >
-            <div className="step-label"><span className='step-label_sub'>{step.label}</span> : {step.description}</div>
-            <img src={step.imgSrc} alt={step.title} />
-          </div>
-        ))}
-      </div>
+      <section className="how-to-use-section">
+        <div className="steps-container">
+          {steps.map((step, index) => (
+            <div
+              className={`step-item ${index === currentStep ? 'active' : ''}`}
+              key={index}
+              onClick={() => setCurrentStep(index)}
+            >
+              <div className="step-label"><span className='step-label_sub'>{step.label}</span> : {step.description}</div>
+              <img src={step.imgSrc} alt={step.title} />
+            </div>
+          ))}
+        </div>
 
-      <div className="video-container">
-        <iframe
-          width="100%"
-          height="315"
-          src="https://www.youtube.com/embed/your-video-id"
-          title="How to use the app"
-          frameBorder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowFullScreen
-        ></iframe>
-      </div>
-    </section>
+        <div className="video-container">
+          <iframe
+            width="100%"
+            height="315"
+            src="https://www.youtube.com/embed/your-video-id"
+            title="How to use the app"
+            frameBorder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+          ></iframe>
+        </div>
+      </section>
     </div>
   );
 };
