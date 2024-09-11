@@ -45,10 +45,10 @@ const Header = () => {
             </div>
             <nav className={isMenuOpen ? 'nav-links active' : 'nav-links'}>
                 <ul>
-                    <li><ScrollLink to="overview" smooth={true} duration={500}>Features</ScrollLink></li>
-                    <li><ScrollLink to="functionality" smooth={true} duration={500}>How To Use</ScrollLink></li>
-                    <li><ScrollLink to="features" smooth={true} duration={500}>Pricing</ScrollLink></li>
-                    <li><ScrollLink to="using-the-app" smooth={true} duration={500}>FAQs</ScrollLink></li>
+                    <li><ScrollLink to="features" smooth={true} duration={500}>Features</ScrollLink></li>
+                    <li><ScrollLink to="howToUse" smooth={true} duration={500}>How To Use</ScrollLink></li>
+                    <li><ScrollLink to="Pricing" smooth={true} duration={500}>Pricing</ScrollLink></li>
+                    <li><ScrollLink to="FAQs" smooth={true} duration={500}>FAQs</ScrollLink></li>
                 </ul>
                 {portalID || portalIDFromWeb ? (
                     <div className="logout-container">

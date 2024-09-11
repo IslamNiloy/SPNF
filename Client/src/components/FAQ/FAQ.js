@@ -45,7 +45,7 @@ const FAQ = () => {
     <section className="faq-section">
       <h2 className="faq-header">Our <span className="highlight">FAQs</span></h2>
       
-      <div className="faq-container">
+      <div className="faq-container" id='FAQs'>
         {faqs.map((faq, index) => (
           <div key={index} className="faq-item">
             <div className="faq-question" onClick={() => handleToggle(index)}>

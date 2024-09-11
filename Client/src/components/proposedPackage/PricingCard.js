@@ -86,7 +86,7 @@ const PricingCard = ({ id, planName, monthlyPrice, yearlyPrice, limit, countries
       handleConfirm={(e) => handleConfirmModal (e)}
     />
 
-    <div className={`pricing-card ${isPopular ? 'most-popular' : ''}`}>
+    <div className={`pricing-card ${isPopular ? 'most-popular' : ''}`} id='Pricing'>
       <div className="plan-header">
         {isPopular && <span className="popular-badge">Most Popular</span>}
         <h2 className="plan-name">{planName}</h2>
