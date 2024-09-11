@@ -58,10 +58,10 @@
     font-weight: bold;
 }
 
-.hero-btn1:hover {
-    background-color: #5893a8; /* Slightly darker shade for hover */
+/* .hero-btn1:hover {
+    background-color: #5893a8;
     color: #ffffff;
-}
+} */
 
 .hero-btn1 {
     background-color: #E1E5E4; /* Updated color for button */
@@ -69,10 +69,10 @@
     font-weight: bold;
 }
 
-.hero-btn1:hover {
-    background-color: #5893a8; /* Slightly darker shade for hover */
+/* .hero-btn1:hover {
+    background-color: #5893a8; 
     color: #ffffff;
-}
+} */
 
 .hero-btn2 {
     border: 1px solid #6ABAE2;
