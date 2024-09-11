@@ -65,9 +65,7 @@ exports.phoneNumber = async (req, res) => {
   const { phoneNumber, country, country_text, hs_object_id } = req.body;
   console.log("request Body: ", req.body)
   let propertyName = req.body.propertyName;
-  if (propertyName === null || propertyName === undefined) {
-    propertyName = "pf_formatted_phone_number_14082001"
-  }
+  
   // logger.info(`--------logging at phoneNumber func with ${phoneNumber}, ${country}, ${country_text}-------`);
   try {
     //const accessToken = await getAccessToken(req);
@@ -100,7 +98,12 @@ exports.phoneNumber = async (req, res) => {
       await updateAPICount(req.body.portalID);
       //incrementAPICount(req.body.portalID, "phoneNumber");
       const formattedNumber = formatPhoneNumber(phoneNumber, country, country_text);
-      await updateContactProperty(propertyName, formattedNumber, hs_object_id, User.accessToken, req, User.refreshToken);
+      await updateContactProperty("pf_formatted_phone_number_14082001", formattedNumber, hs_object_id, User.accessToken, req, User.refreshToken);
+      
+      if (propertyName ) {
+        await updateContactProperty(propertyName, formattedNumber, hs_object_id, User.accessToken, req, User.refreshToken);
+      }
+      
       res.json({
         "outputFields": {
           "Formatted_Phone_Number": formattedNumber,
@@ -230,10 +233,8 @@ const checkPhoneNumber = (phoneNumber, country) => {
 exports.checkPhoneNumber = async (req, res) => {
   const { phoneNumber, country, portalID, hs_object_id, object } = req.body;
   let propertyName = req.body.propertyName;
-  console.log("Property Name: ", propertyName)
-  if (propertyName === null || propertyName === undefined) {
-    propertyName = "pf_phone_number_quality_14082001"
-  }
+  // console.log("Property Name: ", propertyName)
+  
   // console.log("******** Req body *********", phoneNumber, country, propertyName, portalID, object, req.body, "******************")
   console.log(req.body)
 
@@ -274,7 +275,11 @@ exports.checkPhoneNumber = async (req, res) => {
     }
 
     const result = checkPhoneNumber(phoneNumber, country);
-    await updateContactProperty(propertyName, result, hs_object_id, User.accessToken, req, User.refreshToken);
+    await updateContactProperty("pf_phone_number_quality_14082001", result, hs_object_id, User.accessToken, req, User.refreshToken);
+    //  save value in users property if provided 
+    if (propertyName) {
+      await updateContactProperty(propertyName, result, hs_object_id, User.accessToken, req, User.refreshToken);
+    }
     return res.status(200).json({
       "outputFields": {
         "quality": result,
