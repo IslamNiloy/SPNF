@@ -2,18 +2,18 @@
 
 .faq-section {
     padding: 50px 20px;
-    background-color: #f5fafd;
+    background-color: #ffffff;
     text-align: center;
   }
   
   .faq-header {
     font-size: 2.5rem;
     margin-bottom: 30px;
-    color: #003366;
+    color: #000;
   }
   
   .faq-header .highlight {
-    color: #0099ff;
+    color: #6ABAE2;
   }
   
   .faq-container {

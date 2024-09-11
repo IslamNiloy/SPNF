@@ -7,18 +7,18 @@
   .main-title h2 {
     font-size: 2rem;
     font-weight: bold;
-    color: #003366; /* Dark blue */
+    color: #000; /* Dark blue */
   }
   
   .main-title .highlight {
-    color: #007bff; /* Light blue for "Use" */
+    color: #6ABAE2; /* Light blue for "Use" */
   }
   
   /* Section container */
   .how-to-use-section {
     display: flex;
     justify-content: space-between;
-    align-items: flex-start;
+    align-items: center;
     padding: 20px;
     background-color: #f2faff;
     max-width: 1200px;
@@ -29,6 +29,7 @@
     .how-to-use-dev {
       margin-top: -30px;
       padding-top: 40px;
+      padding-bottom: 50px;
       background-color: #f2faff;
     }
   
@@ -132,6 +133,7 @@
   
     .video-container {
       margin-top: 20px;
+      padding: 10px 0;
     }
   }
   
