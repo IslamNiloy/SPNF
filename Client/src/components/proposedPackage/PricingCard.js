@@ -80,7 +80,7 @@ const PricingCard = ({ id, planName, monthlyPrice, yearlyPrice, limit, countries
 
   return (
     <>
-        <CancelModal
+      <CancelModal
       show={showPopup}
       handleClose={handleClosePopup}
       handleConfirm={(e) => handleConfirmModal (e)}
@@ -90,16 +90,64 @@ const PricingCard = ({ id, planName, monthlyPrice, yearlyPrice, limit, countries
       <div className="plan-header">
         {isPopular && <span className="popular-badge">Most Popular</span>}
         <h2 className="plan-name">{planName}</h2>
+        <div>
+          {planName == "Free" &&
+            <img src='/PricingPlan/Free.png' width="40px"/>  
+          }
+          {planName == "Starter" &&
+            <img src='/PricingPlan/Starter.png' width="50px"/>  
+          }
+          {planName == "Pro" &&
+            <img src='/PricingPlan/Pro.png' width="50px"/>  
+          }
+          {planName == "Pro Plus" &&
+            <img src='/PricingPlan/ProPlus.png' width="50px"/>  
+          }
+          {planName == "Enterprise" &&
+            <img src='/PricingPlan/Enterprise.png' width="50px"/>  
+          }
+          {planName == "Custom" &&
+            <img src='/PricingPlan/Custom.png' width="50px"/>  
+          }
+
+        </div>
       </div>
       <div className="plan-price">
         <span className="price-amount">
-          {isMonthly ? monthlyPrice : yearlyPrice}
+          {isMonthly ? 
+          ( 
+            <>
+            <sup className='dollar'>
+              {
+                [monthlyPrice.slice(0, 1), price.slice(1)]
+              }
+            </sup>
+              {
+              [monthlyPrice.slice(1, 5), price.slice(1)]
+              }
+            </>
+          )
+          : 
+          ( 
+            <>
+            <sup className='dollar'>
+              {
+                [yearlyPrice.slice(0, 1), price.slice(1)]
+              }
+            </sup>
+              {
+              [yearlyPrice.slice(1, 5), price.slice(1)]
+              }
+            </>
+          )
+          }
         </span>
         <span className="price-duration">{planName !== 'Custom' ? (isMonthly ? '/month' : '/year') : ''}</span>
+        <hr style={{color: "#001B3440"}}/>
       </div>
       <ul className="plan-features">
-        <li>✔ Actions {limit}</li>
-        <li>✔ {countries}</li>
+        <li style={{color: "#200335"}}><span style={{color: "#66CD51"}}>✔ </span> Actions {limit}</li>
+        <li style={{color: "#200335"}}><span style={{color: "#66CD51"}}>✔ </span> {countries}</li>
       </ul>
 
       {
