@@ -1,7 +1,7 @@
 /* PricingCards.css */
 
 .pricing-section {
-  background-color: #0c1540; /* Dark blue background */
+  background-image: url('./backend.png');
   padding: 50px 20px;
   text-align: center;
 }

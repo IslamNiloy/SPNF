@@ -57,7 +57,7 @@
   @media screen and (max-width: 768px) {
     .quality-check-container {
       flex-direction: column;
-      padding: 60px 15px;
+      padding: 15px;
       text-align: center;
     }
   
