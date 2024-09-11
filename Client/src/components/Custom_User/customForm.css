@@ -1,11 +1,32 @@
 .hubspotForm_main{
-    margin-left: 100px;
-    margin-right: 100px;
-    margin-bottom: 200px;
-    margin-top: 100px;
-    max-height: 800px;
+    padding: 20px 200px;
+    align-self: center;
+}
+.hubspotForm_main p{
+    text-align: center;
+    padding-bottom: 10px;
+}
+.workflow-title {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #000;
+    text-align: center;
+}  
+.workflow-title span {
+    color: #6ABAE2; /* Optional color for 'Functionality' */
 }
 
-.hubspotForm_main h1{
-    text-align: center;
+
+/* Responsive for mobile devices */
+@media (max-width: 768px) {
+    .hubspotForm_main{
+        padding: 15px;
+        padding-top: 40px;
+        margin: 0;
+        min-height: 115vh;
+    }
+    
+    .hubspotForm_main h1{
+        text-align: center;
+    }
 }
