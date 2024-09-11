@@ -158,6 +158,12 @@ const PricingCard = ({ id, planName, monthlyPrice, yearlyPrice, limit, countries
           </button>
         </Link>
         :
+        planName == "Custom" ?
+          <Link to='/custom'>
+              <button className={`plan-button ${isChosen ? 'chosen' : ''}`}>
+                  Contact Us
+              </button>
+            </Link>:
         UserPackageName == "Free" && planName!="Free" ?
         (
           <>
@@ -168,12 +174,6 @@ const PricingCard = ({ id, planName, monthlyPrice, yearlyPrice, limit, countries
           </form>  
           </>
         ):
-        planName == "Custom" ?
-          <Link to='/custom'>
-              <button className={`plan-button ${isChosen ? 'chosen' : ''}`}>
-                  Contact Us
-              </button>
-            </Link>:
         (endDate!="" && today > endDate && 
           UserPackageName=="Free" && 
           UserPackageName != "Installation Package")?
