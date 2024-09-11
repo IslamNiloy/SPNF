@@ -1,12 +1,14 @@
 import Footer from '../components/Footer/Footer';
 import Header from '../components/header/Header';
-import UserProfile from '../components/UserProfile/userProfile';
+
 import React, { useEffect } from 'react';
 import { useDispatch } from "react-redux";
 import { userInfoByID } from '../action/userAction';
 import { useCookies } from 'react-cookie'
 import { useNavigate } from 'react-router-dom';
 import { insertIntoSubscriptionCollection } from '../action/subscriptionAction';
+import UserProfile from '../components/UserProfile/Version2/UserProfile';
+import SubscriptionInfo from '../components/UserProfile/Version2/SubscriptionInfo';
 
 const ProfileScreen = () => {
     const [cookies, setCookie] = useCookies(['subscription']);
@@ -22,7 +24,9 @@ const ProfileScreen = () => {
     return(
         <div>
             <Header />
-            <UserProfile/>
+             <UserProfile/>
+             <SubscriptionInfo/>
+            {/*<UserProfile/>*/}
             <Footer/>
         </div>
     )

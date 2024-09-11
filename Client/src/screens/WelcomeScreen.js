@@ -11,6 +11,7 @@ import { userInfoByID } from '../action/userAction';
 import { useCookies } from 'react-cookie'
 import { insertIntoSubscriptionCollection } from '../action/subscriptionAction';
 import { useNavigate } from 'react-router-dom';
+import PricingCards from '../components/proposedPackage/PricingCard';
 
 const WelcomeScreen = () => {
     const [cookies, setCookie] = useCookies(['subscription']);
@@ -31,7 +32,7 @@ const WelcomeScreen = () => {
     return(
         <div>
             <Header />
-            <ProposedPackageSection/>
+            <PricingCards/>
             <Footer/>
         </div>
     )

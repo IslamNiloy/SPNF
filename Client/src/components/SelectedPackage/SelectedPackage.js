@@ -49,86 +49,86 @@ const SelectedPackage = (props) => {
   return(
       <section>
         <section className="package-section">
-              <div className="package-container">
-                <div className="package-card">
-                  <div className="package-details">
-                      <span className="package-name">{props.data.packageName}</span>
-                      <button className="package-price">${props.data.price}/month</button>
-                  </div>
-                  <p className="package-content1">API Call Limit</p>
-                  <p className="package-content2">{props.data.Limit}/month</p>
-                  {
-                    (endDate!="" && today > endDate && props.data.packageName=="Free" && packageName != "Installation Package")?
-                    ( 
-                      <Link to='/profile'>
-                          <Link to='/profile'>
-                          <button type="submit" className="install-button">
-                              upgrade plan
-                          </button>
-                        </Link>
-                      </Link>
-             
-                    )
-                    :
-                    (props.data.packageName=="Free" && packageName == "Free" && packageName != "Installation Package") ||
-                    (status != 'cancelled' && packageName == "Enterprise" && packageName != "Installation Package") ||
-                    (status != 'cancelled' && (props.data.packageName=="Free" || props.data.packageName=="Pro") && packageName == "Pro" && packageName != "Installation Package") ||
-                    (apiCallCount >= 500 && props.data.packageName=="Free" && status == 'cancelled' && packageName != "Installation Package")
-                    ?
-                    (
+          <div className="package-container">
+            <div className="package-card">
+              <div className="package-details">
+                  <span className="package-name">{props.data.packageName}</span>
+                  <button className="package-price">${props.data.price}/month</button>
+              </div>
+              <p className="package-content1">API Call Limit</p>
+              <p className="package-content2">{props.data.Limit}/month</p>
+              {
+                (endDate!="" && today > endDate && props.data.packageName=="Free" && packageName != "Installation Package")?
+                ( 
+                  <Link to='/profile'>
                       <Link to='/profile'>
                       <button type="submit" className="install-button">
                           upgrade plan
                       </button>
                     </Link>
-                    ):
-                    (status == "cancelled" && (packageName == "Pro" || packageName == "Enterprise" || /custom/i.test(packageName) && packageName != "Installation Package") 
-                    && props.data.packageName=="Free" 
-                    && parseInt(apiCallCount) < parseInt(props.data.Limit)
-                    && today < endDate
-                    && packageName != "Installation Package"
-                  )
-                    ||
-                    (endDate > today && props.data.packageName=="Free" && packageName != "Installation Package" && status != "cancelled" && parseInt(apiCallCount) < parseInt(props.data.Limit))
-                    ?
-                    (
-                      <>
+                  </Link>
+          
+                )
+                :
+                (props.data.packageName=="Free" && packageName == "Free" && packageName != "Installation Package") ||
+                (status != 'cancelled' && packageName == "Enterprise" && packageName != "Installation Package") ||
+                (status != 'cancelled' && (props.data.packageName=="Free" || props.data.packageName=="Pro") && packageName == "Pro" && packageName != "Installation Package") ||
+                (apiCallCount >= 500 && props.data.packageName=="Free" && status == 'cancelled' && packageName != "Installation Package")
+                ?
+                (
+                  <Link to='/profile'>
+                  <button type="submit" className="install-button">
+                      upgrade plan
+                  </button>
+                </Link>
+                ):
+                (status == "cancelled" && (packageName == "Pro" || packageName == "Enterprise" || /custom/i.test(packageName) && packageName != "Installation Package") 
+                && props.data.packageName=="Free" 
+                && parseInt(apiCallCount) < parseInt(props.data.Limit)
+                && today < endDate
+                && packageName != "Installation Package"
+              )
+                ||
+                (endDate > today && props.data.packageName=="Free" && packageName != "Installation Package" && status != "cancelled" && parseInt(apiCallCount) < parseInt(props.data.Limit))
+                ?
+                (
+                  <>
+                    <button type="submit" className="install-button">
+                        upgrade plan
+                    </button>
+                  </>
+                ):
+                (status == "cancelled" && packageName == "Pro" && props.data.packageName!="Free" && packageName != "Installation Package") ||
+                (status == "cancelled" && apiCallCount < 500 && endDate > today && packageName != "Installation Package")
+                ?
+                (
+                  <>
+                  <form action= {`${BackendAPI}/charge/create-checkout-session/${props.data._id}/${portalID}`} method="POST">
+                    <button type="submit" className="install-button">
+                      Proceed to Checkout
+                    </button>
+                  </form>  
+                  </>
+                ):
+                (status != "cancelled" && status != "" && packageName != "Free" && packageName != "Installation Package")?
+                      (<Link to='/profile'>
                         <button type="submit" className="install-button">
-                            upgrade plan
+                          cancel subscription to Proceed
                         </button>
-                      </>
-                    ):
-                    (status == "cancelled" && packageName == "Pro" && props.data.packageName!="Free" && packageName != "Installation Package") ||
-                    (status == "cancelled" && apiCallCount < 500 && endDate > today && packageName != "Installation Package")
-                    ?
-                    (
-                      <>
-                      <form action= {`${BackendAPI}/charge/create-checkout-session/${props.data._id}/${portalID}`} method="POST">
-                        <button type="submit" className="install-button">
-                          Proceed to Checkout
-                        </button>
-                      </form>  
-                      </>
-                    ):
-                    (status != "cancelled" && status != "" && packageName != "Free" && packageName != "Installation Package")?
-                          (<Link to='/profile'>
-                            <button type="submit" className="install-button">
-                              cancel subscription to Proceed
-                            </button>
-                            </Link>)
-                    :
-                    (
-                      <>
-                        <form action= {`${BackendAPI}/charge/create-checkout-session/${props.data._id}/${portalID}`} method="POST">
-                          <button type="submit" className="install-button">
-                            Proceed to Checkout
-                          </button>
-                      </form>  
-                      </>
-                    )
-                  } 
-                </div>
-              </div>
+                        </Link>)
+                :
+                (
+                  <>
+                    <form action= {`${BackendAPI}/charge/create-checkout-session/${props.data._id}/${portalID}`} method="POST">
+                      <button type="submit" className="install-button">
+                        Proceed to Checkout
+                      </button>
+                  </form>  
+                  </>
+                )
+              } 
+            </div>
+          </div>
           </section>
      </section>
   )

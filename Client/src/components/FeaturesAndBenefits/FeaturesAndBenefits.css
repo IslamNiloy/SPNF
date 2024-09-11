@@ -1,0 +1,102 @@
+/* Features.css */
+
+h1{
+    color: #6ABAE2;
+}
+.features-container-main{
+    align-items: center;
+    text-align: center;
+    margin-top: 0px;
+    padding: 30px;
+    background-color: #EAF5FB ;
+}
+.features-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+  padding: 20px;
+  background-color: #f0f8ff; /* Optional background color */
+}
+
+.feature-card {
+  background-color: #ffffff;
+  border-radius: 10px;
+  padding: 20px;
+  width: 22%;
+  height: 180px;
+  text-align: left; /* Ensure everything is left-aligned */
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.feature-card:hover {
+  transform: scale(1.05);
+}
+
+.feature-icon {
+  font-size: 40px;
+  margin-bottom: 15px;
+  text-align: left; /* Make sure the icon is left-aligned */
+}
+
+.feature-content {
+  text-align: left; /* Ensure text content is left-aligned */
+}
+
+.feature-title {
+  font-size: 18px;
+  font-weight: bold;
+  color: #003366;
+  margin-bottom: 10px;
+}
+
+.feature-description {
+  font-size: 14px;
+  color: #666666;
+  line-height: 1.5;
+}
+
+/* Media query for mobile devices (max-width: 768px) */
+@media screen and (max-width: 768px) {
+    .features-container {
+      flex-direction: column; /* Stack the items vertically */
+      gap: 10px; /* Adjust spacing between cards */
+    }
+  
+    .feature-card {
+      width: 100%; /* Make each card take full width on mobile */
+      margin-bottom: 20px; /* Add some space between cards */
+    }
+  
+    .feature-icon {
+      font-size: 30px; /* Reduce icon size on mobile */
+    }
+  
+    .feature-title {
+      font-size: 16px; /* Reduce title font size on mobile */
+    }
+  
+    .feature-description {
+      font-size: 13px; /* Adjust description font size on mobile */
+    }
+  }
+  
+  /* Media query for very small devices (max-width: 480px) */
+  @media screen and (max-width: 480px) {
+    .feature-card {
+      padding: 15px; /* Reduce padding for very small devices */
+    }
+  
+    .feature-icon {
+      font-size: 24px; /* Further reduce icon size */
+    }
+  
+    .feature-title {
+      font-size: 14px; /* Further reduce title font size */
+    }
+  
+    .feature-description {
+      font-size: 12px; /* Further reduce description font size */
+    }
+  }

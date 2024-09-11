@@ -1,0 +1,144 @@
+/* PricingCards.css */
+
+.pricing-section {
+  background-color: #0c1540; /* Dark blue background */
+  padding: 50px 20px;
+  text-align: center;
+}
+
+.pricing-title {
+  font-size: 2rem;
+  color: white;
+  margin-bottom: 20px;
+}
+
+.highlight {
+  color: #0099ff; /* Blue highlight for "Pricing" */
+}
+
+.toggle-buttons {
+  display: inline-flex;
+  justify-content: center;
+  margin-bottom: 40px;
+}
+
+.toggle-button {
+  background-color: transparent;
+  border: 2px solid #0099ff;
+  color: #0099ff;
+  padding: 10px 20px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+
+}
+
+.toggle-button.active {
+  background-color: #0099ff;
+  color: white;
+}
+
+.pricing-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+  gap: 25px;
+  flex-wrap: wrap;
+}
+
+.pricing-card {
+  background-color: white;
+  padding: 30px 20px;
+  border-radius: 15px;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s;
+}
+
+.pricing-card:hover {
+  transform: scale(1.05);
+}
+
+.plan-header {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.plan-name {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #003366;
+}
+
+.popular-badge {
+  position: absolute;
+  top: -15px;
+  right: -15px;
+  background-color: #0099ff;
+  color: white;
+  padding: 5px 10px;
+  font-size: 0.8rem;
+  border-radius: 5px;
+}
+
+.plan-price {
+  font-size: 2rem;
+  color: #0099ff;
+  margin-bottom: 15px;
+}
+
+.price-duration {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.plan-features {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  margin-bottom: 20px;
+}
+
+.plan-features li {
+  font-size: 1rem;
+  color: #0099ff;
+  margin-bottom: 10px;
+}
+
+.plan-button {
+  background-color: #0099ff;
+  color: white;
+  border: none;
+  width: 200px;
+  padding: 10px 20px;
+  font-size: 1rem;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.plan-button:hover {
+  background-color: #007acc;
+}
+
+.plan-button.chosen {
+  background-color: #00c851;
+}
+
+.plan-button.chosen:hover {
+  background-color: #009a44;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .pricing-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .pricing-card {
+    width: 100%;
+    max-width: 350px;
+    margin-bottom: 20px;
+  }
+}

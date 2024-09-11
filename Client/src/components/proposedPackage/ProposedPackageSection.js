@@ -10,6 +10,7 @@ import { BackendAPI } from '../../api/server';
 
 const ProposedPackageSection = () => {
     const dispatch = useDispatch();
+    const [isMonthly, setIsMonthly] = useState(true); // Toggle state for Monthly/Yearly
     const AllPackages = useSelector((state) => state.getAllPackage);
     const { loading, error, packages } = AllPackages;
     //const monghtPackages = packages.find({ subscription: 'monthly' }).sort({ index: 1 });
@@ -19,92 +20,65 @@ const ProposedPackageSection = () => {
         dispatch(allPackages());
       }, [dispatch]);
     
-    return (
-        <section className="package-section" id="features">
-            <h2 className='header'>Packages</h2>
-            <h3 className='headerSub'>Monthly</h3>
-            {
-            <div className="package-container">
-                {error? <MessageBox>{error}</MessageBox>:
-                loading? <LoadingBox>Loading</LoadingBox>: packages?(
-                    packages.filter(pkg => pkg.subscription === 'monthly').map((pkg, index) => (
-                    <div className="package-card" key={index}>
-                        <div className="package-details">
-                            <span className="package-name">{pkg.packageName}</span>
-                            {pkg.packageName=='Custom' ? 
-                                <button className="package-price">Custom</button>:
-                                <button className="package-price">${pkg.price}/month</button>
-                            }
-                        </div>
-                        <p className="package-content1">Number of Actions</p>
-                        {pkg.packageName=='Custom' ? 
-                                <p className="package-content2">15000+/month</p>:
-                                <p className="package-content2">{pkg.Limit}/month</p>
-                        }
+      return (
+        <section className="pricing-section">
+            <h2 className="header">Our <span className="highlight">Pricing</span> Plan</h2>
 
-                         { portalID?
-                                pkg.packageName=='Custom' ? 
-                                <Link to="/custom"  state={{ selectedPackage: pkg }}>
-                                    <button className="install-button">Install</button>
-                                </Link>: 
-                                <Link to="/payment"  state={{ selectedPackage: pkg }}>
-                                <button className="install-button">Checkout</button>
-                            </Link>:
-                             pkg.packageName=='Custom' ? 
-                                <Link to="/custom"  state={{ selectedPackage: pkg }}>
-                                    <button className="install-button">Install</button>
-                                </Link>:
-                                 <Link to={`${BackendAPI}/install`}  state={{ selectedPackage: pkg }}>
-                                    <button className="install-button">Install</button>
-                                </Link>
-                        }
-                    </div>
-                ))):""}
+            {/* Toggle Button */}
+            <div className="toggle-buttons">
+                <button
+                    className={`toggle-button ${isMonthly ? 'active' : ''}`}
+                    onClick={() => setIsMonthly(true)}
+                >
+                    Monthly
+                </button>
+                <button
+                    className={`toggle-button ${!isMonthly ? 'active' : ''}`}
+                    onClick={() => setIsMonthly(false)}
+                >
+                    Yearly
+                </button>
             </div>
-        }
-        <hr/>
-        <h3 className='headerSub'>Yearly</h3>
-            {
-            <div className="package-container">
-                {error? <MessageBox>{error}</MessageBox>:
-                loading? <LoadingBox>Loading</LoadingBox>: packages?(
-                    packages.filter(pkg => pkg.subscription === 'yearly').map((pkg, index) => (
-                    <div className="package-card" key={index}>
-                        <div className="package-details">
-                            <span className="package-name">{pkg.packageName}</span>
-                            {pkg.packageName=='Custom' ? 
-                                <button className="package-price">Custom</button>:
-                                <button className="package-price">${pkg.price}/yearly</button>
-                            }
-                        </div>
-                        <p className="package-content1">Number of Actions</p>
-                        {pkg.packageName=='Custom' ? 
-                                <p className="package-content2">15000+/yearly</p>:
-                                <p className="package-content2">{pkg.Limit}/yearly</p>
-                        }
 
-                         { portalID?
-                                pkg.packageName=='Custom' ? 
-                                <Link to="/custom"  state={{ selectedPackage: pkg }}>
-                                    <button className="install-button">Install</button>
-                                </Link>: 
-                                <Link to="/payment"  state={{ selectedPackage: pkg }}>
-                                <button className="install-button">Checkout</button>
-                            </Link>:
-                             pkg.packageName=='Custom' ? 
-                                <Link to="/custom"  state={{ selectedPackage: pkg }}>
-                                    <button className="install-button">Install</button>
-                                </Link>:
-                                 <Link to={`${BackendAPI}/install`}  state={{ selectedPackage: pkg }}>
-                                    <button className="install-button">Install</button>
+            <div className="package-container">
+            {error ? (
+                <div className="error-box">{error}</div>
+            ) : loading ? (
+                <div className="loading-box">Loading...</div>
+            ) : packages ? (
+                packages
+                    .filter(pkg => pkg.subscription === (isMonthly ? 'monthly' : 'yearly'))
+                    .map((pkg, index) => (
+                        <div className={`package-card ${pkg.mostPopular ? 'most-popular' : ''}`} key={index}>
+                            <div className="package-details">
+                                <span className="package-name">{pkg.packageName}</span>
+                                <span className="package-price">
+                                    {pkg.packageName === 'Custom'
+                                        ? 'Custom Pricing'
+                                        : `$${pkg.price}/month`}
+                                </span>
+                            </div>
+                            <p className="package-content1">{pkg.packageName === 'Custom' ? 'Custom formatting/month' : `${pkg.Limit} formatting/month`}</p>
+                            <p className="package-content2">All countries</p>
+
+                            {portalID ? (
+                                <Link to={pkg.packageName === 'Custom' ? '/custom' : '/payment'} state={{ selectedPackage: pkg }}>
+                                    <button className="install-button">{pkg.packageName === 'Custom' ? 'Proceed' : 'Choose Plan'}</button>
                                 </Link>
-                        }
-                    </div>
-                ))):""}
+                            ) : (
+                                <Link to="/login">
+                                    <button className="install-button">Login to Continue</button>
+                                </Link>
+                            )}
+                        </div>
+                    ))
+                ) : (
+                    <div>No Packages Available</div>
+                )}
             </div>
-        }
         </section>
     );
 };
+
 
 export default ProposedPackageSection;

@@ -89,6 +89,7 @@ const SubscriptionForm = () => {
     return (
         <form className="subscription-info-form">
             <h3>Subscription Information</h3>
+            
             <div>
                 <label>Portal ID:</label>
                 <p>{portalID}</p>
