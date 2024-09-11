@@ -81,20 +81,19 @@
 }
 
 .popular-badge {
-  position: absolute;
-  top: -15px;
-  right: -15px;
-  background-color: #0099ff;
+  background-color: #04587A;
   color: white;
-  padding: 5px 10px;
-  font-size: 0.8rem;
+  padding: 10px 15px;
+  font-size: .9rem;
   border-radius: 5px;
+  transition: transform 0.3s;
 }
 
 .plan-price {
   font-size: 2rem;
   color: #0099ff;
   margin-bottom: 15px;
+  min-height: 95px;
 }
 
 .price-duration {
@@ -116,13 +115,13 @@
 }
 
 .plan-button {
-  background-color: #0099ff;
-  color: white;
+  background-color: #64BAE2;
+  color: #ffffff;
   border: none;
-  width: 200px;
-  padding: 10px 20px;
-  font-size: 1rem;
-  border-radius: 10px;
+  width: 250px;
+  padding: 20px;
+  font-size: 20px;
+  border-radius: 8px;
   cursor: pointer;
   transition: background-color 0.3s;
 }
@@ -148,7 +147,7 @@
 
   .pricing-card {
     width: 100%;
-    max-width: 350px;
+    max-width: 280px;
     margin-bottom: 20px;
   }
 }
