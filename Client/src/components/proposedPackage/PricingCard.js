@@ -113,7 +113,7 @@ const PricingCard = ({ id, planName, monthlyPrice, yearlyPrice, limit, countries
         </div>
       </div>
       <div className="plan-price">
-        <span className="price-amount">
+        <span className="price-amount" >
           {isMonthly ? 
           ( 
             <>
