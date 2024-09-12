@@ -1,6 +1,5 @@
 .footer {
-  background: linear-gradient(to right, #FFDAB9, #ffc4ad, #FFFFFF);
-
+  background-image: url("https://26291308.fs1.hubspotusercontent-eu1.net/hubfs/26291308/HS%20For%20BD%20Landing%20Page/footer-bg.webp");
   padding: 20px;
   display: flex;
   flex-direction: column;

@@ -20,7 +20,8 @@ function App() {
       <Routes>
         <Route path="/" element={<HomeScreen />} exact/>
         <Route path="/welcome" element={<WelcomeScreen />} exact/>
-        <Route path="/payment" element={<PaymentScreen />} exact/>
+        {/*<Route path="/payment" element={<PaymentScreen />} exact/>*/}
+        
         <Route path="/profile" element={<ProfileScreen />} exact/>
         <Route path="/custom" element={<CustomUserScreen/>} exact/>
         

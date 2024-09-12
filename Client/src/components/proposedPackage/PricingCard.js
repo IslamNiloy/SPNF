@@ -323,7 +323,8 @@ const PricingCards = () => {
       ) : error ? (
         <MessageBox>{error}</MessageBox>
       ) : packages && Array.isArray(packages) && packages.length > 0 ? (
-        <div className="pricing-container">
+        <div className="pricing-container" 
+        >
           {packages
             .filter(pkg => pkg.subscription === (isMonthly ? 'monthly' : 'yearly')) // Filter based on subscription type
             .map((pkg, index) => (

@@ -45,7 +45,7 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 25px;
-  margin-top: 10px;
+  justify-content: center; /* Centers the grid as a whole */
 }
 
 .pricing-main {

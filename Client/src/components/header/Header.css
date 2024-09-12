@@ -180,6 +180,7 @@ nav {
 
     .nav-links.active {
         display: flex;
+        padding-bottom: 10px;
     }
 
     .nav-links ul {
