@@ -21,6 +21,31 @@
   .workflow-title span {
     color: black; /* Optional color for 'Functionality' */
   }
+
+  .image-wrapper {
+    position: relative;
+    width: 600px;
+    height: 500px;
+  }
+  
+  .image-back img {
+    margin-left: 40px;
+    width: 94%;
+    height: 100%;
+    z-index: 1;
+  }
+  
+  .image-front img {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;;
+    z-index: 2;
+  }
+  
+  
+
+
   
   .workflow-description {
     font-size: 1.1rem;
@@ -57,7 +82,20 @@
   }
   
   /* Responsive for mobile devices */
+
+  @media (max-width: 600px) {
+    .image-wrapper {
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
+  }
   @media (max-width: 768px) {
+    .image-wrapper {
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
     .workflow-container {
       flex-direction: column-reverse;
       text-align: center;
@@ -77,30 +115,9 @@
     .workflow-image img {
       width: 90%; /* Adjust the image width for mobile */
     }
-  }
 
-  .image-wrapper {
-    position: relative;
-    width: 600px;
-    height: 500px;
+
   }
-  
-  .image-back img {
-    margin-left: 40px;
-    width: 94%;
-    height: 100%;
-    z-index: 1;
-  }
-  
-  .image-front img {
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 100%;;
-    z-index: 2;
-  }
-  
-  
 
 
 
