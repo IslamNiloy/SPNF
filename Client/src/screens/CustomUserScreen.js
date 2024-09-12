@@ -18,8 +18,8 @@ const CustomUserScreen = () => {
         <div>
             <Header />
             <CustomUser />
-            <FeaturesAndBenefits />
             <PricingPlan />
+            <FeaturesAndBenefits />
             <FAQ />
             <Footer />
         </div>
