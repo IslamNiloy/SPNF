@@ -98,7 +98,7 @@ const PricingCard = ({ id, planName, monthlyPrice, yearlyPrice, limit, countries
         <h2 className="plan-name">{planName}</h2>
         <div>
           {planName == "Free" &&
-            <img src='/PricingPlan/Free.png' width="40px"/>  
+            <img src='/PricingPlan/Free.png' width="35px"/>  
           }
           {planName == "Starter" &&
             <img src='/PricingPlan/Starter.png' width="50px"/>  
@@ -107,10 +107,10 @@ const PricingCard = ({ id, planName, monthlyPrice, yearlyPrice, limit, countries
             <img src='/PricingPlan/Pro.png' width="50px"/>  
           }
           {planName == "Pro Plus" &&
-            <img src='/PricingPlan/ProPlus.png' width="50px"/>  
+            <img src='/PricingPlan/ProPlus.png' width="60px"/>  
           }
           {planName == "Enterprise" &&
-            <img src='/PricingPlan/Enterprise.png' width="50px"/>  
+            <img src='/PricingPlan/Enterprise.png' width="48px"/>  
           }
           {planName == "Custom" &&
             <img src='/PricingPlan/Custom.png' width="50px"/>  
@@ -118,7 +118,7 @@ const PricingCard = ({ id, planName, monthlyPrice, yearlyPrice, limit, countries
 
         </div>
       </div>
-      <div className="plan-price">
+      <div className="plan-pricing">
         <span className="price-amount" >
           {isMonthly ? 
           ( 
@@ -130,6 +130,14 @@ const PricingCard = ({ id, planName, monthlyPrice, yearlyPrice, limit, countries
             </sup>
               {
               [monthlyPrice.slice(1, 5), price.slice(1)]
+              }
+               {
+                planName!="Custom" &&
+                 (
+                  <>
+                    .00
+                  </>
+                 ) 
               }
             </>
           )
@@ -144,15 +152,25 @@ const PricingCard = ({ id, planName, monthlyPrice, yearlyPrice, limit, countries
               {
               [yearlyPrice.slice(1, 5), price.slice(1)]
               }
+              {
+                planName!="Custom" &&
+                 (
+                  <>
+                    .00
+                  </>
+                 ) 
+              }
             </>
           )
           }
         </span>
-        <span className="price-duration">{planName !== 'Custom' ? (isMonthly ? '/month' : '/year') : ''}</span>
+        <span className="price-duration">{planName !== 'Custom' ? (isMonthly ? ' /month' : ' /year') : ''}</span>
         <hr style={{color: "#001B3440"}}/>
       </div>
       <ul className="plan-features">
-        <li style={{color: "#200335"}}><span style={{color: "#66CD51"}}>✔ </span> Actions {limit}</li>
+        <li style={{color: "#200335"}}><span style={{color: "#66CD51"}}>✔ </span> Actions {limit}
+        {planName !== 'Custom' ? (isMonthly ? '/month' : '/year') : ''}
+        </li>
         <li style={{color: "#200335"}}><span style={{color: "#66CD51"}}>✔ </span> {countries}</li>
       </ul>
 
@@ -275,23 +293,29 @@ const PricingCards = () => {
   // Ensure packages is an array and handle loading and error states
   return (
     <section className="pricing-section">
-      <h2 className="pricing-title">Our <span className="highlight">Pricing</span> Plan</h2>
 
-      {/* Toggle Buttons */}
-      <div className="toggle-buttons">
-        <button
-          className={`toggle-button ${isMonthly ? 'active' : ''}`}
-          onClick={() => setIsMonthly(true)}
-        >
-          Monthly
-        </button>
-        <button
-          className={`toggle-button ${!isMonthly ? 'active' : ''}`}
-          onClick={() => setIsMonthly(false)}
-        >
-          Yearly
-        </button>
+      <div className='title-div'>
+        <div className='title-div-1'>
+          <h2 className="pricing-title">Our <span className="highlight">Pricing</span> Plan</h2>
+        </div>
+        {/* Toggle Buttons */}
+        <div className="toggle-buttons">
+          <button
+            className={`toggle-button ${isMonthly ? 'active' : ''}`}
+            onClick={() => setIsMonthly(true)}
+          >
+            Monthly
+          </button>
+          <button
+            className={`toggle-button ${!isMonthly ? 'active' : ''}`}
+            onClick={() => setIsMonthly(false)}
+          >
+            Yearly
+          </button>
+        </div>
+        
       </div>
+
 
       {/* Loading/Error Handling */}
       {loading ? (

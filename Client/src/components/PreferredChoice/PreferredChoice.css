@@ -1,88 +1,93 @@
-/* PreferredChoice.css */
-
 .preferred-choice-container {
-    text-align: center;
-    padding: 40px;
-    padding-bottom: 100px;
-    background-color: #ffffff;
-  }
-  
-  .preferred-choice-text h2 {
-    font-size: 2.5rem;
-    font-weight: bold;
-    margin-bottom: 30px;
-    color: #000;
-  }
-  
-  .preferred-choice-text .highlight {
-    color: #6ABAE2; /* Highlight the important text */
-  }
-  
-  .company-logos {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 30px;
-    margin-bottom: 40px;
-  }
-  
-  .company-logo img {
-    width: 120px; /* Adjust this size based on your needs */
-    height: auto;
-  }
-  
-  .cta-container {
-    margin-top: 20px;
-  }
-  
-  .cta-button {
-    background-color: #0099ff;
-    color: white;
-    padding: 15px 30px;
-    font-size: 1.2rem;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .cta-button:hover {
-    background-color: #007acc;
-  }
-  
-  /* Media query for mobile devices */
-  @media screen and (max-width: 768px) {
-    .preferred-choice-container{
+  text-align: center;
+  padding: 40px;
+  padding-bottom: 100px;
+  background-color: #ffffff;
+}
+
+.preferred-choice-text h2 {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 30px;
+  color: #000;
+}
+
+.preferred-choice-text .highlight {
+  color: #6ABAE2; /* Highlight the important text */
+}
+
+/* Adjust company logos to be perfectly centered and spaced */
+.company-logos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+  max-width: 950px; /* Set a max width for better centering */
+  margin: 0 auto; /* Center the grid container */
+  margin-bottom: 40px;
+}
+
+.company-logo img {
+  width: 100px; /* Set a uniform width for the logos */
+  height: 100px; /* Set a uniform height for the logos */
+  object-fit: contain; /* Ensure logos maintain their aspect ratio */
+}
+
+/* CTA Button */
+.cta-container {
+  margin-top: 20px;
+}
+
+.cta-button {
+  background-color: #64BAE2;
+  color: white;
+  padding: 15px 30px;
+  font-size: 1.2rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.cta-button:hover {
+  background-color: #007acc;
+}
+
+/* Responsive Design for Mobile */
+@media screen and (max-width: 768px) {
+  .preferred-choice-container {
       padding: 15px;
       padding-bottom: 100px;
-    }
-    .preferred-choice-text h2 {
-      font-size: 2rem; /* Reduce heading size on mobile */
-    }
-  
-    .company-logo img {
-      width: 80px; /* Reduce logo size on mobile */
-    }
-  
-    .cta-button {
-      font-size: 1rem; /* Adjust button size for mobile */
-      padding: 12px 25px;
-    }
   }
-  
-  @media screen and (max-width: 480px) {
-    .preferred-choice-text h2 {
+
+  .preferred-choice-text h2 {
+      font-size: 2rem;
+  }
+
+  .company-logo img {
+      width: 80px;
+      height: 80px;
+  }
+
+  .cta-button {
+      font-size: 1rem;
+      padding: 12px 25px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .preferred-choice-text h2 {
       font-size: 1.8rem;
-    }
-  
-    .company-logo img {
+  }
+
+  .company-logo img {
       width: 60px;
-    }
-  
-    .cta-button {
+      height: 60px;
+  }
+
+  .cta-button {
       font-size: 0.9rem;
       padding: 10px 20px;
-    }
   }
-  
+}

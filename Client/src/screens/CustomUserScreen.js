@@ -1,3 +1,4 @@
+import React, { useEffect } from "react";
 import CustomUser from '../components/Custom_User/customForm';
 import Footer from '../components/Footer/Footer';
 import FunctionalitySection from '../components/Functionality/Functionality';
@@ -9,6 +10,9 @@ import PricingPlan from '../components/proposedPackage/PricingCard';
 import FeaturesAndBenefits from '../components/FeaturesAndBenefits/FeaturesAndBenefits';
 
 const CustomUserScreen = () => {
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
     return (
         <div>
             <Header />

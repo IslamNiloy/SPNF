@@ -4,20 +4,16 @@
   text-align: center;
 }
 
-.pricing-title {
-  font-size: 2rem;
-  color: white;
-  margin-bottom: 20px;
-}
-
 .price-amount {
-  font-size: 62px;
+  font-size: 42px;
 }
 
 .dollar {
   color: #000;
   font-size: 20px;
   margin-bottom: 100px;
+  font-weight: bold;
+  margin-right: 7px;
 }
 
 .popular-badge {
@@ -26,45 +22,28 @@
   padding: 10px 15px;
   font-size: .9rem;
   border-radius: 200px;
-  margin-top: -45px;
-  max-width: 120px;
+  position: absolute; /* Ensures the badge is positioned relative to the card */
+  top: -20px; /* Moves it upwards above the card */
+  left: 50%; /* Centers it horizontally */
+  transform: translateX(-50%); /* Offsets by 50% of its own width to truly center it */
+  width: 120px;
   display: flex;
   justify-content: center;
-  margin-left: 21.5%;
+  z-index: 1; /* Ensures it stays above the card */
 }
+
 
 .pricing-main:hover {
   transform: scale(1.05);
 }
 
 .highlight {
-  color: #0099ff; /* Blue highlight for "Pricing" */
-}
-
-.toggle-buttons {
-  display: inline-flex;
-  justify-content: center;
-  margin-bottom: 40px;
-}
-
-.toggle-button {
-  background-color: transparent;
-  border: 2px solid #0099ff;
-  color: #0099ff;
-  padding: 10px 20px;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: background-color 0.3s, color 0.3s;
-}
-
-.toggle-button.active {
-  background-color: #0099ff;
-  color: white;
+  color: #64BAE2; /* Blue highlight for "Pricing" */
 }
 
 .pricing-container {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 25px;
   margin-top: 10px;
 }
@@ -72,7 +51,7 @@
 .pricing-main {
   position: relative;
   background-color: white;
-  padding: 30px 20px;
+  padding: 12px 12px;
   border-radius: 15px;
   text-align: center;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
@@ -80,11 +59,12 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  margin-top: auto;
 }
 
 .plan-header {
   position: relative;
-  margin-bottom: 20px;
+  margin-bottom: 1px;
 }
 
 .plan-name {
@@ -93,10 +73,10 @@
   color: #04587A;
 }
 
-.plan-price {
+.plan-pricing {
   font-size: 2rem;
   color: #0099ff;
-  margin-bottom: 15px;
+  margin-bottom: 0px;
 }
 
 .price-duration {
@@ -108,6 +88,7 @@
   list-style-type: none;
   padding: 0;
   margin: 0;
+  text-align: left;
   margin-bottom: 20px;
 }
 
@@ -117,11 +98,16 @@
   margin-bottom: 10px;
 }
 
+hr{
+  margin: 15px 0 0 0;
+  color: #001B3440;
+}
+
 .plan-button {
-  background-color: #0099ff;
+  background-color:#64BAE2;
   color: white;
   border: none;
-  padding: 10px 20px;
+  padding: 17px 23px;
   font-size: 1rem;
   border-radius: 10px;
   cursor: pointer;
@@ -129,7 +115,7 @@
 }
 
 .plan-button:hover {
-  background-color: #007acc;
+  background-color: #0099ff;
 }
 
 .plan-button.chosen {
@@ -158,3 +144,59 @@
     margin-bottom: 20px;
   }
 }
+
+
+.title-div {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr; /* Three equal columns */
+  padding: 4px;
+}
+
+.title-div-1 {
+  grid-column: 1 / 2; /* First column for the title */
+  text-align: left;
+}
+
+.toggle-buttons {
+  grid-column: 2 / 3; /* Spanning the last two columns for the toggle buttons */
+  display: flex;
+  justify-content: center; /* Center the buttons horizontally */
+  gap: 10px;
+}
+
+.pricing-title {
+  font-size: 2rem;
+  color: white;
+}
+
+.toggle-button {
+  background-color: transparent;
+  border: 2px solid #0099ff;
+  color: #0099ff;
+  padding: 10px 20px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.toggle-button.active {
+  background-color: #04587A;
+  color: white;
+}
+
+@media (max-width: 768px) {
+  .title-div {
+    grid-template-columns: 1fr; /* Stack elements vertically on smaller screens */
+    text-align: center;
+  }
+
+  .title-div-1 {
+    grid-column: 1 / 2; /* Full-width for the title */
+    text-align: center; /* Center title on mobile */
+  }
+
+  .toggle-buttons {
+    grid-column: 1 / 2; /* Full-width for buttons */
+  }
+}
+
