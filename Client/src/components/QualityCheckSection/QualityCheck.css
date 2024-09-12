@@ -88,3 +88,26 @@
     }
   }
   
+
+  .image-wrapper_qc {
+    position: relative;
+    width: 600px;
+    height: 500px;
+  }
+  
+  .image-back_qc img {
+    margin-right: 40px;
+    width: 94%;
+    height: 100%;
+    z-index: 1;
+  }
+  
+  .image-front_qc img {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    z-index: 2;
+  }
+  
+  

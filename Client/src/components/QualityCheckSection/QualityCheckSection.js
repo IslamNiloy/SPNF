@@ -5,9 +5,14 @@ const QualityCheckSection = () => {
   return (
     <section className="quality-check-container">
       {/* Left side image */}
-      <div className="quality-check-image">
-        <img src="/QualityCheck/image.png" alt="Phone Number Quality Check" />
+      <div className="image-wrapper_qc">
+      <div className="image-back_qc">
+        <img src="/WorkflowSection/background.png" alt="Background Image" />
       </div>
+      <div className="image-front_qc">
+        <img src="/QualityCheck/image.png" alt="Background Image" />
+      </div>
+      </div> 
 
       {/* Right side content */}
       <div className="quality-check-content">

@@ -24,9 +24,14 @@ const WorkflowSection = () => {
       </div>
 
       {/* Right side image */}
-      <div className="workflow-image">
-        <img src="/WorkflowSection/image.png" alt="Workflow Example" />
+      <div className="image-wrapper">
+      <div className="image-back">
+        <img src="/WorkflowSection/background.png" alt="Background Image" />
       </div>
+      <div className="image-front">
+        <img src="/WorkflowSection/image.png" alt="Background Image" />
+      </div>
+      </div> 
     </section>
   );
 };

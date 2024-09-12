@@ -42,12 +42,15 @@
   }
   
   .workflow-image {
-    width: 70%;
-    display: flex;
-    justify-content: center;
+    position: relative;
+    display: inline-block; /* This will allow the container to wrap around the image */
+  
+    background-size: cover; /* Cover the entire area */
+    border-radius: 8px;
   }
   
   .workflow-image img {
+    display: block; /* Ensure the image takes full width */
     width: 100%;
     height: auto;
     border-radius: 10px; /* Optional: Rounded corners */
@@ -75,6 +78,28 @@
       width: 90%; /* Adjust the image width for mobile */
     }
   }
+
+  .image-wrapper {
+    position: relative;
+    width: 600px;
+    height: 500px;
+  }
+  
+  .image-back img {
+    margin-left: 40px;
+    width: 94%;
+    height: 100%;
+    z-index: 1;
+  }
+  
+  .image-front img {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;;
+    z-index: 2;
+  }
+  
   
 
 
