@@ -1,3 +1,5 @@
+import React from 'react';
+import { Helmet } from 'react-helmet';
 import FAQ from '../components/FAQ/FAQ';
 import FeaturesAndBenefits from '../components/FeaturesAndBenefits/FeaturesAndBenefits';
 import Footer from '../components/Footer/Footer';
@@ -15,21 +17,42 @@ import UsingTheAppSection from '../components/UsingTheAppSection/UsingTheAppSect
 import WorkflowSection from '../components/WorkFlowFunctionality/WorkflowSection';
 
 const HomeSreen = () => {
-    return(
+    return (
         <div>
+            <Helmet>
+                <title>Smart Phone Number Formatter - HubSpot Workflow App</title>
+                <meta
+                    name="description"
+                    content="Smart Phone Number Formatter is a HubSpot app that allows users to format and validate phone numbers in workflows. Improve data accuracy and enhance HubSpot workflows with real-time phone number checks."
+                />
+                <meta
+                    name="keywords"
+                    content="HubSpot app, phone number formatting, phone number validation, HubSpot workflows, data validation, Smart Phone Number Formatter"
+                />
+                <meta property="og:title" content="Smart Phone Number Formatter - HubSpot Workflow App" />
+                <meta
+                    property="og:description"
+                    content="Easily format and validate phone numbers in HubSpot workflows with the Smart Phone Number Formatter app. Ensure data accuracy in CRM processes."
+                />
+                <meta property="og:type" content="website" />
+                <meta property="og:url" content="https://www.formatphonenumber.com/" />
+                <meta property="og:image" content="https://www.formatphonenumber.com/app-image.pnghttps://www.formatphonenumber.com/WorkflowSection/image.png" />
+                <link rel="canonical" href="" />
+            </Helmet>
+
             <Header />
-            <HeroSection/>
-            <FeaturesAndBenefits/>
-            <WorkflowSection/>
-            <QualityCheckSection/>
-            <PreferredChoice/>
-            <HowToUseSection/>
-            <Testimonials/>
-            <PricingPlan/>
-            <FAQ/>
-            <Footer/>
+            <HeroSection />
+            <FeaturesAndBenefits />
+            <WorkflowSection />
+            <QualityCheckSection />
+            <PreferredChoice />
+            <HowToUseSection />
+            <Testimonials />
+            <PricingPlan />
+            <FAQ />
+            <Footer />
         </div>
-    )
-}
+    );
+};
 
 export default HomeSreen;
