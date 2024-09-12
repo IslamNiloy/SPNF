@@ -8,6 +8,7 @@ import ProposedPackageSection from '../components/proposedPackage/ProposedPackag
 import UsingTheAppSection from '../components/UsingTheAppSection/UsingTheAppSection';
 import PricingPlan from '../components/proposedPackage/PricingCard';
 import FeaturesAndBenefits from '../components/FeaturesAndBenefits/FeaturesAndBenefits';
+import FAQ from '../components/FAQ/FAQ';
 
 const CustomUserScreen = () => {
     useEffect(() => {
@@ -19,6 +20,7 @@ const CustomUserScreen = () => {
             <CustomUser />
             <FeaturesAndBenefits />
             <PricingPlan />
+            <FAQ />
             <Footer />
         </div>
     )
