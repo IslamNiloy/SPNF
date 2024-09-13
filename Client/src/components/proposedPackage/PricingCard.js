@@ -263,7 +263,7 @@ const PricingCard = ({ id, planName, monthlyPrice, yearlyPrice, limit, countries
                ) 
         :                (
           <>
-            <form action= {`${BackendAPI}/charge/create-checkout-session/${id}}/${portalID}`} method="POST">
+            <form action= {`${BackendAPI}/charge/create-checkout-session/${id}/${portalID}`} method="POST">
             <button className={`plan-button ${isChosen ? 'chosen' : ''}`}>
                 Proceed to Checkout
               </button>

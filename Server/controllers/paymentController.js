@@ -13,18 +13,51 @@ const { updateUserInfoAfterPayment } = require('./usercontroller');
 exports.createCheckoutSession = async (req, res) => {
   logger.info("logging at /package/createCheckoutSession ");
   const packageId = req.params.id;
+  const portalID = req.params.portalID;
   const selectedPackage = await packagesModel.findOne({_id: req.params.id}); //getting information from mongodb packageModel
+  /*
   const stripePrices = await stripe.prices.list(); //getting all price information from stripe
   console.log("stripePricesstripePricesstripePricesstripePrices== "+ JSON.stringify(stripePrices));
   const filteredStripePrice = stripePrices.data.filter(priceObj =>parseInt(priceObj.unit_amount) === parseInt((selectedPackage.price) * 100));;//filtering from stripe data with price of packageModel findOne
-  const portalID = req.params.portalID;
-
-  console.log("selectedPackage.packageName======>" + selectedPackage.packageName);
+  */
+  var StripePriceId;
+    if(selectedPackage.packageName == "Free" && selectedPackage.duration == '30'){
+      StripePriceId = 'price_1PslsXHzY4EkwWZnAsOSWQYf'; //price_1PxmOnDHdwuTmpiw18jw9qUz
+    }
+    else if(selectedPackage.packageName == "Starter" && selectedPackage.duration == '30'){
+      StripePriceId = 'price_1PslueHzY4EkwWZnaCtgeZkc' //price_1PyZgCDHdwuTmpiweCfv4bCW
+    }
+    else if(selectedPackage.packageName == "Starter" && selectedPackage.duration == '365'){
+      StripePriceId = 'price_1PslueHzY4EkwWZnRVAKanN6' //price_1PsoyhDHdwuTmpiwq8JLfKJk
+    }
+    else if(selectedPackage.packageName == "Pro" && selectedPackage.duration == '30' ){
+      StripePriceId = 'price_1Pslv3HzY4EkwWZnXvscdCRw' //price_1Pt3xCDHdwuTmpiw8530r5z2
+    }
+    else if(selectedPackage.packageName == "Pro" && selectedPackage.duration == '365' ){
+      StripePriceId = 'price_1PslvNHzY4EkwWZnk3Zb0QBC'  //price_1Pt3xlDHdwuTmpiwa6R8yuYo
+  }
+  else if(selectedPackage.packageName == "Pro Plus" && selectedPackage.duration == '30'){
+      StripePriceId = 'price_1PslvlHzY4EkwWZn6Oy4gJIx'  //price_1Pt3ywDHdwuTmpiw4qhJXaNY
+    }
+    else if(selectedPackage.packageName == "Pro Plus" && selectedPackage.duration == '365'){
+      StripePriceId = 'price_1Pslw7HzY4EkwWZnlFuY7wJ7'  //price_1Pt3zyDHdwuTmpiwgAQ7vcKp
+  }
+  else if(selectedPackage.packageName == "Enterprise" && selectedPackage.duration == '30'){
+      StripePriceId = 'price_1PslwNHzY4EkwWZn9VVQAO5t'  //price_1Ps7WuDHdwuTmpiwaJze0viP
+  }
+  else if(selectedPackage.packageName == "Enterprise" && selectedPackage.duration == '365'){
+    StripePriceId = 'price_1PslwrHzY4EkwWZnJMtHJfOx'  //price_1PsoxgDHdwuTmpiwgNb2DKKi
+  }else{
+    const stripePrices = await stripe.prices.list(); //getting all price information from stripe
+    const filteredStripePrice = stripePrices.data.filter(priceObj =>parseInt(priceObj.unit_amount) === parseInt((selectedPackage.price) * 100));
+    StripePriceId = filteredStripePrice[0].id;
+  }
+  //logger.info("selectedPackage.packageName  StripePriceId: "+ JSON.stringify(StripePriceId));
   try {
       const session = await stripe.checkout.sessions.create({
         line_items: [
           {
-            price: filteredStripePrice[0].id,
+            price: StripePriceId,
             quantity: 1,
           },
         ],
@@ -64,7 +97,7 @@ exports.createCheckoutSession = async (req, res) => {
         },
       });
 
-    if(req.params.id === '66ba2cf16343bea38ef334ba'){
+    if(selectedPackage.packageName == "Free"){
       await zeroDollarInfo(session,portalID,packageId);
     }
 

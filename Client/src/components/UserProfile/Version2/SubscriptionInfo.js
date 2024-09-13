@@ -109,7 +109,17 @@ const SubscriptionInfo = () => {
                         : infos
                         ? `$${price}`
                         : "Package not found"}</span>
-            <span className="price-duration">/month</span>
+            <span className="price-duration">
+              {duration == '30' ?
+                <>
+                  /month
+                </>
+                :
+                <>
+                  /year
+                </>
+              }
+              </span>
           </div>
           <ul className="plan-features">
             <li>✔ {loading
@@ -155,7 +165,7 @@ const SubscriptionInfo = () => {
                         : error
                         ? "NOT FOUND"
                         : infos
-                        ? joiningDate
+                        ? joiningDate.split("T")[0]
                         : "Package not found"}</span>
             </div>
             <div className="info-item">
@@ -175,12 +185,18 @@ const SubscriptionInfo = () => {
                         : error
                         ? "NOT FOUND"
                         : infos
-                        ? startDate
+                        ? startDate.split("T")[0]
                         : "Package not found"}</span>
             </div>
             <div className="info-item">
               <span className="info-label">Subscription Status: </span>
-              <span className="info-value">{status}</span>
+              <span className="info-value">{
+              status == 'successed' ?
+              <>
+                Succeed
+              </>
+              : status
+              }</span>
             </div>
             <div className="info-item">
               <span className="info-label">Package End Date: </span>
@@ -189,7 +205,7 @@ const SubscriptionInfo = () => {
                         : error
                         ? "NOT FOUND"
                         : infos
-                        ? endDate
+                        ? endDate.split("T")[0]
                         : "Package not found"}</span>
             </div>
           </div>
