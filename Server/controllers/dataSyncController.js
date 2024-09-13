@@ -59,8 +59,8 @@ const syncDeal = async (subscription) => {
           pf_package_duration: packageData.duration,
           pf_package_limit: packageData.Limit,
           pf_remaining_api_limit: packageData.Limit - subscription.apiCallCount,
-          pf_api_call_count: subscription.apiCallCount,
-          pf_lifetime_api_call_count: subscription.totalApiCallCount,
+          pf_formatted_api_call_count: subscription.apiCallCount,
+          pf_lifetime_formatted_api_call_count: subscription.totalApiCallCount,
           pf_checking_api_call_count: subscription.checkPhoneNumberApiCallCount,
           pf_lifetime_checking_api_call_count: subscription.checkPhoneNumberTotalApiCallCount,
           pf_package_start_date: subscription.packageStartDate,
@@ -68,7 +68,9 @@ const syncDeal = async (subscription) => {
           pf_recent_payment_amount: payment.amount,
           pf_total_payment_amount: payment.totalAmount || 0,
           pf_payment_email_list: paymentEmailList,
-          pf_subscription_status: payment.status
+          pf_subscription_status: payment.status,
+          pf_api_call_count: pf_formatted_api_call_count + pf_checking_api_call_count,
+          pf_lifetime_api_call_count: pf_lifetime_formatted_api_call_count + pf_lifetime_checking_api_call_count
         }
       };
     
