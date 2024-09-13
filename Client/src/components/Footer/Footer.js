@@ -9,7 +9,7 @@ const Footer = () => {
         <div className="footer-section">
           <div className="logo">
             <Link to="/">
-                <img src="logo.webp" alt="HubXpert Logo" />
+                <img style={{alignItems:"start"}} src="logo.webp" alt="HubXpert Logo" />
             </Link>
           </div>
           <div className="content">

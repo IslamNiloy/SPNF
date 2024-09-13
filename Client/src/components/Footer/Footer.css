@@ -34,9 +34,12 @@
 }
 
 .content {
+  font-family: 'wf_57652521a4804d5eadf438020 - 400';
   margin-top: 20px;
-  font-size: 14px;
-  color: #002D57;
+  font-size: 17px;
+  line-height: 24px;
+  font-weight: bold;
+  color: #002d57;
   text-align: left;
   font-size: clamp(0.5px, calc((1.471 * var(--one-unit)) - (var(--scrollbar-width) * 0.01471)), calc(0.015 * var(--section-max-width))) !important;
 }
