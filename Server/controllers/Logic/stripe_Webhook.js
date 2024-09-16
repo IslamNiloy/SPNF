@@ -32,11 +32,13 @@ let stripeWebhook = async (request, response) => {
         STRIPE_DATA_DB.email = checkout_session_completed_data.customer_details.email;
         STRIPE_DATA_DB.countryCode = checkout_session_completed_data.customer_details?.address?.country || '';
         console.log("logging STRIPE_DATA_DB");
-        const sessionsCompleted = await stripe.checkout.sessions.list({
-          limit: -1,
-        });
-        await updateUserInfoAfterPayment(sessionsCompleted.data[0].metadata.portalID, STRIPE_DATA_DB);
-        console.log(STRIPE_DATA_DB);
+
+        const sessionsCompleted = await stripe.checkout.sessions.retrieve(
+          checkout_session_completed_data.id
+        );
+        STRIPE_DATA_DB.portalId = sessionsCompleted.metadata.portalID;
+        STRIPE_DATA_DB.packageId = sessionsCompleted.metadata.packageId;
+
         break;
       case 'payment_intent.succeeded':
           const paymentIntentSucceeded = event.data.object;
@@ -44,15 +46,12 @@ let stripeWebhook = async (request, response) => {
           console.log(paymentIntentSucceeded); */
           break;
       case 'charge.succeeded':
-        
         const chargeSucceeded = event.data.object;
-        console.log("\t logging charge.succeed EVENT"+ JSON.stringify(chargeSucceeded));
-          console.log(chargeSucceeded.amount);
         payment_DATA_DB.email = chargeSucceeded.billing_details.email;
         payment_DATA_DB.name = chargeSucceeded.billing_details.name;
         payment_DATA_DB.phoneNumber = chargeSucceeded.billing_details.phoneNumber;
         payment_DATA_DB.chargeId = chargeSucceeded.id;
-        payment_DATA_DB.amount = Number(chargeSucceeded.amount/100); //convert from cents
+        payment_DATA_DB.amount = Number(chargeSucceeded.amount / 100); // Convert from cents
         payment_DATA_DB.currency = chargeSucceeded.currency;
         payment_DATA_DB.customer_id = chargeSucceeded.customer;
         payment_DATA_DB.invoice_id = chargeSucceeded.invoice;
@@ -61,18 +60,33 @@ let stripeWebhook = async (request, response) => {
         payment_DATA_DB.status = chargeSucceeded.status;
         payment_DATA_DB.payment_intent_id = chargeSucceeded.payment_intent;
         payment_DATA_DB.payment_method_id = chargeSucceeded.payment_method;
-        console.log("\t logging payment_DATA_DB111111112222");
-
-        const sessions = await stripe.checkout.sessions.list({
-          limit: -1,
-        });
-       
-        console.log("payment_DATA_DB222222222222==========="+JSON.stringify(payment_DATA_DB));
-        console.log("payment_DATA_DB===========STRIPE_DATA_DB" + JSON.stringify(STRIPE_DATA_DB));
-        await update_Payment_Info(payment_DATA_DB, STRIPE_DATA_DB, sessions.data[0].metadata.packageId, sessions.data[0].metadata.portalID); //TO DATABASE IN MONGO
-        //await charge(payment_DATA_DB); //TO DATABASE IN MONGO
-       
-        break;
+    
+        // Retrieve session data using payment_intent to get the metadata
+        const paymentIntent = chargeSucceeded.payment_intent;
+        if (paymentIntent) {
+            const sessions = await stripe.checkout.sessions.list({
+                payment_intent: paymentIntent,
+            });
+            
+        if (sessions.data.length > 0) {
+            const session = sessions.data[0];
+            STRIPE_DATA_DB.portalId = session.metadata.portalID;
+            STRIPE_DATA_DB.packageId = session.metadata.packageId;
+            // After fetching the data, proceed with updating
+            if (STRIPE_DATA_DB.portalId && STRIPE_DATA_DB.packageId) {
+                await updateUserInfoAfterPayment(STRIPE_DATA_DB.portalId, STRIPE_DATA_DB);
+                await update_Payment_Info(payment_DATA_DB, STRIPE_DATA_DB, STRIPE_DATA_DB.packageId, 
+                  STRIPE_DATA_DB.portalId);
+            } else {
+                logger.info('Package ID or Portal ID was not found: webhook.');
+            }
+        } else {
+            logger.error('No session found for the payment intent: webhook.');
+        }
+    } else {
+        logger.error('No payment intent found for the charge: webhook.');
+    }
+    break;
    // ... handle other event types
       default:
           console.log(`Unhandled event type ${event.type}`);

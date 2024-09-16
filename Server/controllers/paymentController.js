@@ -22,31 +22,31 @@ exports.createCheckoutSession = async (req, res) => {
   */
   var StripePriceId;
     if(selectedPackage.packageName == "Free" && selectedPackage.duration == '30'){
-      StripePriceId = 'price_1PslsXHzY4EkwWZnAsOSWQYf'; //price_1PxmOnDHdwuTmpiw18jw9qUz
+      StripePriceId = process.env.STRIPE_PRICE_ID_FREE_M_DEV; 
     }
     else if(selectedPackage.packageName == "Starter" && selectedPackage.duration == '30'){
-      StripePriceId = 'price_1PslueHzY4EkwWZnaCtgeZkc' //price_1PyZgCDHdwuTmpiweCfv4bCW
+      StripePriceId = process.env.STRIPE_PRICE_ID_STARTER_M_DEV;
     }
     else if(selectedPackage.packageName == "Starter" && selectedPackage.duration == '365'){
-      StripePriceId = 'price_1PslueHzY4EkwWZnRVAKanN6' //price_1PsoyhDHdwuTmpiwq8JLfKJk
+      StripePriceId = process.env.STRIPE_PRICE_ID_STARTER_Y_DEV;
     }
     else if(selectedPackage.packageName == "Pro" && selectedPackage.duration == '30' ){
-      StripePriceId = 'price_1Pslv3HzY4EkwWZnXvscdCRw' //price_1Pt3xCDHdwuTmpiw8530r5z2
+      StripePriceId = process.env.STRIPE_PRICE_ID_PRO_M_DEV; //price_1Pt3xCDHdwuTmpiw8530r5z2
     }
     else if(selectedPackage.packageName == "Pro" && selectedPackage.duration == '365' ){
-      StripePriceId = 'price_1PslvNHzY4EkwWZnk3Zb0QBC'  //price_1Pt3xlDHdwuTmpiwa6R8yuYo
+      StripePriceId =  process.env.STRIPE_PRICE_ID_PRO_Y_DEV; //price_1Pt3xlDHdwuTmpiwa6R8yuYo
   }
   else if(selectedPackage.packageName == "Pro Plus" && selectedPackage.duration == '30'){
-      StripePriceId = 'price_1PslvlHzY4EkwWZn6Oy4gJIx'  //price_1Pt3ywDHdwuTmpiw4qhJXaNY
+      StripePriceId = process.env.STRIPE_PRICE_ID_PROPLUS_M_DEV;//price_1Pt3ywDHdwuTmpiw4qhJXaNY
     }
     else if(selectedPackage.packageName == "Pro Plus" && selectedPackage.duration == '365'){
-      StripePriceId = 'price_1Pslw7HzY4EkwWZnlFuY7wJ7'  //price_1Pt3zyDHdwuTmpiwgAQ7vcKp
+      StripePriceId = process.env.STRIPE_PRICE_ID_PROPLUS_Y_DEV;  //price_1Pt3zyDHdwuTmpiwgAQ7vcKp
   }
   else if(selectedPackage.packageName == "Enterprise" && selectedPackage.duration == '30'){
-      StripePriceId = 'price_1PslwNHzY4EkwWZn9VVQAO5t'  //price_1Ps7WuDHdwuTmpiwaJze0viP
+      StripePriceId = process.env.STRIPE_PRICE_ID_ENTERPRISE_M_DEV;  //price_1Ps7WuDHdwuTmpiwaJze0viP
   }
   else if(selectedPackage.packageName == "Enterprise" && selectedPackage.duration == '365'){
-    StripePriceId = 'price_1PslwrHzY4EkwWZnJMtHJfOx'  //price_1PsoxgDHdwuTmpiwgNb2DKKi
+    StripePriceId = process.env.STRIPE_PRICE_ID_ENTERPRISE_Y_DEV;  //price_1PsoxgDHdwuTmpiwgNb2DKKi
   }else{
     const stripePrices = await stripe.prices.list(); //getting all price information from stripe
     const filteredStripePrice = stripePrices.data.filter(priceObj =>parseInt(priceObj.unit_amount) === parseInt((selectedPackage.price) * 100));
@@ -91,7 +91,7 @@ exports.createCheckoutSession = async (req, res) => {
         mode: (selectedPackage.packageName == "Free") ? 'payment' : 'subscription',
         success_url: `${process.env.SUCCESS_URL_STRIPE}`,
         cancel_url: `${process.env.CANCEL_URL_STRIPE}`,
-        metadata: { 
+        metadata: {
           portalID: portalID, 
           packageId: packageId  // Store the session ID in the metadata
         },
