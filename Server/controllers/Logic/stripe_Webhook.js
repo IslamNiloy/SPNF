@@ -72,11 +72,47 @@ let stripeWebhook = async (request, response) => {
             const session = sessions.data[0];
             STRIPE_DATA_DB.portalId = session.metadata.portalID;
             STRIPE_DATA_DB.packageId = session.metadata.packageId;
+            STRIPE_DATA_DB.StripePriceId = session.metadata.StripePriceId;
             // After fetching the data, proceed with updating
             if (STRIPE_DATA_DB.portalId && STRIPE_DATA_DB.packageId) {
-                await updateUserInfoAfterPayment(STRIPE_DATA_DB.portalId, STRIPE_DATA_DB);
-                await update_Payment_Info(payment_DATA_DB, STRIPE_DATA_DB, STRIPE_DATA_DB.packageId, 
-                  STRIPE_DATA_DB.portalId);
+              if (process.env.NODE_ENV == "DEV") {
+                  const devIds = [
+                      process.env.STRIPE_PRICE_ID_FREE_M_DEV,
+                      process.env.STRIPE_PRICE_ID_STARTER_M_DEV,
+                      process.env.STRIPE_PRICE_ID_STARTER_Y_DEV,
+                      process.env.STRIPE_PRICE_ID_PRO_M_DEV,
+                      process.env.STRIPE_PRICE_ID_PRO_Y_DEV,
+                      process.env.STRIPE_PRICE_ID_PROPLUS_M_DEV,
+                      process.env.STRIPE_PRICE_ID_PROPLUS_Y_DEV,
+                      process.env.STRIPE_PRICE_ID_ENTERPRISE_M_DEV,
+                      process.env.STRIPE_PRICE_ID_ENTERPRISE_Y_DEV
+                  ];
+
+                  // Check if STRIPE_DATA_DB.StripePriceId matches any of the DEV IDs
+                  if (devIds.includes(STRIPE_DATA_DB.StripePriceId)) {
+                      await updateUserInfoAfterPayment(STRIPE_DATA_DB.portalId, STRIPE_DATA_DB);
+                      await update_Payment_Info(payment_DATA_DB, STRIPE_DATA_DB, STRIPE_DATA_DB.packageId,STRIPE_DATA_DB.portalId);
+                  }
+              }else if (process.env.NODE_ENV == "PROD") {
+                  const prodIds = [
+                    process.env.STRIPE_PRICE_ID_FREE_M_PROD,
+                    process.env.STRIPE_PRICE_ID_STARTER_M_PROD,
+                    process.env.STRIPE_PRICE_ID_STARTER_Y_PROD,
+                    process.env.STRIPE_PRICE_ID_PRO_M_PROD,
+                    process.env.STRIPE_PRICE_ID_PRO_Y_PROD,
+                    process.env.STRIPE_PRICE_ID_PROPLUS_M_PROD,
+                    process.env.STRIPE_PRICE_ID_PROPLUS_Y_PROD,
+                    process.env.STRIPE_PRICE_ID_ENTERPRISE_M_PROD,
+                    process.env.STRIPE_PRICE_ID_ENTERPRISE_Y_PROD
+                ];
+            
+                // Check if STRIPE_DATA_DB.StripePriceId matches any of the DEV IDs
+                if (prodIds.includes(STRIPE_DATA_DB.StripePriceId)) {
+                    // Further work here
+                    await updateUserInfoAfterPayment(STRIPE_DATA_DB.portalId, STRIPE_DATA_DB);
+                    await update_Payment_Info(payment_DATA_DB, STRIPE_DATA_DB, STRIPE_DATA_DB.packageId,STRIPE_DATA_DB.portalId);
+                }
+              }
             } else {
                 logger.info('Package ID or Portal ID was not found: webhook.');
             }
