@@ -33,7 +33,7 @@ const Header = () => {
 
     const handleLogout = () => {
         localStorage.removeItem("I8PD56?#C|NXhSgZ0KE");
-        window.location.reload();
+        window.location.assign('/');
     };
 
     return (
