@@ -1,0 +1,34 @@
+.marquee-container {
+    background: linear-gradient(to right, #75cbf4, #fff, #f2740e);
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+    white-space: nowrap;  /* Keep text in a single line */
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
+  
+  .marquee {
+    display: flex;
+    animation: marquee 30s linear infinite;
+  }
+  
+  .marquee span {
+    display: inline-block;
+    padding-right: 100%;  /* Creates space between repeated text */
+    font-size: 1.8rem;
+    font-family: 'IM FELL Double Pica';
+    font-weight: 600;
+    color: #000;
+  }
+  
+  /* Animation for the marquee effect */
+  @keyframes marquee {
+    0% {
+      transform: translateX(100%);
+    }
+    100% {
+      transform: translateX(-100%);
+    }
+  }
+  

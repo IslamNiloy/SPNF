@@ -1,6 +1,6 @@
 .footer {
   background-image: url("https://26291308.fs1.hubspotusercontent-eu1.net/hubfs/26291308/HS%20For%20BD%20Landing%20Page/footer-bg.webp");
-  padding: 20px;
+  padding: 60px 10px 60px 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -18,7 +18,7 @@
   color: #002D57;
   flex: 1;
   padding: 10px;
-  text-align: center;
+  text-align: left;
 }
 
 .footer-section:nth-child(1), .footer-section:nth-child(2) {
@@ -34,18 +34,19 @@
 }
 
 .content {
-  font-family: 'wf_57652521a4804d5eadf438020 - 400';
+  font-family: 'Lexend Deca Helvetica Neue', sans-serif;
+  font-size: 18px;
   margin-top: 20px;
-  font-size: 17px;
-  line-height: 24px;
-  font-weight: bold;
-  color: #002d57;
+  line-height: 29px;
+  color: #002D57;
   text-align: left;
-  font-size: clamp(0.5px, calc((1.471 * var(--one-unit)) - (var(--scrollbar-width) * 0.01471)), calc(0.015 * var(--section-max-width))) !important;
+  font-weight:400;
 }
 
 .upwork-section {
-  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  margin-top: 40px;
 }
 
 .upwork-logo {
@@ -53,14 +54,33 @@
 }
 
 .upwork-profile-btn {
-  background-color: #52962F;
+  background-color: #6FDA44;
   padding: 10px 20px;
   border-radius: 20px;
-  color: white;
+  color: #000000;
+  font-weight: bold;
   border: none;
-  cursor: pointer;
   margin-top: 10px;
+  text-decoration: none;
+  cursor: pointer;
+
 }
+
+.gold-partner-txt{
+  color: #002D57;
+  font-size: 30px;
+  font-weight: 800;
+  display: flex;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.upwork-profile-btn1 {
+  display: flex;
+  justify-content: center;
+  margin: 0 auto;
+}
+
 
 .upwork-profile-btn:hover{
   color: white;
@@ -76,7 +96,7 @@
 }
 
 .gold-logo {
-  width: 150px;
+  width: 190px;
 }
 
 .white-label-btn {
@@ -109,24 +129,37 @@
 
 .useful-links li {
   text-align: start;
-  margin: 5px 0;
+  margin: 20px 0;
+  font-weight: 500;
   margin-bottom: 10px;
 }
 
 .useful-links a {
   color: #002D57;
   text-decoration: none;
+  font-weight: 400
 }
 
 .social-media {
   display: flex;
   justify-content: center;
-  margin-bottom: 20px;
+  margin-bottom: 40px;
 }
 
 .social-media a {
   margin: 0 10px;
+  background-color: #fff;
+  border-radius: 50%;
+  padding: 10px;
+  color: #002D57;
 }
+
+.social-media a:hover {
+
+  background-color: #F2740E;
+  color: #ffffff;
+}
+
 
 .social-media img {
   width: 30px;
@@ -145,8 +178,15 @@
 
 .footer-copyright {
   text-align: center;
-  font-size: 12px;
-  color: #666;
+  font-size: 16.6px;
+  font-weight: 600;
+  color: #002D57;
+}
+
+.footer-copyright-hr{
+  color: #F2740E;
+  margin-bottom: 30px;
+  background-color: #F2740E;
 }
 
 .icon {
@@ -161,6 +201,19 @@
   align-items: center;
   cursor: pointer;
   transition: .5s;
+}
+
+.verified{
+  display: flex;
+  margin: 0 auto;
+  justify-content: center;
+  flex-flow: row;
+  gap: 10px;
+}
+
+.verified p{
+  font-weight: 800;
+  color: #002D57;
 }
 
 /* Media Query for Mobile Responsiveness */
