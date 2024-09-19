@@ -26,6 +26,12 @@ const syncDeal = async (subscription) => {
       }
 
       const payments = await Payment.find({user:subscription.user});
+      if (payments.length === 0) {
+        console.error(`No payments found for user: ${subscription.user}`);
+        logger.info(`No payments found for user: ${subscription.user}`);
+        return;
+      }
+
       const payment = payments[0]
       let emailSet = new Set()
       if (payment.email) {
@@ -40,7 +46,7 @@ const syncDeal = async (subscription) => {
           });
       }
 
-      const paymentEmailList = Array.from(emailSet).join(', '); 
+      const paymentEmailList = Array.from(emailSet).join(', ') || ''; 
      
       const formattedApiCallCount = subscription.apiCallCount || 0;
       const checkingApiCallCount = subscription.checkPhoneNumberApiCallCount || 0;
