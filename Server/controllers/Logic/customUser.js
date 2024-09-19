@@ -33,10 +33,11 @@ exports.customUserCreatePrice = async (req,res) => {
           const userInfofound = await userModel.findOne({portalID: req.body.portalID});
           if(!findPackageInfo){
             const package_modelInsertion = new packagesModel({
-              packageName: `custom_${req.body.price }`,
+              packageName: `custom_${req.body.price }_${req.body.duration}`,
               price: req.body.price,
-              duration: 30,
-              Limit: req.body.Limit
+              duration: req.body.duration,
+              Limit: req.body.Limit,
+              subscription: "custom"
             })
             await package_modelInsertion.save();
           }else{
@@ -101,11 +102,13 @@ exports.customUserCreatePrice = async (req,res) => {
             email: findUser.email,
             chargeId: req.body.chargeId,
             amount: req.body.price,
+            portalID: req.body.portalID,
             currency: "usd",
             customer_id: req.body.customer_id,
             invoice_id: req.body.invoice_id,
             receipt_url: req.body.receipt_url,
             payment_method_details: req.body.payment_method_details,
+            
             status: "success"
           })
           await payment_insertion.save();
