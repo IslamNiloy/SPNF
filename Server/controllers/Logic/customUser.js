@@ -97,24 +97,68 @@ exports.customUserCreatePrice = async (req,res) => {
           );
           logger.info("Subscription information updated for user: "+ req.body.portalID);
         }
-        
-        const payment_insertion = new paymentModel({
+        const payment_Info = await paymentModel.findOne({portalID: req.body.portalID});
+
+        if(!payment_Info){
+          const payment_insertion = new paymentModel({
             email: findUser.email,
             chargeId: req.body.chargeId,
             amount: req.body.price,
+            totalAmount: req.body.price,
             portalID: req.body.portalID,
             currency: "usd",
             customer_id: req.body.customer_id,
             invoice_id: req.body.invoice_id,
             receipt_url: req.body.receipt_url,
             payment_method_details: req.body.payment_method_details,
-            
             status: "success"
           })
           await payment_insertion.save();
+        }else{
+          const currentTransactionDetails = {
+            email: payment_Info.email,
+            chargeId: payment_Info.chargeId,
+            amount: payment_Info.amount,
+            totalAmount: (payment_Info.totalAmount) || "",
+            currency: payment_Info.currency,
+            customer_id: payment_Info.customer_id,
+            invoice_id: payment_Info.invoice_id,
+            payment_method_details: payment_Info.payment_method_details,
+            receipt_url: payment_Info.receipt_url,
+            status: payment_Info.status,
+            updatedAt: payment_Info.updatedAt  // Capture the last update time
+          };
+      
+          // Use spread operator to append the current transaction to the previous_payment_details array
+          const updatedPreviousPaymentDetails = [
+            ...payment_Info.previous_payment_details,  // Spread the existing array
+            currentTransactionDetails                  // Add the new transaction details
+          ];
+      
+        const paymentUpdate = await paymentModel.findOneAndUpdate(
+            { portalID: req.body.portalID },
+            {
+              $set: {
+                email: req.body.email,
+                chargeId: req.body.chargeId,
+                amount: req.body.price,
+                previous_payment_details: updatedPreviousPaymentDetails,
+                currency: req.body.currency,
+                customer_id: req.body.customer_id,
+                invoice_id: req.body.invoice_id,
+                payment_method_details: req.body.payment_method_details,
+                receipt_url: req.body.receipt_url,
+                status: "successed",
+              },
+              $inc: { totalAmount:req.body.price },
+          },
+          { new: true, upsert: false }
+          );
+        }
+        
          //create payment information for custom
         logger.info("Insert data in package_model and stripe_insertion for custom user price: "+ req.body.price);
-        res.send(payment_insertion);
+        res.send("custom user created");
     }catch (err){
       res.status(400).send({ error: err.message });
     }
