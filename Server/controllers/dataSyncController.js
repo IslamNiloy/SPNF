@@ -42,14 +42,19 @@ const syncDeal = async (subscription) => {
 
       const paymentEmailList = Array.from(emailSet).join(', '); 
      
+      const formattedApiCallCount = subscription.apiCallCount || 0;
+      const checkingApiCallCount = subscription.checkPhoneNumberApiCallCount || 0;
+      const lifetimeFormattedApiCallCount = subscription.totalApiCallCount || 0;
+      const lifetimeCheckingApiCallCount = subscription.checkPhoneNumberTotalApiCallCount || 0;
+      // Now define dealData
       const dealData = {
         properties: {
           dealname: `Phone Number formatter - ${packageData.packageName} - ${user.companyName}`,
           amount: payment.totalAmount || 0,
           dealstage: '727679696',
           pipeline: 'hs-eco-trx-pipeline',
-          pf_user_name: user.name,   
-          pf_user_email: user.email, 
+          pf_user_name: user.name,
+          pf_user_email: user.email,
           pf_user_company_name: user.companyName,
           pf_user_phone_number: user.phoneNumber,
           pf_portal_id: user.portalID,
@@ -59,18 +64,18 @@ const syncDeal = async (subscription) => {
           pf_package_duration: packageData.duration,
           pf_package_limit: packageData.Limit,
           pf_remaining_api_limit: packageData.Limit - subscription.apiCallCount,
-          pf_formatted_api_call_count: subscription.apiCallCount || 0,
-          pf_lifetime_formatted_api_call_count: subscription.totalApiCallCount,
-          pf_checking_api_call_count: subscription.checkPhoneNumberApiCallCount || 0,
-          pf_lifetime_checking_api_call_count: subscription.checkPhoneNumberTotalApiCallCount,
+          pf_formatted_api_call_count: formattedApiCallCount,
+          pf_lifetime_formatted_api_call_count: lifetimeFormattedApiCallCount,
+          pf_checking_api_call_count: checkingApiCallCount,
+          pf_lifetime_checking_api_call_count: lifetimeCheckingApiCallCount,
           pf_package_start_date: subscription.packageStartDate,
           pf_package_end_date: subscription.packageEndDate,
           pf_recent_payment_amount: payment.amount,
           pf_total_payment_amount: payment.totalAmount || 0,
-          pf_payment_email_list: paymentEmailList,
+          pf_payment_email_list: paymentEmailList || '',
           pf_subscription_status: payment.status,
-          pf_api_call_count: pf_formatted_api_call_count + pf_checking_api_call_count,
-          pf_lifetime_api_call_count: pf_lifetime_formatted_api_call_count + pf_lifetime_checking_api_call_count
+          pf_api_call_count: formattedApiCallCount + checkingApiCallCount,
+          pf_lifetime_api_call_count: lifetimeFormattedApiCallCount + lifetimeCheckingApiCallCount
         }
       };
     
