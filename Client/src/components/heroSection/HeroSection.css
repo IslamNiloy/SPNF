@@ -94,11 +94,13 @@
     border-radius: 5px;
     background-color:#6ABAE2;
     color: #ffffff;
+    font-weight: 500;
+    padding: 15px 30px;
+    transition: 0.3s ease-in-out;
 }
 
 .hero-btn2:hover {
-    background-color: white;
-    color: #004080;
+    background: linear-gradient(180deg, #04587A 0%, #64BAE2 100%);
 }
 
 .doc-btn {

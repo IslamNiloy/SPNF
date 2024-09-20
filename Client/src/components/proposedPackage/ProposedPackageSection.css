@@ -114,10 +114,11 @@
     border-radius: 8px;
     cursor: pointer;
     margin-top: 20px;
+    transition: 0.3 ease-in-out;
   }
   
   .install-button:hover {
-    background-color: #006bb3;
+    background: linear-gradient(180deg, #04587A 0%, #64BAE2 100%);
   }
   
   /* Responsive Design */

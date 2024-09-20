@@ -58,17 +58,18 @@
   }
   
   .change-plan-btn {
-    background-color: #0099ff;
+    background-color: #64BAE2;
     color: white;
     border: none;
     padding: 10px 15px;
     border-radius: 8px;
     cursor: pointer;
     font-size: 1rem;
+    transition: 0.3s ease-in-out;
   }
   
   .change-plan-btn:hover {
-    background-color: #006bb3;
+    background: linear-gradient(180deg, #04587A 0%, #64BAE2 100%);
   }
   
   .subscription-info {

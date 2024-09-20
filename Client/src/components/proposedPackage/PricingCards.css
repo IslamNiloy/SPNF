@@ -116,16 +116,19 @@ hr{
 .plan-button {
   background-color:#64BAE2;
   color: white;
+  font-weight: bold;
   border: none;
-  padding: 17px 23px;
+  width: 100%;
+  padding: 12px;
   font-size: 1rem;
-  border-radius: 10px;
+  border-radius: 8px;
   cursor: pointer;
-  transition: background-color 0.3s;
+  transition: 0.3 ease-in-out;
 }
 
 .plan-button:hover {
-  background-color: #0099ff;
+  background: linear-gradient(180deg, #04587A 0%, #64BAE2 100%);
+
 }
 
 .plan-button.chosen {

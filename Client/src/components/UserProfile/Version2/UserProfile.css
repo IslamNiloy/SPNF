@@ -86,11 +86,11 @@
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: 0.3s ease-in-out;
 }
 
 .update-button:hover {
-  background-color: #007acc;
+  background: linear-gradient(180deg, #04587A 0%, #64BAE2 100%);
 }
   
   /* Responsive Design for Mobile */
