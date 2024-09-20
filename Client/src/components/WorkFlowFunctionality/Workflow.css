@@ -5,6 +5,7 @@
     justify-content: space-between;
     align-items: center;
     padding: 50px;
+    gap: 15px;
     background-color: #ffffff; /* Optional light background color */
   }
 
@@ -24,13 +25,13 @@
   .workflow-title {
     font-size: 2.5rem;
     font-weight: bold;
-    color: #6ABAE2;
+    color: #000;
     text-align: left !important;
     
   }
   
   .workflow-title span {
-    color: black; /* Optional color for 'Functionality' */
+    color: #6ABAE2; /* Optional color for 'Functionality' */
   }
 
   .image-wrapper {

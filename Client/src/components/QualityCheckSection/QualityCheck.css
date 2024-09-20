@@ -6,8 +6,18 @@
     align-items: center;
     justify-content: center;
     padding: 50px;
+    gap: 10px;
     background-color: #ffffff; /* Optional light background color */
   }
+
+  .quality-check-container hr{
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid #ccc;
+    margin: 1em 0;
+    padding: 0;
+    }
   
   .quality-check-image {
     width: 65%;
@@ -27,11 +37,11 @@
   .quality-check-title {
     font-size: 2.5rem;
     font-weight: bold;
-    color: #6ABAE2;
+    color: #000;
   }
   
   .quality-check-title span {
-    color: #000; /* Optional highlight color */
+    color: #6ABAE2; /* Optional highlight color */
   }
   
   .quality-check-description {
