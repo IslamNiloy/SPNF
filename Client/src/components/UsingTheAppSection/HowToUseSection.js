@@ -35,7 +35,7 @@ const HowToUseSection = () => {
     <div className="how-to-use-dev" id='howToUse'>
       {/* Main Title */}
       <div className="main-title">
-        <h2>How to <span className="highlight">Use</span> the App</h2>
+        <h2>How to <span className="highlight">Use the App</span></h2>
       </div>
       <section className="how-to-use-section">
         <div className="steps-container">
