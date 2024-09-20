@@ -22,7 +22,7 @@
     display: inline-block;
   }
   
-  .toggle-button {
+  /* .toggle-button {
     background-color: #ffffff;
     border: none;
     color: #0099ff;
@@ -30,12 +30,12 @@
     font-size: 1rem;
     cursor: pointer;
     transition: background-color 0.3s;
-  }
+  } */
   
-  .toggle-button.active {
+  /* .toggle-button.active {
     background-color: #0099ff;
     color: white;
-  }
+  } */
   
   .package-container {
     display: flex;

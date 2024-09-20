@@ -1,11 +1,16 @@
 .pricing-section {
   background-image: url('./backend.png');
   padding: 50px 20px;
+  min-height: 60vh;
   text-align: center;
 }
 
 .price-amount {
   font-size: 42px;
+}
+
+.custom_pricing{
+  font-size: 1.5rem;
 }
 
 .dollar {
@@ -42,10 +47,15 @@
 }
 
 .pricing-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 25px;
-  justify-content: center; /* Centers the grid as a whole */
+  display: flex;
+  flex-wrap: wrap; /* Allows wrapping to the next line */
+  justify-content: center; /* Centers items as a whole */
+  gap: 25px; /* Space between cards */
+}
+
+.pricing-main {
+  flex: 220px; /* Cards have a minimum width of 200px */
+  max-width: calc(20% - 25px); /* Max width is 20% (for 5 columns) minus the gap */
 }
 
 .pricing-main {
@@ -147,21 +157,41 @@ hr{
 
 
 .title-div {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr; /* Three equal columns */
-  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .title-div-1 {
-  grid-column: 1 / 2; /* First column for the title */
+  flex: 1;
   text-align: left;
 }
 
 .toggle-buttons {
-  grid-column: 2 / 3; /* Spanning the last two columns for the toggle buttons */
-  display: flex;
-  justify-content: center; /* Center the buttons horizontally */
-  gap: 10px;
+  background-color: #FFFFFF1A;
+  width: max-content;
+  padding: 4px;
+  border-radius: 8px;
+  display: none;
+}
+.toggle-button{
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-size: 1.2rem;
+  color: white;
+  font-weight: bold;
+  background-color: #00000000;
+  border: none;
+}
+
+.toggle-button.active {
+  background-color: #04587A;
+  ;
+}
+
+.proxy_div{
+  flex: 1;
+  background: #000;
 }
 
 .pricing-title {
@@ -169,34 +199,25 @@ hr{
   color: white;
 }
 
-.toggle-button {
-  background-color: transparent;
-  border: 2px solid #0099ff;
-  color: #0099ff;
-  padding: 10px 20px;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: background-color 0.3s, color 0.3s;
-}
-
-.toggle-button.active {
-  background-color: #04587A;
-  color: white;
-}
 
 @media (max-width: 768px) {
   .title-div {
-    grid-template-columns: 1fr; /* Stack elements vertically on smaller screens */
-    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 0px;
   }
 
   .title-div-1 {
-    grid-column: 1 / 2; /* Full-width for the title */
-    text-align: center; /* Center title on mobile */
+    text-align: center;
+    margin-bottom: 0;
+    padding-bottom: 0;
   }
 
-  .toggle-buttons {
-    grid-column: 1 / 2; /* Full-width for buttons */
+  
+  .pricing-main {
+    max-width: 100%; /* On smaller screens, make cards full width */
   }
 }
 
