@@ -29,7 +29,7 @@
 }
 
 .company-logo img {
-  width: 100px; /* Set a uniform width for the logos */
+  width: 100px;
   height: 100px; /* Set a uniform height for the logos */
   object-fit: contain; /* Ensure logos maintain their aspect ratio */
 }
