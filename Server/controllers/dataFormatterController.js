@@ -65,7 +65,7 @@ exports.phoneNumber = async (req, res) => {
   const { phoneNumber, country, country_text, hs_object_id } = req.body;
   console.log("request Body: ", req.body)
   let propertyName = req.body.propertyName;
-  
+
   // logger.info(`--------logging at phoneNumber func with ${phoneNumber}, ${country}, ${country_text}-------`);
   try {
     //const accessToken = await getAccessToken(req);
@@ -99,11 +99,11 @@ exports.phoneNumber = async (req, res) => {
       //incrementAPICount(req.body.portalID, "phoneNumber");
       const formattedNumber = formatPhoneNumber(phoneNumber, country, country_text);
       await updateContactProperty("pf_formatted_phone_number_14082001", formattedNumber, hs_object_id, User.accessToken, req, User.refreshToken);
-      
-      if (propertyName ) {
+
+      if (propertyName) {
         await updateContactProperty(propertyName, formattedNumber, hs_object_id, User.accessToken, req, User.refreshToken);
       }
-      
+
       res.json({
         "outputFields": {
           "Formatted_Phone_Number": formattedNumber,
@@ -168,10 +168,6 @@ exports.getCountry = async (req, res) => {
 
 /////////////////////// Check Phone Number START //////////////////////////////////
 const checkPhoneNumber = (phoneNumber, country) => {
-  // Check if the phone number contains spaces
-  if (/\s/.test(phoneNumber)) {
-    return 'Space in the Number';
-  }
 
   // Check if the phone number contains hyphens
   if (/-/.test(phoneNumber)) {
@@ -183,9 +179,21 @@ const checkPhoneNumber = (phoneNumber, country) => {
     return 'Bracket in the Number';
   }
 
+
+  // Check if the phone number contains any other non-digit text (excluding the '+' symbol)
+  if (/\D/.test(phoneNumber.replace('+', '').replace('.', '').replace('-', '').replace('*', ''))) {
+    return 'Contains Text or Special Characters';
+  }
+
   // Check if the phone number contains non-numeric text (excluding the '+' symbol)
   if (/[^\d\+\s\-()]/.test(phoneNumber)) {
     return 'Contains Invalid Characters';
+  }
+
+
+  // Check if the phone number contains spaces
+  if (/\s/.test(phoneNumber)) {
+    return 'Space in the Number';
   }
 
   // Check if the phone number contains any other non-digit text (excluding the '+' symbol)
@@ -234,7 +242,7 @@ exports.checkPhoneNumber = async (req, res) => {
   const { phoneNumber, country, portalID, hs_object_id, object } = req.body;
   let propertyName = req.body.propertyName;
   // console.log("Property Name: ", propertyName)
-  
+
   // console.log("******** Req body *********", phoneNumber, country, propertyName, portalID, object, req.body, "******************")
   console.log(req.body)
 
