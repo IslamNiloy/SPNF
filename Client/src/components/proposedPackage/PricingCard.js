@@ -167,7 +167,11 @@ const PricingCard = ({ id, planName, monthlyPrice, yearlyPrice, limit, countries
                 planName === "Custom" && (<span className='custom_pricing'>Custom pricing</span>)
               }
             </span>
-            <span className="price-duration">{planName !== 'Custom' ? (isMonthly ? ' /month' : ' /year') : ''}</span>
+            <span className="price-duration">
+              {planName !== 'Custom' ? (isMonthly ? ' /month' : 
+                planName=="Free"? ' /month':
+                ' /year') : ''}
+            </span>
             <hr style={{ color: "#001B3440" }} />
           </div>
           <ul className="plan-features">
@@ -305,22 +309,17 @@ const PricingCards = () => {
         <div className="toggle-buttons">
           <button
             className={`toggle-button ${isMonthly ? 'active' : ''}`}
-            onClick={() => setIsMonthly(true)}
-          >
+            onClick={() => setIsMonthly(true)}>
             Monthly
           </button>
           <button
             className={`toggle-button ${!isMonthly ? 'active' : ''}`}
-            onClick={() => setIsMonthly(false)}
-          >
+            onClick={() => setIsMonthly(false)}>
             Yearly
           </button>
         </div>
-
         <div className='proxy_div'>
-
         </div>
-
       </div>
 
 
