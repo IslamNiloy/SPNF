@@ -79,7 +79,7 @@ exports.createCheckoutSession = async (req, res) => {
     const filteredStripePrice = stripePrices.data.filter(priceObj =>parseInt(priceObj.unit_amount) === parseInt((selectedPackage.price) * 100));
     StripePriceId = filteredStripePrice[0].id;
   }
-  //logger.info("selectedPackage.packageName  StripePriceId: "+ JSON.stringify(StripePriceId));
+
   try {
       const session = await stripe.checkout.sessions.create({
         line_items: [
