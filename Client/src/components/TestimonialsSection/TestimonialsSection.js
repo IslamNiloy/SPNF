@@ -20,8 +20,8 @@ const Testimonials = () => {
               </div>
             </div>
           </p>
-          <p className="author-name">— John Abraham</p>
-          <p className="author-title">Customer Service Manager, PinkCube</p>
+          <p className="author-name">— Bishal Bhowmik</p>
+          <p className="author-title">Customer Service Manager, Systemology</p>
         </div>
         
           <img src="/Testimonials/1.png" alt="John Abraham" className='FirstImg'/>
