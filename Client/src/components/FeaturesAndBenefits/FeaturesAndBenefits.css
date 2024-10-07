@@ -64,6 +64,13 @@ h1{
       gap: 10px; /* Adjust spacing between cards */
     }
 
+    .feature-details{
+      display: flex;
+      flex-flow: column;
+      align-items: center;
+      justify-content: center;
+    }
+
     .features-container-main{
       padding: 15px;
     }
@@ -72,6 +79,9 @@ h1{
     .feature-card {
       width: 100%; /* Make each card take full width on mobile */
       margin-bottom: 20px; /* Add some space between cards */
+      display: flex;
+      flex-flow: column;
+      align-items: center;
     }
   
     .feature-icon {
@@ -79,11 +89,21 @@ h1{
     }
   
     .feature-title {
-      font-size: 16px; /* Reduce title font size on mobile */
+      font-size: 20px; /* Reduce title font size on mobile */
     }
   
     .feature-description {
-      font-size: 13px; /* Adjust description font size on mobile */
+      font-size: 16px; /* Adjust description font size on mobile */
+      margin: 0;
+      text-align: center;
+      font-family: "HelveticaNeue-Regular", sans-serif;
+    }
+    .company-logos{
+      gap:0px;
+    } 
+
+    .cta-container{
+      display: none;
     }
   }
   
@@ -98,10 +118,13 @@ h1{
     }
   
     .feature-title {
-      font-size: 14px; /* Further reduce title font size */
+      font-size: 20px; /* Further reduce title font size */
     }
   
     .feature-description {
-      font-size: 12px; /* Further reduce description font size */
+      font-size: 16px; /* Further reduce description font size */
+      margin: 0;
+      text-align: center;
+      font-family: "HelveticaNeue-Regular", sans-serif;
     }
   }

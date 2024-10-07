@@ -15,7 +15,7 @@
     font-family: "HelveticaNeue-Medium", sans-serif;
     font-size: 72px;
     line-height: 120%;
-    font-weight: 500;
+    font-weight: bold;
 }
 
 .hero-content {
@@ -82,12 +82,10 @@
 
 .hero-btn1 {
     color: #04587a;
-    text-align: left;
     font-family: "HelveticaNeue-Medium", sans-serif;
     font-size: 24px;
     line-height: 100%;
-    font-weight: 500;
-    position: relative;
+    font-weight: bold;
 }
 
 /* .hero-btn1:hover {
@@ -95,11 +93,6 @@
     color: #ffffff;
 } */
 
-.hero-btn1 {
-    background-color: #E1E5E4; /* Updated color for button */
-    color: #1D587A;
-    font-weight: bold;
-}
 
 /* .hero-btn1:hover {
     background-color: #5893a8; 
@@ -154,10 +147,12 @@
 @media (max-width: 768px) {
     .hero-content{
         padding: 5px;
+        margin-top: 15px;
     }
 
     .hero-btn1{
         margin-top: 10px;
+        max-width: 300px;
     }
 
     .hero-section h1 {
@@ -180,6 +175,9 @@
 }
 
 @media (max-width: 480px) {
+    .buttons{
+        margin: 0px;
+    }
 
     .hero-section h1 {
         font-size: 1.8em; 

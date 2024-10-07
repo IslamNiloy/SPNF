@@ -135,5 +135,29 @@
       margin-top: 20px;
       padding: 10px 0;
     }
+
+    .step-label {
+      font-size: 14px;
+      font-weight: bold;
+      display: flex;
+      color: #007bff;
+      justify-content: center;
+      flex-flow: column;
+      align-items: center;
+      margin: 0 auto;
+    }
+
+    .step-description{
+      color:  #001b34;
+      text-align: left;
+      font-family: "HelveticaNeue-Medium", sans-serif;
+      font-size: 20px;
+      line-height: 100%;
+      font-weight: bold;
+      margin-top: 5px;
+    }
+    #mobile_disp_none{
+      display: none;
+    }
   }
   

@@ -13,7 +13,7 @@ const HowToUseSection = () => {
     },
     {
       title: "Check Phone Number",
-      description: "Check Phone Number.",
+      description: "Check Phone Number",
       imgSrc: "/HowToUse/step2.png",
       label: "STEP 02",
     },
@@ -45,7 +45,8 @@ const HowToUseSection = () => {
               key={index}
               onClick={() => setCurrentStep(index)}
             >
-              <div className="step-label"><span className='step-label_sub'>{step.label}</span> : {step.description}</div>
+              <div className="step-label"><span className='step-label_sub'>{step.label}</span> <span id='mobile_disp_none'>:</span>
+                <span className='step-description'>{step.description}</span></div>
               <img src={step.imgSrc} alt={step.title} />
             </div>
           ))}

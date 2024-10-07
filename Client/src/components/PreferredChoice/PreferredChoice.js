@@ -22,7 +22,7 @@ const PreferredChoice = () => {
   return (
     <section className="preferred-choice-container">
       <div className="preferred-choice-text">
-        <h2>The <span className="highlight">Preferred Choice</span> of 200s <br /> of Leading <span className="highlight">B2B SaaS</span> Companies</h2>
+        <h2 style={{color:"#001b34"}}>Our <span className="highlight">Users</span></h2>
       </div>
 
       {/* Company logos */}

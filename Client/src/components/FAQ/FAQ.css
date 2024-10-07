@@ -37,10 +37,20 @@
     font-weight: 500;
   }
   
+  .faq-question span{
+   color: #001b34;
+   font-family: "HelveticaNeue-Medium", sans-serif;
+    font-size: 18px;
+    line-height: 100%;
+    font-weight: 500;
+  }
+  
   .faq-answer {
     padding: 15px 0;
     font-size: 1rem;
-    color: #666;
+    color: rgba(0, 27, 52, 0.75);
+    font-family: "HelveticaNeue-Regular", sans-serif;
+    font-weight: 400;
   }
   
   .toggle-icon {

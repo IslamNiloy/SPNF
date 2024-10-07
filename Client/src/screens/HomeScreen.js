@@ -43,9 +43,9 @@ const HomeSreen = () => {
             <Header />
             <HeroSection />
             <FeaturesAndBenefits />
+            <PreferredChoice />
             <WorkflowSection />
             <QualityCheckSection />
-            <PreferredChoice />
             <HowToUseSection />
             <Testimonials />
             <PricingPlan />
