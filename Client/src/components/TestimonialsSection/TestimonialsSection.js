@@ -30,6 +30,9 @@ const Testimonials = () => {
           <img src="/Testimonials/1.png" alt="John Abraham" className='FirstImg'/>
      
       </div>
+
+       {/* Section Title */}
+       <h2 className="section-title_mobile">Client's Testimonials</h2>
       {/* Second Testimonial */}
       <div className="testimonial-card reverse">
       <div className="testimonial-quote">
@@ -54,6 +57,7 @@ const Testimonials = () => {
         </div>
           <img src="/Testimonials/2.png" alt="John Abraham" className='FirstImg'/>
       </div>
+
        {/* mobile view Testimonial */}
        <div className="mobile-testimonial-card" >
         <div className="mobile-testimonial-quote">
@@ -70,8 +74,10 @@ const Testimonials = () => {
               </div> 
             </div>
           </p>
-          <p className="author-name">— Tomnoy Baidya</p>
-          <p className="author-title">Sales Representative, HubXpert</p>
+          <p className="author-name">— Tomnoy Baidya <br/>
+           <span className="author-title">Sales Representative</span>
+           <span className="author-title"><br className='br-style-none-mobile'/>HubXpert</span> 
+          </p>
         </div>
         
         <img src="/Testimonials/2.png" alt="John Abraham" className='FirstImg'/>

@@ -98,8 +98,25 @@
   align-self: stretch;
   font-size: 20px;
 }
+
+.section-title_mobile{
+  display: none;
+}
   /* Responsive Design for Mobile */
   @media screen and (max-width: 768px) {
+    
+    .section-title_mobile{
+      display: block;
+      color: rgba(100, 186, 226, 0.1);
+      text-align: center;
+      font-family: "HelveticaNeue-Medium", sans-serif;
+      font-size: 48px;
+      line-height: 100%;
+      font-weight: 500;
+      position: relative;
+      -webkit-text-stroke: 1px transparent;
+    }
+
     .quote-main{
       display: flex;
       flex-flow: column;
@@ -142,13 +159,13 @@
 
     .testimonialDetails{
       color: rgba(0, 27, 52, 0.75);
-  text-align: center;
-  font-family: "HelveticaNeue-Regular", sans-serif;
-  font-size: 16px;
-  line-height: 140%;
-  font-weight: 400;
-  position: relative;
-  align-self: stretch;
+      text-align: center;
+      font-family: "HelveticaNeue-Regular", sans-serif;
+      font-size: 16px;
+      line-height: 140%;
+      font-weight: 400;
+      position: relative;
+      align-self: stretch;
     }
   
     .testimonial-quote, .mobile-testimonial-quote {
@@ -178,6 +195,10 @@
     }
     .FirstImg{
       width: 70%;
+    }
+
+    .section-title{
+      display: none;
     }
   }
   
