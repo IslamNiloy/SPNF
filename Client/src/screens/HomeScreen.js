@@ -18,7 +18,7 @@ import WorkflowSection from '../components/WorkFlowFunctionality/WorkflowSection
 
 const HomeSreen = () => {
     return (
-        <div>
+        <div style={{overflowX: "hidden"}}>
             <Helmet>
                 <title>Smart Phone Number Formatter - HubSpot Workflow App</title>
                 <meta
