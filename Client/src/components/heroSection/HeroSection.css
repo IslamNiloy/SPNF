@@ -10,6 +10,14 @@
     width: 100%;
 }
 
+.heading_hero_main{
+    color:  #04587a;
+    font-family: "HelveticaNeue-Medium", sans-serif;
+    font-size: 72px;
+    line-height: 120%;
+    font-weight: 500;
+}
+
 .hero-content {
     text-align: center;
     z-index: 1;
@@ -25,9 +33,14 @@
 }
 
 .hero-content p{
+    color: rgba(0, 27, 52, 0.75);
+    text-align: center;
+    font-family: "HelveticaNeue-Regular", sans-serif;
     font-size: 20px;
-    color: #001B34BF;
+    line-height: 140%;
     font-weight: 400;
+    position: relative;
+    align-self: stretch;
 }
 
 .hero-content h2 {
@@ -68,9 +81,13 @@
 }
 
 .hero-btn1 {
-    background-color: #E1E5E4; /* Updated color for button */
-    color: #1D587A;
-    font-weight: bold;
+    color: #04587a;
+    text-align: left;
+    font-family: "HelveticaNeue-Medium", sans-serif;
+    font-size: 24px;
+    line-height: 100%;
+    font-weight: 500;
+    position: relative;
 }
 
 /* .hero-btn1:hover {

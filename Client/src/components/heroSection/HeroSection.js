@@ -17,10 +17,11 @@ const HeroSection = () => {
             <section className="hero-section">
                 <div className="hero-content">
                     <button className="btn hero-btn1">
-                        HubSpot Phone Number Formatter
+                        Smart Phone Number Formatter
                     </button>
-                    <h1>Format Phone Numbers <span style={{ color: "#000000" }}>with Ease</span></h1>
-                    <p>Automatically format phone numbers from any country, with a simple click.</p>
+                    <h1 className='heading_hero_main'><span style={{ color: "#000000" }}>Format</span> HubSpot Phone Numbers 
+                    <span style={{ color: "#000000" }}> with Ease</span></h1>
+                    <p>Automatically format phone numbers from any country, from your HubSpot portal!</p>
                     <div className="buttons">
                         <Link to={`${BackendAPI}/install`}>
                             <button className="btn hero-btn2">
