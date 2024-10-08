@@ -19,6 +19,10 @@ const cron = require('node-cron');
 const cronRoute = require("./api/cron");
 const { processStart } = require('./controllers/dataSyncController');
 
+const cronPhoneNumberRoute = require("./api/phone_number");
+const cronCheckPhoneNumberRoute = require("./api/check_phone_number");
+const cronRemoveCacheRoute = require("./api/remove_cache");
+
 // Use CORS middleware
 app.use(cors());
 /* 
@@ -44,6 +48,10 @@ app.use('/package', packageRouters);
 
 //adding to check 404 issue in crom
 app.use('/api/cron', cronRoute);
+
+app.use('/api/phone_number', cronPhoneNumberRoute);
+app.use('/api/check_phone_number', cronCheckPhoneNumberRoute);
+app.use('/api/remove_cache', cronRemoveCacheRoute);
 
 // Setup Swagger
 setupSwagger(app);
