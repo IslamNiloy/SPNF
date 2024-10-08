@@ -24,7 +24,7 @@ exports.updateAPICount = async (portalID) => {
   exports.bulkPhoneNumberApiCallCount = async() =>{
     try{
       for (const [portalID, data] of apiCallCache.entries()) {
-        console.log(`From bulkApiCallCount 
+        logger.info(`From bulkApiCallCount 
                     Portal ID: ${portalID}, 
                     API Call Count: ${data.apiCallCount}`);
 
@@ -32,7 +32,7 @@ exports.updateAPICount = async (portalID) => {
         const user = await User.findOne({ portalID: portalID });
         logger.info("---------------------logging at bulkApiCallCount-------------------");
         if (!user) {
-          console.log('User not found in bulkApiCallCount');
+          logger.info('User not found in bulkApiCallCount');
           return;
         }
         
@@ -44,7 +44,7 @@ exports.updateAPICount = async (portalID) => {
         );
     
         if (!subscriptionInfoUpdate) {
-          console.log('Subscription not found');
+          logger.info('Subscription not found');
           return;
         }
 
@@ -63,7 +63,7 @@ exports.updateAPICount = async (portalID) => {
     exports.bulk_Check_PhoneNumberApiCallCount = async() =>{
       try{
         for (const [portalID, data] of checkPhoneNumberApiCallCache.entries()) {
-          console.log(`From bulkApiCallCount for checkPhone No
+          logger.info(`From bulkApiCallCount for checkPhone No
                       Portal ID: ${portalID}, 
                       API Call Count: ${data.apiCallCount}`);
 
@@ -73,7 +73,7 @@ exports.updateAPICount = async (portalID) => {
             const user = await User.findOne({ portalID: portalID });
             // logger.info("---------------------logging at CheckPhoneNumberUpdateAPICount update API Count end-------------------");
             if (!user) {
-              console.log('User not found in updateAPICount');
+              logger.info('User not found in updateAPICount');
               return;
             }
             
@@ -85,7 +85,7 @@ exports.updateAPICount = async (portalID) => {
             );
         
             if (!subscriptionInfoUpdate) {
-              console.log('Subscription not found');
+              logger.info('Subscription not found');
               return;
             }
           checkPhoneNumberApiCallCache.delete(portalID);

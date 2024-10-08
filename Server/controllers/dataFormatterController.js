@@ -409,5 +409,8 @@ exports.test = async (req, res) => {
 
 
 exports.removeAllCache = async() =>{
+  logger.info(
+    "removing CheckPhoneNumberCallCache"
+  );
   CheckPhoneNumberCallCache.clear();
 }
