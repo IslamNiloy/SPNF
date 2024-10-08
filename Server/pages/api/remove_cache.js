@@ -1,4 +1,4 @@
-import { removeAllCache } from '../controllers/dataFormatterController';
+import { removeAllCache } from '../../controllers/dataFormatterController';
 
 export default async function handler(req, res) {
   try {

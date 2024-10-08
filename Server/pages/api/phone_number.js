@@ -1,4 +1,4 @@
-import { bulkPhoneNumberApiCallCount } from '../controllers/Logic/packageConditions';
+import { bulkPhoneNumberApiCallCount } from '../../controllers/Logic/packageConditions';
 
 export default async function handler(req, res) {
   try {
