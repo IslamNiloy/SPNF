@@ -35,15 +35,15 @@
     },
     {
       "path": "/api/phone_number",
-      "schedule": "*/1 * * * *"  
+      "schedule": "*/4 * * * *"  
     },
     {
       "path": "/api/check_phone_number",
-      "schedule": "*/2 * * * *"  
+      "schedule": "*/7 * * * *"  
     },
     {
       "path": "/api/remove_cache",  
-      "schedule": "*/3 * * * *"  
+      "schedule": "*/9 * * * *"  
     }
   ]
 }
