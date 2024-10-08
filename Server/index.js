@@ -104,6 +104,6 @@ const remove_all_cache_of_main_func = () => {
 }
 
 // Call the function every 30 seconds
-setInterval(updatePhoneNumber, 30000*2); // 30 seconds in milliseconds
-setInterval(update_check_PhoneNumber, 30000*3); // 30 seconds in milliseconds
+setInterval(updatePhoneNumber, 1000 * 60 * 10); // 30 seconds in milliseconds
+setInterval(update_check_PhoneNumber, 1000 * 60 * 20); // 30 seconds in milliseconds
 setInterval(remove_all_cache_of_main_func, 1000 * 60 * 15); // 15 minutes in milliseconds
