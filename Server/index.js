@@ -65,7 +65,7 @@ loadDatabaseConnection();
 // });
 
 const updatePhoneNumber = () => {
-  fetch('http://localhost:3003/format/bulk/update/phone_number', {
+  fetch(process.env.BACKEND_URL+'/format/bulk/update/phone_number', {
     method: 'PUT',
   })
     .then(response => response.json())
@@ -78,7 +78,7 @@ const updatePhoneNumber = () => {
 };
 
 const update_check_PhoneNumber = () => {
-  fetch('http://localhost:3003/format/bulk/update/check_phone_number', {
+  fetch(process.env.BACKEND_URL+'/format/bulk/update/check_phone_number', {
     method: 'PUT',
   })
     .then(response => response.json())
@@ -91,7 +91,7 @@ const update_check_PhoneNumber = () => {
 };
 
 const remove_all_cache_of_main_func = () => {
-  fetch('http://localhost:3003/format/remove/cache/all', {
+  fetch(process.env.BACKEND_URL+'/format/remove/cache/all', {
     method: 'PUT',
   })
     .then(response => response.json())
