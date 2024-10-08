@@ -55,7 +55,7 @@ async function loadDatabaseConnection() {
 
 loadDatabaseConnection();
 
-setInterval(getAsync,  60 * 60 * 1000); 
+//setInterval(getAsync,  60 * 60 * 1000); 
 
 
 // cron.schedule('*/5 * * * *', async () => {
@@ -63,3 +63,54 @@ setInterval(getAsync,  60 * 60 * 1000);
 //   logger.info('Cron job started: Syncing subscriptions to HubSpot');
 //   await processStart()
 // });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+const updatePhoneNumber = () => {
+  fetch('http://localhost:3003/format/bulk/update/phone_number', {
+    method: 'PUT',
+  })
+    .then(response => response.json())
+    .then(data => {
+      console.log('Update successful:', data);
+    })
+    .catch(error => {
+      console.error('Error updating phone numbers:', error);
+    });
+};
+
+const update_check_PhoneNumber = () => {
+  fetch('http://localhost:3003/format/bulk/update/check_phone_number', {
+    method: 'PUT',
+  })
+    .then(response => response.json())
+    .then(data => {
+      console.log('Update successful:', data);
+    })
+    .catch(error => {
+      console.error('Error updating phone numbers:', error);
+    });
+};
+
+// Call the function every 30 seconds
+setInterval(updatePhoneNumber, 30000*2); // 30 seconds in milliseconds
+setInterval(update_check_PhoneNumber, 30000*3); // 30 seconds in milliseconds

@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const dataFormatterController = require('../controllers/dataFormatterController');
 
+const packageConditions = require('../controllers/Logic/packageConditions');
+
 /**
  * @swagger
  * /format/check_phone_number:
@@ -30,6 +32,9 @@ router.post('/phone_number', dataFormatterController.phoneNumber); //phoneNumber
 router.get('/get_country_code', dataFormatterController.getCountry);
 
 router.post('/test', dataFormatterController.test)
+
+router.put('/bulk/update/phone_number',packageConditions.bulkPhoneNumberApiCallCount);
+router.put('/bulk/update/check_phone_number',packageConditions.bulk_Check_PhoneNumberApiCallCount);
 
 
 module.exports = router;

@@ -3,37 +3,114 @@ const logger = require('../../utils/logger'); // Add logger
 const User = require('../../model/user.model');
 const Package = require('../../model/packages.model');
 const Subscription = require('../../model/subscription.model');
-  
-  exports.updateAPICount = async (portalID) => {
+const apiCallCache = new Map();
+const checkPhoneNumberApiCallCache = new Map();
+
+exports.updateAPICount = async (portalID) => {
     try {
-      // Find the user by portalID
-      logger.info("---------------------logging at update API Count start-------------------");
-      logger.info("Portal id: "+ portalID);
-      const user = await User.findOne({ portalID: portalID });
-      logger.info("---------------------logging at update API Count end-------------------");
-      if (!user) {
-        console.log('User not found in updateAPICount');
-        return;
+      if (apiCallCache.has(portalID)) {
+        const currentData = apiCallCache.get(portalID);
+        apiCallCache.set(portalID, { apiCallCount: currentData.apiCallCount + 1 });
+      } else {
+        apiCallCache.set(portalID, { apiCallCount: 1 });
       }
-      
-      // Find the subscription and update the apiCallCount
-      const subscriptionInfoUpdate = await Subscription.findOneAndUpdate(
-        { user: user._id },
-        { $inc: { apiCallCount: 1, totalApiCallCount: 1} }, // Increment apiCallCount by 1 //total also increase
-        { new: true, upsert: false }  // upsert: false ensures it won't create a new document
-      );
-  
-      if (!subscriptionInfoUpdate) {
-        console.log('Subscription not found');
-        return;
-      }
-      
-      console.log('Updated subscription:', subscriptionInfoUpdate);
+    
+      return apiCallCache;
     } catch (e) {
       console.error('Error in condition function:', e);
     }
   };
+
+  exports.bulkPhoneNumberApiCallCount = async() =>{
+    try{
+      for (const [portalID, data] of apiCallCache.entries()) {
+        console.log(`From bulkApiCallCount 
+                    Portal ID: ${portalID}, 
+                    API Call Count: ${data.apiCallCount}`);
+
+         // Find the user by portalID
+        const user = await User.findOne({ portalID: portalID });
+        logger.info("---------------------logging at bulkApiCallCount-------------------");
+        if (!user) {
+          console.log('User not found in bulkApiCallCount');
+          return;
+        }
+        
+        // Find the subscription and update the apiCallCount
+        const subscriptionInfoUpdate = await Subscription.findOneAndUpdate(
+          { user: user._id },
+          { $inc: { apiCallCount: data.apiCallCount, totalApiCallCount: data.apiCallCount} }, // Increment apiCallCount by 1 //total also increase
+          { new: true, upsert: false }  // upsert: false ensures it won't create a new document
+        );
+    
+        if (!subscriptionInfoUpdate) {
+          console.log('Subscription not found');
+          return;
+        }
+
+        apiCallCache.delete(portalID);
+      }
+    }catch(error){
+      console.error('Error in bulkApiCallCount function:', error);
+    }
+  }
+
+
+  /*  
+    check phone number API checking codingtion starts
+  */
+
+    exports.bulk_Check_PhoneNumberApiCallCount = async() =>{
+      try{
+        for (const [portalID, data] of checkPhoneNumberApiCallCache.entries()) {
+          console.log(`From bulkApiCallCount for checkPhone No
+                      Portal ID: ${portalID}, 
+                      API Call Count: ${data.apiCallCount}`);
+
+            // Find the user by portalID
+            // logger.info("---------------------logging at CheckPhoneNumberUpdateAPICount start-------------------");
+            // logger.info("Portal id: "+ portalID);
+            const user = await User.findOne({ portalID: portalID });
+            // logger.info("---------------------logging at CheckPhoneNumberUpdateAPICount update API Count end-------------------");
+            if (!user) {
+              console.log('User not found in updateAPICount');
+              return;
+            }
+            
+            // Find the subscription and update the apiCallCount
+            const subscriptionInfoUpdate = await Subscription.findOneAndUpdate(
+              { user: user._id },
+              { $inc: { checkPhoneNumberApiCallCount: data.apiCallCount , checkPhoneNumberTotalApiCallCount: data.apiCallCount} }, // Increment apiCallCount by 1 //total also increase
+              { new: true, upsert: false }  // upsert: false ensures it won't create a new document
+            );
+        
+            if (!subscriptionInfoUpdate) {
+              console.log('Subscription not found');
+              return;
+            }
+          checkPhoneNumberApiCallCache.delete(portalID);
+        }
+      }catch(error){
+        console.error('Error in bulkApiCallCount function:', error);
+      }
+    }
+
+    exports.CheckPhoneNumberUpdateAPICount = async (portalID) => {
+      try {
+        if (checkPhoneNumberApiCallCache.has(portalID)) {
+          const currentDataOfcheckPhoneNumberApiCallCache = checkPhoneNumberApiCallCache.get(portalID);
+          checkPhoneNumberApiCallCache.set(portalID, { apiCallCount: currentDataOfcheckPhoneNumberApiCallCache.apiCallCount + 1 });
+        } else {
+          checkPhoneNumberApiCallCache.set(portalID, { apiCallCount: 1 });
+        }
+      
+        return checkPhoneNumberApiCallCache;
+      } catch (e) {
+        console.error('Error in condition function:', e);
+      }
+    };
   
+
   
   exports.packageCondition = async (portalID) => {
     try{
@@ -57,8 +134,33 @@ const Subscription = require('../../model/subscription.model');
       }
       logger.info("-----At packageCondition subscription.apiCallCount-----" + subscription.apiCallCount);
       logger.info("-----At packageCondition user_package.Limit-----" + user_package.Limit);
-      const totalAPICALLS = parseInt(subscription.apiCallCount) + parseInt(subscription.checkPhoneNumberApiCallCount)
-      logger.info("====totalAPICALLS===" + totalAPICALLS);
+
+      let totalAPICALLS = 0;
+      if (apiCallCache.size === 0 && checkPhoneNumberApiCallCache.size === 0) {
+        totalAPICALLS = parseInt(subscription.apiCallCount) + parseInt(subscription.checkPhoneNumberApiCallCount);
+      }else{
+        if(apiCallCache.get(portalID) && !checkPhoneNumberApiCallCache.get(portalID)){
+          const currentData = apiCallCache.get(portalID);
+          totalAPICALLS = parseInt(subscription.apiCallCount) + 
+                          parseInt(subscription.checkPhoneNumberApiCallCount) + 
+                          parseInt(currentData.apiCallCount);
+        }else if(checkPhoneNumberApiCallCache.get(portalID) && !apiCallCache.get(portalID)){
+          const currentData = checkPhoneNumberApiCallCache.get(portalID);
+          totalAPICALLS = parseInt(subscription.apiCallCount) + 
+                          parseInt(subscription.checkPhoneNumberApiCallCount) + 
+                          parseInt(currentData.apiCallCount);
+        }else if(apiCallCache.get(portalID) && checkPhoneNumberApiCallCache.get(portalID)){
+          const currentDataofApiCallCache = apiCallCache.get(portalID);
+          const currentData_checkPhoneNumberApiCallCache = checkPhoneNumberApiCallCache.get(portalID);
+          totalAPICALLS = parseInt(subscription.apiCallCount) + 
+                          parseInt(subscription.checkPhoneNumberApiCallCount) + 
+                          parseInt(currentDataofApiCallCache.apiCallCount)+
+                          parseInt(currentData_checkPhoneNumberApiCallCache.apiCallCount);
+        }else{
+          totalAPICALLS = parseInt(subscription.apiCallCount) + parseInt(subscription.checkPhoneNumberApiCallCount);
+        }
+      }
+      logger.info("====totalAPICALLS in package Condition===" + totalAPICALLS);
       if(totalAPICALLS < user_package.Limit){
         return true;
       }else{
@@ -67,44 +169,7 @@ const Subscription = require('../../model/subscription.model');
     }catch (e) {
       logger.error("error in condition function: " + e);
     }
-  }
-
-
-  /*  
-    check phone number API checking codingtion starts
-  */
-
-    exports.CheckPhoneNumberUpdateAPICount = async (portalID) => {
-      try {
-        // Find the user by portalID
-        // logger.info("---------------------logging at CheckPhoneNumberUpdateAPICount start-------------------");
-        // logger.info("Portal id: "+ portalID);
-        const user = await User.findOne({ portalID: portalID });
-        // logger.info("---------------------logging at CheckPhoneNumberUpdateAPICount update API Count end-------------------");
-        if (!user) {
-          console.log('User not found in updateAPICount');
-          return;
-        }
-        
-        // Find the subscription and update the apiCallCount
-        const subscriptionInfoUpdate = await Subscription.findOneAndUpdate(
-          { user: user._id },
-          { $inc: { checkPhoneNumberApiCallCount: 1 , checkPhoneNumberTotalApiCallCount: 1} }, // Increment apiCallCount by 1 //total also increase
-          { new: true, upsert: false }  // upsert: false ensures it won't create a new document
-        );
-    
-        if (!subscriptionInfoUpdate) {
-          console.log('Subscription not found');
-          return;
-        }
-        
-        // console.log('Updated subscription:', subscriptionInfoUpdate);
-      } catch (e) {
-        console.error('Error in condition function:', e);
-      }
-    };
-  
-  
+  }  
   /*  
     check phone number API checking condition ends
   */
