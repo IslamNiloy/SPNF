@@ -147,6 +147,8 @@
 }
 
 .social-media a {
+  height: 15px;
+  width: 15px;
   margin: 0 10px;
   background-color: #fff;
   border-radius: 50%;
