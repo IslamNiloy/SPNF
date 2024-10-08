@@ -8,6 +8,18 @@
     {
       "src": "./api/cron.js",
       "use": "@vercel/node"
+    },
+    {
+      "src": "./api/phone_number.js",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "./api/check_phone_number.js",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "./api/remove_cache.js",
+      "use": "@vercel/node"
     }
   ],
   "routes": [
@@ -22,15 +34,15 @@
       "schedule": "*/5 * * * *"  
     },
     {
-      "path": "/format/bulk/update/phone_number",
+      "path": "/api/phone_number",
       "schedule": "*/1 * * * *"  
     },
     {
-      "path": "/format/bulk/update/check_phone_number",
+      "path": "/api/check_phone_number",
       "schedule": "*/2 * * * *"  
     },
     {
-      "path": "/format/remove/cache/all",
+      "path": "/api/remove_cache",  
       "schedule": "*/3 * * * *"  
     }
   ]
