@@ -161,10 +161,20 @@ exports.updateAPICount = async (portalID) => {
         }
       }
       logger.info("====totalAPICALLS in package Condition===" + totalAPICALLS);
+      let returningValue = {};
       if(totalAPICALLS < user_package.Limit){
-        return true;
+        //return portalId, totalAPICALLS , user_package.Limit and canPass: true
+        returningValue = {"portalId" : portalID, 
+                          "totalAPICALLS" : totalAPICALLS, 
+                          "userLimit": user_package.Limit, 
+                          "canPass": true}; 
+        return returningValue;
       }else{
-        return false;
+        returningValue = {"portalId" : portalID, 
+          "totalAPICALLS" : totalAPICALLS, 
+          "userLimit": user_package.Limit, 
+          "canPass": false}; 
+        return returningValue;      //return portalId, totalAPICALLS , user_package.Limit and canPass: false
       }
     }catch (e) {
       logger.error("error in condition function: " + e);

@@ -8,6 +8,7 @@ const paymentModel = require('../model/payment.model');
 const { updateAPICount, packageCondition, CheckPhoneNumberpackageCondition, CheckPhoneNumberUpdateAPICount } = require('./Logic/packageConditions');
 const redisClient = require('./Logic/bulkCountInsertion');
 const axios = require('axios');
+let CheckPhoneNumberCallCache = new Map();
 
 //////////////////////// PHONE NUMBER //////////////////////////
 const DEFAULT_COUNTRY = 'US';
@@ -49,28 +50,44 @@ const getCountryCode = (country, country_text) => {
   return DEFAULT_COUNTRY;
 };
 
-/*adding redis code starts for phone number*/
-const incrementAPICount = async (portalID, funcName) => {
-  try {
-    const result = await redisClient.incrAsync(portalID, funcName);
-    console.log('After increment:', result); // Should log the incremented value
+// /*adding redis code starts for phone number*/
+// const incrementAPICount = async (portalID, funcName) => {
+//   try {
+//     const result = await redisClient.incrAsync(portalID, funcName);
+//     console.log('After increment:', result); // Should log the incremented value
 
-  } catch (err) {
-    console.error('Redis increment error:', err);
-  }
-};
-/*end of redis code*/
+//   } catch (err) {
+//     console.error('Redis increment error:', err);
+//   }
+// };
+// /*end of redis code*/
 
 exports.phoneNumber = async (req, res) => {
+  //change in phone Number function
+  /*
+    have a cache named CheckPhoneNumberCallCache
+  */
   const { phoneNumber, country, country_text, hs_object_id } = req.body;
-  console.log("request Body: ", req.body)
   let propertyName = req.body.propertyName;
   try {
-    const check = await packageCondition(req.body.portalID);
-    const User = await userModel.findOne({ portalID: req.body.portalID });
-    const paymentInfo = await paymentModel.findOne({ portalID: req.body.portalID }).sort({ createdAt: -1 });
-  
-    if (!check) {
+    if(!CheckPhoneNumberCallCache.has(req.body.portalID)){
+      const check = await packageCondition(req.body.portalID); //get portalId, totalAPICALLS, user_package.Limit, canPass here
+      CheckPhoneNumberCallCache.set(req.body.portalID, check)
+
+      // Fetch the user and payment info
+      const User = await userModel.findOne({ portalID: req.body.portalID });
+      const paymentInfo = await paymentModel.findOne({ portalID: req.body.portalID }).sort({ createdAt: -1 });
+
+      // Store check, User, and paymentInfo in the cache
+      CheckPhoneNumberCallCache.set(req.body.portalID, {
+        ...check,
+        User,         // Add user info to the cache
+        paymentInfo,  // Add payment info to the cache
+      });
+    }
+    const cacheData = CheckPhoneNumberCallCache.get(req.body.portalID);
+
+    if (!cacheData.canPass) {//!check.canPass
       return res.status(200).json({
         "outputFields": {
           "Message": "API Limit Exceeded",
@@ -78,7 +95,7 @@ exports.phoneNumber = async (req, res) => {
         }
       });
     }
-    if (paymentInfo && paymentInfo.status == "cancelled") {
+    if (cacheData.paymentInfo && cacheData.paymentInfo.status == "cancelled") {
       return res.status(200).json({
         "outputFields": {
           "Message": "API Limit Exceeded",
@@ -86,13 +103,31 @@ exports.phoneNumber = async (req, res) => {
         }
       });
     }
-    else if (check) {
+    else if (cacheData.canPass) { //check.canPass
       await updateAPICount(req.body.portalID);
-      const formattedNumber = formatPhoneNumber(phoneNumber, country, country_text);
-      await updateContactProperty("pf_formatted_phone_number_14082001", formattedNumber, hs_object_id, User.accessToken, req, User.refreshToken);
+      cacheData.totalAPICALLS += 1;
+      
+      // Update the cache with the new value
+      CheckPhoneNumberCallCache.set(req.body.portalID, cacheData);
+
+      let formattedNumber;
+      if(cacheData.totalAPICALLS < cacheData.userLimit){
+        formattedNumber = formatPhoneNumber(phoneNumber, country, country_text);
+      }else{
+        return res.status(200).json({
+          "outputFields": {
+            "Message": "API Limit Exceeded",
+            "hs_execution_state": "FAILED"
+          }
+        });
+      }
+      
+      await updateContactProperty("pf_formatted_phone_number_14082001", formattedNumber, hs_object_id, 
+        cacheData.User.accessToken, req, cacheData.User.refreshToken);
 
       if (propertyName) {
-        await updateContactProperty(propertyName, formattedNumber, hs_object_id, User.accessToken, req, User.refreshToken);
+        await updateContactProperty(propertyName, formattedNumber, hs_object_id, cacheData.User.accessToken, req, 
+                                    cacheData.User.refreshToken);
       }
 
       res.json({
@@ -108,6 +143,7 @@ exports.phoneNumber = async (req, res) => {
     res.status(400).json({ error: error.message });
   }
 };
+
 const formatPhoneNumber = (phoneNumber, country, country_text) => {
   const countryCode = getCountryCode(country, country_text);
 
@@ -232,19 +268,34 @@ const checkPhoneNumber = (phoneNumber, country) => {
 exports.checkPhoneNumber = async (req, res) => {
   const { phoneNumber, country, portalID, hs_object_id, object } = req.body;
   let propertyName = req.body.propertyName;
-  // console.log("Property Name: ", propertyName)
+ 
+  // const check = await packageCondition(portalID);
+  // const User = await userModel.findOne({ portalID: req.body.portalID });
+  // // console.log("User in checkPhoneNumber: ===========" + User.email);
+  // const paymentInfo = await paymentModel.findOne({ portalID: req.body.portalID }).sort({ createdAt: -1 });
+  // // console.log("UpaymentInfoser: ===========" + paymentInfo + "check ===" + check);
+  // // logger.info("req.body in checkPhoneNumber: === " + JSON.stringify(req.body));
+  // // logger.info("phoneNumber in checkPhoneNumber: === " + phoneNumber);
 
-  // console.log("******** Req body *********", phoneNumber, country, propertyName, portalID, object, req.body, "******************")
-  console.log(req.body)
+  if(!CheckPhoneNumberCallCache.has(req.body.portalID)){
+    const check = await packageCondition(req.body.portalID); //get portalId, totalAPICALLS, user_package.Limit, canPass here
+    CheckPhoneNumberCallCache.set(req.body.portalID, check)
 
-  const check = await packageCondition(portalID);
-  const User = await userModel.findOne({ portalID: req.body.portalID });
-  // console.log("User in checkPhoneNumber: ===========" + User.email);
-  const paymentInfo = await paymentModel.findOne({ portalID: req.body.portalID }).sort({ createdAt: -1 });
-  // console.log("UpaymentInfoser: ===========" + paymentInfo + "check ===" + check);
-  // logger.info("req.body in checkPhoneNumber: === " + JSON.stringify(req.body));
-  // logger.info("phoneNumber in checkPhoneNumber: === " + phoneNumber);
-  if (!check) {
+    // Fetch the user and payment info
+    const User = await userModel.findOne({ portalID: req.body.portalID });
+    const paymentInfo = await paymentModel.findOne({ portalID: req.body.portalID }).sort({ createdAt: -1 });
+
+    // Store check, User, and paymentInfo in the cache
+    CheckPhoneNumberCallCache.set(req.body.portalID, {
+      ...check,
+      User,         // Add user info to the cache
+      paymentInfo,  // Add payment info to the cache
+    });
+  }
+  const cacheData = CheckPhoneNumberCallCache.get(req.body.portalID);
+
+
+  if (!cacheData.canPass) {
     return res.status(200).json({
       "outputFields": {
         "quality": "API Limit Exceeded",
@@ -252,7 +303,7 @@ exports.checkPhoneNumber = async (req, res) => {
       }
     });
   }
-  if (paymentInfo && paymentInfo.status == "cancelled") {
+  if (cacheData.paymentInfo && cacheData.paymentInfo.status == "cancelled") {
     return res.status(200).json({
       "outputFields": {
         "quality": "You have cancelled your subscription",
@@ -260,10 +311,15 @@ exports.checkPhoneNumber = async (req, res) => {
       }
     });
   }
-  else if (check) {
+  else if (cacheData.canPass) {
     // console.log("checking is fine in check phone number");
     await CheckPhoneNumberUpdateAPICount(req.body.portalID);
     //incrementAPICount(req.body.portalID, "checkPhoneNumber");
+    cacheData.totalAPICALLS += 1;
+      
+    // Update the cache with the new value
+    CheckPhoneNumberCallCache.set(req.body.portalID, cacheData);
+
     if (!phoneNumber) {
       return res.status(200).json({
         "outputFields": {
@@ -272,12 +328,17 @@ exports.checkPhoneNumber = async (req, res) => {
         }
       });
     }
-
-    const result = checkPhoneNumber(phoneNumber, country);
-    await updateContactProperty("pf_phone_number_quality_14082001", result, hs_object_id, User.accessToken, req, User.refreshToken);
+    let result;
+    if(cacheData.totalAPICALLS < cacheData.userLimit){
+      result = checkPhoneNumber(phoneNumber, country);
+    }
+   
+    await updateContactProperty("pf_phone_number_quality_14082001", result, 
+      hs_object_id, cacheData.User.accessToken, req, cacheData.User.refreshToken);
     //  save value in users property if provided 
     if (propertyName) {
-      await updateContactProperty(propertyName, result, hs_object_id, User.accessToken, req, User.refreshToken);
+      await updateContactProperty(propertyName, result, hs_object_id, cacheData.User.accessToken, 
+                                                      req, cacheData.User.refreshToken);
     }
     return res.status(200).json({
       "outputFields": {
@@ -345,3 +406,8 @@ exports.test = async (req, res) => {
   res.status(200).json({ message: 'Test Route', "REQBODY": req.body });
 }
 ///////////////TEST ROUTE END/////////////////////////
+
+
+exports.removeAllCache = async() =>{
+  CheckPhoneNumberCallCache.clear();
+}

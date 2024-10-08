@@ -64,27 +64,6 @@ loadDatabaseConnection();
 //   await processStart()
 // });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 const updatePhoneNumber = () => {
   fetch('http://localhost:3003/format/bulk/update/phone_number', {
     method: 'PUT',
@@ -111,6 +90,20 @@ const update_check_PhoneNumber = () => {
     });
 };
 
+const remove_all_cache_of_main_func = () => {
+  fetch('http://localhost:3003/format/remove/cache/all', {
+    method: 'PUT',
+  })
+    .then(response => response.json())
+    .then(data => {
+      console.log('Update successful:', data);
+    })
+    .catch(error => {
+      console.error('Error updating phone numbers:', error);
+    });
+}
+
 // Call the function every 30 seconds
 setInterval(updatePhoneNumber, 30000*2); // 30 seconds in milliseconds
 setInterval(update_check_PhoneNumber, 30000*3); // 30 seconds in milliseconds
+setInterval(remove_all_cache_of_main_func, 1000 * 60 * 15); // 15 minutes in milliseconds
