@@ -23,15 +23,15 @@
     },
     {
       "path": "/format/bulk/update/phone_number",
-      "schedule": "*/10 * * * *"  
+      "schedule": "*/1 * * * *"  
     },
     {
       "path": "/format/bulk/update/check_phone_number",
-      "schedule": "*/15 * * * *"  
+      "schedule": "*/2 * * * *"  
     },
     {
       "path": "/format/remove/cache/all",
-      "schedule": "*/20 * * * *"  
+      "schedule": "*/3 * * * *"  
     }
   ]
 }
