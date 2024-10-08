@@ -8,18 +8,6 @@
     {
       "src": "./api/cron.js",
       "use": "@vercel/node"
-    },
-    {
-      "src": "./api/phone_number.js",
-      "use": "@vercel/node"
-    },
-    {
-      "src": "./api/check_phone_number.js",
-      "use": "@vercel/node"
-    },
-    {
-      "src": "./api/remove_cache.js",
-      "use": "@vercel/node"
     }
   ],
   "routes": [
