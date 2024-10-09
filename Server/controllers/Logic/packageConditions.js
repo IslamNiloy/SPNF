@@ -188,14 +188,14 @@ exports.updateAPICount = async (portalID) => {
           const currentData = checkphnNoCache.get(portalID);
           totalAPICALLS = parseInt(subscription.apiCallCount) + 
                           parseInt(subscription.checkPhoneNumberApiCallCount) + 
-                          parseInt(currentData.apiCallCount);
+                          parseInt(currentData.apiCheckCallCount); //eikhane change hobe
         }else if(apiCallCache.get(portalID) && checkphnNoCache.get(portalID)){
           const currentDataofApiCallCache = apiCallCache.get(portalID);
           const currentData_checkPhoneNumberApiCallCache = checkphnNoCache.get(portalID);
           totalAPICALLS = parseInt(subscription.apiCallCount) + 
                           parseInt(subscription.checkPhoneNumberApiCallCount) + 
                           parseInt(currentDataofApiCallCache.apiCallCount)+
-                          parseInt(currentData_checkPhoneNumberApiCallCache.apiCallCount);
+                          parseInt(currentData_checkPhoneNumberApiCallCache.apiCheckCallCount); //eikhane change hobe
         }else{
           totalAPICALLS = parseInt(subscription.apiCallCount) + parseInt(subscription.checkPhoneNumberApiCallCount);
         }
