@@ -6,7 +6,6 @@ module.exports = async function handler(req, res) {
   }
 
   try {
-    console.log('bulkPhoneNumberApiCallCount');
     await bulkPhoneNumberApiCallCount();
     res.status(200).end('bulkPhoneNumberApiCallCount successfully');
   } catch (error) {
