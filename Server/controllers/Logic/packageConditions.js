@@ -15,7 +15,7 @@ exports.updateAPICount = async (portalID) => {
       } else {
         apiCallCache.set(portalID, { apiCallCount: 1 });
       }
-      console.log("apiCallCache in updateAPICount = "+ JSON.stringify(updateAPICount));
+      console.log("apiCallCache in updateAPICount = "+ JSON.stringify(apiCallCache));
       return apiCallCache;
     } catch (e) {
       console.error('Error in condition function:', e);
