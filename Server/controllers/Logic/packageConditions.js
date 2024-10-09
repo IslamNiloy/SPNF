@@ -119,16 +119,22 @@ exports.updateAPICount = async (portalID) => {
 
     exports.CheckPhoneNumberUpdateAPICount = async (portalID) => {
       try {
+        
+        console.log("main is called= ");
         // Check if the portalId already exists in the cache
         const existingEntry = apiCheckCallCache.find(entry => entry.portalId === portalID);
-    
+        console.log("main is called= " + existingEntry);
         if (existingEntry) {
           // If it exists, increment the apiCallCount by 1
           existingEntry.apiCallCount += 1;
+
+          console.log("main is called= " + existingEntry.apiCallCount);
         } else {
           // If it doesn't exist, add a new entry to the cache
           const result = { portalId: portalID, apiCallCount: 1 };
           apiCheckCallCache.push(result);
+
+          console.log("main is called= " + result);
         }
 
         console.log("JSON.stringify(apiCheckCallCache) in main= " +JSON.stringify(apiCheckCallCache) );
