@@ -5,7 +5,7 @@ const Package = require('../../model/packages.model');
 const Subscription = require('../../model/subscription.model');
 const paymentModel = require('../../model/payment.model');
 const apiCallCache = new Map();
-const checkPhoneNumberApiCallCache = new Map();
+const checkphnNoCache = new Map();
 
 exports.updateAPICount = async (portalID) => {
     try {
@@ -69,11 +69,11 @@ exports.updateAPICount = async (portalID) => {
 
     exports.bulk_Check_PhoneNumberApiCallCount = async() =>{
       try{
-        console.log("bulk_Check_PhoneNumberApiCallCount is called = "+ checkPhoneNumberApiCallCache.has("47070462"));
-        for (const [portalID, data] of checkPhoneNumberApiCallCache.entries()) {
+        console.log("bulk_Check_PhoneNumberApiCallCount is called = "+ checkphnNoCache.has("47070462"));
+        for (const [portalID, data] of checkphnNoCache.entries()) {
           console.log(`From bulk_Check_PhoneNumberApiCallCount ===>
                       Portal ID: ${portalID}, 
-                      API Call Count: ${data.apiCallCount}`);
+                      API Call Count: ${data.apiCheckCallCount}`);
 
             const user = await User.findOne({ portalID: portalID });
             // logger.info("---------------------logging at CheckPhoneNumberUpdateAPICount update API Count end-------------------");
@@ -85,8 +85,8 @@ exports.updateAPICount = async (portalID) => {
             // Find the subscription and update the apiCallCount
             const subscriptionInfoUpdate = await Subscription.findOneAndUpdate(
               { user: user._id },
-              { $inc: { checkPhoneNumberApiCallCount: data.apiCallCount , 
-                checkPhoneNumberTotalApiCallCount: data.apiCallCount} }, // Increment apiCallCount by 1 //total also increase
+              { $inc: { checkPhoneNumberApiCallCount: data.apiCheckCallCount , 
+                checkPhoneNumberTotalApiCallCount: data.apiCheckCallCount} }, // Increment apiCallCount by 1 //total also increase
               { new: true, upsert: false }  // upsert: false ensures it won't create a new document
             );
   
@@ -94,7 +94,7 @@ exports.updateAPICount = async (portalID) => {
               logger.info('Subscription not found');
               return;
             }
-          checkPhoneNumberApiCallCache.delete(portalID);
+            checkphnNoCache.delete(portalID);
         }
       }catch(error){
         console.error('Error in bulkApiCallCount function:', error);
@@ -103,20 +103,20 @@ exports.updateAPICount = async (portalID) => {
 
     exports.CheckPhoneNumberUpdateAPICount = async (portalID) => {
       try {
-        if (checkPhoneNumberApiCallCache.has(portalID)) {
-          const currentDataOfcheckPhoneNumberApiCallCache = checkPhoneNumberApiCallCache.get(portalID);
-          checkPhoneNumberApiCallCache.set(portalID, { apiCallCount: currentDataOfcheckPhoneNumberApiCallCache.apiCallCount + 1 });
+        if (checkphnNoCache.has(portalID)) {
+          const currentData = checkphnNoCache.get(portalID);
+          checkphnNoCache.set(portalID, { apiCheckCallCount: currentData.apiCheckCallCount + 1 });
         } else {
-          checkPhoneNumberApiCallCache.set(portalID, { apiCallCount: 1 });
+          checkphnNoCache.set(portalID, { apiCheckCallCount: 1 });
         }
       
-        for (const [portalID, data] of checkPhoneNumberApiCallCache.entries()) {
+        for (const [portalID, data] of checkphnNoCache.entries()) {
           console.log(`From checkPhoneNumberApiCallCache ===> 
                       Portal ID: ${portalID}, 
-                      API Call Count: ${data.apiCallCount}`);
+                      API Call Count: ${data.apiCheckCallCount}`);
           }
 
-        return checkPhoneNumberApiCallCache;
+        return checkphnNoCache;
       } catch (e) {
         console.error('Error in condition function:', e);
       }
