@@ -177,39 +177,42 @@ exports.updateAPICount = async (portalID) => {
       logger.info("-----At packageCondition user_package.Limit-----" + user_package.Limit);
 
       let totalAPICALLS = 0;
-      if (apiCallCache.size === 0) {
-        totalAPICALLS = parseInt(subscription.apiCallCount) + parseInt(subscription.checkPhoneNumberApiCallCount);
-      }else{
-        // if(apiCallCache.get(portalID) && !checkphnNoCache.get(portalID)){
-        //   const currentData = apiCallCache.get(portalID);
-        //   totalAPICALLS = parseInt(subscription.apiCallCount) + 
-        //                   parseInt(subscription.checkPhoneNumberApiCallCount) + 
-        //                   parseInt(currentData.apiCallCount);
-        // }else if(checkphnNoCache.get(portalID) && !apiCallCache.get(portalID)){
-        //   const currentData = checkphnNoCache.get(portalID);
-        //   totalAPICALLS = parseInt(subscription.apiCallCount) + 
-        //                   parseInt(subscription.checkPhoneNumberApiCallCount) + 
-        //                   parseInt(currentData.apiCheckCallCount); //eikhane change hobe
-        // }else 
-        if(apiCallCache.get(portalID)){
-          const currentDataofApiCallCache = apiCallCache.get(portalID);
+
+      totalAPICALLS = parseInt(subscription.apiCallCount) + parseInt(subscription.checkPhoneNumberApiCallCount);
+
+      // // if (apiCallCache.size === 0) {
+        
+      // // }else{
+      // //   // if(apiCallCache.get(portalID) && !checkphnNoCache.get(portalID)){
+      // //   //   const currentData = apiCallCache.get(portalID);
+      // //   //   totalAPICALLS = parseInt(subscription.apiCallCount) + 
+      // //   //                   parseInt(subscription.checkPhoneNumberApiCallCount) + 
+      // //   //                   parseInt(currentData.apiCallCount);
+      // //   // }else if(checkphnNoCache.get(portalID) && !apiCallCache.get(portalID)){
+      // //   //   const currentData = checkphnNoCache.get(portalID);
+      // //   //   totalAPICALLS = parseInt(subscription.apiCallCount) + 
+      // //   //                   parseInt(subscription.checkPhoneNumberApiCallCount) + 
+      // //   //                   parseInt(currentData.apiCheckCallCount); //eikhane change hobe
+      // //   // }else 
+      // //   if(apiCallCache.get(portalID)){
+      // //     const currentDataofApiCallCache = apiCallCache.get(portalID);
       
-          if(currentDataofApiCallCache.apiCheckCallCount > 0){
-            totalAPICALLS = parseInt(subscription.apiCallCount) + 
-            parseInt(subscription.checkPhoneNumberApiCallCount) + 
-            parseInt(currentDataofApiCallCache.apiCallCount)+
-            parseInt(currentDataofApiCallCache.apiCheckCallCount);
-          }else{
-            totalAPICALLS = parseInt(subscription.apiCallCount) + 
-            parseInt(subscription.checkPhoneNumberApiCallCount) + 
-            parseInt(currentDataofApiCallCache.apiCallCount)
-          }
+      // //     if(currentDataofApiCallCache.apiCheckCallCount > 0){
+      // //       totalAPICALLS = parseInt(subscription.apiCallCount) + 
+      // //       parseInt(subscription.checkPhoneNumberApiCallCount) + 
+      // //       parseInt(currentDataofApiCallCache.apiCallCount)+
+      // //       parseInt(currentDataofApiCallCache.apiCheckCallCount);
+      // //     }else{
+      // //       totalAPICALLS = parseInt(subscription.apiCallCount) + 
+      // //       parseInt(subscription.checkPhoneNumberApiCallCount) + 
+      // //       parseInt(currentDataofApiCallCache.apiCallCount)
+      // //     }
 
      
-        }else{
-          totalAPICALLS = parseInt(subscription.apiCallCount) + parseInt(subscription.checkPhoneNumberApiCallCount);
-        }
-      }
+      // //   }else{
+      // //     totalAPICALLS = parseInt(subscription.apiCallCount) + parseInt(subscription.checkPhoneNumberApiCallCount);
+      // //   }
+      // }
       logger.info("====totalAPICALLS in package Condition===" + totalAPICALLS);
       
       if(totalAPICALLS < user_package.Limit){
