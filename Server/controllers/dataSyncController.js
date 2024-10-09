@@ -52,8 +52,41 @@ const syncDeal = async (subscription) => {
       const checkingApiCallCount = subscription.checkPhoneNumberApiCallCount || 0;
       const lifetimeFormattedApiCallCount = subscription.totalApiCallCount || 0;
       const lifetimeCheckingApiCallCount = subscription.checkPhoneNumberTotalApiCallCount || 0;
-      // Now define dealData
-      const dealData = {
+ 
+      // console.log(dealData)
+      const searchResponse = await hubspotClient.crm.contacts.searchApi.doSearch({
+        filterGroups: [
+          {
+            filters: [
+              {
+                value: user.email,
+                propertyName: 'email',
+                operator: 'EQ',
+              },
+            ],
+          },
+        ],
+        sorts: [],
+        properties: [],
+        limit: 1,
+        after: 0,
+      });
+
+      if (searchResponse.total == 0) {
+        // No contact found, so create a new contact
+        const createResponse = await hubspotClient.crm.contacts.basicApi.create({
+          properties: {
+            email: user.email,
+            firstname: user.name, 
+            phone: user.phoneNumber
+          },
+        });
+      
+        console.log('New contact created:', createResponse.id);
+      } 
+
+        // Now define dealData
+        const dealData = {
         properties: {
           dealname: `Phone Number formatter - ${packageData.packageName} - ${user.companyName}`,
           amount: payment.totalAmount || 0,
@@ -85,8 +118,6 @@ const syncDeal = async (subscription) => {
         }
       };
     
-      // console.log(dealData)
-
       if (subscription.hubspotDealId) {
         await hubspotClient.crm.deals.basicApi.update(subscription.hubspotDealId, dealData);
         console.log(`Updated HubSpot deal for subscription ID: ${subscription._id}`);
