@@ -5,7 +5,7 @@ const Package = require('../../model/packages.model');
 const Subscription = require('../../model/subscription.model');
 const paymentModel = require('../../model/payment.model');
 const apiCallCache = new Map();
-const checkphnNoCache = new Map();
+// const checkphnNoCache = new Map();
 
 exports.updateAPICount = async (portalID) => {
     try {
@@ -69,8 +69,8 @@ exports.updateAPICount = async (portalID) => {
 
     exports.bulk_Check_PhoneNumberApiCallCount = async() =>{
       try{
-        console.log("bulk_Check_PhoneNumberApiCallCount is called 2= "+ checkphnNoCache.has("47070462"));
-        for (const [portalID, data] of checkphnNoCache.entries()) {
+        console.log("bulk_Check_PhoneNumberApiCallCount is called 2= "+ apiCallCache.has("47070462"));
+        for (const [portalID, data] of apiCallCache.entries()) {
           console.log(`From bulk_Check_PhoneNumberApiCallCount 2===>
                       Portal ID: ${portalID}, 
                       API Call Count: ${data.apiCheckCallCount}`);
@@ -94,7 +94,7 @@ exports.updateAPICount = async (portalID) => {
               logger.info('Subscription not found');
               return;
             }
-            checkphnNoCache.delete(portalID);
+            apiCallCache.delete(portalID);
         }
       }catch(error){
         console.error('Error in bulkApiCallCount function:', error);
@@ -103,21 +103,21 @@ exports.updateAPICount = async (portalID) => {
 
     exports.CheckPhoneNumberUpdateAPICount = async (portalID) => {
       try {
-        console.log("From checkphnNoCache ===>  is called 2= "+ checkphnNoCache.has(portalID));
-        if (checkphnNoCache.has(portalID)) {
-          const currentData = checkphnNoCache.get(portalID);
-          checkphnNoCache.set(portalID, { apiCheckCallCount: currentData.apiCheckCallCount + 1 });
+        console.log("From checkphnNoCache ===>  is called 3= "+ apiCallCache.has(portalID));
+        if (apiCallCache.has(portalID)) {
+          const currentData = apiCallCache.get(portalID);
+          apiCallCache.set(portalID, { apiCheckCallCount: currentData.apiCheckCallCount + 1 });
         } else {
-          checkphnNoCache.set(portalID, { apiCheckCallCount: 1 });
+          apiCallCache.set(portalID, { apiCheckCallCount: 1 });
         }
       
-        for (const [portalID, data] of checkphnNoCache.entries()) {
-          console.log(`From checkphnNoCache 2===> 
+        for (const [portalID, data] of apiCallCache.entries()) {
+          console.log(`From checkphnNoCache 3===> 
                       Portal ID: ${portalID}, 
                       API Call Count: ${data.apiCheckCallCount}`);
           }
          
-        return checkphnNoCache;
+        return apiCallCache;
       } catch (e) {
         console.error('Error in condition function:', e);
       }
@@ -177,26 +177,35 @@ exports.updateAPICount = async (portalID) => {
       logger.info("-----At packageCondition user_package.Limit-----" + user_package.Limit);
 
       let totalAPICALLS = 0;
-      if (apiCallCache.size === 0 && checkphnNoCache.size === 0) {
+      if (apiCallCache.size === 0) {
         totalAPICALLS = parseInt(subscription.apiCallCount) + parseInt(subscription.checkPhoneNumberApiCallCount);
       }else{
-        if(apiCallCache.get(portalID) && !checkphnNoCache.get(portalID)){
-          const currentData = apiCallCache.get(portalID);
-          totalAPICALLS = parseInt(subscription.apiCallCount) + 
-                          parseInt(subscription.checkPhoneNumberApiCallCount) + 
-                          parseInt(currentData.apiCallCount);
-        }else if(checkphnNoCache.get(portalID) && !apiCallCache.get(portalID)){
-          const currentData = checkphnNoCache.get(portalID);
-          totalAPICALLS = parseInt(subscription.apiCallCount) + 
-                          parseInt(subscription.checkPhoneNumberApiCallCount) + 
-                          parseInt(currentData.apiCheckCallCount); //eikhane change hobe
-        }else if(apiCallCache.get(portalID) && checkphnNoCache.get(portalID)){
+        // if(apiCallCache.get(portalID) && !checkphnNoCache.get(portalID)){
+        //   const currentData = apiCallCache.get(portalID);
+        //   totalAPICALLS = parseInt(subscription.apiCallCount) + 
+        //                   parseInt(subscription.checkPhoneNumberApiCallCount) + 
+        //                   parseInt(currentData.apiCallCount);
+        // }else if(checkphnNoCache.get(portalID) && !apiCallCache.get(portalID)){
+        //   const currentData = checkphnNoCache.get(portalID);
+        //   totalAPICALLS = parseInt(subscription.apiCallCount) + 
+        //                   parseInt(subscription.checkPhoneNumberApiCallCount) + 
+        //                   parseInt(currentData.apiCheckCallCount); //eikhane change hobe
+        // }else 
+        if(apiCallCache.get(portalID)){
           const currentDataofApiCallCache = apiCallCache.get(portalID);
-          const currentData_checkPhoneNumberApiCallCache = checkphnNoCache.get(portalID);
-          totalAPICALLS = parseInt(subscription.apiCallCount) + 
-                          parseInt(subscription.checkPhoneNumberApiCallCount) + 
-                          parseInt(currentDataofApiCallCache.apiCallCount)+
-                          parseInt(currentData_checkPhoneNumberApiCallCache.apiCheckCallCount); //eikhane change hobe
+      
+          if(currentDataofApiCallCache.apiCheckCallCount > 0){
+            totalAPICALLS = parseInt(subscription.apiCallCount) + 
+            parseInt(subscription.checkPhoneNumberApiCallCount) + 
+            parseInt(currentDataofApiCallCache.apiCallCount)+
+            parseInt(currentDataofApiCallCache.apiCheckCallCount);
+          }else{
+            totalAPICALLS = parseInt(subscription.apiCallCount) + 
+            parseInt(subscription.checkPhoneNumberApiCallCount) + 
+            parseInt(currentDataofApiCallCache.apiCallCount)
+          }
+
+     
         }else{
           totalAPICALLS = parseInt(subscription.apiCallCount) + parseInt(subscription.checkPhoneNumberApiCallCount);
         }
