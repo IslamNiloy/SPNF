@@ -15,7 +15,7 @@ exports.updateAPICount = async (portalID) => {
       } else {
         apiCallCache.set(portalID, { apiCallCount: 1 });
       }
-    
+      console.log("apiCallCache in updateAPICount = "+ JSON.stringify(updateAPICount));
       return apiCallCache;
     } catch (e) {
       console.error('Error in condition function:', e);
@@ -25,15 +25,15 @@ exports.updateAPICount = async (portalID) => {
   exports.bulkPhoneNumberApiCallCount = async() =>{
     try{
       for (const [portalID, data] of apiCallCache.entries()) {
-        logger.info(`From bulkApiCallCount 
+        console.log(`From bulkApiCallCount 
                     Portal ID: ${portalID}, 
                     API Call Count: ${data.apiCallCount}`);
 
          // Find the user by portalID
         const user = await User.findOne({ portalID: portalID });
-        logger.info("---------------------logging at bulkApiCallCount-------------------");
+        console.log("---------------------logging at bulkApiCallCount-------------------");
         if (!user) {
-          logger.info('User not found in bulkApiCallCount');
+          console.log('User not found in bulkApiCallCount');
           return;
         }
         
@@ -43,7 +43,7 @@ exports.updateAPICount = async (portalID) => {
           { $inc: { apiCallCount: data.apiCallCount, totalApiCallCount: data.apiCallCount} }, // Increment apiCallCount by 1 //total also increase
           { new: true, upsert: false }  // upsert: false ensures it won't create a new document
         );
-    
+        console.log("subscriptionInfoUpdate in bulkPhoneNumberApiCallCount" + JSON.stringify(subscriptionInfoUpdate))
         if (!subscriptionInfoUpdate) {
           logger.info('Subscription not found');
           return;
@@ -64,7 +64,7 @@ exports.updateAPICount = async (portalID) => {
     exports.bulk_Check_PhoneNumberApiCallCount = async() =>{
       try{
         for (const [portalID, data] of checkPhoneNumberApiCallCache.entries()) {
-          logger.info(`From bulkApiCallCount for checkPhone No
+          console.log(`From bulkApiCallCount for checkPhone No
                       Portal ID: ${portalID}, 
                       API Call Count: ${data.apiCallCount}`);
 
@@ -81,10 +81,11 @@ exports.updateAPICount = async (portalID) => {
             // Find the subscription and update the apiCallCount
             const subscriptionInfoUpdate = await Subscription.findOneAndUpdate(
               { user: user._id },
-              { $inc: { checkPhoneNumberApiCallCount: data.apiCallCount , checkPhoneNumberTotalApiCallCount: data.apiCallCount} }, // Increment apiCallCount by 1 //total also increase
+              { $inc: { checkPhoneNumberApiCallCount: data.apiCallCount , 
+                checkPhoneNumberTotalApiCallCount: Subscription.checkPhoneNumberTotalApiCallCount+ data.apiCallCount} }, // Increment apiCallCount by 1 //total also increase
               { new: true, upsert: false }  // upsert: false ensures it won't create a new document
             );
-        
+  
             if (!subscriptionInfoUpdate) {
               logger.info('Subscription not found');
               return;
@@ -104,7 +105,7 @@ exports.updateAPICount = async (portalID) => {
         } else {
           checkPhoneNumberApiCallCache.set(portalID, { apiCallCount: 1 });
         }
-      
+        console.log("checkPhoneNumberApiCallCache in CheckPhoneNumberUpdateAPICount = "+ JSON.stringify(checkPhoneNumberApiCallCache));
         return checkPhoneNumberApiCallCache;
       } catch (e) {
         console.error('Error in condition function:', e);

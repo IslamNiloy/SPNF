@@ -6,7 +6,6 @@ module.exports = async function handler(req, res) {
   }
 
   try {
-    console.log('removeAllCache');
     await removeAllCache();
     res.status(200).end('removeAllCache successfully');
   } catch (error) {
