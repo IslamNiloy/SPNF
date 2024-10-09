@@ -75,10 +75,14 @@ exports.updateAPICount = async (portalID) => {
     exports.bulk_Check_PhoneNumberApiCallCount = async () => {
       try {
         // Loop through the array in reverse to safely remove items while iterating
+
+        console.log("JSON.stringify(apiCheckCallCache) in cache head = " + JSON.stringify(apiCheckCallCache));
         for (let i = apiCheckCallCache.length - 1; i >= 0; i--) {
           const data = apiCheckCallCache[i];
           const portalID = data.portalId;
-    
+
+          console.log("JSON.stringify(apiCheckCallCache) in cache= " +portalID + " and data.apiCallCount = "+data.apiCallCount);
+ 
           // Fetch the user by portalID
           const user = await User.findOne({ portalID: portalID });
     
@@ -126,6 +130,8 @@ exports.updateAPICount = async (portalID) => {
           const result = { portalId: portalID, apiCallCount: 1 };
           apiCheckCallCache.push(result);
         }
+
+        console.log("JSON.stringify(apiCheckCallCache) in main= " +JSON.stringify(apiCheckCallCache) );
       } catch (e) {
         console.error('Error in CheckPhoneNumberUpdateAPICount function:', e);
       }
