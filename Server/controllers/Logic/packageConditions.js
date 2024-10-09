@@ -70,7 +70,7 @@ exports.updateAPICount = async (portalID) => {
     exports.bulk_Check_PhoneNumberApiCallCount = async() =>{
       try{
         for (const [portalID, data] of checkPhoneNumberApiCallCache.entries()) {
-          console.log(`From bulkApiCallCount for checkPhone No
+          console.log(`From bulk_Check_PhoneNumberApiCallCount ===>
                       Portal ID: ${portalID}, 
                       API Call Count: ${data.apiCallCount}`);
 
@@ -108,9 +108,13 @@ exports.updateAPICount = async (portalID) => {
         } else {
           checkPhoneNumberApiCallCache.set(portalID, { apiCallCount: 1 });
         }
-        console.log("checkPhoneNumberApiCallCache in CheckPhoneNumberUpdateAPICount = "+ JSON.stringify(checkPhoneNumberApiCallCache));
+      
+        for (const [portalID, data] of checkPhoneNumberApiCallCache.entries()) {
+          console.log(`From checkPhoneNumberApiCallCache ===> 
+                      Portal ID: ${portalID}, 
+                      API Call Count: ${data.apiCallCount}`);
+          }
 
-        console.log("checkPhoneNumberApiCallCache in CheckPhoneNumberUpdateAPICount 1= "+ checkPhoneNumberApiCallCache);
         return checkPhoneNumberApiCallCache;
       } catch (e) {
         console.error('Error in condition function:', e);
