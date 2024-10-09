@@ -52,35 +52,16 @@ const getCountryCode = (country, country_text) => {
 
 exports.phoneNumber = async (req, res) => {
   //change in phone Number function
-  /*
-    have a cache named CheckPhoneNumberCallCache
-  */
   const { phoneNumber, country, country_text, hs_object_id } = req.body;
   let propertyName = req.body.propertyName;
   try {
-    console.log("CheckPhoneNumberCallCache.has(req.body.portalID) = "+
-                  CheckPhoneNumberCallCache.has(req.body.portalID));
-
-    if(!CheckPhoneNumberCallCache.has(req.body.portalID)){
       const check = await packageCondition(req.body.portalID); //get portalId, totalAPICALLS, user_package.Limit, canPass here
-      CheckPhoneNumberCallCache.set(req.body.portalID, check)
 
       // Fetch the user and payment info
       const User = await userModel.findOne({ portalID: req.body.portalID });
       const paymentInfo = await paymentModel.findOne({ portalID: req.body.portalID }).sort({ createdAt: -1 });
 
-      // Store check, User, and paymentInfo in the cache
-      CheckPhoneNumberCallCache.set(req.body.portalID, {
-        ...check,
-        User,         // Add user info to the cache
-        paymentInfo,  // Add payment info to the cache
-      });
-    }
-    const cacheData = CheckPhoneNumberCallCache.get(req.body.portalID);
-
-    console.log("cacheData in  phoneNumber = "+ JSON.stringify(cacheData))
-
-    if (!cacheData.canPass) {//!check.canPass
+    if (!check.canPass) {//!check.canPass
       return res.status(200).json({
         "outputFields": {
           "Message": "API Limit Exceeded",
@@ -88,7 +69,7 @@ exports.phoneNumber = async (req, res) => {
         }
       });
     }
-    if (cacheData.paymentInfo && cacheData.paymentInfo.status == "cancelled") {
+    if (paymentInfo && paymentInfo.status == "cancelled") {
       return res.status(200).json({
         "outputFields": {
           "Message": "API Limit Exceeded",
@@ -96,31 +77,16 @@ exports.phoneNumber = async (req, res) => {
         }
       });
     }
-    else if (cacheData.canPass) { //check.canPass
+    else if (check.canPass) { //check.canPass
       await updateAPICount(req.body.portalID);
-      cacheData.totalAPICALLS += 1;
-      
-      // Update the cache with the new value
-      CheckPhoneNumberCallCache.set(req.body.portalID, cacheData);
-
-      let formattedNumber;
-      if(cacheData.totalAPICALLS < cacheData.userLimit){
-        formattedNumber = formatPhoneNumber(phoneNumber, country, country_text);
-      }else{
-        return res.status(200).json({
-          "outputFields": {
-            "Message": "API Limit Exceeded",
-            "hs_execution_state": "FAILED"
-          }
-        });
-      }
+      const formattedNumber = formatPhoneNumber(phoneNumber, country, country_text);
       
       await updateContactProperty("pf_formatted_phone_number_14082001", formattedNumber, hs_object_id, 
-        cacheData.User.accessToken, req, cacheData.User.refreshToken);
+        User.accessToken, req, User.refreshToken);
 
       if (propertyName) {
-        await updateContactProperty(propertyName, formattedNumber, hs_object_id, cacheData.User.accessToken, req, 
-                                    cacheData.User.refreshToken);
+        await updateContactProperty(propertyName, formattedNumber, hs_object_id, User.accessToken, req, 
+                                    User.refreshToken);
       }
 
       res.json({
@@ -270,25 +236,13 @@ exports.checkPhoneNumber = async (req, res) => {
   // // logger.info("req.body in checkPhoneNumber: === " + JSON.stringify(req.body));
   // // logger.info("phoneNumber in checkPhoneNumber: === " + phoneNumber);
 
-  if(!CheckPhoneNumberCallCache.has(req.body.portalID)){
     const check = await packageCondition(req.body.portalID); //get portalId, totalAPICALLS, user_package.Limit, canPass here
-    CheckPhoneNumberCallCache.set(req.body.portalID, check)
 
     // Fetch the user and payment info
     const User = await userModel.findOne({ portalID: req.body.portalID });
     const paymentInfo = await paymentModel.findOne({ portalID: req.body.portalID }).sort({ createdAt: -1 });
 
-    // Store check, User, and paymentInfo in the cache
-    CheckPhoneNumberCallCache.set(req.body.portalID, {
-      ...check,
-      User,         // Add user info to the cache
-      paymentInfo,  // Add payment info to the cache
-    });
-  }
-  const cacheData = CheckPhoneNumberCallCache.get(req.body.portalID);
-
-
-  if (!cacheData.canPass) {
+  if (!check.canPass) {
     return res.status(200).json({
       "outputFields": {
         "quality": "API Limit Exceeded",
@@ -296,7 +250,7 @@ exports.checkPhoneNumber = async (req, res) => {
       }
     });
   }
-  if (cacheData.paymentInfo && cacheData.paymentInfo.status == "cancelled") {
+  if (paymentInfo && paymentInfo.status == "cancelled") {
     return res.status(200).json({
       "outputFields": {
         "quality": "You have cancelled your subscription",
@@ -304,14 +258,10 @@ exports.checkPhoneNumber = async (req, res) => {
       }
     });
   }
-  else if (cacheData.canPass) {
+  else if (check.canPass) {
     // console.log("checking is fine in check phone number");
     await CheckPhoneNumberUpdateAPICount(req.body.portalID);
     //incrementAPICount(req.body.portalID, "checkPhoneNumber");
-    cacheData.totalAPICALLS += 1;
-      
-    // Update the cache with the new value
-    CheckPhoneNumberCallCache.set(req.body.portalID, cacheData);
 
     if (!phoneNumber) {
       return res.status(200).json({
@@ -321,17 +271,16 @@ exports.checkPhoneNumber = async (req, res) => {
         }
       });
     }
-    let result;
-    if(cacheData.totalAPICALLS < cacheData.userLimit){
-      result = checkPhoneNumber(phoneNumber, country);
-    }
+
+    const result = checkPhoneNumber(phoneNumber, country);
+    
    
     await updateContactProperty("pf_phone_number_quality_14082001", result, 
-      hs_object_id, cacheData.User.accessToken, req, cacheData.User.refreshToken);
+      hs_object_id, User.accessToken, req, User.refreshToken);
     //  save value in users property if provided 
     if (propertyName) {
-      await updateContactProperty(propertyName, result, hs_object_id, cacheData.User.accessToken, 
-                                                      req, cacheData.User.refreshToken);
+      await updateContactProperty(propertyName, result, hs_object_id, User.accessToken, 
+                                                      req, User.refreshToken);
     }
     return res.status(200).json({
       "outputFields": {
