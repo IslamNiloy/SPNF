@@ -58,6 +58,9 @@ exports.phoneNumber = async (req, res) => {
   const { phoneNumber, country, country_text, hs_object_id } = req.body;
   let propertyName = req.body.propertyName;
   try {
+    console.log("CheckPhoneNumberCallCache.has(req.body.portalID) = "+
+                  CheckPhoneNumberCallCache.has(req.body.portalID));
+
     if(!CheckPhoneNumberCallCache.has(req.body.portalID)){
       const check = await packageCondition(req.body.portalID); //get portalId, totalAPICALLS, user_package.Limit, canPass here
       CheckPhoneNumberCallCache.set(req.body.portalID, check)
@@ -74,6 +77,8 @@ exports.phoneNumber = async (req, res) => {
       });
     }
     const cacheData = CheckPhoneNumberCallCache.get(req.body.portalID);
+
+    console.log("cacheData in  phoneNumber = "+ JSON.stringify(cacheData))
 
     if (!cacheData.canPass) {//!check.canPass
       return res.status(200).json({

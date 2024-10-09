@@ -32,18 +32,6 @@
     {
       "path": "/api/cron",
       "schedule": "*/5 * * * *"  
-    },
-    {
-      "path": "/api/phone_number",
-      "schedule": "*/4 * * * *"  
-    },
-    {
-      "path": "/api/check_phone_number",
-      "schedule": "*/7 * * * *"  
-    },
-    {
-      "path": "/api/remove_cache",  
-      "schedule": "*/9 * * * *"  
     }
   ]
 }
