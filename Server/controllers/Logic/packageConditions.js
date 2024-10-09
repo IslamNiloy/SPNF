@@ -111,7 +111,7 @@ exports.updateAPICount = async (portalID) => {
         }
       
         for (const [portalID, data] of checkphnNoCache.entries()) {
-          console.log(`From checkPhoneNumberApiCallCache ===> 
+          console.log(`From checkphnNoCache ===> 
                       Portal ID: ${portalID}, 
                       API Call Count: ${data.apiCheckCallCount}`);
           }
@@ -176,22 +176,22 @@ exports.updateAPICount = async (portalID) => {
       logger.info("-----At packageCondition user_package.Limit-----" + user_package.Limit);
 
       let totalAPICALLS = 0;
-      if (apiCallCache.size === 0 && checkPhoneNumberApiCallCache.size === 0) {
+      if (apiCallCache.size === 0 && checkphnNoCache.size === 0) {
         totalAPICALLS = parseInt(subscription.apiCallCount) + parseInt(subscription.checkPhoneNumberApiCallCount);
       }else{
-        if(apiCallCache.get(portalID) && !checkPhoneNumberApiCallCache.get(portalID)){
+        if(apiCallCache.get(portalID) && !checkphnNoCache.get(portalID)){
           const currentData = apiCallCache.get(portalID);
           totalAPICALLS = parseInt(subscription.apiCallCount) + 
                           parseInt(subscription.checkPhoneNumberApiCallCount) + 
                           parseInt(currentData.apiCallCount);
-        }else if(checkPhoneNumberApiCallCache.get(portalID) && !apiCallCache.get(portalID)){
-          const currentData = checkPhoneNumberApiCallCache.get(portalID);
+        }else if(checkphnNoCache.get(portalID) && !apiCallCache.get(portalID)){
+          const currentData = checkphnNoCache.get(portalID);
           totalAPICALLS = parseInt(subscription.apiCallCount) + 
                           parseInt(subscription.checkPhoneNumberApiCallCount) + 
                           parseInt(currentData.apiCallCount);
-        }else if(apiCallCache.get(portalID) && checkPhoneNumberApiCallCache.get(portalID)){
+        }else if(apiCallCache.get(portalID) && checkphnNoCache.get(portalID)){
           const currentDataofApiCallCache = apiCallCache.get(portalID);
-          const currentData_checkPhoneNumberApiCallCache = checkPhoneNumberApiCallCache.get(portalID);
+          const currentData_checkPhoneNumberApiCallCache = checkphnNoCache.get(portalID);
           totalAPICALLS = parseInt(subscription.apiCallCount) + 
                           parseInt(subscription.checkPhoneNumberApiCallCount) + 
                           parseInt(currentDataofApiCallCache.apiCallCount)+
