@@ -3,6 +3,7 @@ const logger = require('../../utils/logger'); // Add logger
 const User = require('../../model/user.model');
 const Package = require('../../model/packages.model');
 const Subscription = require('../../model/subscription.model');
+const paymentModel = require('../../model/payment.model');
 const apiCallCache = new Map();
 const checkPhoneNumberApiCallCache = new Map();
 
@@ -114,24 +115,52 @@ exports.updateAPICount = async (portalID) => {
   
   exports.packageCondition = async (portalID) => {
     try{
+      let returningValue = {};
       logger.info("At packageCondition");
       const user = await User.findOne( {portalID: portalID});
       // logger.info("At packageCondition user infos: "+ user);
       if (!user) {
         // Handle case where user is not found
         logger.info("At packageCondition User not found for portalID: " + portalID);
-        return false;
+         returningValue = {"portalId" : portalID, 
+          "totalAPICALLS" : 0, 
+          "userLimit": user_package.Limit, 
+          "canPass": false}; 
+        return returningValue;
       }
       //this user's subscription subscription
       const subscription = await Subscription.findOne( {user: user._id});
+
+      const paymentInformation = await paymentModel.findOne({portalID:portalID})
       logger.info("At packageCondition subscription infos: "+ subscription);
       //This user's package
       const user_package = await Package.findOne( {_id: subscription.package});
       const today = new Date();
-      if (today >  (subscription.packageEndDate)) {
+      /* 
+        if today > endDate then checking
+          if status == successed then update the value in subscription model the end date
+          else status != successed then send the canPass to false
+      */
+      if(today >  (subscription.packageEndDate) && paymentInformation.status == "successed"){
+          const SubscriptionUpdate = await Subscription.findOneAndUpdate(
+            { user: user._id },
+                {
+                  $set: {
+                    packageEndDate: today
+                  }
+              },
+              { new: true, upsert: false }
+            );
+            logger.info("end date updated in package Condition: "+ SubscriptionUpdate);
+      }else if (today >  (subscription.packageEndDate)  && paymentInformation.status != "successed") {
         logger.info("At packageCondition returning false date condition: "+ today + " "+ subscription.packageEndDate);
-        return false;
+           returningValue = {"portalId" : portalID, 
+            "totalAPICALLS" : 0, 
+            "userLimit": user_package.Limit, 
+            "canPass": false}; 
+          return returningValue;
       }
+
       logger.info("-----At packageCondition subscription.apiCallCount-----" + subscription.apiCallCount);
       logger.info("-----At packageCondition user_package.Limit-----" + user_package.Limit);
 
@@ -161,7 +190,7 @@ exports.updateAPICount = async (portalID) => {
         }
       }
       logger.info("====totalAPICALLS in package Condition===" + totalAPICALLS);
-      let returningValue = {};
+      
       if(totalAPICALLS < user_package.Limit){
         //return portalId, totalAPICALLS , user_package.Limit and canPass: true
         returningValue = {"portalId" : portalID, 

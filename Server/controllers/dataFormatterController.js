@@ -50,18 +50,6 @@ const getCountryCode = (country, country_text) => {
   return DEFAULT_COUNTRY;
 };
 
-// /*adding redis code starts for phone number*/
-// const incrementAPICount = async (portalID, funcName) => {
-//   try {
-//     const result = await redisClient.incrAsync(portalID, funcName);
-//     console.log('After increment:', result); // Should log the incremented value
-
-//   } catch (err) {
-//     console.error('Redis increment error:', err);
-//   }
-// };
-// /*end of redis code*/
-
 exports.phoneNumber = async (req, res) => {
   //change in phone Number function
   /*
