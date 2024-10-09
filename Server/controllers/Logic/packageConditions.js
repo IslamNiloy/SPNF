@@ -69,9 +69,9 @@ exports.updateAPICount = async (portalID) => {
 
     exports.bulk_Check_PhoneNumberApiCallCount = async() =>{
       try{
-        console.log("bulk_Check_PhoneNumberApiCallCount is called = "+ checkphnNoCache.has("47070462"));
+        console.log("bulk_Check_PhoneNumberApiCallCount is called 1= "+ checkphnNoCache.has("47070462"));
         for (const [portalID, data] of checkphnNoCache.entries()) {
-          console.log(`From bulk_Check_PhoneNumberApiCallCount ===>
+          console.log(`From bulk_Check_PhoneNumberApiCallCount 1===>
                       Portal ID: ${portalID}, 
                       API Call Count: ${data.apiCheckCallCount}`);
 
@@ -111,11 +111,11 @@ exports.updateAPICount = async (portalID) => {
         }
       
         for (const [portalID, data] of checkphnNoCache.entries()) {
-          console.log(`From checkphnNoCache ===> 
+          console.log(`From checkphnNoCache 1===> 
                       Portal ID: ${portalID}, 
                       API Call Count: ${data.apiCheckCallCount}`);
           }
-
+          console.log("From checkphnNoCache ===>  is called = "+ checkphnNoCache.has("47070462"));
         return checkphnNoCache;
       } catch (e) {
         console.error('Error in condition function:', e);
