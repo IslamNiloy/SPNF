@@ -16,6 +16,7 @@ exports.updateAPICount = async (portalID) => {
         apiCallCache.set(portalID, { apiCallCount: 1 });
       }
       console.log("apiCallCache in updateAPICount = "+ JSON.stringify(apiCallCache));
+      console.log("apiCallCache in updateAPICount 1= "+ apiCallCache);
       return apiCallCache;
     } catch (e) {
       console.error('Error in condition function:', e);
@@ -67,10 +68,7 @@ exports.updateAPICount = async (portalID) => {
           console.log(`From bulkApiCallCount for checkPhone No
                       Portal ID: ${portalID}, 
                       API Call Count: ${data.apiCallCount}`);
-
-            // Find the user by portalID
-            // logger.info("---------------------logging at CheckPhoneNumberUpdateAPICount start-------------------");
-            // logger.info("Portal id: "+ portalID);
+                      
             const user = await User.findOne({ portalID: portalID });
             // logger.info("---------------------logging at CheckPhoneNumberUpdateAPICount update API Count end-------------------");
             if (!user) {
@@ -82,7 +80,7 @@ exports.updateAPICount = async (portalID) => {
             const subscriptionInfoUpdate = await Subscription.findOneAndUpdate(
               { user: user._id },
               { $inc: { checkPhoneNumberApiCallCount: data.apiCallCount , 
-                checkPhoneNumberTotalApiCallCount: Subscription.checkPhoneNumberTotalApiCallCount+ data.apiCallCount} }, // Increment apiCallCount by 1 //total also increase
+                checkPhoneNumberTotalApiCallCount: data.apiCallCount} }, // Increment apiCallCount by 1 //total also increase
               { new: true, upsert: false }  // upsert: false ensures it won't create a new document
             );
   
@@ -106,6 +104,8 @@ exports.updateAPICount = async (portalID) => {
           checkPhoneNumberApiCallCache.set(portalID, { apiCallCount: 1 });
         }
         console.log("checkPhoneNumberApiCallCache in CheckPhoneNumberUpdateAPICount = "+ JSON.stringify(checkPhoneNumberApiCallCache));
+
+        console.log("checkPhoneNumberApiCallCache in CheckPhoneNumberUpdateAPICount 1= "+ checkPhoneNumberApiCallCache);
         return checkPhoneNumberApiCallCache;
       } catch (e) {
         console.error('Error in condition function:', e);
