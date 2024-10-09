@@ -7,6 +7,9 @@ const paymentModel = require('../../model/payment.model');
 const apiCallCache = new Map();
 // const checkphnNoCache = new Map();
 
+const apiCheckCallCache = [];
+
+
 exports.updateAPICount = async (portalID) => {
     try {
       if (apiCallCache.has(portalID)) {
@@ -67,62 +70,67 @@ exports.updateAPICount = async (portalID) => {
     check phone number API checking codingtion starts
   */
 
-    exports.bulk_Check_PhoneNumberApiCallCount = async() =>{
-      try{
-        console.log("bulk_Check_PhoneNumberApiCallCount is called 2= "+ apiCallCache.has("47070462"));
-        for (const [portalID, data] of apiCallCache.entries()) {
-          console.log(`From bulk_Check_PhoneNumberApiCallCount 2===>
-                      Portal ID: ${portalID}, 
-                      API Call Count: ${data.apiCheckCallCount}`);
-
-            const user = await User.findOne({ portalID: portalID });
-            // logger.info("---------------------logging at CheckPhoneNumberUpdateAPICount update API Count end-------------------");
-            if (!user) {
-              logger.info('User not found in updateAPICount');
-              return;
-            }
-            
-            // Find the subscription and update the apiCallCount
-            const subscriptionInfoUpdate = await Subscription.findOneAndUpdate(
-              { user: user._id },
-              { $inc: { checkPhoneNumberApiCallCount: data.apiCheckCallCount , 
-                checkPhoneNumberTotalApiCallCount: data.apiCheckCallCount} }, // Increment apiCallCount by 1 //total also increase
-              { new: true, upsert: false }  // upsert: false ensures it won't create a new document
-            );
-  
-            if (!subscriptionInfoUpdate) {
-              logger.info('Subscription not found');
-              return;
-            }
-            apiCallCache.delete(portalID);
+ 
+    
+    exports.bulk_Check_PhoneNumberApiCallCount = async () => {
+      try {
+        // Loop through the array in reverse to safely remove items while iterating
+        for (let i = apiCheckCallCache.length - 1; i >= 0; i--) {
+          const data = apiCheckCallCache[i];
+          const portalID = data.portalId;
+    
+          // Fetch the user by portalID
+          const user = await User.findOne({ portalID: portalID });
+    
+          if (!user) {
+            logger.info(`User not found for portalID: ${portalID}`);
+            continue; // Move to the next iteration if user is not found
+          }
+    
+          // Update the subscription info with the apiCallCount value
+          const subscriptionInfoUpdate = await Subscription.findOneAndUpdate(
+            { user: user._id },
+            {
+              $inc: {
+                checkPhoneNumberApiCallCount: data.apiCallCount, // Update with current apiCallCount
+                checkPhoneNumberTotalApiCallCount: data.apiCallCount, // Update total API call count
+              },
+            },
+            { new: true, upsert: false } // Do not create a new record if it doesn't exist
+          );
+    
+          if (!subscriptionInfoUpdate) {
+            logger.info(`Subscription not found for user: ${user._id}`);
+            continue; // Move to the next iteration if the subscription is not found
+          }
+    
+          // Remove the entry from the array after successfully updating the subscription
+          apiCheckCallCache.splice(i, 1);
         }
-      }catch(error){
-        console.error('Error in bulkApiCallCount function:', error);
+      } catch (error) {
+        console.error('Error in bulk_Check_PhoneNumberApiCallCount function:', error);
       }
-    }
+    };     
+
 
     exports.CheckPhoneNumberUpdateAPICount = async (portalID) => {
       try {
-        console.log("From checkphnNoCache ===>  is called 3= "+ apiCallCache.has(portalID));
-        if (apiCallCache.has(portalID)) {
-          const currentData = apiCallCache.get(portalID);
-          apiCallCache.set(portalID, { apiCheckCallCount: currentData.apiCheckCallCount + 1 });
+        // Check if the portalId already exists in the cache
+        const existingEntry = apiCheckCallCache.find(entry => entry.portalId === portalID);
+    
+        if (existingEntry) {
+          // If it exists, increment the apiCallCount by 1
+          existingEntry.apiCallCount += 1;
         } else {
-          apiCallCache.set(portalID, { apiCheckCallCount: 1 });
+          // If it doesn't exist, add a new entry to the cache
+          const result = { portalId: portalID, apiCallCount: 1 };
+          apiCheckCallCache.push(result);
         }
-      
-        for (const [portalID, data] of apiCallCache.entries()) {
-          console.log(`From checkphnNoCache 3===> 
-                      Portal ID: ${portalID}, 
-                      API Call Count: ${data.apiCheckCallCount}`);
-          }
-         
-        return apiCallCache;
       } catch (e) {
-        console.error('Error in condition function:', e);
+        console.error('Error in CheckPhoneNumberUpdateAPICount function:', e);
       }
     };
-  
+    
 
   
   exports.packageCondition = async (portalID) => {
