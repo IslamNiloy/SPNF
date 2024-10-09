@@ -69,6 +69,7 @@ exports.updateAPICount = async (portalID) => {
 
     exports.bulk_Check_PhoneNumberApiCallCount = async() =>{
       try{
+        console.log("bulk_Check_PhoneNumberApiCallCount is called = "+ checkPhoneNumberApiCallCache.has("47070462"));
         for (const [portalID, data] of checkPhoneNumberApiCallCache.entries()) {
           console.log(`From bulk_Check_PhoneNumberApiCallCount ===>
                       Portal ID: ${portalID}, 
