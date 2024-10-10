@@ -197,8 +197,12 @@ exports.updateAPICount = async (portalID) => {
       logger.info("-----At packageCondition user_package.Limit-----" + user_package.Limit);
 
       const cache_2 = apiCheckCallCache.find(entry => entry.portalId === portalID);
-      const cache_2_apiCount = cache_2.apiCallCount || 0;
+      let cache_2_apiCount = 0;
 
+      if(cache_2){
+        cache_2_apiCount = cache_2.apiCallCount;
+      }
+     
       let cache_1_apiCount = 0;
 
       if (apiCallCache.has(portalID)) {
