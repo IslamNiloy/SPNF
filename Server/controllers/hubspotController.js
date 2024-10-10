@@ -35,25 +35,26 @@ exports.install = async (req, res) => {
 exports.oauthCallback = async (req, res) => {
   //here will get the chargeID req.params
   const { exchangeForTokens } = require('../auth/hubspotAuth');
-  if (req.query.code) {
-    const authCodeProof = {
-      grant_type: 'authorization_code',
-      client_id: process.env.CLIENT_ID,
-      client_secret: process.env.CLIENT_SECRET,
-      redirect_uri: process.env.BACKEND_URL + '/oauth-callback',
-      code: req.query.code
-    };
-    const token = await exchangeForTokens(req, authCodeProof);
-    if (token.message) {
-      logWithDetails('error', `Error during OAuth callback: ${token.message}`, req);
-      return res.redirect(`/error?msg=${token.message}`);
-    }
-    logWithDetails('info', 'OAuth callback successful, redirecting to home', req);
-    res.redirect(`/`);
-  } else {
-    logWithDetails('warn', 'OAuth callback received without a code', req);
-    res.redirect('/error?msg=No%20code%20provided');
-  }
+  res.redirect(`/`);
+  // if (req.query.code) {
+  //   const authCodeProof = {
+  //     grant_type: 'authorization_code',
+  //     client_id: process.env.CLIENT_ID,
+  //     client_secret: process.env.CLIENT_SECRET,
+  //     redirect_uri: process.env.BACKEND_URL + '/oauth-callback',
+  //     code: req.query.code
+  //   };
+  //   const token = await exchangeForTokens(req, authCodeProof);
+  //   if (token.message) {
+  //     logWithDetails('error', `Error during OAuth callback: ${token.message}`, req);
+  //     return res.redirect(`/error?msg=${token.message}`);
+  //   }
+  //   logWithDetails('info', 'OAuth callback successful, redirecting to home', req);
+  //   res.redirect(`/`);
+  // } else {
+  //   logWithDetails('warn', 'OAuth callback received without a code', req);
+  //   res.redirect('/error?msg=No%20code%20provided');
+  // }
 };
 
 exports.home = async (req, res) => {
