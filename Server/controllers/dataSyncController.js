@@ -10,6 +10,7 @@ const hubspotClient = new Client({ accessToken: process.env.HS_API_KEY });
 
 const syncDeal = async (subscription) => {
     console.log("Pulling data from MongoDB");
+    let contact_id;
     try {
       const user = await User.findById(subscription.user);
       if (!user) {
@@ -72,6 +73,8 @@ const syncDeal = async (subscription) => {
         after: 0,
       });
 
+      console.log("search Response : " + JSON.stringify(searchResponse));
+      contact_id = searchResponse?.results[0]?.id;
       if (searchResponse.total == 0) {
         // No contact found, so create a new contact
         const createResponse = await hubspotClient.crm.contacts.basicApi.create({
@@ -81,7 +84,7 @@ const syncDeal = async (subscription) => {
             phone: user.phoneNumber
           },
         });
-      
+        contact_id = createResponse.id
         console.log('New contact created:', createResponse.id);
       } 
 
@@ -120,12 +123,14 @@ const syncDeal = async (subscription) => {
     
       if (subscription.hubspotDealId) {
         await hubspotClient.crm.deals.basicApi.update(subscription.hubspotDealId, dealData);
+        associateContactToDeal( subscription.hubspotDealId, contact_id);
         console.log(`Updated HubSpot deal for subscription ID: ${subscription._id}`);
         logger.info(`Updated HubSpot deal for subscription ID: ${subscription._id}`);
       } else {
 
         const createResponse = await hubspotClient.crm.deals.basicApi.create(dealData);
         const hubspotDealId = createResponse.id;
+        associateContactToDeal(hubspotDealId,contact_id);
   
         subscription.hubspotDealId = hubspotDealId;
         await subscription.save();
@@ -140,6 +145,7 @@ const syncDeal = async (subscription) => {
 
 const processStart = async() => {
     try {
+      console.log('start')
         const subscriptions = await Subscription.find().populate(['user','package']).exec();
         // console.log(subscriptions)
         for (const subscription of subscriptions) {
@@ -153,5 +159,41 @@ const processStart = async() => {
         logger.info('Error in cron job:', error);
       }
 }
+
+// Function to associate a contact with a deal
+// Function to associate a contact with a deal
+const associateContactToDeal = async (objectId,toObjectId) => {
+  try {
+    const objectType = "deals";      
+    // const objectId = "21783311998";  
+    const toObjectType = "contacts"; 
+    // const toObjectId = "66354473750"; 
+
+    // Define the association spec
+    const AssociationSpec = [
+      {
+        "associationCategory": "HUBSPOT_DEFINED",
+        "associationTypeId": 3 
+      }
+    ];
+
+
+  
+
+    // Call the HubSpot API to create the association
+    const apiResponse = await hubspotClient.crm.associations.v4.basicApi.create(objectType, objectId, toObjectType, toObjectId, AssociationSpec);
+    
+    // Log the API response
+    console.log("haskdj"+ JSON.stringify(apiResponse, null, 2));
+  } catch (e) {
+    // Handle errors
+    if (e.message === 'HTTP request failed') {
+      console.error(JSON.stringify(e.response, null, 2));
+    } else {
+      console.error(e);
+    }
+  }
+};
+
 
 module.exports = {processStart};
