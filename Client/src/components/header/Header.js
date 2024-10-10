@@ -65,7 +65,6 @@ const Header = () => {
                             </div>
                             )}
                         </div>
-                      
                     </div>
                 ):
                     <Link to={`${BackendAPI}/install`}>

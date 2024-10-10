@@ -31,7 +31,15 @@
   "crons": [
     {
       "path": "/api/cron",
-      "schedule": "*/3 * * * *"  
+      "schedule": "*/5 * * * *"  
+    },
+    {
+      "path": "/api/phone_number",
+      "schedule": "*/8 * * * *"  
+    },
+    {
+      "path": "/api/check_phone_number",
+      "schedule": "*/11 * * * *"  
     }
   ]
 }

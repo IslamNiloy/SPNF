@@ -53,7 +53,7 @@ app.use('/api/cron', cronRoute);
 
 app.use('/api/phone_number', cronPhoneNumberRoute);
 app.use('/api/check_phone_number', cronCheckPhoneNumberRoute);
-app.use('/api/remove_cache', cronRemoveCacheRoute);
+// app.use('/api/remove_cache', cronRemoveCacheRoute);
 
 // Setup Swagger
 setupSwagger(app);
