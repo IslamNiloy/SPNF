@@ -134,7 +134,7 @@ exports.updateAPICount = async (portalID) => {
           const result = { portalId: portalID, apiCallCount: 1 };
           apiCheckCallCache.push(result);
 
-          console.log("main is called= " + result);
+          console.log("main is called= " + JSON.stringify(result));
         }
 
         console.log("JSON.stringify(apiCheckCallCache) in main= " +JSON.stringify(apiCheckCallCache) );
@@ -196,9 +196,20 @@ exports.updateAPICount = async (portalID) => {
       logger.info("-----At packageCondition subscription.apiCallCount-----" + subscription.apiCallCount);
       logger.info("-----At packageCondition user_package.Limit-----" + user_package.Limit);
 
-      let totalAPICALLS = 0;
+      const cache_2 = apiCheckCallCache.find(entry => entry.portalId === portalID);
+      const cache_2_apiCount = cache_2.apiCallCount || 0;
 
-      totalAPICALLS = parseInt(subscription.apiCallCount) + parseInt(subscription.checkPhoneNumberApiCallCount);
+      let cache_1_apiCount = 0;
+
+      if (apiCallCache.has(portalID)) {
+        const currentData_cache1 = apiCallCache.get(portalID);
+        cache_1_apiCount = currentData_cache1.apiCallCount;
+      }
+
+      const totalAPICALLS = parseInt(subscription.apiCallCount) 
+                            + parseInt(subscription.checkPhoneNumberApiCallCount)
+                            +parseInt(cache_2_apiCount)
+                            + parseInt(cache_1_apiCount);
 
       // // if (apiCallCache.size === 0) {
         
