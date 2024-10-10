@@ -35,26 +35,25 @@ exports.install = async (req, res) => {
 exports.oauthCallback = async (req, res) => {
   //here will get the chargeID req.params
   const { exchangeForTokens } = require('../auth/hubspotAuth');
-  res.redirect(`/`);
-  // if (req.query.code) {
-  //   const authCodeProof = {
-  //     grant_type: 'authorization_code',
-  //     client_id: process.env.CLIENT_ID,
-  //     client_secret: process.env.CLIENT_SECRET,
-  //     redirect_uri: process.env.BACKEND_URL + '/oauth-callback',
-  //     code: req.query.code
-  //   };
-  //   const token = await exchangeForTokens(req, authCodeProof);
-  //   if (token.message) {
-  //     logWithDetails('error', `Error during OAuth callback: ${token.message}`, req);
-  //     return res.redirect(`/error?msg=${token.message}`);
-  //   }
-  //   logWithDetails('info', 'OAuth callback successful, redirecting to home', req);
-  //   res.redirect(`/`);
-  // } else {
-  //   logWithDetails('warn', 'OAuth callback received without a code', req);
-  //   res.redirect('/error?msg=No%20code%20provided');
-  // }
+  if (req.query.code) {
+    const authCodeProof = {
+      grant_type: 'authorization_code',
+      client_id: process.env.CLIENT_ID,
+      client_secret: process.env.CLIENT_SECRET,
+      redirect_uri: process.env.BACKEND_URL + '/oauth-callback',
+      code: req.query.code
+    };
+    const token = await exchangeForTokens(req, authCodeProof);
+    if (token.message) {
+      logWithDetails('error', `Error during OAuth callback: ${token.message}`, req);
+      return res.redirect(`/error?msg=${token.message}`);
+    }
+    logWithDetails('info', 'OAuth callback successful, redirecting to home', req);
+    res.redirect(`/`);
+  } else {
+    logWithDetails('warn', 'OAuth callback received without a code', req);
+    res.redirect('/error?msg=No%20code%20provided');
+  }
 };
 
 exports.home = async (req, res) => {
@@ -68,7 +67,7 @@ exports.home = async (req, res) => {
     //Todo:: Need to create new package for new user
     const packageId = "66dac9dd4ffd1188c309c0d4";
     let subsciptionInsertion = await  insertIntoSubscriptionAfterInstall(packageId,userInsertion._id)
-    await processStart()
+    //await processStart()
 
     logger.info("----insert into subscription mongoDB during installation----" + JSON.stringify(subsciptionInsertion));
     res.redirect(`${process.env.FRONTEND_URL}/welcome?portalID=${userInsertion.portalID}`);
