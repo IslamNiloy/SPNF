@@ -55,7 +55,7 @@ const syncDeal = async (subscription) => {
       const lifetimeCheckingApiCallCount = subscription.checkPhoneNumberTotalApiCallCount || 0;
  
       // console.log(dealData)
-      console.log("___________-____email:",user.email)
+      // console.log("___________-____email:",user.email)
       const searchResponse = await hubspotClient.crm.contacts.searchApi.doSearch({
         filterGroups: [
           {
@@ -76,7 +76,7 @@ const syncDeal = async (subscription) => {
 
       console.log("search Response : " + JSON.stringify(searchResponse));
       contact_id = searchResponse?.results[0]?.id;
-      if (searchResponse.total == 0) {
+      if (searchResponse.total == 0  && !user.email.includes('@hubxpert.com')) {
         // No contact found, so create a new contact
         const createResponse = await hubspotClient.crm.contacts.basicApi.create({
           properties: {
