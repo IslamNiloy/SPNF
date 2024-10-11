@@ -230,14 +230,6 @@ exports.checkPhoneNumber = async (req, res) => {
   const { phoneNumber, country, portalID, hs_object_id, object } = req.body;
   let propertyName = req.body.propertyName;
  
-  // const check = await packageCondition(portalID);
-  // const User = await userModel.findOne({ portalID: req.body.portalID });
-  // // console.log("User in checkPhoneNumber: ===========" + User.email);
-  // const paymentInfo = await paymentModel.findOne({ portalID: req.body.portalID }).sort({ createdAt: -1 });
-  // // console.log("UpaymentInfoser: ===========" + paymentInfo + "check ===" + check);
-  // // logger.info("req.body in checkPhoneNumber: === " + JSON.stringify(req.body));
-  // // logger.info("phoneNumber in checkPhoneNumber: === " + phoneNumber);
-
     const check = await packageCondition(req.body.portalID); //get portalId, totalAPICALLS, user_package.Limit, canPass here
 
     // Fetch the user and payment info

@@ -48,7 +48,6 @@ const syncDeal = async (subscription) => {
       }
 
       const paymentEmailList = Array.from(emailSet).join(', ') || ''; 
-     
       const formattedApiCallCount = subscription.apiCallCount || 0;
       const checkingApiCallCount = subscription.checkPhoneNumberApiCallCount || 0;
       const lifetimeFormattedApiCallCount = subscription.totalApiCallCount || 0;
@@ -152,8 +151,6 @@ const processStart = async() => {
           await syncDeal(subscription);
         }
         console.log('Cron job completed: All subscriptions synced to HubSpot');
-        logger.info('Cron job completed: All subscriptions synced to HubSpot');
-        logger.info('-------------------------------------------------------');
       } catch (error) {
         console.error('Error in cron job:', error);
         logger.info('Error in cron job:', error);
