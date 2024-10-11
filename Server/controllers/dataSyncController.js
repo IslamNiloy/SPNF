@@ -55,6 +55,7 @@ const syncDeal = async (subscription) => {
       const lifetimeCheckingApiCallCount = subscription.checkPhoneNumberTotalApiCallCount || 0;
  
       // console.log(dealData)
+      console.log("___________-____email:",user.email)
       const searchResponse = await hubspotClient.crm.contacts.searchApi.doSearch({
         filterGroups: [
           {
@@ -120,17 +121,22 @@ const syncDeal = async (subscription) => {
           pf_lifetime_api_call_count: lifetimeFormattedApiCallCount + lifetimeCheckingApiCallCount
         }
       };
+      console.log("---------------------- deal Data",dealData)
     
       if (subscription.hubspotDealId) {
         await hubspotClient.crm.deals.basicApi.update(subscription.hubspotDealId, dealData);
-        associateContactToDeal( subscription.hubspotDealId, contact_id);
+        if (contact_id && subscription.hubspotDealId){
+          associateContactToDeal( subscription.hubspotDealId, contact_id);
+        }
         console.log(`Updated HubSpot deal for subscription ID: ${subscription._id}`);
         logger.info(`Updated HubSpot deal for subscription ID: ${subscription._id}`);
       } else {
 
         const createResponse = await hubspotClient.crm.deals.basicApi.create(dealData);
         const hubspotDealId = createResponse.id;
-        associateContactToDeal(hubspotDealId,contact_id);
+        if (contact_id && hubspotDealId){
+          associateContactToDeal(hubspotDealId,contact_id);
+        }
   
         subscription.hubspotDealId = hubspotDealId;
         await subscription.save();
@@ -196,4 +202,4 @@ const associateContactToDeal = async (objectId,toObjectId) => {
 };
 
 
-module.exports = {processStart};
+module.exports = {processStart,syncDeal};

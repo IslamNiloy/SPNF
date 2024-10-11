@@ -6,7 +6,7 @@ const { insertIntoSubscription } = require('./subscriptionController');
 const { insertIntoUser } = require('./usercontroller');
 const { createProperties } = require('./propertyController');
 const {insertIntoSubscriptionAfterInstall} = require('./subscriptionController');
-const { processStart } = require('./dataSyncController');
+const { syncDeal } = require('./dataSyncController');
 
  //const BASE_URL = "http://localhost:3003";
  //const FRONTEND_URL = "http://localhost:3000";
@@ -62,12 +62,15 @@ exports.home = async (req, res) => {
     const accInfo = await getAccountInfo(accessToken);
     let userInsertion = await insertIntoUser(accInfo);
     let paymentInsertion = await insertIntoPayment(userInsertion);
+    const Subscription = require('../model/subscription.model');
     await createProperties(accessToken)
     
     //Todo:: Need to create new package for new user
     const packageId = "66dac9dd4ffd1188c309c0d4";
     let subsciptionInsertion = await  insertIntoSubscriptionAfterInstall(packageId,userInsertion._id)
-    //await processStart()
+    const subsciption_data = await Subscription.findOne({user:userInsertion._id})
+    console.log("--------------------------------- Here:",subsciption_data)
+    await syncDeal(subsciption_data)
 
     logger.info("----insert into subscription mongoDB during installation----" + JSON.stringify(subsciptionInsertion));
     res.redirect(`${process.env.FRONTEND_URL}/welcome?portalID=${userInsertion.portalID}`);
