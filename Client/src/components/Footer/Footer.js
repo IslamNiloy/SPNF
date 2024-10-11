@@ -68,9 +68,8 @@ const Footer = () => {
 
           <div className='verified'>
             <p>Verified </p>
-            <img style={{width:"20%"}} src="https://static.wixstatic.com/media/2b3cd1_f477381ff4fe45b6be80821075ef3179~mv2.webp/v1/fill/w_60,h_60,al_c,q_80,usm_0.66_1.00_0.01,enc_auto/verified.webp" alt="HubXpert Logo" /> 
+            <img style={{width:"20%", height: "20%"}} src="https://static.wixstatic.com/media/2b3cd1_f477381ff4fe45b6be80821075ef3179~mv2.webp/v1/fill/w_60,h_60,al_c,q_80,usm_0.66_1.00_0.01,enc_auto/verified.webp" alt="HubXpert Logo" /> 
           </div>
-         
         </div>
       </div>
      
