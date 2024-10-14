@@ -122,6 +122,7 @@ const syncDeal = async (subscription) => {
         }
       };
       // console.log("---------------------- deal Data",dealData)
+      // console.log("---------------------- deal Data",dealData)
     
       if (subscription.hubspotDealId) {
         await hubspotClient.crm.deals.basicApi.update(subscription.hubspotDealId, dealData);
