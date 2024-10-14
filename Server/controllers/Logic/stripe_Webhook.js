@@ -31,8 +31,11 @@ let stripeWebhook = async (request, response) => {
         STRIPE_DATA_DB.phoneNumber = custom_fields_array[ 2 ].text.value ? custom_fields_array[ 2 ].text.value : "";
         STRIPE_DATA_DB.email = checkout_session_completed_data.customer_details.email;
         STRIPE_DATA_DB.countryCode = checkout_session_completed_data.customer_details?.address?.country || '';
-        console.log("logging STRIPE_DATA_DB");
-
+ 
+        if(checkout_session_completed_data.amount_total == 0){
+            await updateUserInfoAfterPayment(STRIPE_DATA_DB.portalId, STRIPE_DATA_DB);
+        }
+        
         const sessionsCompleted = await stripe.checkout.sessions.retrieve(
           checkout_session_completed_data.id
         );
@@ -74,6 +77,8 @@ let stripeWebhook = async (request, response) => {
             STRIPE_DATA_DB.packageId = session.metadata.packageId;
             STRIPE_DATA_DB.StripePriceId = session.metadata.StripePriceId;
             // After fetching the data, proceed with updating
+
+   
             if (STRIPE_DATA_DB.portalId && STRIPE_DATA_DB.packageId) {
               if (process.env.NODE_ENV == "DEV") {
                   const devIds = [
