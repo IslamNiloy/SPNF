@@ -62,8 +62,7 @@ const Testimonials = () => {
           <p>
             <div className="mobile-quote-main">
               <div className='testimonialDetails'>
-                The phone number formatter is a must-have for anyone who deals
-                with international phone numbers. It's accurate and reliable.
+              In HubSpot, Phone number format was a big issue for our sales team. Once we came to know about the "Smart Phone Number Formatter" app we initially implemented it on a small scale, after we saw the effectiveness of it we implemented the app fully in our system. A must have app for HubSpot.
               </div>
               <div className="mobile-quote-icon">
               <svg width="46" height="46" viewBox="0 0 54 46" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -72,9 +71,9 @@ const Testimonials = () => {
               </div> 
             </div>
           </p>
-          <p className="author-name">— Tomnoy Baidya <br/>
-           <span className="author-title">Sales Representative</span>
-           <span className="author-title"><br className='br-style-none-mobile'/>HubXpert</span> 
+          <p className="author-name">— Justin Knock <br/>
+           <span className="author-title">Senior Account Executive</span>
+           <span className="author-title"><br className='br-style-none-mobile'/>Spectra Lending</span> 
           </p>
         </div>
         
