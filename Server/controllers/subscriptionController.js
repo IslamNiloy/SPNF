@@ -51,6 +51,7 @@ exports.insertIntoSubscriptionAfterPayment = async (packageID, userID) => {
                  hubspotDealId: ""
              });
              await subscribe.save();
+             await syncDeal(subscribe);
             //  logger.info("Insert data in subscription model");
          }
      }catch(error){
@@ -91,8 +92,8 @@ exports.insertIntoSubscriptionAfterPayment = async (packageID, userID) => {
             },
             { new: true } 
           );
-
           await syncDeal(subscriptionUpDate);
+         
         //   logger.info("Subscription information updated for user: "+ userID);
           return subscriptionUpDate;
   }
