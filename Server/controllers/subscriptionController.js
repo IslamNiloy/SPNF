@@ -26,11 +26,11 @@ exports.insertIntoSubscriptionAfterPayment = async (packageID, userID) => {
          
          if (!userInfo) {
              logger.error("User not found");
-             return res.status(404).json({ error: 'User not found' });
+             return ({ error: 'User not found' });
          }
          else if (!packageInfo) {
              logger.error("Package information not found");
-             return res.json({ error: 'Package information not found' });
+             return ({ error: 'Package information not found' });
          }
          if(subscriptionInfo){
             await syncDeal(subscriptionInfo);
@@ -286,14 +286,14 @@ exports.insertIntoSubscription = async (req, res) => {
 
          if (!userInfo) {
             //  logger.error("User not found");
-             return res.status(404).json({ error: 'User not found' });
+             return ({ error: 'User not found' });
          }
          else if (!packageInfo) {
              logger.error("Package information not found");
-             return res.json({ error: 'Package information not found' });
+             return ({ error: 'Package information not found' });
          }
          if(subscriptionInfo){
-            return res.status(200).json({ message: 'Already Exist' });
+            return ({ message: 'Already Exist' });
          }
          if (userInfo && !subscriptionInfo) {
              //insert into Subscription model

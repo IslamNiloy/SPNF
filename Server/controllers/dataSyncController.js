@@ -181,9 +181,6 @@ const associateContactToDeal = async (objectId,toObjectId) => {
       }
     ];
 
-
-  
-
     // Call the HubSpot API to create the association
     const apiResponse = await hubspotClient.crm.associations.v4.basicApi.create(objectType, objectId, toObjectType, toObjectId, AssociationSpec);
     
