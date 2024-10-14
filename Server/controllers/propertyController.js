@@ -35,7 +35,7 @@ async function createProperties(accessToken) {
     for (const property of propertiesToCreate) {
       try {
         const apiResponse = await hubspotClient.crm.properties.coreApi.create(objectType, property);
-        console.log(`Property ${property.name} created:`, JSON.stringify(apiResponse, null, 2));
+        // console.log(`Property ${property.name} created:`, JSON.stringify(apiResponse, null, 2));
       } catch (e) {
         if (e.code === 409) {
           console.log(`Property ${property.name} already exists.`);

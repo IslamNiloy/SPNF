@@ -282,7 +282,7 @@ exports.update_Payment_Info = async (chargeData, extraChargeData, packageID, por
     );
     await insertIntoSubscriptionAfterPayment(packageID,paymentUpdate.user);
     //await updateUserInfoAfterPayment(portalID, extraChargeData);
-    console.log(paymentUpdate);
+    // console.log(paymentUpdate);
     return paymentUpdate;
     
   } catch (error) {
@@ -323,7 +323,7 @@ exports.get_payment_info_user = async (req,res) => {
   logger.info("Logging at /get_payment_info_user" + JSON.stringify(req.params.portalID));
   try{
     const payment_Info = await PaymentModel.findOne({ portalID:req.params.portalID }).sort({ createdAt: -1 });
-    console.log("Logging at /get_payment_info_user: "+ JSON.stringify(payment_Info));
+    // console.log("Logging at /get_payment_info_user: "+ JSON.stringify(payment_Info));
     res.json((payment_Info));
   }catch (error){
     res.send(error);

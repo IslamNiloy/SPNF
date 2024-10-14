@@ -33,7 +33,7 @@ let update_Package_Details = async (inputData) => {
                 upsert: true, // Insert the document if it does not exist
             }
         );
-        console.log('Document upserted in Mongo:', updatedPackage);
+        // console.log('Document upserted in Mongo:', updatedPackage);
         return res.status(200).json({ updateData });
     } catch (error) {
         console.error('Error inserting document:', error);
