@@ -91,7 +91,7 @@ const syncDeal = async (subscription) => {
         // Now define dealData
         const dealData = {
         properties: {
-          dealname: `Phone Number formatter - ${packageData.packageName} - ${user.companyName}`,
+          dealname: `Phone Number formatter - ${user.uiDomain} - ${packageData.packageName}`,
           amount: payment.totalAmount || 0,
           dealstage: '727679696',
           pipeline: 'hs-eco-trx-pipeline',
