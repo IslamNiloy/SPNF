@@ -5,6 +5,7 @@ import { paymentInfoByEmail } from '../../../action/paymentAction';
 import CancelModal from '../CancelModal';
 import './SubscriptionInfo.css'; // Import the CSS file
 import PricingCards from '../../proposedPackage/PricingCard';
+import { ScrollLink } from 'react-scroll';
 
 const SubscriptionInfo = () => {
   const [showPopup, setshowPopup] = useState(false);
@@ -34,6 +35,12 @@ const SubscriptionInfo = () => {
 
     const toggleplanChange = () => {
       setChangePlan(!changePlan); // Toggles the state between true and false
+      if(changePlan == false){
+        window.scrollBy({
+          top: 600, // Adjust this value to scroll down more or less
+          behavior: 'smooth',
+        });
+      }
     };
   
 
@@ -131,7 +138,14 @@ const SubscriptionInfo = () => {
                         : "Package not found"}</li>
             <li>✔ All Countries</li>
           </ul>
-          <button className="change-plan-btn" onClick={toggleplanChange}>Change Plan</button>
+     
+            <button className="change-plan-btn" onClick={toggleplanChange}>
+       
+              Change Plan
+    
+              </button>
+       
+          
           {status == "cancelled" || packageName == "Free"?
             <></>:
             status && apiCallLimit!=0 && (
@@ -214,7 +228,7 @@ const SubscriptionInfo = () => {
     </section>
 
 {changePlan &&
-  <PricingCards/>
+  <PricingCards id="toggleplanChangeOptions"/>
 }
 </div>
   );
