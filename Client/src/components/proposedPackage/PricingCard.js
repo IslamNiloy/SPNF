@@ -168,16 +168,16 @@ const PricingCard = ({ id, planName, monthlyPrice, yearlyPrice, limit, countries
               }
             </span>
             <span className="price-duration">
-              {planName !== 'Custom' ? (isMonthly ? ' /month' : 
-                planName=="Free"? ' /month':
-                ' /year') : ''}
+              {planName !== 'Custom' ? (isMonthly ? ' /month' :
+                planName == "Free" ? ' /month' :
+                  ' /year') : ''}
             </span>
             <hr style={{ color: "#001B3440" }} />
           </div>
           <ul className="plan-features">
             <li style={{ color: "#200335" }}><span style={{ color: "#66CD51" }}>✔ </span> Actions {limit}
-              {planName !== 'Custom' && planName !=="Free" ? (isMonthly ? '/month' : '/year') : ''}
-              {planName == "Free" && ('/month') }
+              {planName !== 'Custom' && planName !== "Free" ? (isMonthly ? '/month' : '/year') : ''}
+              {planName == "Free" && ('/month')}
             </li>
             <li style={{ color: "#200335" }}><span style={{ color: "#66CD51" }}>✔ </span> {countries}</li>
           </ul>
@@ -208,7 +208,7 @@ const PricingCard = ({ id, planName, monthlyPrice, yearlyPrice, limit, countries
                   ) :
                   (endDate != "" && today > endDate &&
                     UserPackageName == "Free" &&
-                    UserPackageName != "Installation Package") ?
+                    UserPackageName != "None") ?
                     (
                       <Link to='/profile'>
                         <button className={`plan-button ${isChosen ? 'chosen' : ''}`}>
@@ -226,14 +226,14 @@ const PricingCard = ({ id, planName, monthlyPrice, yearlyPrice, limit, countries
                       :
                       (status == "cancelled" &&
                         (UserPackageName == "Pro" || UserPackageName == "Enterprise" || /custom/i.test(UserPackageName)
-                          && UserPackageName != "Installation Package")
+                          && UserPackageName != "None")
                         && UserPackageName == "Free"
                         && parseInt(apiCallCount) < parseInt(limit)
                         && today < endDate
-                        && UserPackageName != "Installation Package"
+                        && UserPackageName != "None"
                       )
                         ||
-                        (endDate > today && UserPackageName == "Free" && UserPackageName != "Installation Package"
+                        (endDate > today && UserPackageName == "Free" && UserPackageName != "None"
                           && status != "cancelled" && parseInt(apiCallCount) < parseInt(limit))
                         ?
                         (
@@ -245,9 +245,9 @@ const PricingCard = ({ id, planName, monthlyPrice, yearlyPrice, limit, countries
                         ) :
                         (status == "cancelled"
                           && UserPackageName != "Free"
-                          && UserPackageName != "Installation Package") ||
+                          && UserPackageName != "None") ||
                           (status == "cancelled" && apiCallCount < 100
-                            && endDate > today && UserPackageName != "Installation Package")
+                            && endDate > today && UserPackageName != "None")
                           ?
                           (
                             <>
@@ -261,7 +261,7 @@ const PricingCard = ({ id, planName, monthlyPrice, yearlyPrice, limit, countries
                           (status != "cancelled" &&
                             status != "" &&
                             UserPackageName != "Free" &&
-                            UserPackageName != "Installation Package") ?
+                            UserPackageName != "None") ?
                             (
                               <>
                                 <button className={`plan-button ${isChosen ? 'chosen' : ''}`} onClick={handleCancelSubscription}>
