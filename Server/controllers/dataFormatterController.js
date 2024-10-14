@@ -205,7 +205,7 @@ const checkPhoneNumber = (phoneNumber, country) => {
   if (country) {
     const countryCode = getCountryCode(country, null)
     if (countryCode !== undefined && parsedNumber) {
-      console.log(countryCode)
+      // console.log(countryCode)
       if (parsedNumber.country != countryCode) {
         return 'Country Mismatch';
       }
@@ -302,15 +302,15 @@ const updateContactProperty = async (propertyName, value, contactId, token, req,
       }
     );
 
-    console.log('Contact updated:', response.data);
+    // console.log('Contact updated:', response.data);
   } catch (error) {
     if (error.response && error.response.data.category === 'EXPIRED_AUTHENTICATION') {
-      console.log('Token expired, refreshing access token...');
+      // console.log('Token expired, refreshing access token...');
       try {
         req.session.refresh_token = refresh_token;
         const newTokenData = await refreshAccessToken(req);
 
-        console.log('Retrying with new access token...');
+        // console.log('Retrying with new access token...');
         const retryResponse = await axios.patch(`https://api.hubapi.com/crm/v3/objects/contacts/${contactId}`,
           {
             properties: {
@@ -325,7 +325,7 @@ const updateContactProperty = async (propertyName, value, contactId, token, req,
           }
         );
 
-        console.log('Contact updated on retry:', retryResponse.data);
+        // console.log('Contact updated on retry:', retryResponse.data);
       } catch (refreshError) {
         console.error('Error refreshing token:', refreshError.response ? refreshError.response.data : refreshError.message);
       }
@@ -338,15 +338,15 @@ const updateContactProperty = async (propertyName, value, contactId, token, req,
 
 ///////////////TEST ROUTE///////////////////////////
 exports.test = async (req, res) => {
-  console.log(req.body)
+  // console.log(req.body)
   res.status(200).json({ message: 'Test Route', "REQBODY": req.body });
 }
 ///////////////TEST ROUTE END/////////////////////////
 
 
 exports.removeAllCache = async() =>{
-  console.log(
-    "removing CheckPhoneNumberCallCache" + JSON.stringify(CheckPhoneNumberCallCache)
-  );
+//   console.log(
+//     "removing CheckPhoneNumberCallCache" + JSON.stringify(CheckPhoneNumberCallCache)
+//   );
   CheckPhoneNumberCallCache.clear();
 }

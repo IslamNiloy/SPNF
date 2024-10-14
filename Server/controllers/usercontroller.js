@@ -5,7 +5,7 @@ const { getAccessToken, isAuthorized, getContact, getAccountInfo } = require('..
 exports.insertIntoUser = async (user_info) => {
     try { 
         const userInfo = await User.findOne({ portalID: user_info.hub_id});
-        console.log("exist:",user_info)
+        // console.log("exist:",user_info)
         if (userInfo) {
             // If the user exists, update their information
             userInfo.name = user_info.name || "";
@@ -66,7 +66,7 @@ exports.profile = async (req, res) => {
 
 exports.getUserByID = async (req, res) => {
     const userId = req.params.id; // Get the user ID from the URL parameter
-    console.log(req.params);
+    // console.log(req.params);
     const userInfo = await User.findOne({ _id: userId }); // Find the user by ID
     if (!userInfo) {
         return res.status(404).json({ error: 'User not found' });
@@ -102,7 +102,7 @@ exports.updateUserInfoAfterPayment = async(portalID, chargeData) => {
 }
 //user/update
 exports.updateUser = async (req, res) => {
-    console.log(req.body);
+    // console.log(req.body);
     try {
         const userInfoUpDate = await User.findOneAndUpdate(
             { portalID: req.body.portalID },

@@ -9,7 +9,7 @@ const logger = require('../utils/logger');
 const hubspotClient = new Client({ accessToken: process.env.HS_API_KEY });
 
 const syncDeal = async (subscription) => {
-    console.log("Pulling data from MongoDB");
+    // console.log("Pulling data from MongoDB");
     let contact_id;
     try {
       const user = await User.findById(subscription.user);
@@ -73,7 +73,7 @@ const syncDeal = async (subscription) => {
         after: 0,
       });
 
-      console.log("search Response : " + JSON.stringify(searchResponse));
+      // console.log("search Response : " + JSON.stringify(searchResponse));
       contact_id = searchResponse?.results[0]?.id;
       if (searchResponse.total == 0  && !user.email.includes('@hubxpert.com')) {
         // No contact found, so create a new contact
@@ -85,7 +85,7 @@ const syncDeal = async (subscription) => {
           },
         });
         contact_id = createResponse.id
-        console.log('New contact created:', createResponse.id);
+        // console.log('New contact created:', createResponse.id);
       } 
 
         // Now define dealData
@@ -121,14 +121,14 @@ const syncDeal = async (subscription) => {
           pf_lifetime_api_call_count: lifetimeFormattedApiCallCount + lifetimeCheckingApiCallCount
         }
       };
-      console.log("---------------------- deal Data",dealData)
+      // console.log("---------------------- deal Data",dealData)
     
       if (subscription.hubspotDealId) {
         await hubspotClient.crm.deals.basicApi.update(subscription.hubspotDealId, dealData);
         if (contact_id && subscription.hubspotDealId){
           associateContactToDeal( subscription.hubspotDealId, contact_id);
         }
-        console.log(`Updated HubSpot deal for subscription ID: ${subscription._id}`);
+        // console.log(`Updated HubSpot deal for subscription ID: ${subscription._id}`);
         logger.info(`Updated HubSpot deal for subscription ID: ${subscription._id}`);
       } else {
 
@@ -140,7 +140,7 @@ const syncDeal = async (subscription) => {
   
         subscription.hubspotDealId = hubspotDealId;
         await subscription.save();
-        console.log(`Created HubSpot deal for subscription ID: ${subscription._id}`);
+        // console.log(`Created HubSpot deal for subscription ID: ${subscription._id}`);
         logger.info(`Created HubSpot deal for subscription ID: ${subscription._id}`);
       }
     } catch (error) {
@@ -151,13 +151,13 @@ const syncDeal = async (subscription) => {
 
 const processStart = async() => {
     try {
-      console.log('start')
+      // console.log('start')
         const subscriptions = await Subscription.find().populate(['user','package']).exec();
         // console.log(subscriptions)
         for (const subscription of subscriptions) {
           await syncDeal(subscription);
         }
-        console.log('Cron job completed: All subscriptions synced to HubSpot');
+        // console.log('Cron job completed: All subscriptions synced to HubSpot');
       } catch (error) {
         console.error('Error in cron job:', error);
         logger.info('Error in cron job:', error);
@@ -188,7 +188,7 @@ const associateContactToDeal = async (objectId,toObjectId) => {
     const apiResponse = await hubspotClient.crm.associations.v4.basicApi.create(objectType, objectId, toObjectType, toObjectId, AssociationSpec);
     
     // Log the API response
-    console.log("haskdj"+ JSON.stringify(apiResponse, null, 2));
+    // console.log("haskdj"+ JSON.stringify(apiResponse, null, 2));
   } catch (e) {
     // Handle errors
     if (e.message === 'HTTP request failed') {
