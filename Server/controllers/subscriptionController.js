@@ -5,7 +5,7 @@ const packagesModel = require('../model/packages.model');
 const logger = require('../utils/logger');
 const ModelPayment = require('../model/payment.model');
 const userModel = require('../model/user.model');
-
+const { syncDeal } = require('./dataSyncController');
 
 exports.insertIntoSubscriptionAfterPayment = async (packageID, userID) => {
     try{
@@ -23,7 +23,8 @@ exports.insertIntoSubscriptionAfterPayment = async (packageID, userID) => {
          else if(packageInfo.subscription == 'yearly'){
             endDate.setDate(startDate.getDate() + 365);
          }
- 
+         
+         await syncDeal(subscriptionInfo);
        
          if (!userInfo) {
              logger.error("User not found");
