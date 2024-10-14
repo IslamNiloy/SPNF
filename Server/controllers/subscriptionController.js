@@ -33,7 +33,6 @@ exports.insertIntoSubscriptionAfterPayment = async (packageID, userID) => {
              return ({ error: 'Package information not found' });
          }
          if(subscriptionInfo){
-            await syncDeal(subscriptionInfo);
             this.updateSubscriptionInfo(userInfo._id,packageID);
          }
          if (userInfo && !subscriptionInfo) {
@@ -92,6 +91,8 @@ exports.insertIntoSubscriptionAfterPayment = async (packageID, userID) => {
             },
             { new: true } 
           );
+
+          await syncDeal(subscriptionUpDate);
         //   logger.info("Subscription information updated for user: "+ userID);
           return subscriptionUpDate;
   }
