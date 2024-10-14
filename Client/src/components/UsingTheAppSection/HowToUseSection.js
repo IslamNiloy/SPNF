@@ -53,22 +53,8 @@ const HowToUseSection = () => {
         </div>
 
         <div className="video-container">
-          {/* <iframe
-            width="100%"
-            height="315"
-            src="https://www.youtube.com/embed/your-video-id"
-            title="How to use the app"
-            frameBorder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-          ></iframe> */}
-
-
-          
-<div >
-  
-  <iframe src="https://www.loom.com/embed/c9c1cb78ccee4d21b464a4df01575d03?sid=70aef422-9e50-4c2f-9631-c36afc9a1182" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe></div>
-        </div>
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/oLSVMLAtBto?si=qBLa4jOumErXLoAM" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+          </div>
       </section>
     </div>
   );

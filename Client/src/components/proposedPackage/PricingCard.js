@@ -176,7 +176,8 @@ const PricingCard = ({ id, planName, monthlyPrice, yearlyPrice, limit, countries
           </div>
           <ul className="plan-features">
             <li style={{ color: "#200335" }}><span style={{ color: "#66CD51" }}>✔ </span> Actions {limit}
-              {planName !== 'Custom' ? (isMonthly ? '/month' : '/year') : ''}
+              {planName !== 'Custom' && planName !=="Free" ? (isMonthly ? '/month' : '/year') : ''}
+              {planName == "Free" && ('/month') }
             </li>
             <li style={{ color: "#200335" }}><span style={{ color: "#66CD51" }}>✔ </span> {countries}</li>
           </ul>
