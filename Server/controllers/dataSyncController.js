@@ -116,6 +116,7 @@ const syncDeal = async (subscription) => {
           pf_total_payment_amount: payment.totalAmount || 0,
           pf_payment_email_list: paymentEmailList || '',
           pf_subscription_status: payment.status,
+          pf_company_domain: user.uiDomain || '',
           pf_api_call_count: formattedApiCallCount + checkingApiCallCount,
           pf_lifetime_api_call_count: lifetimeFormattedApiCallCount + lifetimeCheckingApiCallCount
         }

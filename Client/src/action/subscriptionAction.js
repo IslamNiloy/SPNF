@@ -24,7 +24,7 @@ export const insertIntoSubscriptionCollection = (portalID,packageID) => async (d
   export const subscriptionInfoByID = (portalID) => async (dispatch) => {
     dispatch({ type: GET_BY_ID_SUBSCRIPTION_REQUEST, payload: { portalID } });
     try {
-      console.log("subscriptionInfoByID------------" + portalID);
+      //console.log("subscriptionInfoByID------------" + portalID);
   
       // Include portalID in the query string
       const { data } = await Axios.get(`${BackendAPI}/subscribe/getSubscription`, {

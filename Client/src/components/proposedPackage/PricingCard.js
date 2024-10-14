@@ -169,15 +169,15 @@ const PricingCard = ({ id, planName, monthlyPrice, yearlyPrice, limit, countries
             </span>
             <span className="price-duration">
               {planName !== 'Custom' ? (isMonthly ? ' /month' :
-                planName == "Free" ? ' /month' :
+              
                   ' /year') : ''}
             </span>
             <hr style={{ color: "#001B3440" }} />
           </div>
           <ul className="plan-features">
             <li style={{ color: "#200335" }}><span style={{ color: "#66CD51" }}>✔ </span> Actions {limit}
-              {planName !== 'Custom' && planName !== "Free" ? (isMonthly ? '/month' : '/year') : ''}
-              {planName == "Free" && ('/month')}
+              {planName !== 'Custom' ? (isMonthly ? '/month' : '/year') : ''}
+       
             </li>
             <li style={{ color: "#200335" }}><span style={{ color: "#66CD51" }}>✔ </span> {countries}</li>
           </ul>

@@ -24,8 +24,6 @@ exports.insertIntoSubscriptionAfterPayment = async (packageID, userID) => {
             endDate.setDate(startDate.getDate() + 365);
          }
          
-         await syncDeal(subscriptionInfo);
-       
          if (!userInfo) {
              logger.error("User not found");
              return res.status(404).json({ error: 'User not found' });
@@ -35,8 +33,8 @@ exports.insertIntoSubscriptionAfterPayment = async (packageID, userID) => {
              return res.json({ error: 'Package information not found' });
          }
          if(subscriptionInfo){
-
-             this.updateSubscriptionInfo(userInfo._id,packageID);
+            await syncDeal(subscriptionInfo);
+            this.updateSubscriptionInfo(userInfo._id,packageID);
          }
          if (userInfo && !subscriptionInfo) {
              //insert into Subscription model
