@@ -41,7 +41,7 @@ exports.customUserCreatePrice = async (req,res) => {
             })
             await package_modelInsertion.save();
           }else{
-            logger.info(`Custom price ${req.body.price } found in priceModel`);
+            // logger.info(`Custom price ${req.body.price } found in priceModel`);
           }
 
         if(!userInfofound){
@@ -60,7 +60,7 @@ exports.customUserCreatePrice = async (req,res) => {
           })
           await user_Insertion.save();
         }else{
-          logger.info(`User information already in mongoDB for custom user ${req.body.portalID} and price: ${req.body.price}`);
+          // logger.info(`User information already in mongoDB for custom user ${req.body.portalID} and price: ${req.body.price}`);
         }
 
         //create subscription in custom
@@ -81,7 +81,7 @@ exports.customUserCreatePrice = async (req,res) => {
           })
           await subscription_modelInsertion.save();
         }else{
-          logger.info(`Custom price ${req.body.price } found in user Model, updating subsctiption data`);
+          // logger.info(`Custom price ${req.body.price } found in user Model, updating subsctiption data`);
           await subscriptionModel.findOneAndUpdate(
             { user: findUser._id},
             { $set:
@@ -95,7 +95,7 @@ exports.customUserCreatePrice = async (req,res) => {
             },
             { new: true } 
           );
-          logger.info("Subscription information updated for user: "+ req.body.portalID);
+          // logger.info("Subscription information updated for user: "+ req.body.portalID);
         }
         const payment_Info = await paymentModel.findOne({portalID: req.body.portalID});
 
@@ -157,7 +157,7 @@ exports.customUserCreatePrice = async (req,res) => {
         }
         
          //create payment information for custom
-        logger.info("Insert data in package_model and stripe_insertion for custom user price: "+ req.body.price);
+        // logger.info("Insert data in package_model and stripe_insertion for custom user price: "+ req.body.price);
         res.send("custom user created");
     }catch (err){
       res.status(400).send({ error: err.message });

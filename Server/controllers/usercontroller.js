@@ -22,7 +22,7 @@ exports.insertIntoUser = async (user_info) => {
 
             // Save the updated user
             await userInfo.save();
-            logger.info("user data inserted to mongo", User);
+            // logger.info("user data inserted to mongo", User);
             return userInfo;
         }
         else{
@@ -77,7 +77,7 @@ exports.getUserByID = async (req, res) => {
 
 exports.updateUserInfoAfterPayment = async(portalID, chargeData) => {
     try{
-        logger.info("--------in updateUserInfoAfterPayment 28 AUG====="+ JSON.stringify(chargeData));
+        // logger.info("--------in updateUserInfoAfterPayment 28 AUG====="+ JSON.stringify(chargeData));
         const userInfoUpDate = await User.findOneAndUpdate(
             { portalID: portalID },
             {
@@ -95,7 +95,6 @@ exports.updateUserInfoAfterPayment = async(portalID, chargeData) => {
             return 'User not found';
         }
         //return res.redirect("http://localhost:3000")
-        
         return userInfoUpDate;
     }catch(error){
         return error;

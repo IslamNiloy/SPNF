@@ -12,7 +12,7 @@ const { updateUserInfoAfterPayment } = require('../usercontroller');
 const endpointSecret = process.env.webhookEndpoint;
 
 let stripeWebhook = async (request, response) => {
-  console.log("logging at webhook");
+//   console.log("logging at webhook");
     const sig = request.headers[ 'stripe-signature' ];
     let event;
     try {
@@ -22,7 +22,7 @@ let stripeWebhook = async (request, response) => {
     switch (event.type) {
       case 'checkout.session.completed':
         const checkout_session_completed_data = event.data.object;
-        console.log("\t logging checkout.session.completed ");
+        // console.log("\t logging checkout.session.completed ");
         //console.log(checkout_session_completed_data);
         let custom_fields_array = checkout_session_completed_data.custom_fields;
         //console.log(custom_fields_array);
@@ -39,7 +39,7 @@ let stripeWebhook = async (request, response) => {
         STRIPE_DATA_DB.packageId = sessionsCompleted.metadata.packageId;
 
         if(checkout_session_completed_data.amount_total == 0){
-            console.log();
+            // console.log();
             await updateUserInfoAfterPayment(STRIPE_DATA_DB.portalId, STRIPE_DATA_DB);
         }
 
@@ -131,7 +131,7 @@ let stripeWebhook = async (request, response) => {
     break;
    // ... handle other event types
       default:
-          console.log(`Unhandled event type ${event.type}`);
+        //   console.log(`Unhandled event type ${event.type}`);
   }
 // Return a 200 response to acknowledge receipt of the event
   response.send();

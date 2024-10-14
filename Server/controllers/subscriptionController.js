@@ -52,7 +52,7 @@ exports.insertIntoSubscriptionAfterPayment = async (packageID, userID) => {
                  hubspotDealId: ""
              });
              await subscribe.save();
-             logger.info("Insert data in subscription model");
+            //  logger.info("Insert data in subscription model");
          }
      }catch(error){
          logger.info('Error in insertIntoSubscription: '+ error);
@@ -74,7 +74,7 @@ exports.insertIntoSubscriptionAfterPayment = async (packageID, userID) => {
             endDate.setDate(startDate.getDate() + 365);
          }
       
-        logger.info("package information in updateSubscriptionInf: " + package_info);
+        // logger.info("package information in updateSubscriptionInf: " + package_info);
 
         if(package_info.packageName == "Free" && current_subscription_info.package != "66dac9dd4ffd1188c309c0d4"){
             return ("You are not able to take free subscription again");
@@ -92,7 +92,7 @@ exports.insertIntoSubscriptionAfterPayment = async (packageID, userID) => {
             },
             { new: true } 
           );
-          logger.info("Subscription information updated for user: "+ userID);
+        //   logger.info("Subscription information updated for user: "+ userID);
           return subscriptionUpDate;
   }
 
@@ -131,9 +131,9 @@ exports.insertIntoSubscriptionAfterPayment = async (packageID, userID) => {
 //subscribe/getSubscriptionDetails
   exports.getSubscription = async (req, res) => {
        try{
-        logger.info("----portalID in /subscribe/getSubscriptionDetails: "+ JSON.stringify(req.query.portalID));
+        // logger.info("----portalID in /subscribe/getSubscriptionDetails: "+ JSON.stringify(req.query.portalID));
         const userInfo = await User.findOne( {portalID:req.query.portalID});
-        logger.info("----portalID in /subscribe/getSubscriptionDetails: "+ JSON.stringify(userInfo));
+        // logger.info("----portalID in /subscribe/getSubscriptionDetails: "+ JSON.stringify(userInfo));
         if (!userInfo) {
             return res.status(404).json({ error: 'User not found' });
         }
@@ -141,7 +141,7 @@ exports.insertIntoSubscriptionAfterPayment = async (packageID, userID) => {
         if (!subscriptionInfo) {
             return res.status(404).json({ error: 'You have not subscribed yet' });
         }
-        logger.info("----portalID in /subscribe/getSubscriptionDetails: "+ JSON.stringify(subscriptionInfo));
+        // logger.info("----portalID in /subscribe/getSubscriptionDetails: "+ JSON.stringify(subscriptionInfo));
         return res.send(subscriptionInfo);
         }catch(error){
             return res.status(404).json(error);
@@ -180,9 +180,9 @@ const updateSubsAutoInfo = async(subscriptionObj) =>{
         const endDate = new Date();
         endDate.setDate(startDate.getDate() + 30);
         const findsubscripedUserDetails = await userModel.findOne({_id : subscriptionObj.user})
-        logger.info("---findsubscripedUserDetails---"+findsubscripedUserDetails.email)
+        // logger.info("---findsubscripedUserDetails---"+findsubscripedUserDetails.email)
         const paymentInfoByEmail = await ModelPayment.findOne({email: findsubscripedUserDetails.email}).sort({ createdAt: -1 });
-        logger.info("---paymentInfoByEmail---"+paymentInfoByEmail)
+        // logger.info("---paymentInfoByEmail---"+paymentInfoByEmail)
         if(paymentInfoByEmail.status == "cancelled"){
             const freePackageInfo = await packagesModel.findOne({packageName: "Free"})
             await Subscription.findOneAndUpdate(
@@ -198,7 +198,7 @@ const updateSubsAutoInfo = async(subscriptionObj) =>{
                 },
                 { new: true } 
               );
-              logger.info("switched to Free package, Information updated on :" + startDate);
+            //   logger.info("switched to Free package, Information updated on :" + startDate);
         }else{
             await Subscription.findOneAndUpdate(
                 { _id: subscriptionObj._id},
@@ -212,7 +212,7 @@ const updateSubsAutoInfo = async(subscriptionObj) =>{
                 },
                 { new: true } 
               );
-              logger.info("Your package updated on :" + startDate);
+            //   logger.info("Your package updated on :" + startDate);
         }
           return paymentInfoByEmail;
     }catch (error){
@@ -229,8 +229,8 @@ exports.insertIntoSubscription = async (req, res) => {
         const startDate = new Date();
         const endDate = new Date();
         //endDate.setDate(startDate.getDate() + 30);
-        logger.info("PackageID in insertIntoSubscription packageID-------:"+ req.body.packageID)
-        logger.info("PackageID in insertIntoSubscription portalID-------:"+ req.body.portalID)
+        // logger.info("PackageID in insertIntoSubscription packageID-------:"+ req.body.packageID)
+        // logger.info("PackageID in insertIntoSubscription portalID-------:"+ req.body.portalID)
 
         const userInfo = await User.findOne( {portalID: req.body.portalID});
         const packageInfo = await packagesModel.findOne( {_id: req.body.packageID});
@@ -285,7 +285,7 @@ exports.insertIntoSubscription = async (req, res) => {
          const subscriptionInfo = await Subscription.findOne( {user: userInfo._id});
 
          if (!userInfo) {
-             logger.error("User not found");
+            //  logger.error("User not found");
              return res.status(404).json({ error: 'User not found' });
          }
          else if (!packageInfo) {
@@ -311,7 +311,7 @@ exports.insertIntoSubscription = async (req, res) => {
                  hubspotDealId: ""
              });
              await subscribe.save();
-             logger.info("Insert data in subscription model");
+            //  logger.info("Insert data in subscription model");
          }
      }catch(error){
          logger.info('Error in insertIntoSubscription: '+ error);

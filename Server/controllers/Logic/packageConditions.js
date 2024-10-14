@@ -87,7 +87,7 @@ exports.updateAPICount = async (portalID) => {
           const user = await User.findOne({ portalID: portalID });
     
           if (!user) {
-            logger.info(`User not found for portalID: ${portalID}`);
+            // logger.info(`User not found for portalID: ${portalID}`);
             continue; // Move to the next iteration if user is not found
           }
     
@@ -148,7 +148,7 @@ exports.updateAPICount = async (portalID) => {
   exports.packageCondition = async (portalID) => {
     try{
       let returningValue = {};
-      logger.info("At packageCondition");
+      // logger.info("At packageCondition");
       const user = await User.findOne( {portalID: portalID});
       // logger.info("At packageCondition user infos: "+ user);
       if (!user) {
@@ -164,7 +164,7 @@ exports.updateAPICount = async (portalID) => {
       const subscription = await Subscription.findOne( {user: user._id});
 
       const paymentInformation = await paymentModel.findOne({portalID:portalID})
-      logger.info("At packageCondition subscription infos: "+ subscription);
+      // logger.info("At packageCondition subscription infos: "+ subscription);
       //This user's package
       const user_package = await Package.findOne( {_id: subscription.package});
       const today = new Date();
@@ -183,9 +183,9 @@ exports.updateAPICount = async (portalID) => {
               },
               { new: true, upsert: false }
             );
-            logger.info("end date updated in package Condition: "+ SubscriptionUpdate);
+            // logger.info("end date updated in package Condition: "+ SubscriptionUpdate);
       }else if (today >  (subscription.packageEndDate)  && paymentInformation.status != "successed") {
-        logger.info("At packageCondition returning false date condition: "+ today + " "+ subscription.packageEndDate);
+        // logger.info("At packageCondition returning false date condition: "+ today + " "+ subscription.packageEndDate);
            returningValue = {"portalId" : portalID, 
             "totalAPICALLS" : 0, 
             "userLimit": user_package.Limit, 
@@ -193,8 +193,8 @@ exports.updateAPICount = async (portalID) => {
           return returningValue;
       }
 
-      logger.info("-----At packageCondition subscription.apiCallCount-----" + subscription.apiCallCount);
-      logger.info("-----At packageCondition user_package.Limit-----" + user_package.Limit);
+      // logger.info("-----At packageCondition subscription.apiCallCount-----" + subscription.apiCallCount);
+      // logger.info("-----At packageCondition user_package.Limit-----" + user_package.Limit);
 
       const cache_2 = apiCheckCallCache.find(entry => entry.portalId === portalID);
       let cache_2_apiCount = 0;
@@ -248,7 +248,7 @@ exports.updateAPICount = async (portalID) => {
       // //     totalAPICALLS = parseInt(subscription.apiCallCount) + parseInt(subscription.checkPhoneNumberApiCallCount);
       // //   }
       // }
-      logger.info("====totalAPICALLS in package Condition===" + totalAPICALLS);
+      // logger.info("====totalAPICALLS in package Condition===" + totalAPICALLS);
       
       if(totalAPICALLS < user_package.Limit){
         //return portalId, totalAPICALLS , user_package.Limit and canPass: true

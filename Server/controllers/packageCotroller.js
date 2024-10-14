@@ -47,7 +47,7 @@ exports.get_all_packages = async (req, res) => {
         if (!packages) {
             return res.status(404).json({ error: 'packages not found' });
         }
-        logger.info("Get All Packges:" + JSON.stringify(packages));
+        // logger.info("Get All Packges:" + JSON.stringify(packages));
     res.json(packages);
   }
 
@@ -57,7 +57,7 @@ exports.get_all_packages = async (req, res) => {
         if (!packages) {
             return res.status(404).json({ error: 'User not found' });
         }
-        logger.info("All Packges (for PaymentController):" + JSON.stringify(packages));
+        // logger.info("All Packges (for PaymentController):" + JSON.stringify(packages));
     return packages;
   }
 

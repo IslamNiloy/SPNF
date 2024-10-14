@@ -11,7 +11,7 @@ const { updateUserInfoAfterPayment } = require('./usercontroller');
 
 
 exports.createCheckoutSession = async (req, res) => {
-  logger.info("logging at /package/createCheckoutSession ");
+  // logger.info("logging at /package/createCheckoutSession ");
   const packageId = req.params.id;
   const portalID = req.params.portalID;
   const selectedPackage = await packagesModel.findOne({_id: req.params.id}); //getting information from mongodb packageModel
@@ -129,7 +129,7 @@ exports.createCheckoutSession = async (req, res) => {
       await zeroDollarInfo(session,portalID,packageId);
     }
 
-    logger.info("-------Session whole -----------" + JSON.stringify(session));
+    // logger.info("-------Session whole -----------" + JSON.stringify(session));
     
     res.redirect(303, session.url);
   } catch (error) {
@@ -140,7 +140,7 @@ exports.createCheckoutSession = async (req, res) => {
 
 exports.insertIntoPayment = async (user_data) => {
   try{
-    logger.info("insert into payment----insertIntoPayment: " + JSON.stringify(user_data));
+    // logger.info("insert into payment----insertIntoPayment: " + JSON.stringify(user_data));
     
     const existingPayment = await PaymentModel.findOne({
       user: user_data._id,
@@ -148,7 +148,7 @@ exports.insertIntoPayment = async (user_data) => {
     });
 
     if (existingPayment) {
-      logger.info("Payment record already Created for user: " + user_data._id);
+      // logger.info("Payment record already Created for user: " + user_data._id);
       return; // Exit the function without creating a new record
     }
 
@@ -167,7 +167,7 @@ exports.insertIntoPayment = async (user_data) => {
 //code stripe main ends
 exports.charge = async (charge_data) => {
 try{
-  logger.info("--------getting information from stripe---------" + charge_data);
+  // logger.info("--------getting information from stripe---------" + charge_data);
   /*
   usa case: logged out user changing pro to enterprise
     1. find all payments history from mongoDB of email ID
@@ -175,8 +175,8 @@ try{
     3. cancel stripe subscription as well using the email address
   */
   const paymentInfoByEmail = await PaymentModel.findOne({email: charge_data.email}).sort({ createdAt: -1 });
-  logger.info("---paymentInfoByEmail in charge function---" + paymentInfoByEmail);
-  logger.info("----Information in Charge (stripe information)----" + charge_data)
+  // logger.info("---paymentInfoByEmail in charge function---" + paymentInfoByEmail);
+  // logger.info("----Information in Charge (stripe information)----" + charge_data)
   if(paymentInfoByEmail){
     
     const paymentInfoUpdate = await PaymentModel.findOneAndUpdate(
@@ -190,8 +190,8 @@ try{
       { new: true } 
     );
     
-    logger.info("All previous Subscriptions has been cancelled for user: "+ charge_data.email+ "paymentInfoUpdate: "+ paymentInfoUpdate);
-    logger.info("Calling ${BACKEND_URL}/charge/cancel/${charge_data.email} in charge function");
+    // logger.info("All previous Subscriptions has been cancelled for user: "+ charge_data.email+ "paymentInfoUpdate: "+ paymentInfoUpdate);
+    // logger.info("Calling ${BACKEND_URL}/charge/cancel/${charge_data.email} in charge function");
     //next subscription cancel in stripe
     await axios.get(`${process.env.BACKEND_URL}/charge/cancel/${charge_data.email}`);
   }
@@ -202,8 +202,8 @@ try{
     charge_data
   );
     await transaction.save();
-    logger.info("---insertion in payment Model: "+ transaction);
-    logger.info("Payment info saved with global.stripeEmail (stripe information)===== " + global.stripeEmail)
+    // logger.info("---insertion in payment Model: "+ transaction);
+    // logger.info("Payment info saved with global.stripeEmail (stripe information)===== " + global.stripeEmail)
   } catch (error) {
     logger.info("error in Charge function in paymentController: " + error)
   }
@@ -218,9 +218,9 @@ exports.cancel_subscription = async(req,res) =>{
     }
     const chargeInfo = await stripe.invoices.retrieve(paymentInfo.invoice_id);
     const subscriptionCancel = await stripe.subscriptions.cancel(chargeInfo.subscription);
-    logger.info("------------cancel_subscription paymentInfo-----------"+paymentInfo);
-    logger.info("------------cancel_subscription subscriptionCancel-----------"+subscriptionCancel);
-    logger.info("------------cancel_subscription chargeInfo-----------"+chargeInfo);
+    // logger.info("------------cancel_subscription paymentInfo-----------"+paymentInfo);
+    // logger.info("------------cancel_subscription subscriptionCancel-----------"+subscriptionCancel);
+    // logger.info("------------cancel_subscription chargeInfo-----------"+chargeInfo);
     await updatePaymentSuccessCancel(req,res,paymentInfo._id);
     res.send(subscriptionCancel);
   }catch(error){
@@ -232,9 +232,9 @@ exports.cancel_subscription = async(req,res) =>{
 
 exports.update_Payment_Info = async (chargeData, extraChargeData, packageID, portalID) => {
   try {
-    logger.info("Information in update_Payment_Info=====:::" + JSON.stringify(chargeData));
-    logger.info("Information in update_Payment_Info=====:::extraChargeDataextraChargeData" + JSON.stringify(extraChargeData));
-    logger.info("Information in update_Payment_Info=====:::" + portalID);
+    // logger.info("Information in update_Payment_Info=====:::" + JSON.stringify(chargeData));
+    // logger.info("Information in update_Payment_Info=====:::extraChargeDataextraChargeData" + JSON.stringify(extraChargeData));
+    // logger.info("Information in update_Payment_Info=====:::" + portalID);
     
     const payment_Info = await PaymentModel.findOne({portalID: portalID});
     if (!payment_Info) {
@@ -320,7 +320,7 @@ const zeroDollarInfo = async(session, portalID,packageId) =>{
 }
 
 exports.get_payment_info_user = async (req,res) => {
-  logger.info("Logging at /get_payment_info_user" + JSON.stringify(req.params.portalID));
+  // logger.info("Logging at /get_payment_info_user" + JSON.stringify(req.params.portalID));
   try{
     const payment_Info = await PaymentModel.findOne({ portalID:req.params.portalID }).sort({ createdAt: -1 });
     // console.log("Logging at /get_payment_info_user: "+ JSON.stringify(payment_Info));
@@ -331,7 +331,7 @@ exports.get_payment_info_user = async (req,res) => {
 }
 
 const updatePaymentSuccessCancel = async (req,res, id) => {
-  logger.info("Logging at /updatePaymentSuccess");
+  // logger.info("Logging at /updatePaymentSuccess");
   try {
     const payment_Info = await PaymentModel.findOne({ _id: id });
     if (!payment_Info) {
@@ -346,7 +346,7 @@ const updatePaymentSuccessCancel = async (req,res, id) => {
     },
     { new: true, upsert: false }
     );
-    logger.info("----------paymentUpdateCancel-----------"+ paymentUpdateCancel);
+    // logger.info("----------paymentUpdateCancel-----------"+ paymentUpdateCancel);
     return paymentUpdateCancel;
   } catch (error) {
     console.error('Error in update_Payment_Info:', error);
