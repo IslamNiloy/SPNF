@@ -15,15 +15,14 @@ const Testimonials = () => {
               </svg>
               </div> 
               <div className='testimonialDetails'>
-                This app has been a lifesaver for our customer service team.
-                It's so easy to use and saves us a ton of time.
+              We used to struggle with phone number formatting in HubSpot. We came to know about the app through HubXpert; they have set it up with workflow, and it was a super easy and fast process. This app does everything automatically, and it has been super convenient! If you want to enjoy this automatic process in HubSpot, this app is recommended.
               </div>
             </div>
           </p>
 
-          <p className="author-name">— Bishal Bhowmik <br/>
-           <span className="author-title">Customer Service Manager</span>
-           <span className="author-title"><br className='br-style-none-mobile'/>Systemology</span> 
+          <p className="author-name" style={{marginLeft: "65px"}}>— Jake Rheude<br/>
+           <span className="author-title">Chief Marketing Officer</span>
+           <span className="author-title"><br className='br-style-none-mobile'/>Spectra Capital</span> 
           </p>
         </div>
         
@@ -39,8 +38,7 @@ const Testimonials = () => {
           <p >
             <div className="quote-main second">
               <div className='testimonialDetails'>
-                  The phone number formatter is a must-have for anyone who deals
-                  with international phone numbers. It's accurate and reliable.
+              In HubSpot, Phone number format was a big issue for our sales team. Once we came to know about the "Smart Phone Number Formatter" app we initially implemented it on a small scale, after we saw the effectiveness of it we implemented the app fully in our system. A must have app for HubSpot.
               </div>
               <div className="quote-icon">
               <svg width="46" height="46" viewBox="0 0 54 46" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -49,9 +47,9 @@ const Testimonials = () => {
               </div> 
             </div>
           </p>
-          <p className="author-name">— Tomnoy Baidya <br/>
-           <span className="author-title">Sales Representative</span> <br/>
-           <span className="author-title">HubXpert</span> 
+          <p className="author-name">— Justin Knock <br/>
+           <span className="author-title">Senior Account Executive</span> <br/>
+           <span className="author-title">Spectra Lending</span> 
           </p>
          
         </div>
