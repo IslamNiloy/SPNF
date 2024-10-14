@@ -95,6 +95,7 @@ exports.updateUserInfoAfterPayment = async(portalID, chargeData) => {
             return 'User not found';
         }
         //return res.redirect("http://localhost:3000")
+        
         return userInfoUpDate;
     }catch(error){
         return error;

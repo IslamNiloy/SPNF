@@ -10,7 +10,7 @@ module.exports = async function handler(req, res) {
   }
 
   try {
-    console.log('Cron job started: Syncing subscriptions to HubSpot');
+    //console.log('Cron job started: Syncing subscriptions to HubSpot');
 
     // await bulk_Check_PhoneNumberApiCallCount();
     // console.log('Cron job started: bulk_Check_PhoneNumberApiCallCount');

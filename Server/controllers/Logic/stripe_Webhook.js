@@ -31,16 +31,17 @@ let stripeWebhook = async (request, response) => {
         STRIPE_DATA_DB.phoneNumber = custom_fields_array[ 2 ].text.value ? custom_fields_array[ 2 ].text.value : "";
         STRIPE_DATA_DB.email = checkout_session_completed_data.customer_details.email;
         STRIPE_DATA_DB.countryCode = checkout_session_completed_data.customer_details?.address?.country || '';
- 
-        if(checkout_session_completed_data.amount_total == 0){
-            await updateUserInfoAfterPayment(STRIPE_DATA_DB.portalId, STRIPE_DATA_DB);
-        }
-        
+         
         const sessionsCompleted = await stripe.checkout.sessions.retrieve(
           checkout_session_completed_data.id
         );
         STRIPE_DATA_DB.portalId = sessionsCompleted.metadata.portalID;
         STRIPE_DATA_DB.packageId = sessionsCompleted.metadata.packageId;
+
+        if(checkout_session_completed_data.amount_total == 0){
+            console.log();
+            await updateUserInfoAfterPayment(STRIPE_DATA_DB.portalId, STRIPE_DATA_DB);
+        }
 
         break;
       case 'payment_intent.succeeded':
