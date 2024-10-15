@@ -52,7 +52,7 @@ const syncDeal = async (subscription) => {
       const checkingApiCallCount = subscription.checkPhoneNumberApiCallCount || 0;
       const lifetimeFormattedApiCallCount = subscription.totalApiCallCount || 0;
       const lifetimeCheckingApiCallCount = subscription.checkPhoneNumberTotalApiCallCount || 0;
- 
+      const bothApiCallCount = formattedApiCallCount + checkingApiCallCount
       // console.log(dealData)
       // console.log("___________-____email:",user.email)
       const searchResponse = await hubspotClient.crm.contacts.searchApi.doSearch({
@@ -111,7 +111,7 @@ const syncDeal = async (subscription) => {
           pf_package_price: packageData.price,
           pf_package_duration: packageData.duration,
           pf_package_limit: packageData.Limit,
-          pf_remaining_api_limit: packageData.Limit - subscription.apiCallCount,
+          pf_remaining_api_limit: packageData.Limit -  bothApiCallCount,
           pf_formatted_api_call_count: formattedApiCallCount,
           pf_lifetime_formatted_api_call_count: lifetimeFormattedApiCallCount,
           pf_checking_api_call_count: checkingApiCallCount,
@@ -135,7 +135,7 @@ const syncDeal = async (subscription) => {
         if (contact_id && subscription.hubspotDealId){
           associateContactToDeal( subscription.hubspotDealId, contact_id);
         }
-        console.log(`Updated HubSpot deal for subscription ID: ${subscription._id}`);
+        // console.log(`Updated HubSpot deal for subscription ID: ${subscription._id}`);
         // logger.info(`Updated HubSpot deal for subscription ID: ${subscription._id}`);
       } else {
 
@@ -147,7 +147,7 @@ const syncDeal = async (subscription) => {
   
         subscription.hubspotDealId = hubspotDealId;
         await subscription.save();
-        console.log(`Created HubSpot deal for subscription ID: ${subscription._id}`);
+        // console.log(`Created HubSpot deal for subscription ID: ${subscription._id}`);
         // logger.info(`Created HubSpot deal for subscription ID: ${subscription._id}`);
       }
     } catch (error) {
