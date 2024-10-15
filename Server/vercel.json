@@ -31,15 +31,15 @@
   "crons": [
     {
       "path": "/api/cron",
-      "schedule": "*/5 * * * *"  
+      "schedule": "*/6 * * * *"  
     },
     {
       "path": "/api/phone_number",
-      "schedule": "*/8 * * * *"  
+      "schedule": "*/2 * * * *"  
     },
     {
       "path": "/api/check_phone_number",
-      "schedule": "*/11 * * * *"  
+      "schedule": "*/4 * * * *"  
     }
   ]
 }
