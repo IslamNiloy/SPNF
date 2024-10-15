@@ -6,6 +6,7 @@ const Subscription = require('../../model/subscription.model');
 const paymentModel = require('../../model/payment.model');
 const apiCallCache = new Map();
 // const checkphnNoCache = new Map();
+const packageConstionMainCache = [];
 
 const apiCheckCallCache = [];
 
@@ -59,6 +60,8 @@ exports.updateAPICount = async (portalID) => {
         }
 
         apiCallCache.delete(portalID);
+        packageConstionMainCache = [];
+
       }
     }catch(error){
       console.error('Error in bulkApiCallCount function:', error);
@@ -70,8 +73,6 @@ exports.updateAPICount = async (portalID) => {
     check phone number API checking codingtion starts
   */
 
- 
-    
     exports.bulk_Check_PhoneNumberApiCallCount = async () => {
       try {
         // Loop through the array in reverse to safely remove items while iterating
@@ -150,32 +151,46 @@ exports.updateAPICount = async (portalID) => {
     try{
       let returningValue = {};
       // logger.info("At packageCondition");
-      const user = await User.findOne( {portalID: portalID});
-      if (!user) {
-        // Handle case where user is not found
-        console.log("At packageCondition User not found for portalID: " + portalID);
-         returningValue = {"portalId" : portalID, 
-          "totalAPICALLS" : 0, 
-          "userLimit": user_package.Limit, 
-          "canPass": false}; 
-        return returningValue;
-      }
-      //this user's subscription subscription
-      const subscription = await Subscription.findOne( {user: user._id});
+      const isPortalInCache = packageConstionMainCache.some(item => item.portalId === portalID);
 
-      const paymentInformation = await paymentModel.findOne({portalID:portalID})
-      // logger.info("At packageCondition subscription infos: "+ subscription);
-      //This user's package
-      const user_package = await Package.findOne( {_id: subscription.package});
+        if (!isPortalInCache) {
+          const user = await User.findOne( {portalID: portalID});
+          if (!user) {
+            // Handle case where user is not found
+             returningValue = {"portalId" : portalID, 
+              "totalAPICALLS" : 0, 
+              "userLimit": user_package.Limit, 
+              "canPass": false}; 
+            return returningValue;
+          }
+    
+          //this user's subscription subscription
+          const subscription = await Subscription.findOne( {user: user._id});
+    
+          const paymentInformation = await paymentModel.findOne({portalID:portalID})
+          // logger.info("At packageCondition subscription infos: "+ subscription);
+          //This user's package
+          const user_package = await Package.findOne( {_id: subscription.package});
+
+          //pushing in the cache array
+            packageConstionMainCache.push({
+              portalId: portalID, 
+              userInfo: user, 
+              subscriptionInfo: subscription, 
+              payMentInfo: paymentInformation, 
+              packageInfo: user_package
+            });
+        } 
       const today = new Date();
+      console.log("packageConstionMainCache =====>"+ JSON.stringify(packageConstionMainCache));
       /* 
         if today > endDate then checking
           if status == successed then update the value in subscription model the end date
           else status != successed then send the canPass to false
       */
-      if(today >  (subscription.packageEndDate) && paymentInformation.status == "successed"){
+      if(today >  (packageConstionMainCache[0].subscriptionInfo.packageEndDate) && packageConstionMainCache[0].payMentInfo.status == "successed"){
           const SubscriptionUpdate = await Subscription.findOneAndUpdate(
-            { user: user._id },
+            { user: packageConstionMainCache[0].userInfo._id },
                 {
                   $set: {
                     packageEndDate: today
@@ -184,12 +199,11 @@ exports.updateAPICount = async (portalID) => {
               { new: true, upsert: false }
             );
             // logger.info("end date updated in package Condition: "+ SubscriptionUpdate);
-      }else if (today >  (subscription.packageEndDate)  && paymentInformation.status != "successed") {
-        // logger.info("At packageCondition returning false date condition: "+ today + " "+ subscription.packageEndDate);
-        console.log("yap!" + paymentInformation.status);
+      }else if (today >  (packageConstionMainCache[0].subscriptionInfo.packageEndDate)  && packageConstionMainCache[0].payMentInfo.status != "successed") {
+        // logger.info("At packageCondition returning false date condition: "+ today + " "+ subscription.packageEndDate)
            returningValue = {"portalId" : portalID, 
             "totalAPICALLS" : 0, 
-            "userLimit": user_package.Limit, 
+            "userLimit": packageConstionMainCache[0].packageInfo.Limit, 
             "canPass": false}; 
           return returningValue;
       }
@@ -210,61 +224,24 @@ exports.updateAPICount = async (portalID) => {
         const currentData_cache1 = apiCallCache.get(portalID);
         cache_1_apiCount = currentData_cache1.apiCallCount;
       }
-      console.log("in package conditions cache_1_apiCount:  "+ parseInt(cache_1_apiCount));
-      console.log("in package conditions cache_2_apiCount: "+ parseInt(cache_2_apiCount));
 
-
-      const totalAPICALLS = parseInt(subscription.apiCallCount) 
-                            + parseInt(subscription.checkPhoneNumberApiCallCount)
+      const totalAPICALLS = parseInt(packageConstionMainCache[0].subscriptionInfo.apiCallCount) 
+                            + parseInt(packageConstionMainCache[0].subscriptionInfo.checkPhoneNumberApiCallCount)
                             +parseInt(cache_2_apiCount)
                             + parseInt(cache_1_apiCount);
 
-      // // if (apiCallCache.size === 0) {
-        
-      // // }else{
-      // //   // if(apiCallCache.get(portalID) && !checkphnNoCache.get(portalID)){
-      // //   //   const currentData = apiCallCache.get(portalID);
-      // //   //   totalAPICALLS = parseInt(subscription.apiCallCount) + 
-      // //   //                   parseInt(subscription.checkPhoneNumberApiCallCount) + 
-      // //   //                   parseInt(currentData.apiCallCount);
-      // //   // }else if(checkphnNoCache.get(portalID) && !apiCallCache.get(portalID)){
-      // //   //   const currentData = checkphnNoCache.get(portalID);
-      // //   //   totalAPICALLS = parseInt(subscription.apiCallCount) + 
-      // //   //                   parseInt(subscription.checkPhoneNumberApiCallCount) + 
-      // //   //                   parseInt(currentData.apiCheckCallCount); //eikhane change hobe
-      // //   // }else 
-      // //   if(apiCallCache.get(portalID)){
-      // //     const currentDataofApiCallCache = apiCallCache.get(portalID);
       
-      // //     if(currentDataofApiCallCache.apiCheckCallCount > 0){
-      // //       totalAPICALLS = parseInt(subscription.apiCallCount) + 
-      // //       parseInt(subscription.checkPhoneNumberApiCallCount) + 
-      // //       parseInt(currentDataofApiCallCache.apiCallCount)+
-      // //       parseInt(currentDataofApiCallCache.apiCheckCallCount);
-      // //     }else{
-      // //       totalAPICALLS = parseInt(subscription.apiCallCount) + 
-      // //       parseInt(subscription.checkPhoneNumberApiCallCount) + 
-      // //       parseInt(currentDataofApiCallCache.apiCallCount)
-      // //     }
-
-     
-      // //   }else{
-      // //     totalAPICALLS = parseInt(subscription.apiCallCount) + parseInt(subscription.checkPhoneNumberApiCallCount);
-      // //   }
-      // }
-      // logger.info("====totalAPICALLS in package Condition===" + totalAPICALLS);
-      
-      if(totalAPICALLS < user_package.Limit){
+      if(totalAPICALLS < packageConstionMainCache[0].packageInfo.Limit){
         //return portalId, totalAPICALLS , user_package.Limit and canPass: true
         returningValue = {"portalId" : portalID, 
                           "totalAPICALLS" : totalAPICALLS, 
-                          "userLimit": user_package.Limit, 
+                          "userLimit": packageConstionMainCache[0].packageInfo.Limit, 
                           "canPass": true}; 
         return returningValue;
       }else{
         returningValue = {"portalId" : portalID, 
           "totalAPICALLS" : totalAPICALLS, 
-          "userLimit": user_package.Limit, 
+          "userLimit": packageConstionMainCache[0].packageInfo.Limit, 
           "canPass": false}; 
         return returningValue;      //return portalId, totalAPICALLS , user_package.Limit and canPass: false
       }
