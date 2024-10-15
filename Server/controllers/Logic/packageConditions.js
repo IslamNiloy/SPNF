@@ -211,9 +211,7 @@ exports.updateAPICount = async (portalID) => {
       }
 
       const totalAPICALLS = parseInt(subscription.apiCallCount) 
-                            + parseInt(subscription.checkPhoneNumberApiCallCount)
-                            +parseInt(cache_2_apiCount)
-                            + parseInt(cache_1_apiCount);
+                            + parseInt(subscription.checkPhoneNumberApiCallCount);
 
       // // if (apiCallCache.size === 0) {
         
