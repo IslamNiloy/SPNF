@@ -39,7 +39,7 @@
     },
     {
       "path": "/api/check_phone_number",
-      "schedule": "*/8 * * * *"  
+      "schedule": "*/1 * * * *"  
     }
   ]
 }
