@@ -19,11 +19,11 @@ exports.updateAPICount = async (portalID) => {
         apiCallCache.set(portalID, { apiCallCount: 1 });
       }
 
-      // for (const [portalID, data] of apiCallCache.entries()) {
-      //   console.log(`From updateAPICount ===> 
-      //               Portal ID: ${portalID}, 
-      //               API Call Count: ${data.apiCallCount}`);
-      //   }
+      for (const [portalID, data] of apiCallCache.entries()) {
+        console.log(`From updateAPICount ===> 
+                    Portal ID: ${portalID}, 
+                    API Call Count: ${data.apiCallCount}`);
+        }
 
       return apiCallCache;
     } catch (e) {
@@ -34,9 +34,9 @@ exports.updateAPICount = async (portalID) => {
   exports.bulkPhoneNumberApiCallCount = async() =>{
     try{
       for (const [portalID, data] of apiCallCache.entries()) {
-        // console.log(`From bulkApiCallCount ===>
-        //             Portal ID: ${portalID}, 
-        //             API Call Count: ${data.apiCallCount}`);
+        console.log(`From bulkApiCallCount ===>
+                    Portal ID: ${portalID}, 
+                    API Call Count: ${data.apiCallCount}`);
 
          // Find the user by portalID
         const user = await User.findOne({ portalID: portalID });
@@ -76,7 +76,7 @@ exports.updateAPICount = async (portalID) => {
       try {
         // Loop through the array in reverse to safely remove items while iterating
 
-        // console.log("JSON.stringify(apiCheckCallCache) in cache head = " + JSON.stringify(apiCheckCallCache));
+        console.log("JSON.stringify(apiCheckCallCache) in cache head = " + JSON.stringify(apiCheckCallCache));
         for (let i = apiCheckCallCache.length - 1; i >= 0; i--) {
           const data = apiCheckCallCache[i];
           const portalID = data.portalId;
@@ -88,7 +88,7 @@ exports.updateAPICount = async (portalID) => {
     
           if (!user) {
             // logger.info(`User not found for portalID: ${portalID}`);
-            continue; // Move to the next iteration if user is not found
+            return 0;
           }
     
           // Update the subscription info with the apiCallCount value
@@ -105,11 +105,12 @@ exports.updateAPICount = async (portalID) => {
     
           if (!subscriptionInfoUpdate) {
             logger.info(`Subscription not found for user: ${user._id}`);
-            continue; // Move to the next iteration if the subscription is not found
+            return 0; // Move to the next iteration if the subscription is not found
           }
     
           // Remove the entry from the array after successfully updating the subscription
           apiCheckCallCache.splice(i, 1);
+          console.log("apiCheckCallCache after slice: " + JSON.stringify(apiCheckCallCache));
         }
       } catch (error) {
         console.error('Error in bulk_Check_PhoneNumberApiCallCount function:', error);
@@ -150,10 +151,9 @@ exports.updateAPICount = async (portalID) => {
       let returningValue = {};
       // logger.info("At packageCondition");
       const user = await User.findOne( {portalID: portalID});
-      // logger.info("At packageCondition user infos: "+ user);
       if (!user) {
         // Handle case where user is not found
-        logger.info("At packageCondition User not found for portalID: " + portalID);
+        console.log("At packageCondition User not found for portalID: " + portalID);
          returningValue = {"portalId" : portalID, 
           "totalAPICALLS" : 0, 
           "userLimit": user_package.Limit, 
@@ -186,6 +186,7 @@ exports.updateAPICount = async (portalID) => {
             // logger.info("end date updated in package Condition: "+ SubscriptionUpdate);
       }else if (today >  (subscription.packageEndDate)  && paymentInformation.status != "successed") {
         // logger.info("At packageCondition returning false date condition: "+ today + " "+ subscription.packageEndDate);
+        console.log("yap!" + paymentInformation.status);
            returningValue = {"portalId" : portalID, 
             "totalAPICALLS" : 0, 
             "userLimit": user_package.Limit, 
@@ -209,9 +210,14 @@ exports.updateAPICount = async (portalID) => {
         const currentData_cache1 = apiCallCache.get(portalID);
         cache_1_apiCount = currentData_cache1.apiCallCount;
       }
+      console.log("in package conditions cache_1_apiCount:  "+ parseInt(cache_1_apiCount));
+      console.log("in package conditions cache_2_apiCount: "+ parseInt(cache_2_apiCount));
+
 
       const totalAPICALLS = parseInt(subscription.apiCallCount) 
-                            + parseInt(subscription.checkPhoneNumberApiCallCount);
+                            + parseInt(subscription.checkPhoneNumberApiCallCount)
+                            // +parseInt(cache_2_apiCount)
+                            // + parseInt(cache_1_apiCount);
 
       // // if (apiCallCache.size === 0) {
         
