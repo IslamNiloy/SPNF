@@ -180,6 +180,8 @@ exports.updateAPICount = async (portalID) => {
               payMentInfo: paymentInformation, 
               packageInfo: user_package
             });
+
+            console.log("subscription in the condition : "+ JSON.stringify(subscription));
         } 
       const today = new Date();
       console.log("packageConstionMainCache =====>"+ JSON.stringify(packageConstionMainCache));

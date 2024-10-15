@@ -35,6 +35,8 @@ exports.insertIntoSubscriptionAfterPayment = async (packageID, userID) => {
          if(subscriptionInfo){
             this.updateSubscriptionInfo(userInfo._id,packageID);
          }
+
+         console.log("issue in free =======>"+ endDate.toISOString().split('T')[0]);
          if (userInfo && !subscriptionInfo) {
              //insert into Subscription model
              const subscribe = new Subscription({  
