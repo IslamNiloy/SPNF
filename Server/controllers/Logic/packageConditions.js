@@ -230,7 +230,8 @@ exports.updateAPICount = async (portalID) => {
                             +parseInt(cache_2_apiCount)
                             + parseInt(cache_1_apiCount);
 
-      
+      console.log("totalAPICALLS in condition: "+ totalAPICALLS);
+      console.log("totalAPICALLS in condition: "+ packageConstionMainCache[0].packageInfo.Limit);
       if(totalAPICALLS < packageConstionMainCache[0].packageInfo.Limit){
         //return portalId, totalAPICALLS , user_package.Limit and canPass: true
         returningValue = {"portalId" : portalID, 
