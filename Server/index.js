@@ -22,6 +22,7 @@ const { processStart } = require('./controllers/dataSyncController');
 const cronPhoneNumberRoute = require("./api/phone_number");
 const cronCheckPhoneNumberRoute = require("./api/check_phone_number");
 const cronRemoveCacheRoute = require("./api/remove_cache");
+const { default: mongoose } = require('mongoose');
 
 // Use CORS middleware
 app.use(cors());
@@ -59,7 +60,10 @@ app.use('/api/check_phone_number', cronCheckPhoneNumberRoute);
 setupSwagger(app);
 
 async function loadDatabaseConnection() {
-  await ConnectDB();
+  mongoose
+  .connect(process.env.DATABASE_URL)
+  .then(() => console.log('connected'))
+  .catch((err) => console.log(err));
   app.listen(PORT, () => logger.info(`Server is running on port ${PORT}`));
 }
 
