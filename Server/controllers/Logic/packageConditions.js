@@ -139,7 +139,7 @@ exports.updateAPICount = async (portalID) => {
           // console.log("main is called= " + JSON.stringify(result));
         }
 
-        // console.log("JSON.stringify(apiCheckCallCache) in main= " +JSON.stringify(apiCheckCallCache) );
+        console.log("apiCheckCallCache main: " +JSON.stringify(apiCheckCallCache) );
       } catch (e) {
         console.error('Error in CheckPhoneNumberUpdateAPICount function:', e);
       }

@@ -234,7 +234,7 @@ const PricingCard = ({ id, planName, monthlyPrice, yearlyPrice, limit, countries
                       )
                         ||
                         (endDate > today && UserPackageName == "Free" && UserPackageName != "None"
-                          && status != "cancelled" && parseInt(apiCallCount) < parseInt(limit))
+                          && status != "cancelled")
                         ?
                         (
                           <>
