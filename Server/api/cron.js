@@ -21,7 +21,7 @@ module.exports = async function handler(req, res) {
     // await removeAllCache(); //removing cache in phone_number main func
     // console.log('Cron job started: removeAllCache');
 
-    await processStart();
+    processStart();
     res.status(200).end('Subscriptions synced successfully');
   } catch (error) {
     console.error('Error syncing subscriptions:', error);
