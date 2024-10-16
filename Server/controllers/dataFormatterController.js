@@ -116,7 +116,12 @@ const formatPhoneNumber = (phoneNumber, country, country_text) => {
 
   // Check if the phone number length is within the valid range
   if (sanitizedPhoneNumber.length < MIN_PHONE_NUMBER_LENGTH || sanitizedPhoneNumber.length > MAX_PHONE_NUMBER_LENGTH) {
-    throw new Error('Invalid phone number length');
+    return res.status(200).json({
+      "outputFields": {
+        "Message": "Invalid phone number length",
+        "hs_execution_state": "FAILED"
+      }
+    });    
   }
 
   let parsedNumber = parsePhoneNumberFromString(sanitizedPhoneNumber, countryCode);
@@ -130,7 +135,14 @@ const formatPhoneNumber = (phoneNumber, country, country_text) => {
     return parsedNumber.formatInternational().replace(/\s+/g, '');
   }
 
-  throw new Error('Invalid phone number');
+  return res.status(200).json({
+    "outputFields": {
+      "Message": "Invalid phone number",
+      "hs_execution_state": "FAILED"
+    }
+  });    
+
+  // throw new Error('Invalid phone number');
 };
 
 
@@ -239,7 +251,7 @@ exports.checkPhoneNumber = async (req, res) => {
   if (!check.canPass) {
     return res.status(200).json({
       "outputFields": {
-        "quality": "API Limit Exceeded",
+        "quality": "API Limit Exceeded", 
         "hs_execution_state": "FAILED"
       }
     });
