@@ -80,7 +80,7 @@ exports.phoneNumber = async (req, res) => {
     }
     else if (check.canPass) { //check.canPass
       await updateAPICount(req.body.portalID);
-      const formattedNumber = formatPhoneNumber(phoneNumber, country, country_text);
+      const formattedNumber = formatPhoneNumber(req,res,phoneNumber, country, country_text);
       
       await updateContactProperty("pf_formatted_phone_number_14082001", formattedNumber, hs_object_id, 
         User.accessToken, req, User.refreshToken);
@@ -97,7 +97,7 @@ exports.phoneNumber = async (req, res) => {
         }
       });
     } else {
-      res.json({
+      res.status(200).json({
         "outputFields": {
           "message": "Update your plan",
           "hs_execution_state": "SUCCESS"
@@ -109,7 +109,7 @@ exports.phoneNumber = async (req, res) => {
   }
 };
 
-const formatPhoneNumber = (phoneNumber, country, country_text,req, res) => {
+const formatPhoneNumber = (req, res, phoneNumber, country, country_text) => {
   const countryCode = getCountryCode(country, country_text);
 
   // Remove extension part if exists
@@ -121,7 +121,7 @@ const formatPhoneNumber = (phoneNumber, country, country_text,req, res) => {
 
   // Check if the phone number length is within the valid range
   if (sanitizedPhoneNumber.length < MIN_PHONE_NUMBER_LENGTH || sanitizedPhoneNumber.length > MAX_PHONE_NUMBER_LENGTH) {
-    return res.json({
+    return res.status(200).json({
       "outputFields": {
         "Message": "Invalid phone number length",
         "hs_execution_state": "FAILED"
@@ -140,7 +140,7 @@ const formatPhoneNumber = (phoneNumber, country, country_text,req, res) => {
     return parsedNumber.formatInternational().replace(/\s+/g, '');
   }
 
-  return res.json({
+  return res.status(200).json({
     "outputFields": {
       "Message": "Invalid phone number",
       "hs_execution_state": "FAILED"
