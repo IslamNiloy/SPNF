@@ -62,34 +62,21 @@ exports.home = async (req, res) => {
     const accessToken = await getAccessToken(req);
     const accInfo = await getAccountInfo(accessToken);
     let userInsertion = await insertIntoUser(accInfo);
-
-    const paymentInsertion = await axios.post(`${process.env.HELPER_BACKEND_URL}/charge/insertion/payment`, {"user_data": userInsertion}
-    )
-      .then(response => {
-        console.log('Payment successful:', response.data);
-      })
-      .catch(error => {
-        console.error('Error occurred during payment:', error);
-      });
-
-    console.log(`paymentInsertion : ${paymentInsertion}`);
-    
+    let paymentInsertion = await insertIntoPayment(userInsertion);
     const Subscription = require('../model/subscription.model');
-
     await createProperties(accessToken)
     
-
+    // console.log("====> accInfo ===> "+ JSON.stringify(accInfo));
     //Todo:: Need to create new package for new user
     const packageId = "66dac9dd4ffd1188c309c0d4";
-    let subsciptionInsertion = await  insertIntoSubscriptionAfterInstall(packageId,userInsertion._id)//server 2
-    const subsciption_data = await Subscription.findOne({user:userInsertion._id})//server 2
+    let subsciptionInsertion = await  insertIntoSubscriptionAfterInstall(packageId,userInsertion._id)
+    const subsciption_data = await Subscription.findOne({user:userInsertion._id})
     await syncDeal(subsciption_data)
     res.redirect(`${process.env.FRONTEND_URL}/welcome?portalID=${userInsertion.portalID}`);
     logWithDetails('info', 'Displayed home page with account info and access token', req);
   }
   //res.redirect(process.env.FRONTEND_URL);
 }
-
 exports.error = (req, res) => {
   res.setHeader('Content-Type', 'text/html');
   res.write(`
