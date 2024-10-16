@@ -60,10 +60,19 @@ app.use('/api/check_phone_number', cronCheckPhoneNumberRoute);
 setupSwagger(app);
 
 async function loadDatabaseConnection() {
-  mongoose
-  .connect(process.env.DATABASE_URL)
+  // mongoose
+  // .connect(process.env.DATABASE_URL)
+  // .then(() => console.log('connected'))
+  // .catch((err) => console.log(err));
+
+  mongoose.connect(process.env.DATABASE_URL, {
+    serverSelectionTimeoutMS: 40000, // 30 seconds
+    socketTimeoutMS: 45000, // 45 seconds
+  })
   .then(() => console.log('connected'))
   .catch((err) => console.log(err));
+  ;
+  
   app.listen(PORT, () => logger.info(`Server is running on port ${PORT}`));
 }
 
