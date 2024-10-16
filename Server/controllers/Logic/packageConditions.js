@@ -191,11 +191,13 @@ exports.updateAPICount = async (portalID) => {
           else status != successed then send the canPass to false
       */
       if(today >  (packageConstionMainCache[0].subscriptionInfo.packageEndDate) && packageConstionMainCache[0].payMentInfo.status == "successed"){
-          const SubscriptionUpdate = await Subscription.findOneAndUpdate(
+          const packageEndDate = new Date(today);
+          packageEndDate.setDate(today.getDate() + 30);  
+        const SubscriptionUpdate = await Subscription.findOneAndUpdate(
             { user: packageConstionMainCache[0].userInfo._id },
                 {
                   $set: {
-                    packageEndDate: today
+                    packageEndDate: packageEndDate
                   }
               },
               { new: true, upsert: false }

@@ -77,7 +77,7 @@ exports.getUserByID = async (req, res) => {
 
 exports.updateUserInfoAfterPayment = async(portalID, chargeData) => {
     try{
-        // logger.info("--------in updateUserInfoAfterPayment 28 AUG====="+ JSON.stringify(chargeData));
+        console.log("--------in updateUserInfoAfterPayment 28 AUG====="+ JSON.stringify(chargeData));
         const userInfoUpDate = await User.findOneAndUpdate(
             { portalID: portalID },
             {
