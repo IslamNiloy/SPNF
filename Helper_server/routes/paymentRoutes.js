@@ -10,6 +10,10 @@ router.post('/webhook', express.raw({ type: 'application/json' }), webhookContro
 router.post('/custom/create', customUserController.customUserCreatePrice);
 router.get('/cancel/:portalID', paymentController.cancel_subscription);
 router.get('/get/info/:portalID', paymentController.get_payment_info_user);
+
+
+
+router.post('/insertion/payment', paymentController.insertIntoPayment);
 //router.post('/free/remained/:apiCallCount/:portalID', paymentController.chargeRemainedFree);
 
 module.exports = router;

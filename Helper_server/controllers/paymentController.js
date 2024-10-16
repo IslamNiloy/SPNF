@@ -138,31 +138,32 @@ exports.createCheckoutSession = async (req, res) => {
 }
 
 
-exports.insertIntoPayment = async (user_data) => {
-  try{
-    // logger.info("insert into payment----insertIntoPayment: " + JSON.stringify(user_data));
-    
+exports.insertIntoPayment = async (req, res) => {
+  try {
     const existingPayment = await PaymentModel.findOne({
-      user: user_data._id,
-      portalID: user_data.portalID
+      user: req.body.user_data._id,
+      portalID: req.body.user_data.portalID
     });
 
     if (existingPayment) {
-      // logger.info("Payment record already Created for user: " + user_data._id);
-      return; // Exit the function without creating a new record
+      // Payment record already exists
+      return res.status(200).send({ message: "Payment record already exists." }); // Return a response here
     }
 
+    // No existing payment, create a new one
     const transaction = new PaymentModel({
-      user : user_data._id,
+      user: req.body.user_data._id,
       status: "due",
-      portalID :  user_data.portalID
+      portalID: req.body.user_data.portalID
     });
-      await transaction.save();
-      
-  }catch (error){
-    logger.info("Something went wrong in insertIntoPayment: " + error);
+
+    await transaction.save();
+    return res.status(201).send(transaction); // Return the newly created transaction
+  } catch (error) {
+    console.error("Something went wrong in insertIntoPayment: ", error);
+    return res.status(500).send({ error: "Internal server error" }); // Ensure a response is sent on error
   }
-}
+};
 
 //code stripe main ends
 exports.charge = async (charge_data) => {
