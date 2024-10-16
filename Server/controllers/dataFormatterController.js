@@ -97,14 +97,19 @@ exports.phoneNumber = async (req, res) => {
         }
       });
     } else {
-      res.json("Update your plan");
+      res.json({
+        "outputFields": {
+          "message": "Update your plan",
+          "hs_execution_state": "SUCCESS"
+        }
+      });
     }
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
 };
 
-const formatPhoneNumber = (phoneNumber, country, country_text) => {
+const formatPhoneNumber = (phoneNumber, country, country_text,req, res) => {
   const countryCode = getCountryCode(country, country_text);
 
   // Remove extension part if exists

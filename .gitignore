@@ -1,10 +1,14 @@
 /Client/.env
+/Helper_server/.env
 /Server/.env
 /Client/app.log
 /Server/app.log
+/Helper_server/app.log
 /Server/cache.json
+/Helper_server/cache.json
 /Client/node_modules
 /Server/node_modules
+/Helper_server/node_modules
 
 # dependencies
 

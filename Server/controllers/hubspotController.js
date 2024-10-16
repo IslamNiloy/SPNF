@@ -65,7 +65,6 @@ exports.home = async (req, res) => {
     const Subscription = require('../model/subscription.model');
     await createProperties(accessToken)
     
-    // console.log("====> accInfo ===> "+ JSON.stringify(accInfo));
     //Todo:: Need to create new package for new user
     const packageId = "66dac9dd4ffd1188c309c0d4";
     let subsciptionInsertion = await  insertIntoSubscriptionAfterInstall(packageId,userInsertion._id)
