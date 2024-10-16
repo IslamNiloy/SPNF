@@ -20,6 +20,9 @@ const SubscriptionInfo = () => {
     const paymentInfoFromAction = useSelector((state) => state.paymentInfoByEmail);
     const { loading : paymentLoading, error: paymentErr, paymentInfo } = paymentInfoFromAction;
 
+    const UserInfos = useSelector((state) => state.userInfo);
+    const { loading: userInfoLoading, error:userInfoError, userInfo } = UserInfos;
+
     const [modalVisible, setModalVisible] = useState(false);
     const [packageName, setPackageName] = useState("Loading...");
     const [apiCallCount, setAPICallCount] = useState("");
@@ -203,7 +206,7 @@ const SubscriptionInfo = () => {
                         : "Package not found"}</span>
             </div>
             <div className="info-item">
-              <span className="info-label">Subscription Status: </span>
+              <span className="info-label">Payment Status: </span>
               <span className="info-value">{
               status == 'successed' ?
               <>
@@ -220,6 +223,17 @@ const SubscriptionInfo = () => {
                         ? "NOT FOUND"
                         : infos
                         ? endDate.split("T")[0]
+                        : "Package not found"}</span>
+            </div>
+
+            <div className="info-item">
+              <span className="info-label">User Doamin: </span>
+              <span className="info-value">{userInfoLoading
+                        ? "loading"
+                        : userInfoError
+                        ? "NOT FOUND"
+                        : userInfo
+                        ? userInfo.uiDomain || ""
                         : "Package not found"}</span>
             </div>
           </div>

@@ -77,6 +77,7 @@ exports.home = async (req, res) => {
   }
   //res.redirect(process.env.FRONTEND_URL);
 }
+
 exports.error = (req, res) => {
   res.setHeader('Content-Type', 'text/html');
   res.write(`

@@ -124,13 +124,13 @@ const UserProfile = () => {
                     onChange={(e) => setPhoneNumber(e.target.value)}
                   />
                 </span>:
-                <span className="item-value">{userInfo?phoneNumber:""}</span>
+                  ""
               }
              
             </div>
             <div>
-              <span className="item-title">Country Code </span>
-              <span className="item-value">{userInfo?countryCode:""}</span>
+              
+              <span className="item-value">{userInfo?phoneNumber:""}</span>
             </div>
           </div>
           
