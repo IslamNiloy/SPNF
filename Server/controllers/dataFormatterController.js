@@ -136,8 +136,18 @@ const formatPhoneNumber = (req, res, phoneNumber, country, country_text) => {
     parsedNumber = parsePhoneNumberFromString(parsedNumber, countryCode);
   }
 
+  // if (parsedNumber && parsedNumber.isValid()) {
+  //   return parsedNumber.formatInternational().replace(/\s+/g, '');
+  // }
+
+
   if (parsedNumber && parsedNumber.isValid()) {
-    return parsedNumber.formatInternational().replace(/\s+/g, '');
+    return res.status(200).json({
+      "outputFields": {
+        "formattedPhoneNumber": parsedNumber.formatInternational().replace(/\s+/g, ''),
+        "hs_execution_state": "SUCCESS"
+      }
+    });
   }
 
   return res.status(200).json({
