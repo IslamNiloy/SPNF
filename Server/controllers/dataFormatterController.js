@@ -121,7 +121,7 @@ const formatPhoneNumber = (phoneNumber, country, country_text,req, res) => {
 
   // Check if the phone number length is within the valid range
   if (sanitizedPhoneNumber.length < MIN_PHONE_NUMBER_LENGTH || sanitizedPhoneNumber.length > MAX_PHONE_NUMBER_LENGTH) {
-    return res.status(200).json({
+    return res.json({
       "outputFields": {
         "Message": "Invalid phone number length",
         "hs_execution_state": "FAILED"
@@ -140,7 +140,7 @@ const formatPhoneNumber = (phoneNumber, country, country_text,req, res) => {
     return parsedNumber.formatInternational().replace(/\s+/g, '');
   }
 
-  return res.status(200).json({
+  return res.json({
     "outputFields": {
       "Message": "Invalid phone number",
       "hs_execution_state": "FAILED"
