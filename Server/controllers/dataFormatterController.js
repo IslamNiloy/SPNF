@@ -109,7 +109,8 @@ exports.phoneNumber = async (req, res) => {
   }
 };
 
-const formatPhoneNumber = (req, res, phoneNumber, country, country_text) => {
+
+const formatPhoneNumber = (phoneNumber, country, country_text) => {
   const countryCode = getCountryCode(country, country_text);
 
   // Remove extension part if exists
@@ -121,12 +122,7 @@ const formatPhoneNumber = (req, res, phoneNumber, country, country_text) => {
 
   // Check if the phone number length is within the valid range
   if (sanitizedPhoneNumber.length < MIN_PHONE_NUMBER_LENGTH || sanitizedPhoneNumber.length > MAX_PHONE_NUMBER_LENGTH) {
-    return res.status(200).json({
-      "outputFields": {
-        "Message": "Invalid phone number length",
-        "hs_execution_state": "FAILED"
-      }
-    });    
+    throw new Error('Invalid phone number length');
   }
 
   let parsedNumber = parsePhoneNumberFromString(sanitizedPhoneNumber, countryCode);
@@ -138,17 +134,59 @@ const formatPhoneNumber = (req, res, phoneNumber, country, country_text) => {
 
   if (parsedNumber && parsedNumber.isValid()) {
     return parsedNumber.formatInternational().replace(/\s+/g, '');
+  }else{
+    return {error: 'Invalid phone number'}
   }
-
-  return res.status(200).json({
-    "outputFields": {
-      "Message": "Invalid phone number",
-      "hs_execution_state": "FAILED"
-    }
-  });    
-
-  // throw new Error('Invalid phone number');
 };
+
+// const formatPhoneNumber = (req, res, phoneNumber, country, country_text) => {
+//   const countryCode = getCountryCode(country, country_text);
+
+//   // Remove extension part if exists
+//   const extensionMatch = phoneNumber.match(/(ext\.?|extension)\s?(\d+)/i);
+//   const mainPhoneNumber = extensionMatch ? phoneNumber.replace(extensionMatch[0], '').trim() : phoneNumber;
+
+//   // Remove all non-digit characters from the main phone number
+//   const sanitizedPhoneNumber = mainPhoneNumber.replace(/\D+/g, '');
+
+//   // Check if the phone number length is within the valid range
+//   if (sanitizedPhoneNumber.length < MIN_PHONE_NUMBER_LENGTH || sanitizedPhoneNumber.length > MAX_PHONE_NUMBER_LENGTH) {
+//     return res.status(200).json({
+//       "outputFields": {
+//         "Message": "Invalid phone number length",
+//         "hs_execution_state": "FAILED"
+//       }
+//     });    
+//   }
+
+//   let parsedNumber = parsePhoneNumberFromString(sanitizedPhoneNumber, countryCode);
+//   if (!parsedNumber || !parsedNumber.isValid()) {
+//     // Attempt to format the number as it is typed
+//     parsedNumber = new AsYouType(countryCode).input(sanitizedPhoneNumber);
+//     parsedNumber = parsePhoneNumberFromString(parsedNumber, countryCode);
+//   }
+
+//   if (parsedNumber && parsedNumber.isValid()) {
+//     //return parsedNumber.formatInternational().replace(/\s+/g, '');
+//       return res.status(200).json({
+//       "outputFields": {
+//         "Message": parsedNumber.formatInternational().replace(/\s+/g, ''),
+//         "hs_execution_state": "SUCCESS"
+//       }
+//     });   
+//   }else{
+//     return res.status(200).json({
+//       "outputFields": {
+//         "Message": "Invalid phone number",
+//         "hs_execution_state": "FAILED"
+//       }
+//     });    
+//   }
+
+
+
+//   // throw new Error('Invalid phone number');
+// };
 
 
 //Country code
