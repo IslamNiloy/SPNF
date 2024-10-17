@@ -29,20 +29,21 @@ exports.customUserCreatePrice = async (req,res) => {
 
         //create user for custom
           //create package for custom
-          const findPackageInfo = await packagesModel.findOne({price: req.body.price});
+          const findPackageInfo = await packagesModel.findOne({packageName: `custom_${req.body.uiDomain}`});
           const userInfofound = await userModel.findOne({portalID: req.body.portalID});
-          if(!findPackageInfo){
-            const package_modelInsertion = new packagesModel({
-              packageName: `custom_${req.body.price }_${req.body.duration}`,
-              price: req.body.price,
-              duration: req.body.duration,
-              Limit: req.body.Limit,
-              subscription: "custom"
-            })
-            await package_modelInsertion.save();
-          }else{
-            // logger.info(`Custom price ${req.body.price } found in priceModel`);
-          }
+
+       if(!findPackageInfo){
+        const package_modelInsertion = new packagesModel({
+          packageName: `custom_${req.body.uiDomain}`,
+          price: req.body.price,
+          duration: req.body.duration,
+          Limit: req.body.Limit,
+          subscription: "custom"
+        })
+        await package_modelInsertion.save();
+ 
+       }
+ 
 
         if(!userInfofound){
           const user_Insertion = new userModel({
@@ -65,7 +66,7 @@ exports.customUserCreatePrice = async (req,res) => {
 
         //create subscription in custom
         const findUser = await userModel.findOne({portalID: req.body.portalID}); //getting this after user insertion if not found
-        const findPackage = await packagesModel.findOne({price: req.body.price}); //getting this for same
+        const findPackage = await packagesModel.findOne({packageName: `custom_${req.body.uiDomain}`}); //getting this for same
         let startDate = new Date();
         const endDate = new Date();
         endDate.setDate(startDate.getDate() + 30);
