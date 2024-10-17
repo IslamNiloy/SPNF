@@ -6,9 +6,9 @@ const Subscription = require('../../model/subscription.model');
 const paymentModel = require('../../model/payment.model');
 const apiCallCache = new Map();
 // const checkphnNoCache = new Map();
-const packageConstionMainCache = [];
+let packageConstionMainCache = [];
 
-const apiCheckCallCache = [];
+let apiCheckCallCache = [];
 
 
 exports.updateAPICount = async (portalID) => {
