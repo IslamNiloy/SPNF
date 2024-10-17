@@ -2,7 +2,7 @@
 
 const { removeAllCache } = require('../controllers/dataFormatterController');
 const { processStart } =  require('../controllers/dataSyncController');
-const { bulk_Check_PhoneNumberApiCallCount, bulkPhoneNumberApiCallCount } = require('../controllers/Logic/packageConditions');
+// const { bulk_Check_PhoneNumberApiCallCount, bulkPhoneNumberApiCallCount } = require('../controllers/Logic/packageConditions');
 
 module.exports = async function handler(req, res) {
   if (req.headers.authorization !== `Bearer ${process.env.CRON_SECRET}`) {

@@ -31,15 +31,7 @@
   "crons": [
     {
       "path": "/api/cron",
-      "schedule": "*/6 * * * *"  
-    },
-    {
-      "path": "/api/phone_number",
-      "schedule": "*/3 * * * *"  
-    },
-    {
-      "path": "/api/check_phone_number",
-      "schedule": "*/1 * * * *"  
+      "schedule": "*/5 * * * *"  
     }
   ]
 }

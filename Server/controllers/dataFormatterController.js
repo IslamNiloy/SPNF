@@ -58,11 +58,13 @@ exports.phoneNumber = async (req, res) => {
   try {
     const check = await packageCondition(req.body.portalID); //get portalId, totalAPICALLS, user_package.Limit, canPass here
 
+    console.log("check of package condtion: " + check);
+
     // Fetch the user and payment info
     const User = await userModel.findOne({ portalID: req.body.portalID });
     const paymentInfo = await paymentModel.findOne({ portalID: req.body.portalID }).sort({ createdAt: -1 });
 
-    if (!check.canPass) {//!check.canPass
+    if (!check) {//!check.canPass
       return res.status(200).json({
         "outputFields": {
           "Message": "API Limit Exceeded",
@@ -78,7 +80,7 @@ exports.phoneNumber = async (req, res) => {
         }
       });
     }
-    else if (check.canPass) { //check.canPass
+    else if (check) { //check.canPass
       await updateAPICount(req.body.portalID);
       const formattedNumber = formatPhoneNumber(phoneNumber, country, country_text);
       
@@ -247,7 +249,7 @@ exports.checkPhoneNumber = async (req, res) => {
   const User = await userModel.findOne({ portalID: req.body.portalID });
   const paymentInfo = await paymentModel.findOne({ portalID: req.body.portalID }).sort({ createdAt: -1 });
 
-  if (!check.canPass) {
+  if (!check) {
     return res.status(200).json({
       "outputFields": {
         "quality": "API Limit Exceeded",
@@ -263,7 +265,7 @@ exports.checkPhoneNumber = async (req, res) => {
       }
     });
   }
-  else if (check.canPass) {
+  else if (check) {
     // console.log("checking is fine in check phone number");
     await CheckPhoneNumberUpdateAPICount(req.body.portalID);
     //incrementAPICount(req.body.portalID, "checkPhoneNumber");

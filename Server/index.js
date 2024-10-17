@@ -52,8 +52,8 @@ app.use('/package', packageRouters);
 //adding to check 404 issue in crom
 app.use('/api/cron', cronRoute);
 
-app.use('/api/phone_number', cronPhoneNumberRoute);
-app.use('/api/check_phone_number', cronCheckPhoneNumberRoute);
+// app.use('/api/phone_number', cronPhoneNumberRoute);
+// app.use('/api/check_phone_number', cronCheckPhoneNumberRoute);
 // app.use('/api/remove_cache', cronRemoveCacheRoute);
 
 // Setup Swagger

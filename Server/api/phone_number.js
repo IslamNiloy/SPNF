@@ -1,4 +1,4 @@
-const { bulkPhoneNumberApiCallCount } = require("../controllers/Logic/packageConditions");
+//const { bulkPhoneNumberApiCallCount } = require("../controllers/Logic/packageConditions");
 
 module.exports = async function handler(req, res) {
   if (req.headers.authorization !== `Bearer ${process.env.CRON_SECRET}`) {
@@ -6,7 +6,7 @@ module.exports = async function handler(req, res) {
   }
 
   try {
-    await bulkPhoneNumberApiCallCount();
+    //await bulkPhoneNumberApiCallCount();
     res.status(200).end('bulkPhoneNumberApiCallCount successfully');
   } catch (error) {
     console.error('Error bulkPhoneNumberApiCallCount:', error);
