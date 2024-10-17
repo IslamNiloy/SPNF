@@ -81,15 +81,16 @@ exports.phoneNumber = async (req, res) => {
     else if (check.canPass) { //check.canPass
       await updateAPICount(req.body.portalID);
       const formattedNumber = formatPhoneNumber(phoneNumber, country, country_text);
-
-      await updateContactProperty("pf_formatted_phone_number_14082001", formattedNumber, hs_object_id,
-        User.accessToken, req, User.refreshToken);
-
-      if (propertyName) {
-        await updateContactProperty(propertyName, formattedNumber, hs_object_id, User.accessToken, req,
-          User.refreshToken);
+      
+      if(formattedNumber!="Invalid phone number length" && formattedNumber!="Invalid phone number"){
+        await updateContactProperty("pf_formatted_phone_number_14082001", formattedNumber, hs_object_id,
+          User.accessToken, req, User.refreshToken);
+  
+        if (propertyName) {
+          await updateContactProperty(propertyName, formattedNumber, hs_object_id, User.accessToken, req,
+            User.refreshToken);
+        }
       }
-
       res.json({
         "outputFields": {
           "Formatted_Phone_Number": formattedNumber,
