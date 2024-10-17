@@ -152,9 +152,14 @@ exports.updateAPICount = async (portalID) => {
       let returningValue = {};
       // logger.info("At packageCondition");
       const isPortalInCache = packageConstionMainCache.some(item => item.portalId === portalID);
+      //This user's package
+      const user = await User.findOne( {portalID: portalID});
+      //this user's subscription subscription
+      const subscription = await Subscription.findOne( {user: user._id});
+      const user_package = await Package.findOne( {_id: subscription.package});
+      const paymentInformation = await paymentModel.findOne({portalID:portalID})
 
         if (!isPortalInCache) {
-          const user = await User.findOne( {portalID: portalID});
           if (!user) {
             // Handle case where user is not found
              returningValue = {"portalId" : portalID, 
@@ -163,15 +168,6 @@ exports.updateAPICount = async (portalID) => {
               "canPass": false}; 
             return returningValue;
           }
-    
-          //this user's subscription subscription
-          const subscription = await Subscription.findOne( {user: user._id});
-    
-          const paymentInformation = await paymentModel.findOne({portalID:portalID})
-          // logger.info("At packageCondition subscription infos: "+ subscription);
-          //This user's package
-          const user_package = await Package.findOne( {_id: subscription.package});
-
           //pushing in the cache array
             packageConstionMainCache.push({
               portalId: portalID, 
