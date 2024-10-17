@@ -56,11 +56,11 @@ exports.phoneNumber = async (req, res) => {
   const { phoneNumber, country, country_text, hs_object_id } = req.body;
   let propertyName = req.body.propertyName;
   try {
-      const check = await packageCondition(req.body.portalID); //get portalId, totalAPICALLS, user_package.Limit, canPass here
+    const check = await packageCondition(req.body.portalID); //get portalId, totalAPICALLS, user_package.Limit, canPass here
 
-      // Fetch the user and payment info
-      const User = await userModel.findOne({ portalID: req.body.portalID });
-      const paymentInfo = await paymentModel.findOne({ portalID: req.body.portalID }).sort({ createdAt: -1 });
+    // Fetch the user and payment info
+    const User = await userModel.findOne({ portalID: req.body.portalID });
+    const paymentInfo = await paymentModel.findOne({ portalID: req.body.portalID }).sort({ createdAt: -1 });
 
     if (!check.canPass) {//!check.canPass
       return res.status(200).json({
@@ -81,13 +81,13 @@ exports.phoneNumber = async (req, res) => {
     else if (check.canPass) { //check.canPass
       await updateAPICount(req.body.portalID);
       const formattedNumber = formatPhoneNumber(phoneNumber, country, country_text);
-      
-      await updateContactProperty("pf_formatted_phone_number_14082001", formattedNumber, hs_object_id, 
+
+      await updateContactProperty("pf_formatted_phone_number_14082001", formattedNumber, hs_object_id,
         User.accessToken, req, User.refreshToken);
 
       if (propertyName) {
-        await updateContactProperty(propertyName, formattedNumber, hs_object_id, User.accessToken, req, 
-                                    User.refreshToken);
+        await updateContactProperty(propertyName, formattedNumber, hs_object_id, User.accessToken, req,
+          User.refreshToken);
       }
 
       res.json({
@@ -97,10 +97,20 @@ exports.phoneNumber = async (req, res) => {
         }
       });
     } else {
-      res.json("Update your plan");
+      res.json({
+        "outputFields": {
+          "Message": "Upgrade your plan",
+          "hs_execution_state": "SUCCESS"
+        }
+      });
     }
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    res.json({
+      "outputFields": {
+        "Message": "Invalid",
+        "hs_execution_state": "SUCCESS"
+      }
+    });
   }
 };
 
@@ -116,7 +126,7 @@ const formatPhoneNumber = (phoneNumber, country, country_text) => {
 
   // Check if the phone number length is within the valid range
   if (sanitizedPhoneNumber.length < MIN_PHONE_NUMBER_LENGTH || sanitizedPhoneNumber.length > MAX_PHONE_NUMBER_LENGTH) {
-    throw new Error('Invalid phone number length');
+    return 'Invalid phone number length'
   }
 
   let parsedNumber = parsePhoneNumberFromString(sanitizedPhoneNumber, countryCode);
@@ -130,7 +140,7 @@ const formatPhoneNumber = (phoneNumber, country, country_text) => {
     return parsedNumber.formatInternational().replace(/\s+/g, '');
   }
 
-  throw new Error('Invalid phone number');
+  return 'Invalid phone number';
 };
 
 
@@ -229,12 +239,12 @@ const checkPhoneNumber = (phoneNumber, country) => {
 exports.checkPhoneNumber = async (req, res) => {
   const { phoneNumber, country, portalID, hs_object_id, object } = req.body;
   let propertyName = req.body.propertyName;
- 
-    const check = await packageCondition(req.body.portalID); //get portalId, totalAPICALLS, user_package.Limit, canPass here
 
-    // Fetch the user and payment info
-    const User = await userModel.findOne({ portalID: req.body.portalID });
-    const paymentInfo = await paymentModel.findOne({ portalID: req.body.portalID }).sort({ createdAt: -1 });
+  const check = await packageCondition(req.body.portalID); //get portalId, totalAPICALLS, user_package.Limit, canPass here
+
+  // Fetch the user and payment info
+  const User = await userModel.findOne({ portalID: req.body.portalID });
+  const paymentInfo = await paymentModel.findOne({ portalID: req.body.portalID }).sort({ createdAt: -1 });
 
   if (!check.canPass) {
     return res.status(200).json({
@@ -267,14 +277,14 @@ exports.checkPhoneNumber = async (req, res) => {
     }
 
     const result = checkPhoneNumber(phoneNumber, country);
-    
-   
-    await updateContactProperty("pf_phone_number_quality_14082001", result, 
+
+
+    await updateContactProperty("pf_phone_number_quality_14082001", result,
       hs_object_id, User.accessToken, req, User.refreshToken);
     //  save value in users property if provided 
     if (propertyName) {
-      await updateContactProperty(propertyName, result, hs_object_id, User.accessToken, 
-                                                      req, User.refreshToken);
+      await updateContactProperty(propertyName, result, hs_object_id, User.accessToken,
+        req, User.refreshToken);
     }
     return res.status(200).json({
       "outputFields": {
@@ -344,9 +354,9 @@ exports.test = async (req, res) => {
 ///////////////TEST ROUTE END/////////////////////////
 
 
-exports.removeAllCache = async() =>{
-//   console.log(
-//     "removing CheckPhoneNumberCallCache" + JSON.stringify(CheckPhoneNumberCallCache)
-//   );
+exports.removeAllCache = async () => {
+  //   console.log(
+  //     "removing CheckPhoneNumberCallCache" + JSON.stringify(CheckPhoneNumberCallCache)
+  //   );
   CheckPhoneNumberCallCache.clear();
 }
