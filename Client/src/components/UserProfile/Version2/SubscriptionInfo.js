@@ -71,7 +71,30 @@ const SubscriptionInfo = () => {
         setStatus(paymentInfo.status);
       }
     }
-  }, [dispatch, infos, portalID, allPackageInfo]);
+  }, [dispatch, infos, portalID, allPackageInfo, packageName]);
+
+
+//   useEffect(() => {
+//   if (!infos) {
+//     dispatch(subscriptionInfoByID(portalID));
+//     dispatch(paymentInfoByEmail(portalID));
+//   }
+//   if (infos) {
+//     const filteredPackages = allPackageInfo.filter(packages => packages._id === infos.package);
+//     setPackageName(filteredPackages[0].packageName);
+//     setAPICallCount(parseInt(infos.apiCallCount) + parseInt(infos.checkPhoneNumberApiCallCount));
+//     setAPICallLimit(filteredPackages[0].Limit);
+//     setJoiningDate(infos.joiningDate);
+//     setStartDate(infos.packageStartDate);
+//     setEndDate(infos.packageEndDate);
+//     setPrice(filteredPackages[0].price);
+//     setDuration(filteredPackages[0].duration);
+//     if (paymentInfo) {
+//       setStatus(paymentInfo.status);
+//     }
+//   }
+// }, [dispatch, infos, portalID, allPackageInfo, status]); // Add `status` here
+
 
   const handleCancelSubscription = (e) => {
     e.preventDefault();
@@ -83,21 +106,38 @@ const SubscriptionInfo = () => {
     setshowPopup(false);
   };
 
-  const handleConfirmModal = (e) => {
-    setshowPopup(false);
-    //ancel subscription logic here
-    const portalID = localStorage.getItem('I8PD56?#C|NXhSgZ0KE');
-    dispatch(cancelSubscription(portalID));
+  // const handleConfirmModal = (e) => {
+  //   setshowPopup(false);
+  //   //ancel subscription logic here
+  //   const portalID = localStorage.getItem('I8PD56?#C|NXhSgZ0KE');
+  //   dispatch(cancelSubscription(portalID));
 
+  //   setStatus("cancelled");
+  //   setModalVisible(true);
+  //   //window.location.reload();
+  // };
+
+  // const handleCloseModal = () => {
+  //   setModalVisible(false);
+  // };
+
+  const handleConfirmModal = (e) => {
+    e.preventDefault();
+    setshowPopup(false);
+    
+    const portalID = localStorage.getItem('I8PD56?#C|NXhSgZ0KE');
+    
+    // Dispatch cancel subscription
+    dispatch(cancelSubscription(portalID)).then(() => {
+      // After cancelling, fetch updated subscription info
+      dispatch(subscriptionInfoByID(portalID));
+    });
+    
     setStatus("cancelled");
     setModalVisible(true);
-    //window.location.reload();
   };
 
-  const handleCloseModal = () => {
-    setModalVisible(false);
-  };
-
+  
   return (
     <div>
       <section className="subscription-section">

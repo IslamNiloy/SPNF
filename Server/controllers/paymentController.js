@@ -221,7 +221,7 @@ exports.cancel_subscription = async(req,res) =>{
     // logger.info("------------cancel_subscription paymentInfo-----------"+paymentInfo);
     // logger.info("------------cancel_subscription subscriptionCancel-----------"+subscriptionCancel);
     // logger.info("------------cancel_subscription chargeInfo-----------"+chargeInfo);
-    await updatePaymentSuccessCancel(req,res,paymentInfo._id);
+    await updatePaymentSuccessCancel(req,res,paymentInfo._id, req.params.portalID);
     res.send(subscriptionCancel);
   }catch(error){
     logger.info("----------error in cancelling subscription------------"+ error)
@@ -330,7 +330,7 @@ exports.get_payment_info_user = async (req,res) => {
   }
 }
 
-const updatePaymentSuccessCancel = async (req,res, id) => {
+const updatePaymentSuccessCancel = async (req,res, id, portalID) => {
   // logger.info("Logging at /updatePaymentSuccess");
   try {
     const payment_Info = await PaymentModel.findOne({ _id: id });
@@ -346,6 +346,19 @@ const updatePaymentSuccessCancel = async (req,res, id) => {
     },
     { new: true, upsert: false }
     );
+
+    const userInfo = await userModel.findOne({portalID:portalID });
+    const subscription_to_free1 = await subscriptionModel.findOne({user: userInfo._id})
+
+    const subscription_to_free = await subscriptionModel.findOneAndUpdate({user: userInfo._id},
+          {
+        $set: {
+          package: "66ba2cf16343bea38ef334ba",
+          apiCallCount: 0,
+          checkPhoneNumberApiCallCount: 0
+        },
+    })
+
     // logger.info("----------paymentUpdateCancel-----------"+ paymentUpdateCancel);
     return paymentUpdateCancel;
   } catch (error) {
