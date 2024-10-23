@@ -78,6 +78,7 @@ exports.phoneNumber = async (req, res) => {
       });
     }
     else if (check) { //check.canPass
+      check = false; //due to server gettign check true sometimes
       await updateAPICount(req.body.portalID);
       const formattedNumber = formatPhoneNumber(phoneNumber, country, country_text);
       
@@ -90,7 +91,7 @@ exports.phoneNumber = async (req, res) => {
             User.refreshToken);
         }
       }
-      check = false; //due to server gettign check true sometimes
+    
       res.json({
         "outputFields": {
           "Formatted_Phone_Number": formattedNumber,
