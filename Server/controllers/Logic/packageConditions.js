@@ -54,10 +54,10 @@ const Subscription = require('../../model/subscription.model');
    
       const totalAPICALLS = parseInt(subscription.apiCallCount) + parseInt(subscription.checkPhoneNumberApiCallCount)
       if(totalAPICALLS < user_package.Limit){
-        console.log("Total API calls:" + totalAPICALLS);
+        console.log("Returning true when total API is:" + totalAPICALLS);
         return true;
       }else{
-        console.log("Total API calls:" + totalAPICALLS);
+        console.log("Returning false when total API is::" + totalAPICALLS);
         return false;
       }
     }catch (e) {

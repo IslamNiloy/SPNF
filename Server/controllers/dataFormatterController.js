@@ -266,7 +266,7 @@ exports.checkPhoneNumber = async (req, res) => {
     });
   }
   else if (check) {
-    console.log("checking is fine in check phone number" + check);
+    //console.log("checking is fine in check phone number" + check);
     await CheckPhoneNumberUpdateAPICount(req.body.portalID);
     //incrementAPICount(req.body.portalID, "checkPhoneNumber");
 
