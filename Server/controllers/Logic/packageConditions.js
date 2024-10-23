@@ -52,7 +52,7 @@ const Subscription = require('../../model/subscription.model');
         return false;
       }
       
-      if(subscription){
+      if(subscription && user_package){
         const totalAPICALLS = parseInt(subscription.apiCallCount) + parseInt(subscription.checkPhoneNumberApiCallCount)
         console.log("Returning totalAPICALLS count:" + totalAPICALLS);
         if(totalAPICALLS < user_package.Limit){
