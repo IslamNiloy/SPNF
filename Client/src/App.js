@@ -20,10 +20,10 @@ function App() {
       <Routes>
         <Route path="/" element={<HomeScreen />} exact/>
       
-        {portalID &&   <Route path="/welcome" element={<WelcomeScreen />} exact/>}
+      <Route path="/welcome" element={<WelcomeScreen />} exact/>
         <Route path="/all-pricing-plans" element={<PricingScreen />} exact/>
         {/*<Route path="/payment" element={<PaymentScreen />} exact/>*/}
-       {portalID && <Route path="/profile" element={<ProfileScreen />} exact/>}
+      <Route path="/profile" element={<ProfileScreen />} exact/>
   
         
         <Route path="/custom" element={<CustomUserScreen/>} exact/>
