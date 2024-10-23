@@ -51,16 +51,22 @@ const Subscription = require('../../model/subscription.model');
       if (today >  (subscription.packageEndDate)) {
         return false;
       }
-   
-      const totalAPICALLS = parseInt(subscription.apiCallCount) + parseInt(subscription.checkPhoneNumberApiCallCount)
-      console.log("Returning totalAPICALLS count:" + totalAPICALLS);
-      if(totalAPICALLS < user_package.Limit){
-        console.log("Returning true when total API is:" + totalAPICALLS);
-        return true;
+      
+      if(subscription){
+        const totalAPICALLS = parseInt(subscription.apiCallCount) + parseInt(subscription.checkPhoneNumberApiCallCount)
+        console.log("Returning totalAPICALLS count:" + totalAPICALLS);
+        if(totalAPICALLS < user_package.Limit){
+          console.log("Returning true when total API is:" + totalAPICALLS);
+          return true;
+        }else{
+          console.log("Returning false when total API is::" + totalAPICALLS);
+          return false;
+        }
       }else{
-        console.log("Returning false when total API is::" + totalAPICALLS);
+        console.log("Returning false due to subscription infor not found");
         return false;
       }
+ 
     }catch (e) {
       logger.error("error in condition function: " + e);
     }
