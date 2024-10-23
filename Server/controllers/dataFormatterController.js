@@ -57,9 +57,6 @@ exports.phoneNumber = async (req, res) => {
   let propertyName = req.body.propertyName;
   try {
     const check = await packageCondition(req.body.portalID); //get portalId, totalAPICALLS, user_package.Limit, canPass here
-
-    console.log("check of package condtion: " + check);
-
     // Fetch the user and payment info
     const User = await userModel.findOne({ portalID: req.body.portalID });
     const paymentInfo = await paymentModel.findOne({ portalID: req.body.portalID }).sort({ createdAt: -1 });
