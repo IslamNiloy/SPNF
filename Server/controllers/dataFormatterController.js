@@ -56,7 +56,7 @@ exports.phoneNumber = async (req, res) => {
   const { phoneNumber, country, country_text, hs_object_id } = req.body;
   let propertyName = req.body.propertyName;
   try {
-    const check = await packageCondition(req.body.portalID); //get portalId, totalAPICALLS, user_package.Limit, canPass here
+    let check = await packageCondition(req.body.portalID); //get portalId, totalAPICALLS, user_package.Limit, canPass here
     // Fetch the user and payment info
     const User = await userModel.findOne({ portalID: req.body.portalID });
     const paymentInfo = await paymentModel.findOne({ portalID: req.body.portalID }).sort({ createdAt: -1 });
@@ -90,6 +90,7 @@ exports.phoneNumber = async (req, res) => {
             User.refreshToken);
         }
       }
+      check = false; //due to server gettign check true sometimes
       res.json({
         "outputFields": {
           "Formatted_Phone_Number": formattedNumber,
