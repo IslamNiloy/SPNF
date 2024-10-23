@@ -9,8 +9,9 @@ import './PricingCards.css'; // Import the CSS file
 import { subscriptionInfoByID, cancelSubscription } from "../../action/subscriptionAction";
 import { paymentInfoByEmail } from "../../action/paymentAction";
 import CancelModal from '../UserProfile/CancelModal';
+import { useLocation } from 'react-router-dom';
 
-const PricingCard = ({ id, planName, monthlyPrice, yearlyPrice, limit, countries, buttonText, isPopular, isChosen, isMonthly }) => {
+const PricingCard = ({ id, planName, monthlyPrice, yearlyPrice, limit, countries, buttonText, isPopular, isChosen, isMonthly, pathName }) => {
   const today = new Date();
   const portalID = localStorage.getItem('I8PD56?#C|NXhSgZ0KE');
   const [old_price, setOld_Price] = useState("");
@@ -41,9 +42,8 @@ const PricingCard = ({ id, planName, monthlyPrice, yearlyPrice, limit, countries
       dispatch(subscriptionInfoByID(portalID));
       dispatch(paymentInfoByEmail(portalID));
     }
-
     if (infos) {
-
+     
       const userPackage = allPackageInfo.filter(pkg => pkg._id === infos.package);
       setUserPackageName(userPackage[0].packageName);
 
@@ -183,6 +183,13 @@ const PricingCard = ({ id, planName, monthlyPrice, yearlyPrice, limit, countries
           </ul>
 
           {
+            pathName == "/all-pricing-plans" ?
+            <Link to={`${BackendAPI}/install`}>
+            <button className={`plan-button ${isChosen ? 'chosen' : ''}`}>
+              Get Your Formatter
+            </button>
+          </Link>
+            :
             !portalID ?
               <Link to={`${BackendAPI}/install`}>
                 <button className={`plan-button ${isChosen ? 'chosen' : ''}`}>
@@ -286,6 +293,7 @@ const PricingCard = ({ id, planName, monthlyPrice, yearlyPrice, limit, countries
 };
 
 const PricingCards = () => {
+  const location = useLocation(); 
   const dispatch = useDispatch();
   const [isMonthly, setIsMonthly] = useState(true); // State for toggling between monthly/yearly
 
@@ -347,6 +355,7 @@ const PricingCards = () => {
                 isPopular={pkg.mostPopular}
                 isChosen={pkg.isChosen}
                 isMonthly={isMonthly}
+                pathName={location.pathname}
               />
             ))}
         </div>
