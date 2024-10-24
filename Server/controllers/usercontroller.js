@@ -8,10 +8,10 @@ exports.insertIntoUser = async (user_info) => {
         // console.log("exist:",user_info)
         if (userInfo) {
             // If the user exists, update their information
-            userInfo.name = user_info.name || "";
-            userInfo.companyName = user_info.companyName || "";
-            userInfo.email = user_info.user || User.email;
-            userInfo.phoneNumber = user_info.phoneNumber || "";
+            // userInfo.name = user_info.name || "";
+            // userInfo.companyName = user_info.companyName || "";
+            // userInfo.email = user_info.user || User.email;
+            // userInfo.phoneNumber = user_info.phoneNumber || "";
             userInfo.countryCode = user_info.countryCode || "";
             userInfo.accountType = user_info.accountType || "";
             userInfo.timeZone = user_info.timeZone || "";
