@@ -100,7 +100,7 @@ const Subscription = require('../../model/subscription.model');
           console.log('Subscription not found');
           return;
         }
-        
+        return subscriptionInfoUpdate;
         // console.log('Updated subscription:', subscriptionInfoUpdate);
       } catch (e) {
         console.error('Error in condition function:', e);
