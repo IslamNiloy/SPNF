@@ -23,7 +23,6 @@ const logWithDetails = (level, message, req) => {
 
 
 exports.install = async (req, res) => {
-  //here got the packageID in req param and send it to /oauth-callback/packageID 
   const authUrl =
         'https://app.hubspot.com/oauth/authorize' +
         `?client_id=${encodeURIComponent(process.env.CLIENT_ID)}` +
