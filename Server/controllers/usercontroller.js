@@ -10,7 +10,7 @@ exports.insertIntoUser = async (user_info) => {
             // If the user exists, update their information
             // userInfo.name = user_info.name || "";
             // userInfo.companyName = user_info.companyName || "";
-            // userInfo.email = user_info.user || User.email;
+             userInfo.email = user_info.user || User.email;
             // userInfo.phoneNumber = user_info.phoneNumber || "";
             userInfo.countryCode = user_info.countryCode || "";
             userInfo.accountType = user_info.accountType || "";

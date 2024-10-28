@@ -2,14 +2,14 @@
 import React from 'react';
 import './Modal.css';
 
-const CancelModal = ({ show, handleClose, handleConfirm }) => {
+const CancelModal = ({ show, handleClose,packageToBeChosen, handleConfirm }) => {
   return (
     <div className={`modal ${show ? 'show' : ''}`}>
       <div className="modal-content">
         <h2>Are you sure?</h2>
-        <p>Do you really want to cancel your subscription?</p>
+        <p>Cancel your current subscription to Continue</p>
         <div className="modal-actions">
-          <button onClick={(e)=>handleConfirm(e)} className="modal-confirm">
+          <button onClick={(e)=>handleConfirm(e,packageToBeChosen)} className="modal-confirm">
             Yes
           </button>
           <button onClick={handleClose} className="modal-cancel">

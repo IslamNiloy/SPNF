@@ -38,7 +38,9 @@ const ProposedPackageSection = () => {
                 >
                     Yearly
                 </button>
+                
             </div>
+            
 
             <div className="package-container">
             {error ? (

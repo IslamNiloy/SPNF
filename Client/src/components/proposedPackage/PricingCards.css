@@ -13,6 +13,11 @@
   font-size: 1.5rem;
 }
 
+.choose_plan{
+  background: rgba(100, 186, 226, 0.25) !important;
+  color: #64bae2 !important;
+}
+
 .dollar {
   color: #000;
   font-size: 20px;
@@ -194,7 +199,9 @@ hr{
 
 .proxy_div{
   flex: 1;
-  background: #000;
+  float: right;
+  display: flex;
+  justify-content: flex-end;
 }
 
 .pricing-title {
@@ -204,6 +211,11 @@ hr{
 
 
 @media (max-width: 768px) {
+
+  .proxy_div{
+    margin-bottom: 30px;
+  }
+  
   .title-div {
     display: flex;
     flex-direction: column;
