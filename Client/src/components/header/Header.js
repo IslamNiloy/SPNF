@@ -1,14 +1,38 @@
 import React, { useState } from 'react';
 import './Header.css';
-import { Link } from 'react-router-dom';
-import { Link as ScrollLink } from 'react-scroll';
+import { Link, useNavigate } from 'react-router-dom';
+import { scroller, Link as ScrollLink } from 'react-scroll';
 import { BackendAPI } from '../../api/server';
 import { useLocation } from 'react-router-dom';
 
 
 const Header = () => {
     const [dropdownOpen, setDropdownOpen] = useState(false);
+    const navigate = useNavigate();
     const location = useLocation();
+  
+    const handleScrollTo = (target) => {
+      // If already on the homepage, scroll directly
+      if (location.pathname === "/") {
+        scroller.scrollTo(target, {
+          smooth: true,
+          duration: 500,
+          offset: -10, // Adjust for headers if necessary
+        });
+      } else {
+        console.log("target= " + target);
+        // Navigate to homepage first, then scroll
+        navigate("/");
+        setTimeout(() => {
+          scroller.scrollTo(target, {
+            smooth: true,
+            duration: 500,
+            offset: -50,
+          });
+        }, 100); // Delay to allow routing to complete
+      }
+    };
+  
 
     // Function to extract query parameters from the URL
     const queryParams = new URLSearchParams(location.search);
@@ -45,10 +69,18 @@ const Header = () => {
             </div>
             <nav className={isMenuOpen ? 'nav-links active' : 'nav-links'}>
                 <ul>
-                    <li><ScrollLink to="features" smooth={true} duration={500}>Features</ScrollLink></li>
-                    <li><ScrollLink to="howToUse" smooth={true} duration={500}>How To Use</ScrollLink></li>
-                    <li><ScrollLink to="Pricing" smooth={true} duration={500}>Pricing</ScrollLink></li>
-                    <li><ScrollLink to="FAQs" smooth={true} duration={500}>FAQs</ScrollLink></li>
+                <li>
+                    <Link to="/" onClick={() => handleScrollTo("features")}>Features</Link>
+                </li>
+                <li>
+                    <Link to="/" onClick={() => handleScrollTo("howToUse")}>How To Use</Link>
+                </li>
+                <li>
+                    <Link to="/" onClick={() => handleScrollTo("PricingCards")}>Pricing</Link>
+                </li>
+                <li>
+                    <Link to="/" onClick={() => handleScrollTo("FAQs")}>FAQs</Link>
+                </li>
                 </ul>
                 {portalID || portalIDFromWeb ? (
                     <div className="logout-container">
