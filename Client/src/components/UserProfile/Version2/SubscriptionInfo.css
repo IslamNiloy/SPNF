@@ -68,8 +68,9 @@
     transition: 0.3s ease-in-out;
   }
   
-  .change-plan-btn:hover {
+  .change-plan-btn:hover, .cancel_subscription:hover {
     background: linear-gradient(180deg, #04587A 0%, #64BAE2 100%);
+    color: #ffffff;
   }
   
   .subscription-info {
@@ -111,8 +112,8 @@
 
   .cancel_subscription{
     background-color: #ffffff;
-    color: rgb(253, 147, 147);
-    border: 1px solid  rgb(253, 147, 147);
+    color: #64bae2;
+    border-color: #64bae2;
     padding: 10px 15px;
     border-radius: 8px;
     margin-top: 5px;
@@ -120,10 +121,7 @@
     font-size: 1rem;
   }
 
-  .cancel_subscription:hover{
-    background-color: #bb2124; /* Darker blue on hover */
-    color: #ddd;
-  }
+
   
   
   /* Mobile Responsive */

@@ -281,9 +281,9 @@ const SubscriptionInfo = () => {
         </div>
       </section>
 
-      {changePlan &&
+     
         <PricingCards id="toggleplanChangeOptions" />
-      }
+      
     </div>
   );
 };

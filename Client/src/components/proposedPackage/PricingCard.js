@@ -253,7 +253,7 @@ const PricingCard = ({ id, planName, monthlyPrice, yearlyPrice, limit, countries
                         Chosen Plan
                       </button>
                   ) :
-                  status == "cancelled" && planName == "Free" ?
+                  status == "cancelled" && planName == "Free" && isMonthly?
                       <button className={`plan-button choose_plan ${isChosen ? 'chosen choose_plan' : ''}`}>
                         Chosen Plan
                       </button>
