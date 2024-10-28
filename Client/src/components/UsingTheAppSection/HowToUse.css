@@ -13,6 +13,11 @@
   .main-title .highlight {
     color: #6ABAE2; /* Light blue for "Use" */
   }
+
+  .steps-container::-webkit-scrollbar,
+.video-container::-webkit-scrollbar {
+  display: none; /* For Chrome, Safari, and Opera */
+}
   
   /* Section container */
   .how-to-use-section {
@@ -37,7 +42,7 @@
   .steps-container {
     flex: 0 0 45%; /* Takes 45% of the width */
     max-height: 500px; /* Adjusted height */
-    overflow-y: auto;
+    overflow-y: scroll;
     display: flex;
     flex-direction: column;
     gap: 20px;
