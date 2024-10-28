@@ -111,8 +111,26 @@ const UserProfile = () => {
             }
 
           </div>
+
+
+          <div className="profile-item">
+            <span className="item-title">Phone Number</span>
+            {isEdit?
+            <span className='item-value'>
+                <input
+                  type="text"
+                  name="phoneNumber"
+                  value={userInfo?phoneNumber:""}
+                  onChange={(e) => setPhoneNumber(e.target.value)}
+                />
+            </span>
+            :
+            <span className="item-value">{userInfo?phoneNumber:""}</span>
+            }
+
+          </div>
           
-          <div className="profile-item split">
+          {/* <div className="profile-item">
             <div>
               <span className="item-title">Phone Number </span>
               {isEdit?
@@ -124,7 +142,7 @@ const UserProfile = () => {
                     onChange={(e) => setPhoneNumber(e.target.value)}
                   />
                 </span>:
-                  ""
+                  <span className="item-value">{userInfo?phoneNumber:""}</span>
               }
              
             </div>
@@ -132,7 +150,7 @@ const UserProfile = () => {
               
               <span className="item-value">{userInfo?phoneNumber:""}</span>
             </div>
-          </div>
+          </div> */}
           
           <div className="profile-item">
             <span className="item-title">Email</span>
