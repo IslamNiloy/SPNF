@@ -29,7 +29,6 @@ exports.insertIntoUser = async (user_info) => {
             logger.info(user_info.hub_id + ' already exist');
             return "Cannot Insert data into User model";
         }
-            //console.log(`user with ${accInfo.email} already exist`);
     } catch (error) {
         //console.log('Error inserting USER document:', error);
         return (error);

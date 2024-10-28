@@ -15,6 +15,8 @@ import Testimonials from '../components/TestimonialsSection/TestimonialsSection'
 import HowToUseSection from '../components/UsingTheAppSection/HowToUseSection';
 import UsingTheAppSection from '../components/UsingTheAppSection/UsingTheAppSection';
 import WorkflowSection from '../components/WorkFlowFunctionality/WorkflowSection';
+import HubSpotMeeting from '../components/Meeting/MeetingFrame';
+
 
 const HomeSreen = () => {
     return (
@@ -50,6 +52,7 @@ const HomeSreen = () => {
             <Testimonials />
             <PricingPlan />
             <FAQ />
+            <HubSpotMeeting/>
             <Footer />
         </div>
     );

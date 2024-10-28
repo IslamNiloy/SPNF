@@ -24,6 +24,12 @@
     margin-top: 80px;
 }
 
+.book-a-meeting{
+    border-color:  #64bae2 !important;
+    color: #64bae2 !important;
+    background:rgba(255, 255, 255, 0.5) !important;
+}
+
 .hero-content h1 {
     font-size: 3.8em;
     margin-top: 15px;
@@ -109,8 +115,9 @@
     transition: 0.3s ease-in-out;
 }
 
-.hero-btn2:hover {
-    background: linear-gradient(180deg, #04587A 0%, #64BAE2 100%);
+.hero-btn2:hover, .book-a-meeting:hover {
+    background: linear-gradient(180deg, #04587A 0%, #64BAE2 100%) !important;
+    color: #ffffff !important;
 }
 
 .doc-btn {

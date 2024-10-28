@@ -28,6 +28,15 @@ const HeroSection = () => {
                                 Get Your Formatter Now!
                             </button>
                         </Link>
+
+
+
+                        <ScrollLink to="hubspotMeeting" smooth={true} duration={500}>
+                            <button className="btn hero-btn2 book-a-meeting">
+                                Book A Meeting Now!
+                            </button>
+                        </ScrollLink>
+                    
                     </div>
                 </div>
             </section>
