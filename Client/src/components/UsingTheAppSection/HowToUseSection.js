@@ -1,5 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
 import './HowToUse.css';
+import { Link } from 'react-router-dom';
+import { BackendAPI } from '../../api/server';
+import { Link as ScrollLink } from 'react-scroll';
 
 const HowToUseSection = () => {
   const [currentStep, setCurrentStep] = useState(0);
@@ -55,9 +58,24 @@ const HowToUseSection = () => {
 
   return (
     <div className="how-to-use-dev" id="howToUse">
+          
       <div className="main-title">
         <h2>How to <span className="highlight">Use the App</span></h2>
+        <div className="buttons flex_two_btn" style={{margin: "-10px 0px -10px 0px"}}>
+        <Link to={`${BackendAPI}/install`}>
+            <button className="btn hero-btn2">
+                Get Your Formatter Now!
+            </button>
+        </Link>
+
+        <ScrollLink to="hubspotMeeting" smooth={true} duration={500}>
+            <button className="btn hero-btn2 book-a-meeting">
+                Book A Meeting Now!
+            </button>
+        </ScrollLink>  
       </div>
+      </div>
+      
       <section className="how-to-use-section">
         <div
           className="steps-container"

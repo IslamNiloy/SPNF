@@ -37,19 +37,18 @@ const PreferredChoice = () => {
 
       {/* Call-to-action button */}
       <div className="buttons flex_two_btn">
-                        <Link to={`${BackendAPI}/install`}>
-                            <button className="btn hero-btn2">
-                                Get Your Formatter Now!
-                            </button>
-                        </Link>
+        <Link to={`${BackendAPI}/install`}>
+            <button className="btn hero-btn2">
+                Get Your Formatter Now!
+            </button>
+        </Link>
 
-                        <ScrollLink to="hubspotMeeting" smooth={true} duration={500}>
-                            <button className="btn hero-btn2 book-a-meeting">
-                                Book A Meeting Now!
-                            </button>
-                        </ScrollLink>
-                    
-                    </div>
+        <ScrollLink to="hubspotMeeting" smooth={true} duration={500}>
+            <button className="btn hero-btn2 book-a-meeting">
+                Book A Meeting Now!
+            </button>
+        </ScrollLink>  
+      </div>
     </section>
   );
 };
