@@ -2,6 +2,7 @@ import React from 'react';
 import './PreferredChoice.css'; // Import the CSS file for styling
 import { BackendAPI } from "../../api/server";
 import {Link } from 'react-router-dom';
+import { Link as ScrollLink } from 'react-scroll';
   
 const PreferredChoice = () => {
   const companies = [
@@ -35,11 +36,20 @@ const PreferredChoice = () => {
       </div>
 
       {/* Call-to-action button */}
-      <div className="cta-container">
-        <Link to={`${BackendAPI}/install`}>
-          <button className="cta-button">Get Your Formatter Now!</button>
-        </Link>
-      </div>
+      <div className="buttons flex_two_btn">
+                        <Link to={`${BackendAPI}/install`}>
+                            <button className="btn hero-btn2">
+                                Get Your Formatter Now!
+                            </button>
+                        </Link>
+
+                        <ScrollLink to="hubspotMeeting" smooth={true} duration={500}>
+                            <button className="btn hero-btn2 book-a-meeting">
+                                Book A Meeting Now!
+                            </button>
+                        </ScrollLink>
+                    
+                    </div>
     </section>
   );
 };

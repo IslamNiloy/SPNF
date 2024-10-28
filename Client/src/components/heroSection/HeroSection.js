@@ -22,14 +22,12 @@ const HeroSection = () => {
                     <h1 className='heading_hero_main'><span style={{ color: "#000000" }}>Format</span> HubSpot Phone Numbers 
                     <span style={{ color: "#000000" }}> with Ease</span></h1>
                     <p>Automatically format phone numbers from any country, from your HubSpot portal!</p>
-                    <div className="buttons">
+                    <div className="buttons flex_two_btn">
                         <Link to={`${BackendAPI}/install`}>
                             <button className="btn hero-btn2">
                                 Get Your Formatter Now!
                             </button>
                         </Link>
-
-
 
                         <ScrollLink to="hubspotMeeting" smooth={true} duration={500}>
                             <button className="btn hero-btn2 book-a-meeting">
