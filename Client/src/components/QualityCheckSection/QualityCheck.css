@@ -51,9 +51,12 @@
   }
   
   .quality-check-features h3 {
-    font-size: 1.4rem;
-    color: #003366;
-    margin-bottom: 10px;
+    color:#001b34;
+    text-align: left;
+    font-family: "HelveticaNeue-Medium", sans-serif;
+    font-size: 30px;
+    line-height: 100%;
+    font-weight: bold;
   }
   
   .quality-check-features p {

@@ -15,7 +15,7 @@ const WorkflowSection = () => {
           another platform! You can just add a simple action to a HubSpot workflow, and
           Smart Phone Number Formatter will take care of all your number formatting
           issues!
-          <br style={{marginBottom: "8px"}}/>
+          <br/> <br/>
           
           Whether you&#039;re dealing with incoming leads, customer data updates, or
           bulk data imports, our app ensures that every phone number is automatically
@@ -24,11 +24,11 @@ const WorkflowSection = () => {
           </p>
         <div className="workflow-features">
           <h3 style={{marginBottom: "-5px"}}>Automated Operations</h3>
-          <p className="workflow-description" style={{marginBottom: "-5px"}}>You’ll never have to manually format phone numbers anymore. So you’ll reduce
+          <p className="workflow-description" style={{marginBottom: "-25px"}}>You’ll never have to manually format phone numbers anymore. So you’ll reduce
           the risk of errors, and make your HubSpot work more efficiently.</p>
           <hr />
           <h3 style={{marginBottom: "-5px"}}>Customisable Triggers and Actions</h3>
-          <p className="workflow-description" style={{marginBottom: "-5px"}}> Set up triggers based on specific actions, such as new contact creation or
+          <p className="workflow-description" style={{marginBottom: "-25px"}}> Set up triggers based on specific actions, such as new contact creation or
           data import, to automatically format phone numbers in real-time.</p>
           <hr />
           <h3 style={{marginBottom: "-5px"}}>Enhanced Data Consistency</h3>
