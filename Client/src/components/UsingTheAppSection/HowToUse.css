@@ -22,11 +22,12 @@
   /* Section container */
   .how-to-use-section {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
-    padding: 20px;
+    padding-left: 40px;
+    padding-right: 40px;
     background-color: #f2faff;
-    max-width: 1200px;
+    max-width: 1600px;
     margin: 0 auto;
   }
 
@@ -46,7 +47,8 @@
     display: flex;
     flex-direction: column;
     gap: 20px;
-    padding-right: 10px; /* For space between scrollbar and content */
+    margin-right: 0px;
+    padding-right: 40px; /* For space between scrollbar and content */
   }
 
   .step-label_sub{
@@ -115,7 +117,7 @@
   /* Video container */
   .video-container {
     flex: 0 0 50%; /* Takes 50% of the width */
-    padding: 10px;
+    padding: 0px;
   }
   
   iframe {
@@ -162,6 +164,10 @@
       margin-top: 5px;
     }
     #mobile_disp_none{
+      display: none;
+    }
+
+    .hiddenFrame{
       display: none;
     }
   }

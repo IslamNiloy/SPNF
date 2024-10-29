@@ -42,8 +42,8 @@ const CustomUserScreen = () => {
             <Header />
             <CustomUser />
             <PricingPlan />
-            <FeaturesAndBenefits />
-            <FAQ />
+            {/* <FeaturesAndBenefits />
+            <FAQ /> */}
             <Footer />
         </div>
     );

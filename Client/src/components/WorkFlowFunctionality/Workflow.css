@@ -2,11 +2,15 @@
 
 .workflow-container {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
-    padding: 50px;
-    gap: 15px;
+    padding: 10px 30px 10px 30px;
+    gap: 60px;
     background-color: #ffffff; /* Optional light background color */
+  }
+
+  .header-btns-automate-formatting{
+    padding: 0px;
   }
 
   .workflow-container hr{
@@ -36,8 +40,8 @@
 
   .image-wrapper {
     position: relative;
-    width: 600px;
-    height: 500px;
+    width: 55%;
+    height: 300px;
   }
   
   .image-back img {
@@ -102,6 +106,10 @@
     }
   }
   @media (max-width: 768px) {
+    .header-btns-automate-formatting{
+      font-size: 16px;
+    }
+
     .image-wrapper {
       position: relative;
       width: 100%;

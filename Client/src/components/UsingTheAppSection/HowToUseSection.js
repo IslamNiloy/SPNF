@@ -105,6 +105,7 @@ const HowToUseSection = () => {
             position: 'sticky',
             top: '20px', // Adjust this value as needed
             height: '350px',
+            
           }}
         >
           <iframe
@@ -128,7 +129,7 @@ const HowToUseSection = () => {
         <iframe
             width="100%"
             height="100%"
-
+            className='hiddenFrame'
             title="YouTube video player"
             frameBorder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -139,7 +140,7 @@ const HowToUseSection = () => {
         <iframe
             width="100%"
             height="100%"
-          
+            className='hiddenFrame'
             title="YouTube video player"
             frameBorder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -150,7 +151,7 @@ const HowToUseSection = () => {
         <iframe
             width="100%"
             height="100%"
-           
+            className='hiddenFrame'
             title="YouTube video player"
             frameBorder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
