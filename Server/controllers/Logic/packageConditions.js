@@ -93,36 +93,46 @@ exports.updateAPICount = async (portalID) => {
     check phone number API checking codingtion starts
   */
 
-    exports.CheckPhoneNumberUpdateAPICount = async (portalID) => {
-      try {
-        // Find the user by portalID
-        // logger.info("---------------------logging at CheckPhoneNumberUpdateAPICount start-------------------");
-        // logger.info("Portal id: "+ portalID);
-        const user = await User.findOne({ portalID: portalID });
-        // logger.info("---------------------logging at CheckPhoneNumberUpdateAPICount update API Count end-------------------");
-        if (!user) {
-          console.log('User not found in updateAPICount');
-          return;
-        }
-        
-        // Find the subscription and update the apiCallCount
-        const subscriptionInfoUpdate = await Subscription.findOneAndUpdate(
-          { user: user._id },
-          { $inc: { checkPhoneNumberApiCallCount: 1 , checkPhoneNumberTotalApiCallCount: 1} }, // Increment apiCallCount by 1 //total also increase
-          { new: true, upsert: false }  // upsert: false ensures it won't create a new document
-        );
+    const phoneNumberCountBuffer = {};  // In-memory buffer for CheckPhoneNumberUpdateAPICount
+    const PHONE_NUMBER_FLUSH_INTERVAL = 5000;  // Flush interval for CheckPhoneNumberUpdateAPICount
     
-        if (!subscriptionInfoUpdate) {
-          console.log('Subscription not found');
-          return;
+    // Periodically flush buffer to database for CheckPhoneNumberUpdateAPICount
+    setInterval(async () => {
+        for (const [userId, counts] of Object.entries(phoneNumberCountBuffer)) {
+            try {
+                await Subscription.findOneAndUpdate(
+                    { user: userId },
+                    { $inc: { checkPhoneNumberApiCallCount: counts.apiCalls, checkPhoneNumberTotalApiCallCount: counts.totalApiCalls } },
+                    { new: true, upsert: false }
+                );
+                delete phoneNumberCountBuffer[userId];  // Clear buffer for the user after updating
+            } catch (error) {
+                console.error(`Failed to update user ${userId} in CheckPhoneNumberUpdateAPICount:`, error);
+            }
         }
-        return subscriptionInfoUpdate;
-        // console.log('Updated subscription:', subscriptionInfoUpdate);
-      } catch (e) {
-        console.error('Error in condition function:', e);
-      }
+    }, PHONE_NUMBER_FLUSH_INTERVAL);
+    
+    exports.CheckPhoneNumberUpdateAPICount = async (portalID) => {
+        try {
+            // Find the user by portalID
+            const user = await User.findOne({ portalID: portalID });
+            if (!user) {
+                console.log('User not found in CheckPhoneNumberUpdateAPICount');
+                return;
+            }
+    
+            // Buffer API count increments for the user
+            if (!phoneNumberCountBuffer[user._id]) {
+                phoneNumberCountBuffer[user._id] = { apiCalls: 0, totalApiCalls: 0 };
+            }
+            phoneNumberCountBuffer[user._id].apiCalls += 1;
+            phoneNumberCountBuffer[user._id].totalApiCalls += 1;
+    
+        } catch (error) {
+            console.error('Error in CheckPhoneNumberUpdateAPICount function:', error);
+        }
     };
-  
+    
   
   /*  
     check phone number API checking condition ends
