@@ -24,13 +24,13 @@ const WorkflowSection = () => {
           </p>
         <div className="workflow-features">
           <h3 style={{marginBottom: "-5px"}}>Automated Operations</h3>
-          <p className="workflow-description" style={{marginBottom: "-25px"}}>You’ll never have to manually format phone numbers anymore. So you’ll reduce
+          <p className="workflow-description">You’ll never have to manually format phone numbers anymore. So you’ll reduce
           the risk of errors, and make your HubSpot work more efficiently.</p>
-          <hr />
+          <hr style={{marginBottom: "-10px"}}/>
           <h3 style={{marginBottom: "-5px"}}>Customisable Triggers and Actions</h3>
-          <p className="workflow-description" style={{marginBottom: "-25px"}}> Set up triggers based on specific actions, such as new contact creation or
+          <p className="workflow-description"> Set up triggers based on specific actions, such as new contact creation or
           data import, to automatically format phone numbers in real-time.</p>
-          <hr />
+          <hr style={{marginBottom: "-10px"}}/>
           <h3 style={{marginBottom: "-5px"}}>Enhanced Data Consistency</h3>
           <p className="workflow-description" style={{marginBottom: "-5px"}}>The app ensures that all phone numbers across your CRM are consistently
           formatted, improving the accuracy of your communications and reporting.</p>

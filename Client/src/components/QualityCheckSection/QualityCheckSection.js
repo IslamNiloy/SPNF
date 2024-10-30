@@ -39,14 +39,14 @@ const QualityCheckSection = () => {
 
         <div className="quality-check-features" style={{marginBottom: "-12px"}}>
           <h3 style={{marginBottom: "-12px"}}>Comprehensive Error Detection</h3>
-          <p className="workflow-description" style={{marginBottom: "-12px"}}>Generate reports that identify phone numbers with incorrect or missing country
+          <p className="workflow-description">Generate reports that identify phone numbers with incorrect or missing country
             codes, invalid characters within the property, too short or too long phone
             numbers, and other common issues.</p>
-          <hr />
+            <hr style={{marginBottom: "-10px"}}/>
           <h3 style={{marginBottom: "-12px"}}>Data Quality Insights</h3>
-          <p className="workflow-description" style={{marginBottom: "-12px"}}> Get a clear overview of your data&#039;s health with visual representations of
+          <p className="workflow-description"> Get a clear overview of your data&#039;s health with visual representations of
             common misformatting issues, helping you take corrective action.</p>
-          <hr />
+            <hr style={{marginBottom: "-10px"}}/>
           <h3 style={{marginBottom: "-12px"}}>Actionable Intelligence</h3>
           <p className="workflow-description" style={{marginBottom: "-12px"}}>Use these reports to refine your data entry processes, update training for
           your team, or even adjust your CRM workflows to minimise future errors.</p>
