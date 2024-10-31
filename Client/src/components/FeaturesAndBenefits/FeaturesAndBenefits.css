@@ -1,12 +1,12 @@
 /* Features.css */
 
-h1{
+.features_and_benefites{
     color: #6ABAE2;
+    margin-top: 40px;
 }
 .features-container-main{
     align-items: center;
     text-align: center;
-    margin-top: 0px;
     padding: 30px;
     background-color: #EAF5FB ;
 }
@@ -16,7 +16,6 @@ h1{
   align-items: center;
   gap: 20px;
   padding: 20px;
-  background-color: #f0f8ff; /* Optional background color */
 }
 
 .feature-card {
@@ -24,9 +23,9 @@ h1{
   border-radius: 10px;
   padding: 20px;
   width: 22%;
-  height: 180px;
+  height: 190px;
+  cursor: pointer;
   text-align: left; /* Ensure everything is left-aligned */
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease;
 }
 
@@ -45,16 +44,21 @@ h1{
 }
 
 .feature-title {
-  font-size: 18px;
-  font-weight: bold;
-  color: #003366;
-  margin-bottom: 10px;
+  color: #001b34;
+  text-align: left;
+  font-family: "HelveticaNeue-Medium", sans-serif;
+  font-size: 20px;
+  line-height: 100%;
+  font-weight: 700;
 }
 
 .feature-description {
-  font-size: 14px;
-  color: #666666;
-  line-height: 1.5;
+  color: rgba(0, 27, 52, 0.75);
+  text-align: left;
+  font-family: "HelveticaNeue-Regular", sans-serif;
+  font-size: 17px;
+  line-height: 140%;
+  font-weight: 400;
 }
 
 /* Media query for mobile devices (max-width: 768px) */

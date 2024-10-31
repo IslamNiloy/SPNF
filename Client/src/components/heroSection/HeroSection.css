@@ -111,9 +111,12 @@
     border-radius: 5px;
     background-color:#6ABAE2;
     color: #ffffff;
-    font-weight: 500;
-    padding: 15px 30px;
+    padding: 18px 40px;
     transition: 0.3s ease-in-out;
+    font-family: "HelveticaNeue-Medium", sans-serif;
+    font-size: 21px;
+    font-style: normal;
+    font-weight: 500;
 }
 
 .hero-btn2:hover, .book-a-meeting:hover {

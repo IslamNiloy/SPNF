@@ -209,8 +209,8 @@ const PricingCard = ({ id, planName, monthlyPrice, yearlyPrice, limit, countries
         {
           pathName == "/all-pricing-plans" ?
           <Link to={`${BackendAPI}/install`}>
-          <button className={`plan-button ${isChosen ? 'chosen' : ''}`}>
-            Get Your Formatter
+          <button className={`plan-button hero-btn2 ${isChosen ? 'chosen' : ''}`}>
+            Get Your Formatter Now!
           </button>
         </Link>
           :
@@ -358,8 +358,8 @@ const PricingCards = () => {
           {!portalID &&
             <div>
             <Link to={`${BackendAPI}/install`}>
-                  <button className={`plan-button`} style={{maxWidth: "200px"}}>
-                    Get Your Formatter
+                  <button className={`hero-btn2`}>
+                  Get Your Formatter Now!
               </button>
             </Link>
             </div>

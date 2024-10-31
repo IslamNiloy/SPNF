@@ -3,6 +3,8 @@
 .faq-section {
     padding: 10px 20px;
     padding-bottom: 100px;
+    margin-top: 35px;
+    margin-bottom: 30px;
     background-color: #ffffff;
     text-align: center;
   }
@@ -33,24 +35,26 @@
     justify-content: space-between;
     align-items: center;
     cursor: pointer;
-    font-size: 1.2rem;
-    font-weight: 500;
   }
   
   .faq-question span{
    color: #001b34;
    font-family: "HelveticaNeue-Medium", sans-serif;
-    font-size: 18px;
+    font-size: 20px;
     line-height: 100%;
-    font-weight: 500;
+    font-weight: 700;
   }
   
   .faq-answer {
     padding: 15px 0;
-    font-size: 1rem;
+  }
+
+  .faq-answer p{
     color: rgba(0, 27, 52, 0.75);
     font-family: "HelveticaNeue-Regular", sans-serif;
-    font-weight: 400;
+    font-size: 20px;
+    align-self: stretch;
+    font-size: 20px;
   }
   
   .toggle-icon {

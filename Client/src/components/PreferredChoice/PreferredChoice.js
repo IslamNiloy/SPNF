@@ -26,14 +26,14 @@ const PreferredChoice = () => {
         <h2 style={{color:"#001b34"}}>Our <span className="highlight">Users</span></h2>
       </div>
 
-      {/* Company logos */}
       <div className="company-logos">
-        {companies.map((company, index) => (
-          <div key={index} className="company-logo">
-            <img src={company.logo} alt={company.name} />
-          </div>
-        ))}
-      </div>
+      {companies.map((company, index) => (
+        <div key={index} className="company-logo">
+          <img src={company.logo} alt={company.name} />
+        </div>
+      ))}
+    </div>
+
 
       {/* Call-to-action button */}
       <div className="buttons flex_two_btn">

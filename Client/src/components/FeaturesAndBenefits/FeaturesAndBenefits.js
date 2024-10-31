@@ -72,7 +72,7 @@ const FeaturesAndBenefits = () => {
 
   return (
     <div className="features-container-main" id="features"> 
-        <h1>Featues <span style={{color: "#000000"}}>and</span> Benefits</h1>
+        <h1 className='features_and_benefites'>Features <span style={{color: "#000000"}}>and</span> Benefits</h1>
         <div className="features-container">
         {features.map((feature, index) => (
             <div className="feature-card">

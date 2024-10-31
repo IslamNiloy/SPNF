@@ -14,7 +14,7 @@ const HubSpotMeeting = () => {
     }, []);
 
     return (
-        <div id='hubspotMeeting'>
+        <div id='hubspotMeeting' style={{marginBottom: "30px"}}>
             <div
                 className="meetings-iframe-container"
                 data-src="https://meetings-eu1.hubspot.com/tonmoy/spnf?embed=true"

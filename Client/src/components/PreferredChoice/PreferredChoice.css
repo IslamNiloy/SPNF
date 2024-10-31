@@ -16,23 +16,29 @@
   color: #6ABAE2; /* Highlight the important text */
 }
 
-/* Adjust company logos to be perfectly centered and spaced */
 .company-logos {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-  justify-content: center;
-  align-items: center;
   gap: 30px;
-  max-width: 950px; /* Set a max width for better centering */
-  margin: 0 auto; /* Center the grid container */
-  margin-bottom: 40px;
+  place-items: center;
+  padding-left: 30px;
+  padding-right: 30px;
+  margin: 0 auto;
+  justify-content: center; 
+}
+
+.company-logo {
+  display: flex;
+  max-width: 150px;
+  align-items: center;
+  justify-content: center;
 }
 
 .company-logo img {
-  width: 100px;
-  height: 100px; /* Set a uniform height for the logos */
-  object-fit: contain; /* Ensure logos maintain their aspect ratio */
+  max-width: 100%; /* Keeps logos responsive */
+  height: auto;
 }
+
 
 /* CTA Button */
 .cta-container {

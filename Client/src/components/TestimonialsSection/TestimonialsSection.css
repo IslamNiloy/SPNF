@@ -3,6 +3,8 @@
 .testimonials-section {
     position: relative;
     padding: 50px;
+    margin-top: 40px;
+    margin-bottom: 40px;
     text-align: center;
     background-color: #ffffff; /* Optional light background color */
   }
@@ -97,6 +99,7 @@
   font-size: 20px;
   align-self: stretch;
   font-size: 20px;
+  line-height: 25px;
 }
 
 .section-title_mobile{

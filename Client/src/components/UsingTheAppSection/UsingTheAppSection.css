@@ -10,10 +10,15 @@
     margin-bottom: 30px;
 }
 
+.how-to-use-dev{
+    margin-top: 70px;
+}
+
 .steps-container {
     display: flex;
     flex-direction: column;
     gap: 20px; /* Space between each step */
+    margin-top: 70px;
 }
 
 .step {
