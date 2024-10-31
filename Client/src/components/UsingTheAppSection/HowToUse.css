@@ -139,6 +139,7 @@
     .steps-container,
     .video-container {
       flex: 0 0 100%; /* Full width on mobile */
+      padding: 0px;
     }
   
     .video-container {
