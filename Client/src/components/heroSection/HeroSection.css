@@ -160,7 +160,7 @@
 
     .hero-content{
         padding: 5px;
-        margin-top: 15px;
+        margin-top: 45px;
     }
 
     .hero-btn1{
@@ -189,6 +189,11 @@
 }
 
 @media (max-width: 480px) {
+    /* src/HeroSection.css */
+    .hero-section {
+        background-image: url("./HeroSectionMobile.png");
+
+    }
     .buttons{
         margin: 0px;
     }

@@ -57,6 +57,8 @@
     font-size: 30px;
     line-height: 100%;
     font-weight: bold;
+    padding: 0px;
+    margin: 0px;
   }
   
   .quality-check-features p {
@@ -96,6 +98,12 @@
       padding: 15px;
       text-align: center;
     }
+
+    .title_quality_check_h3{
+      display: flex;
+      margin: 0 auto;
+      justify-content: center;
+    }
   
     .quality-check-image, .quality-check-content {
       width: 100%; /* Full width on mobile */
@@ -111,8 +119,8 @@
       margin-top: 20px;
     }
   
-    .quality-check-title {
-      font-size: 2rem; /* Adjust title font size for mobile */
+    .quality-check-title {  
+      font-size: 24px;/* Adjust title font size for mobile */
     }
   
     .quality-check-features h3 {
