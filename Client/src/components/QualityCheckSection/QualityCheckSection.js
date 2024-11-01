@@ -17,10 +17,10 @@ const QualityCheckSection = () => {
 
       {/* Right side content */}
       <div className="quality-check-content">
-        <button className="btn hero-btn1 header-btns-automate-formatting_title">
+        <button className="btn hero-btn1 header-btns-automate-formatting_title" style={{marginBottom: "-20px"}}>
           Gain Insights into Your Data Integrity
         </button>
-        <h2 className="quality-check-title">
+        <h2 className="quality-check-title" style={{marginBottom: "-10px"}}>
           Phone Number <span>Quality Check</span>
         </h2>
         <p className="workflow-description_txt" >
@@ -30,15 +30,15 @@ const QualityCheckSection = () => {
         </p>
 
         <div className="quality-check-features">
-          <h3 className='title_quality_check_h3'>Comprehensive Error Detection</h3>
+          <h3 className='title_quality_check_h3' style={{marginBottom: "-10px"}}>Comprehensive Error Detection</h3>
           <p className="workflow-description_txt">Generate reports to spot issues like missing country codes, invalid
           characters, or incorrect phone number lengths.</p>
             <hr/>
-          <h3 className='title_quality_check_h3'>Data Quality Insights</h3>
+          <h3 className='title_quality_check_h3' style={{marginBottom: "-10px"}}>Data Quality Insights</h3>
           <p className="workflow-description_txt">Generate reports to spot issues like missing country codes, invalid
           characters, or incorrect phone number lengths.</p>
             <hr />
-          <h3 className='title_quality_check_h3'>Actionable Intelligence</h3>
+          <h3 className='title_quality_check_h3' style={{marginBottom: "-10px"}}>Actionable Intelligence</h3>
           <p className="workflow-description_txt">Use these reports to improve data entry, team training, and CRM workflows,
           reducing future errors.</p>
         </div>
