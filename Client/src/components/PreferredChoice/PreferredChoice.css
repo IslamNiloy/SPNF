@@ -21,7 +21,7 @@
 .company-logos {
   display: flex;
   flex-wrap: wrap;
-  gap: 60px;
+  gap: 40px;
   justify-content: center; /* Centers the items */
   padding-left: 30px;
   padding-right: 30px;

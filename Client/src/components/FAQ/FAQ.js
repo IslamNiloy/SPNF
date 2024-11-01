@@ -43,7 +43,7 @@ const FAQ = () => {
 
   return (
     <section className="faq-section">
-      <h2 className="faq-header">Our <span className="highlight">FAQs</span></h2>
+      <h2 className="faq-header" style={{marginBottom: "0px"}}>Our <span className="highlight">FAQs</span></h2>
       
       <div className="faq-container" id='FAQs'>
         {faqs.map((faq, index) => (

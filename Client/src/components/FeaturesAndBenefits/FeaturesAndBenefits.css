@@ -24,7 +24,7 @@
   border-radius: 10px;
   padding: 20px;
   width: 22%;
-  height: 220px;
+  height: 200px;
   cursor: pointer;
   text-align: left; /* Ensure everything is left-aligned */
   transition: transform 0.3s ease;
@@ -44,14 +44,20 @@
   text-align: left; /* Ensure text content is left-aligned */
 }
 
+.workflow-description_txt{
+  padding: 0px;
+  margin-top: 10px;
+}
 .feature-title {
   color: #001b34;
   text-align: left;
   font-family: "HelveticaNeue-Medium", sans-serif;
-  font-size: 20px;
+  font-size: 1.4vw;
   line-height: 100%;
   font-weight: 700;
-  min-height: 42px;
+  min-height: 1px;
+  padding: 0px;
+  margin: 0px;
 }
 
 .feature-description {
@@ -61,6 +67,8 @@
   font-size: 17px;
   line-height: 140%;
   font-weight: 400;
+  padding: 0px;
+  margin: 0px;
 }
 
 /* Media query for mobile devices (max-width: 768px) */

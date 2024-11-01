@@ -4,6 +4,9 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  background-size: cover; /* Ensures the image covers the entire section */
+  background-position: center; /* Centers the background image */
+  background-repeat: no-repeat; /* Prevents the image from repeating */
 }
 
 .footer-sections {
