@@ -89,7 +89,7 @@ const HowToUseSection = () => {
               onClick={() => setCurrentStep(index)}
             >
               <div className="step-label">
-                <span className="step-label_sub">{step.label}</span> <span id="mobile_disp_none">:</span>
+                <span className="step-label_sub">{step.label}</span> <span id="mobile_disp_none"></span>
                 <span className="step-description">{step.description}</span>
               </div>
               <img src={step.imgSrc} alt={step.title} />

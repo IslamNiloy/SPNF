@@ -23,6 +23,10 @@
     margin: 0 auto;
     flex-wrap: wrap; /* Ensures wrapping on smaller screens */
   }
+
+  .MainIfrime{
+    max-width: 768px;
+  }
   
   .steps-container, .video-container {
     flex: 1 1 50%; /* Each takes 50% of the container's width */
@@ -38,6 +42,23 @@
 }
   
 
+.step-description{
+  color: var(--colorblack, #001b34);
+  text-align: center;
+  font-family: "HelveticaNeue-Medium", sans-serif;
+  font-size: 18px;
+  line-height: 100%;
+  font-weight: 500;
+}
+/*
+  color: var(--colorblack, #001b34);
+  text-align: left;
+  font-family: "HelveticaNeue-Medium", sans-serif;
+  font-size: 30px;
+  line-height: 100%;
+  font-weight: 500;
+*/
+
 
     /* Section container */
     .how-to-use-dev {
@@ -51,9 +72,16 @@
 
   .step-label_sub{
     background-color: #04587A;
-    color: #f2faff;
-    padding: 5px;
+    color: #ffffff;
+    padding: 7px;
+    margin-right: 6px;
     border-radius: 12px;
+    font-family: "HelveticaNeue-Medium", sans-serif;
+    font-size: 14px;
+    line-height: 100%;
+    letter-spacing: 0.15em;
+    font-weight: 500;
+    
   }
   
   .steps-container::-webkit-scrollbar {

@@ -122,22 +122,22 @@ const PricingCard = ({ id, planName, monthlyPrice, yearlyPrice, limit, countries
           <h2 className="plan-name">{planName}</h2>
           <div>
             {planName == "Free" &&
-              <img src='/PricingPlan/Free.png' width="35px" />
+              <img src='/PricingPlan/Free.png' width="50px" />
             }
             {planName == "Starter" &&
-              <img src='/PricingPlan/Starter.png' width="50px" />
+              <img src='/PricingPlan/Starter.png' width="70px" />
             }
             {planName == "Pro" &&
-              <img src='/PricingPlan/Pro.png' width="50px" />
+              <img src='/PricingPlan/Pro.png' width="70px" />
             }
             {planName == "Pro Plus" &&
-              <img src='/PricingPlan/ProPlus.png' width="60px" />
+              <img src='/PricingPlan/ProPlus.png' width="90px" />
             }
             {planName == "Enterprise" &&
-              <img src='/PricingPlan/Enterprise.png' width="48px" />
+              <img src='/PricingPlan/Enterprise.png' width="80px" />
             }
             {planName == "Custom" &&
-              <img src='/PricingPlan/Custom.png' width="50px" />
+              <img src='/PricingPlan/Custom.png' width="80px" />
             }
 
           </div>
@@ -199,7 +199,7 @@ const PricingCard = ({ id, planName, monthlyPrice, yearlyPrice, limit, countries
           <hr style={{ color: "#001B3440" }} />
         </div>
         <ul className="plan-features">
-          <li style={{ color: "#200335" }}><span style={{ color: "#66CD51" }}>✔ </span> Actions {limit}
+          <li style={{ color: "#200335" }}><span style={{ color: "#66CD51" }}>✔ </span>{ planName === "Custom" ? <>Custom Actions/month</> : <>Actions {limit}</> } 
             {planName !== 'Custom' ? (isMonthly ? '/month' : '/year') : ''}
       
           </li>

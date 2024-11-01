@@ -61,63 +61,36 @@ const Header = () => {
     };
 
     return (
-        <header>
-            <div className="logo">
-                <Link to="/" smooth={true} duration={500}>
-                    <img src="logo.webp" alt="Logo" />
-                </Link>
-            </div>
-            <div style={{marginLeft: "100px"}}>
-            <nav className={isMenuOpen ? 'nav-links active' : 'nav-links'}>
-                <ul>
-                <li>
-                    <Link to="/" onClick={() => handleScrollTo("features")}>Features</Link>
-                </li>
-                <li>
-                    <Link to="/" onClick={() => handleScrollTo("howToUse")}>How To Use</Link>
-                </li>
-                <li>
-                    <Link to="/" onClick={() => handleScrollTo("PricingCards")}>Pricing</Link>
-                </li>
-                <li>
-                    <Link to="/" onClick={() => handleScrollTo("FAQs")}>FAQs</Link>
-                </li>
-                </ul>
-                {portalID || portalIDFromWeb ? (
-                    <div className="logout-container">
-                              {/* Dropdown for Profile */}
-                        <div className="dropdown">
-                            <button className="dropdown-btn" onClick={toggleDropdown}>
-                            Profile <i className="fas fa-chevron-down"></i>
-                            </button>
-
-                            {dropdownOpen && (
-                            <div className="dropdown-menu">
-                                <Link to="/profile" className="dropdown-item">Your Profile</Link>
-                                <Link to="/profile" className="dropdown-item" onClick={handleLogout}>Logout</Link>
-                            </div>
-                            )}
-                        </div>
-                    </div>
-                ):
-
-                <></>
-                }
-
-            {portalID || portalIDFromWeb ? "" : 
-                <div>
-                    <Link to={`${BackendAPI}/install`}>
-                            <button className="hero-btn2" style={{float: "right"}}>Get Your Formatter Now!</button>
-                    </Link>
-                </div>
-            }
-         
-            </nav>
-            <div className="menu-icon" onClick={toggleMenu}>
-                &#9776;
-            </div>
+<header>
+    <div className="logo">
+        <Link to="/" smooth={true} duration={500}>
+            <img src="logo.webp" alt="Logo" />
+        </Link>
+    </div>
+    
+    <nav className={isMenuOpen ? 'nav-links active' : 'nav-links'} style={{marginLeft: "60px"}}>
+        <ul>
+            <li><Link to="/" onClick={() => handleScrollTo("features")}>Features</Link></li>
+            <li><Link to="/" onClick={() => handleScrollTo("howToUse")}>How To Use</Link></li>
+            <li><Link to="/" onClick={() => handleScrollTo("PricingCards")}>Pricing</Link></li>
+            <li><Link to="/" onClick={() => handleScrollTo("FAQs")}>FAQs</Link></li>
+        </ul>
+    </nav>
+    
+    {(portalID || portalIDFromWeb) ? null : (
+        <div className="get-formatter-container">
+            <Link to={`${BackendAPI}/install`}>
+                <button className="hero-btn2">Get Your Formatter Now!</button>
+            </Link>
         </div>
-        </header>
+    )}
+    
+    <div className="menu-icon" onClick={toggleMenu}>
+        &#9776;
+    </div>
+</header>
+
+
     );
 };
 
