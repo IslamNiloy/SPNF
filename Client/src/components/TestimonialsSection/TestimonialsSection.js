@@ -14,7 +14,7 @@ const Testimonials = () => {
                 <path fill-rule="evenodd" clip-rule="evenodd" d="M15.0358 0.48915C10.957 0.913537 7.03659 2.93321 4.35741 5.99013C2.24549 8.39978 0.930614 11.226 0.410914 14.4725C0.175257 15.9445 0.168151 39.8959 0.402972 40.8895C0.820884 42.6571 2.10346 44.232 3.7585 45.0094C5.01307 45.5989 5.22386 45.6135 12.5191 45.6155C16.9425 45.6167 19.4311 45.5782 19.8866 45.5015C20.2649 45.4378 20.9674 45.2039 21.4477 44.9818C23.0002 44.2639 24.313 42.7021 24.7793 41.0187C24.9471 40.4127 24.9637 39.7163 24.9637 33.2641C24.9637 25.4017 24.977 25.5744 24.2616 24.2064C23.7831 23.2915 22.4503 21.9994 21.5254 21.5537C20.2869 20.9569 19.8768 20.9148 15.2899 20.9127C10.3542 20.9106 10.3432 20.9088 9.42607 19.9747C8.6797 19.2143 8.50393 18.6883 8.50508 17.2172C8.50696 14.6284 9.24257 12.7511 10.8992 11.1073C12.1342 9.88174 13.3992 9.1712 14.9029 8.85846C15.3196 8.77183 16.5393 8.6679 17.6135 8.62766L19.5664 8.55438L19.9659 8.23726C20.1857 8.06285 20.4729 7.71175 20.6042 7.45708C20.8368 7.0059 20.8421 6.9272 20.8132 4.37869L20.7835 1.76335L20.4843 1.33292C20.2975 1.06417 19.9855 0.803244 19.6539 0.638431C19.1491 0.38751 19.0415 0.375105 17.4972 0.38824C16.6032 0.39585 15.4956 0.441301 15.0358 0.48915ZM43.8789 0.485189C39.3673 0.929799 35.0299 3.38907 32.308 7.04614C30.7087 9.19487 29.6111 11.8626 29.1769 14.6561C29.0689 15.3522 29.0393 18.2026 29.0393 27.9475C29.0393 41.7404 28.9985 40.9043 29.7427 42.3217C30.2471 43.2822 31.4904 44.4838 32.4505 44.9386C33.863 45.6078 33.9412 45.6136 41.4231 45.6136C48.7857 45.6136 48.988 45.5998 50.2445 45.0094C51.8995 44.232 53.1821 42.6571 53.6 40.8895C53.8296 39.9181 53.8232 26.5833 53.5927 25.6075C53.3284 24.4892 52.8522 23.6563 51.9717 22.7729C51.0488 21.847 49.878 21.2158 48.7298 21.0252C48.3132 20.9559 46.4289 20.9109 43.9527 20.9109C40.0902 20.9109 39.8317 20.8991 39.2925 20.6978C38.6377 20.4535 37.9845 19.869 37.6422 19.2212C37.4393 18.8371 37.4002 18.5788 37.3664 17.396C37.2862 14.5863 38.0495 12.6597 39.9457 10.8859C41.7856 9.16505 43.455 8.6237 46.9618 8.61077C48.3683 8.60567 48.7745 8.44596 49.3087 7.68809L49.6266 7.23722L49.6607 4.77013C49.6983 2.04388 49.6531 1.73646 49.1264 1.13808C48.5422 0.474347 48.1797 0.377294 46.3348 0.390846C45.4439 0.397413 44.3387 0.439842 43.8789 0.485189Z" fill="#04587A"/>
               </svg>
               </div> 
-              <div className='testimonialDetails'>
+              <div className='workflow-description_txt mbl_text_align'>
               We used to struggle with phone number formatting in HubSpot. We came to know about the app through HubXpert; they have set it up with workflow, and it was a super easy and fast process. This app does everything automatically, and it has been super convenient! If you want to enjoy this automatic process in HubSpot, this app is recommended.
               </div>
             </div>
@@ -37,7 +37,7 @@ const Testimonials = () => {
       <div className="testimonial-quote">
           <p >
             <div className="quote-main second">
-              <div className='testimonialDetails'>
+              <div className='workflow-description_txt mbl_text_align'>
               In HubSpot, Phone number format was a big issue for our sales team. Once we came to know about the "Smart Phone Number Formatter" app we initially implemented it on a small scale, after we saw the effectiveness of it we implemented the app fully in our system. A must have app for HubSpot.
               </div>
               <div className="quote-icon">
@@ -61,7 +61,7 @@ const Testimonials = () => {
         <div className="mobile-testimonial-quote">
           <p>
             <div className="mobile-quote-main">
-              <div className='testimonialDetails'>
+              <div className='workflow-description_txt mbl_text_align'>
               In HubSpot, Phone number format was a big issue for our sales team. Once we came to know about the "Smart Phone Number Formatter" app we initially implemented it on a small scale, after we saw the effectiveness of it we implemented the app fully in our system. A must have app for HubSpot.
               </div>
               <div className="mobile-quote-icon">

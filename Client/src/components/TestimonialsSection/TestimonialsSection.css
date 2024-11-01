@@ -1,12 +1,14 @@
-/* Testimonials.css */
-
 .testimonials-section {
     position: relative;
-    padding: 50px;
+    padding: 40px;
     margin-top: 40px;
     margin-bottom: 40px;
     text-align: center;
     background-color: #ffffff; /* Optional light background color */
+    background-image: url('./testimonialBG.png');
+    background-size: cover; /* Ensures the image covers the entire section */
+    background-position: center; /* Centers the background image */
+    background-repeat: no-repeat; /* Prevents the image from repeating */
   }
   
 .testimonial-card {
@@ -113,7 +115,7 @@
       color: rgba(100, 186, 226, 0.1);
       text-align: center;
       font-family: "HelveticaNeue-Medium", sans-serif;
-      font-size: 48px;
+      font-size: 58px;
       line-height: 100%;
       font-weight: 500;
       position: relative;
@@ -151,6 +153,10 @@
 
     .br-style-none-mobile{
       display: none;
+    }
+
+    .mbl_text_align{
+      text-align: center;
     }
 
     .author-name{

@@ -67,6 +67,7 @@ const Header = () => {
                     <img src="logo.webp" alt="Logo" />
                 </Link>
             </div>
+            <div style={{marginLeft: "100px"}}>
             <nav className={isMenuOpen ? 'nav-links active' : 'nav-links'}>
                 <ul>
                 <li>
@@ -99,14 +100,23 @@ const Header = () => {
                         </div>
                     </div>
                 ):
-                    <Link to={`${BackendAPI}/install`}>
-                            <button className="logIn-button">Get Your Formatter Now!</button>
-                    </Link>
+
+                <></>
                 }
+
+            {portalID || portalIDFromWeb ? "" : 
+                <div>
+                    <Link to={`${BackendAPI}/install`}>
+                            <button className="hero-btn2" style={{float: "right"}}>Get Your Formatter Now!</button>
+                    </Link>
+                </div>
+            }
+         
             </nav>
             <div className="menu-icon" onClick={toggleMenu}>
                 &#9776;
             </div>
+        </div>
         </header>
     );
 };

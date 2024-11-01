@@ -23,7 +23,7 @@
   border-radius: 10px;
   padding: 20px;
   width: 22%;
-  height: 190px;
+  height: 220px;
   cursor: pointer;
   text-align: left; /* Ensure everything is left-aligned */
   transition: transform 0.3s ease;
@@ -50,6 +50,7 @@
   font-size: 20px;
   line-height: 100%;
   font-weight: 700;
+  min-height: 42px;
 }
 
 .feature-description {

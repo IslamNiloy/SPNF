@@ -81,7 +81,7 @@ const FeaturesAndBenefits = () => {
                 </div>
                 <div className='feature-details'>
                     <h3 className="feature-title">{feature.title}</h3>
-                    <p className="feature-description">{feature.description}</p>
+                    <p className="workflow-description_txt">{feature.description}</p>
                 </div>
             </div>
         ))}

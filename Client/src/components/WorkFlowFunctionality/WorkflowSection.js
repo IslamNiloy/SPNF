@@ -6,27 +6,27 @@ const WorkflowSection = () => {
     <section className="workflow-container">
       {/* Left side content */}
       <div className="workflow-content">
-        <button className="btn hero-btn1 header-btns-automate-formatting">
+        <button className="btn hero-btn1 header-btns-automate-formatting_title ">
           Automate Your Phone Number Formatting
         </button>
         <h2 className="workflow-title_P">Workflow <span> &nbsp;Functionality</span></h2>
 
-        <p className="workflow-description">
+        <p className="workflow-description_txt">
             No need to export data! Just add the Smart Phone Number Formatter to your
             HubSpot workflow, and it’ll automatically format all phone numbers to the
             correct standards.
           </p>
         <div className="workflow-features">
           <h3>Automated Operations</h3>
-          <p className="workflow-description">No more manual phone number formatting—reduce errors and boost HubSpot
+          <p className="workflow-description_txt">No more manual phone number formatting—reduce errors and boost HubSpot
           efficiency.</p>
           <hr/>
           <h3 className='workflow-features_h3'>Customisable Triggers and Actions</h3>
-          <p className="workflow-description">Use triggers like new contacts or data imports to format numbers automatically
+          <p className="workflow-description_txt">Use triggers like new contacts or data imports to format numbers automatically
           in real-time.</p>
           <hr/>
           <h3 className='workflow-features_h3'>Enhanced Data Consistency</h3>
-          <p className="workflow-description">Ensure consistent phone formatting across your CRM for accurate communication
+          <p className="workflow-description_txt">Ensure consistent phone formatting across your CRM for accurate communication
           and reporting.</p>
         </div>
       </div>

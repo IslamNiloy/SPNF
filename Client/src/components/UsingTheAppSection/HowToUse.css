@@ -1,12 +1,13 @@
 /* Main Title */
 .main-title {
     text-align: center;
-    margin-bottom: 40px;
+    margin-bottom: 0px;
   }
   
   .main-title h2 {
     font-size: 2rem;
     font-weight: bold;
+    margin-bottom: 40px;
     color: #000; /* Dark blue */
   }
   
@@ -14,22 +15,29 @@
     color: #6ABAE2; /* Light blue for "Use" */
   }
 
+  .how-to-use-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f2faff;
+    margin: 0 auto;
+    flex-wrap: wrap; /* Ensures wrapping on smaller screens */
+  }
+  
+  .steps-container, .video-container {
+    flex: 1 1 50%; /* Each takes 50% of the container's width */
+    max-width: 50%; /* Ensures they don’t exceed 50% width */
+    padding: 0 15px; /* Optional padding for spacing */
+    box-sizing: border-box; /* Keeps padding within the 50% width */
+  }
+  
+
   .steps-container::-webkit-scrollbar,
 .video-container::-webkit-scrollbar {
   display: none; /* For Chrome, Safari, and Opera */
 }
   
-  /* Section container */
-  .how-to-use-section {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    /* padding-left: 40px;
-    padding-right: 40px; */
-    background-color: #f2faff;
-    /* max-width: 1600px; */
-    margin: 0 auto;
-  }
+
 
     /* Section container */
     .how-to-use-dev {
@@ -39,18 +47,7 @@
       background-color: #f2faff;
     }
   
-  /* Steps container */
-  .steps-container {
-    flex: 0 0 50%; /* Takes 45% of the width */
-    max-height: 500px; /* Adjusted height */
-    overflow-y: scroll;
-    display: flex;
-    max-width: 620px;
-    flex-direction: column;
-    gap: 20px;
-    padding-left: 180px;
-    padding-right: 30px;
-  }
+
 
   .step-label_sub{
     background-color: #04587A;
@@ -115,13 +112,7 @@
     color: #666;
   }
   
-  /* Video container */
-  .video-container {
-    flex: 0 0 50%; /* Takes 50% of the width */
-    padding-left: 30px;
-    padding-right: 200px;
-    max-width: 600px;
-  }
+
   
   iframe {
     border-radius: 10px;
@@ -133,18 +124,26 @@
   /* Responsive Design */
   @media (max-width: 768px) {
     .how-to-use-section {
-      flex-direction: column;
+      flex-direction: column-reverse;
     }
+
+
+  .video-container, .steps-container {
+    width: 100%; /* Full width on mobile */
+    max-width: 100%; /* Ensure they don’t exceed 100% width */
+    padding: 0 15px; /* Optional padding for consistent spacing */
+    box-sizing: border-box;
+  }
   
-    .steps-container,
     .video-container {
-      flex: 0 0 100%; /* Full width on mobile */
+      margin-top: 50px;
       padding: 0px;
+      width: 100%; 
     }
   
-    .video-container {
-      margin-top: 20px;
-      padding: 10px 0;
+    .steps-container {
+      width: 100%;
+      padding: 0; /* Ensures steps container is also full-width */
     }
 
     .step-label {

@@ -3,6 +3,8 @@
   padding: 40px;
   padding-bottom: 100px;
   background-color: #ffffff;
+  max-width: 1400px; /* Adjust based on your layout needs */
+  margin: 0 auto;
 }
 
 .preferred-choice-text h2 {
@@ -17,14 +19,14 @@
 }
 
 .company-logos {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  display: flex;
+  flex-wrap: wrap;
   gap: 30px;
-  place-items: center;
+  justify-content: center; /* Centers the items */
   padding-left: 30px;
   padding-right: 30px;
   margin: 0 auto;
-  justify-content: center; 
+  max-width: 1200px; /* Optional: limits width on larger screens */
 }
 
 .company-logo {
@@ -33,6 +35,7 @@
   align-items: center;
   justify-content: center;
 }
+
 
 .company-logo img {
   max-width: 100%; /* Keeps logos responsive */
@@ -70,12 +73,12 @@
   .preferred-choice-text h2 {
       font-size: 2rem;
   }
-
   .company-logo img {
-      width: 80px;
-      height: 80px;
-  }
-
+    width: auto;
+    height: auto;
+    margin: 20px;
+    padding: 10px;
+}
   .cta-button {
       font-size: 1rem;
       padding: 12px 25px;
@@ -93,8 +96,9 @@
   }
 
   .company-logo img {
-      width: 60px;
-      height: 60px;
+      width: auto;
+      height: auto;
+      margin: 20px;
   }
 
   .cta-button {

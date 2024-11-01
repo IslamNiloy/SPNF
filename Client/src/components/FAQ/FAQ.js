@@ -68,7 +68,7 @@ const FAQ = () => {
               </>}</span>
             </div>
             {openIndex === index && (
-              <div className="faq-answer">
+              <div className="workflow-description_txt">
                 <p>{faq.answer}</p>
               </div>
             )}

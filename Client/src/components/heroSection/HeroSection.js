@@ -21,7 +21,7 @@ const HeroSection = () => {
                     </button>
                     <h1 className='heading_hero_main'><span style={{ color: "#000000" }}>Format</span> HubSpot Phone Numbers 
                     <span style={{ color: "#000000" }}> with Ease</span></h1>
-                    <p>Automatically format phone numbers from any country, from your HubSpot portal!</p>
+                    <p className='workflow-description_txt txt_hero_section'>Automatically format phone numbers from any country, from your HubSpot portal!</p>
                     <div className="buttons flex_two_btn">
                         <Link to={`${BackendAPI}/install`}>
                             <button className="btn hero-btn2">

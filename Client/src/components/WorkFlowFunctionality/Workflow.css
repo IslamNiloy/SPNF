@@ -14,6 +14,11 @@
     padding: 0px;
   }
 
+  .header-btns-automate-formatting_title{
+    padding: 12px;
+  }
+
+
   .workflow-container hr{
   display: block;
   height: 1px;
@@ -68,6 +73,18 @@
     margin-bottom: 30px;
   }
   
+  .workflow-description_txt{
+    color: rgba(0, 27, 52, 0.75);
+    text-align: left;
+    font-family: var(
+      --paragraph-desktop-font-family,
+      "HelveticaNeue-Regular",
+      sans-serif
+    );
+    font-size: 18px;
+    font-weight: 400;
+  }
+
   .workflow-features h3 {
     color: var(--hubxpert-black, #001b34);
     text-align: left;
@@ -77,13 +94,13 @@
     font-weight: bold;
     margin: 0px;
   }
-  
+/*   
   .workflow-features p {
     font-size: 1rem;
     color: #666666;
     margin-bottom: 20px;
   }
-  
+   */
   .workflow-image {
     position: relative;
     display: inline-block; /* This will allow the container to wrap around the image */

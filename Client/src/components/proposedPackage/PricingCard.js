@@ -222,11 +222,6 @@ const PricingCard = ({ id, planName, monthlyPrice, yearlyPrice, limit, countries
       
           :
           !portalID ?
-            // <Link to={`${BackendAPI}/install`}>
-            //   <button className={`plan-button ${isChosen ? 'chosen' : ''}`}>
-            //     Get Your Formatter
-            //   </button>
-            // </Link>
             <></>
             :
             planName == "Custom" ?

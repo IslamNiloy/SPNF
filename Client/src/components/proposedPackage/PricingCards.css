@@ -33,7 +33,7 @@
   font-size: .9rem;
   border-radius: 200px;
   position: absolute; /* Ensures the badge is positioned relative to the card */
-  top: -20px; /* Moves it upwards above the card */
+  top: -15px; /* Moves it upwards above the card */
   left: 50%; /* Centers it horizontally */
   transform: translateX(-50%); /* Offsets by 50% of its own width to truly center it */
   width: 120px;
@@ -55,7 +55,7 @@
   display: flex;
   flex-wrap: wrap; /* Allows wrapping to the next line */
   justify-content: center; /* Centers items as a whole */
-  gap: 25px; /* Space between cards */
+  gap: 35px; /* Space between cards */
 }
 
 .pricing-main {
@@ -119,13 +119,16 @@ hr{
 }
 
 .plan-button {
+  font-family:
+  "HelveticaNeue-Medium",
+  sans-serif;
   background-color:#64BAE2;
   color: white;
-  font-weight: bold;
+  font-weight: 600;
   border: none;
+  font-size: 19px;
   width: 100%;
-  padding: 12px;
-  font-size: 1rem;
+  padding: 15px 51px;
   border-radius: 8px;
   cursor: pointer;
   transition: 0.3 ease-in-out;

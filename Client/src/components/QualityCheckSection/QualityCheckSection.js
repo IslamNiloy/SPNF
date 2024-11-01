@@ -17,13 +17,13 @@ const QualityCheckSection = () => {
 
       {/* Right side content */}
       <div className="quality-check-content">
-        <button className="btn hero-btn1 header-btns-automate-formatting">
+        <button className="btn hero-btn1 header-btns-automate-formatting_title">
           Gain Insights into Your Data Integrity
         </button>
         <h2 className="quality-check-title">
           Phone Number <span>Quality Check</span>
         </h2>
-        <p className="workflow-description" >
+        <p className="workflow-description_txt" >
             Our app helps you identify and fix HubSpot phone number issues quickly. With
             the Smart Phone Number Check, spot formatting errors and detect invalid
             numbers instantly.
@@ -31,15 +31,15 @@ const QualityCheckSection = () => {
 
         <div className="quality-check-features">
           <h3 className='title_quality_check_h3'>Comprehensive Error Detection</h3>
-          <p className="workflow-description">Generate reports to spot issues like missing country codes, invalid
+          <p className="workflow-description_txt">Generate reports to spot issues like missing country codes, invalid
           characters, or incorrect phone number lengths.</p>
             <hr/>
           <h3 className='title_quality_check_h3'>Data Quality Insights</h3>
-          <p className="workflow-description">Generate reports to spot issues like missing country codes, invalid
+          <p className="workflow-description_txt">Generate reports to spot issues like missing country codes, invalid
           characters, or incorrect phone number lengths.</p>
             <hr />
           <h3 className='title_quality_check_h3'>Actionable Intelligence</h3>
-          <p className="workflow-description">Use these reports to improve data entry, team training, and CRM workflows,
+          <p className="workflow-description_txt">Use these reports to improve data entry, team training, and CRM workflows,
           reducing future errors.</p>
         </div>
       </div>
