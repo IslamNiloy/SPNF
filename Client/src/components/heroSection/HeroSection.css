@@ -209,14 +209,15 @@
         min-width: 350px;
         font-size: 18px;
     }
-}
-
-@media (max-width: 480px) {
-    /* src/HeroSection.css */
     .hero-section {
         background-image: url("./HeroSectionMobile.png");
 
     }
+}
+
+@media (max-width: 480px) {
+    /* src/HeroSection.css */
+
     .buttons{
         margin: 0px;
     }
