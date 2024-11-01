@@ -6,30 +6,31 @@ import { Link as ScrollLink } from 'react-scroll';
   
 const PreferredChoice = () => {
   const companies = [
-    { name: 'Lyrebird Health', logo: '/PreferredChoice/1.png' },
-    { name: 'SEMIPROBE', logo: '/PreferredChoice/2.png' },
-    { name: 'ArtDisplay', logo: '/PreferredChoice/3.png' },
-    { name: 'AMATA', logo: '/PreferredChoice/4.png' },
-    { name: 'Great Question', logo: '/PreferredChoice/5.png' },
-    { name: 'Spectra Lending', logo: '/PreferredChoice/6.png' },
-    { name: 'Mobile Action', logo: '/PreferredChoice/7.png' },
-    { name: 'Pool Shark', logo: '/PreferredChoice/8.png' },
-    { name: 'QIDZ', logo: '/PreferredChoice/9.png' },
-    { name: 'Main & Legacy', logo: '/PreferredChoice/10.png' },
-    { name: 'Main & Legacy', logo: '/PreferredChoice/11.png' },
-    { name: 'Main & Legacy', logo: '/PreferredChoice/12.png' }
+    { name: 'Great Question', logo: '/PreferredChoice/1.png', style: { width: '200px' }, className: 'Great_Question' },
+    { name: 'Spectra Lending', logo: '/PreferredChoice/2.png', style: { width: '100px' }, className: 'Spectra_Lending' },
+    { name: 'Mobile Action', logo: '/PreferredChoice/3.png', style: { width: '150px' }, className: 'Mobile_Action' },
+    { name: 'Pool Shark', logo: '/PreferredChoice/4.png', style: { width: '100px' }, className: 'Pool_Shark' },
+    { name: 'OIDZ', logo: '/PreferredChoice/5.png', style: { width: '100px' }, className: 'OIDZ' },
+    { name: 'Spectra Capital', logo: '/PreferredChoice/6.png', style: { width: '100px' }, className: 'Spectra_Capital' },
+    { name: '4G Clinical', logo: '/PreferredChoice/7.png', style: { width: '60px' }, className: 'fourG_Clinical' },
+    { name: 'Lyrebird Health', logo: '/PreferredChoice/8.png', style: { width: '150px' }, className: 'Lyrebird_Health' },
+    { name: 'Semiprobe', logo: '/PreferredChoice/9.png', style: { width: '150px' }, className: 'Semiprobe' },
+    { name: 'Art & Display', logo: '/PreferredChoice/10.png', style: { width: '120px' }, className: 'Art_Display' },
+    { name: 'Amata', logo: '/PreferredChoice/11.png', style: { width: '120px' }, className: 'Amata' },
+    { name: 'Home Service', logo: '/PreferredChoice/12.png', style: { width: '120px' }, className: 'Home_Service' }
   ];
+
 
   return (
     <section className="preferred-choice-container">
       <div className="preferred-choice-text">
-        <h2 style={{color:"#001b34"}}>Our <span className="highlight">Users</span></h2>
+        <h2 style={{color:"#001b34", marginBottom:"40px"}}>Our <span className="highlight">Users</span></h2>
       </div>
 
       <div className="company-logos">
       {companies.map((company, index) => (
         <div key={index} className="company-logo">
-          <img src={company.logo} alt={company.name} />
+          <img style={company.style} src={company.logo} alt={company.name} className={company.className}/>
         </div>
       ))}
     </div>

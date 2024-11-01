@@ -244,3 +244,13 @@
         min-width: 350px;
     }
 }
+
+
+
+@media (min-width: 1024px) {
+    .hero-btn2 {
+        padding: 17px 60px; /* Increase padding for a larger button */
+        font-size: 24px; /* Increase font size */
+        min-width: 300px; /* Increase minimum width */
+    }
+}
