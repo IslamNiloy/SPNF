@@ -17,16 +17,16 @@ async function createProperties(accessToken) {
       fieldType: "text",
     },
     {
-      hidden: false,
-      displayOrder: -1,
-      description: "This property is created to store the formatted phone number",
-      label: "PF-Formatted Phone Number",
-      type: "string",
-      formField: false,
-      groupName: "contactinformation",
-      name: "pf_formatted_phone_number_14082001", 
-      fieldType: "text",
-    }
+      "hidden": false,
+      "displayOrder": -1,
+      "description": "This property is created to store the formatted phone number",
+      "label": "PF-Formatted Phone Number",
+      "type": "string", // Set to "string" for phone numbers
+      "formField": false,
+      "groupName": "contactinformation",
+      "name": "pf_formatted_phone_number_14082001",
+      "fieldType": "phonenumber" // Set to "phone_number" for proper phone number formatting
+    }    
   ];
 
   const objectType = "contacts";
@@ -35,7 +35,7 @@ async function createProperties(accessToken) {
     for (const property of propertiesToCreate) {
       try {
         const apiResponse = await hubspotClient.crm.properties.coreApi.create(objectType, property);
-        // console.log(`Property ${property.name} created:`, JSON.stringify(apiResponse, null, 2));
+        //console.log(`Property ${property.name} created:`, JSON.stringify(apiResponse, null, 2));
       } catch (e) {
         if (e.code === 409) {
           console.log(`Property ${property.name} already exists.`);
