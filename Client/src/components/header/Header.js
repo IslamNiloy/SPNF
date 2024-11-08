@@ -1,130 +1,117 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Header.css';
 import { Link, useNavigate } from 'react-router-dom';
 import { scroller, Link as ScrollLink } from 'react-scroll';
 import { BackendAPI } from '../../api/server';
 import { useLocation } from 'react-router-dom';
 
-
 const Header = () => {
-    const [dropdownOpen, setDropdownOpen] = useState(false);
-    const navigate = useNavigate();
-    const location = useLocation();
-  
-    const handleScrollTo = (target) => {
-      // If already on the homepage, scroll directly
-      if (location.pathname === "/") {
-        scroller.scrollTo(target, {
-          smooth: true,
-          duration: 500,
-          offset: -10, // Adjust for headers if necessary
-        });
-      } else {
-        console.log("target= " + target);
-        // Navigate to homepage first, then scroll
-        navigate("/");
-        setTimeout(() => {
-          scroller.scrollTo(target, {
-            smooth: true,
-            duration: 500,
-            offset: -50,
-          });
-        }, 100); // Delay to allow routing to complete
-      }
-    };
-  
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
 
-    // Function to extract query parameters from the URL
-    const queryParams = new URLSearchParams(location.search);
-    const portalIDFromWeb = queryParams.get('portalID');
+  const handleScrollTo = (target) => {
+    scroller.scrollTo(target, {
+      smooth: true,
+      duration: 500,
+      offset: -10, // Adjust for headers if necessary
+    });
+  };
 
-    // Toggle dropdown visibility
-    const toggleDropdown = () => {
-        setDropdownOpen(!dropdownOpen);
-    };
+  // Scroll to the section if the URL contains a hash
+  useEffect(() => {
+    const hash = location.hash; // Get the hash from the URL (e.g., "#features")
+    if (hash) {
+      const target = hash.substring(1); // Remove the "#" to get the target ID
+      scroller.scrollTo(target, {
+        smooth: true,
+        duration: 500,
+        offset: -10, // Adjust for headers if necessary
+      });
+    }
+  }, [location]);
 
-    // Handle clicking outside of dropdown (optional)
-    const closeDropdown = () => {
-        setDropdownOpen(false);
-    };
+  // Function to toggle the dropdown menu
+  const toggleDropdown = () => {
+    setDropdownOpen(!dropdownOpen);
+  };
 
-    const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const portalID = localStorage.getItem("I8PD56?#C|NXhSgZ0KE");
+  // Function to close the dropdown menu
+  const closeDropdown = () => {
+    setDropdownOpen(false);
+  };
 
-    const toggleMenu = () => {
-        setIsMenuOpen(!isMenuOpen);
-    };
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const portalID = localStorage.getItem("I8PD56?#C|NXhSgZ0KE");
 
-    const handleLogout = () => {
-        localStorage.removeItem("I8PD56?#C|NXhSgZ0KE");
-        window.location.assign('/');
-    };
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
 
-    return (
-<header>
-    <div className="logo">
+  const handleLogout = () => {
+    localStorage.removeItem("I8PD56?#C|NXhSgZ0KE");
+    window.location.assign('/');
+  };
+
+  return (
+    <header>
+      <div className="logo">
         <Link to="/" smooth={true} duration={500}>
-            <img src="logo.webp" alt="Logo" />
+          <img src="logo.webp" alt="Logo" />
         </Link>
-    </div>
-    
-    <nav className={isMenuOpen ? 'nav-links active' : 'nav-links'} style={{marginLeft: "60px"}}>
+      </div>
+      <nav className={isMenuOpen ? 'nav-links active' : 'nav-links'} style={{ marginLeft: "60px" }}>
         <ul>
-            <li><Link to="/" onClick={() => handleScrollTo("features")}>Features</Link></li>
-            <li><Link to="/" onClick={() => handleScrollTo("howToUse")}>How To Use</Link></li>
-            <li><Link to="/" onClick={() => handleScrollTo("PricingCards")}>Pricing</Link></li>
-            <li><Link to="/" onClick={() => handleScrollTo("FAQs")}>FAQs</Link></li>
+          <li><Link to="/#features" onClick={() => handleScrollTo("features")}>Features</Link></li>
+          <li><Link to="/#howToUse" onClick={() => handleScrollTo("howToUse")}>How To Use</Link></li>
+          <li><Link to="/#PricingCards" onClick={() => handleScrollTo("PricingCards")}>Pricing</Link></li>
+          <li><Link to="/#FAQs" onClick={() => handleScrollTo("FAQs")}>FAQs</Link></li>
+          <li className='mobile_li'>
+            <div className="logout-container">
+              <div className="dropdown">
+                {portalID && (
+                    <button className="dropdown-btn_mbl" onClick={toggleDropdown}>
+                        Profile <i className="fas fa-chevron-down"></i>
+                    </button>
+                )}
+                {dropdownOpen && portalID &&(
 
-
-            <li className='mobile_li'><div className="logout-container">
-     {/* Dropdown for Profile */}
-        <div className="dropdown">
-        <button className="dropdown-btn_mbl" onClick={toggleDropdown}>
-        Profile <i className="fas fa-chevron-down"></i>
-        </button>
-
-        {dropdownOpen && (
-            <div className="dropdown-menu">
+                  <div className="dropdown-menu">
+                    <Link to="/profile" className="dropdown-item">Your Profile</Link>
+                    <Link to="/profile" className="dropdown-item" onClick={handleLogout}>Logout</Link>
+                  </div>
+                )}
+              </div>
+            </div>
+          </li>
+        </ul>
+      </nav>
+      {(portalID) ? (
+        <div className="logout-container">
+          <div className="dropdown">
+            <button className="dropdown-btn" onClick={toggleDropdown}>
+              Profile <i className="fas fa-chevron-down"></i>
+            </button>
+            {dropdownOpen && (
+              <div className="dropdown-menu">
                 <Link to="/profile" className="dropdown-item">Your Profile</Link>
                 <Link to="/profile" className="dropdown-item" onClick={handleLogout}>Logout</Link>
-            </div>
+              </div>
             )}
-            </div>
-            </div></li>
-            </ul>
-        </nav>
-        
-    {(portalID || portalIDFromWeb) ? 
-     <div className="logout-container">
-     {/* Dropdown for Profile */}
-        <div className="dropdown">
-        <button className="dropdown-btn" onClick={toggleDropdown}>
-        Profile <i className="fas fa-chevron-down"></i>
-        </button>
-
-        {dropdownOpen && (
-        <div className="dropdown-menu">
-            <Link to="/profile" className="dropdown-item">Your Profile</Link>
-            <Link to="/profile" className="dropdown-item" onClick={handleLogout}>Logout</Link>
+          </div>
         </div>
-        )}
-        </div>
-        </div>
-    : (
+      ) : (
         <div className="get-formatter-container">
-            <Link to={`${BackendAPI}/install`}>
-                <button className="hero-btn2">Get Your Formatter Now!</button>
-            </Link>
+          <Link to={`${BackendAPI}/install`}>
+            <button className="hero-btn2">Get Your Formatter Now!</button>
+          </Link>
         </div>
-    )}
-    
-    <div className="menu-icon" onClick={toggleMenu}>
+      )}
+      <div className="menu-icon" onClick={toggleMenu}>
         &#9776;
-    </div>
-</header>
-
-
-    );
+      </div>
+    </header>
+  );
 };
 
 export default Header;
