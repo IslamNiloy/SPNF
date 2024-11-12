@@ -33,9 +33,6 @@ router.get('/get_country_code', dataFormatterController.getCountry);
 
 router.post('/test', dataFormatterController.test)
 
-// router.put('/bulk/update/phone_number',packageConditions.bulkPhoneNumberApiCallCount);
-// router.put('/bulk/update/check_phone_number',packageConditions.bulk_Check_PhoneNumberApiCallCount);
-
 router.put('/remove/cache/all',dataFormatterController.removeAllCache);
 
 

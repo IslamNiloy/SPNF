@@ -1,7 +1,6 @@
 const { createLogger, format, transports } = require('winston');
 const { combine, timestamp, printf } = format;
 
-// Define your custom format
 const myFormat = printf(({ level, message, timestamp, portalId, email }) => {
   return `${timestamp} [${level}] : ${message}`;
 });
