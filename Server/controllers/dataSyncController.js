@@ -132,8 +132,10 @@ const syncDeal = async (subscription) => {
       if (dealExists) {
         await hubspotClient.crm.deals.basicApi.update(subscription.hubspotDealId, dealData);
         hubspotDealId = subscription.hubspotDealId;
-        console.log("deal updated in! ="+ subscription.hubspotDealId);
+      }else{
+        return;
       } 
+
     } else {
       const createResponse = await hubspotClient.crm.deals.basicApi.create(dealData);
       hubspotDealId = createResponse.id;
@@ -158,10 +160,9 @@ const syncDeal = async (subscription) => {
     }
 
     if (contact_id && hubspotDealId) {
-      if(dealExists){
       associateContactToDeal(hubspotDealId, contact_id);
-      }
     }
+
   } catch (error) {
     console.error('Error syncing deal:', error);
     logger.info('Error syncing deal:', error);
