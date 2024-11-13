@@ -67,7 +67,7 @@ async function loadDatabaseConnection() {
 loadDatabaseConnection();
 
 
-//processStart();
+// processStart();
 
 //setInterval(getAsync,  60 * 60 * 1000); 
 

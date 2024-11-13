@@ -132,6 +132,7 @@ const syncDeal = async (subscription) => {
       if (dealExists) {
         await hubspotClient.crm.deals.basicApi.update(subscription.hubspotDealId, dealData);
         hubspotDealId = subscription.hubspotDealId;
+        console.log("deal updated in! ="+ subscription.hubspotDealId);
       } 
     } else {
       const createResponse = await hubspotClient.crm.deals.basicApi.create(dealData);
@@ -199,8 +200,6 @@ const associateContactToDeal = async (objectId,toObjectId) => {
       }
     ];
 
-
-  
 
     // Call the HubSpot API to create the association
     const apiResponse = await hubspotClient.crm.associations.v4.basicApi.create(objectType, objectId, toObjectType, toObjectId, AssociationSpec);

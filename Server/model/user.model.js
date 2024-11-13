@@ -7,7 +7,7 @@ const UserSchema = new mongoose.Schema({
   companyName: { type: String },
   phoneNumber: { type: String},
   countryCode: { type: String },
-  portalID: { type: Number, require: true, unique: true },
+  portalId: { type: Number, require: true, unique: true },
   accountType: { type: String },
   timeZone: { type: String },
   companyCurrency: { type: String },
