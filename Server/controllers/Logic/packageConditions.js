@@ -54,23 +54,18 @@ exports.updateAPICount = async (portalID) => {
   exports.packageCondition = async (portalID) => {
     try{
       console.log("at packageCondition");
-      const user = await User.findOne( {portalID: portalID});
+      const user = await User.findOne( {portalID: portalID}); 
       const today = new Date();
 
-      // logger.info("At packageCondition user infos: "+ user);
       if (!user) {
-        // Handle case where user is not found
         return false;
       }
-      //this user's subscription subscription
       const subscription = await Subscription.findOne( {user: user._id});
-      //This user's package
       const user_package = await Package.findOne( {_id: subscription.package});
       const user_payment_info = await Payment.findOne({portalID: portalID});
 
       if(today >  (subscription.packageEndDate) 
         && (user_payment_info.status!='cancelled' || user_payment_info.status!='due')){
-      console.log(`user package Name: ${user_package.packageName}`);
         if(user_package.packageName == "Free"){
           return false;
         }
@@ -94,7 +89,6 @@ exports.updateAPICount = async (portalID) => {
       }
 
       if(user_payment_info.status=='cancelled'){
-        console.log(user_payment_info.status);
         return false;
       }
       // if (today > (subscription.packageEndDate)) {
@@ -103,12 +97,9 @@ exports.updateAPICount = async (portalID) => {
       
       if(subscription && user_package){
         const totalAPICALLS = parseInt(subscription.apiCallCount) + parseInt(subscription.checkPhoneNumberApiCallCount)
-        //console.log("Returning totalAPICALLS count:" + totalAPICALLS);
         if(totalAPICALLS < user_package.Limit){
-          //console.log("Returning true when total API is:" + totalAPICALLS);
           return true;
         }else{
-          //console.log("Returning false when total API is::" + totalAPICALLS);
           return false;
         }
       }else{
