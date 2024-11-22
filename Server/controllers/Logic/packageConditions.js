@@ -3,7 +3,7 @@ const logger = require('../../utils/logger'); // Add logger
 const User = require('../../model/user.model');
 const Package = require('../../model/packages.model');
 const Subscription = require('../../model/subscription.model');
-  
+const Payment = require("../../model/payment.model");
 const countBuffer = {};  // In-memory buffer to store increments per user
 const FLUSH_INTERVAL = 5000;  // Flush buffer every 5 seconds
 
@@ -53,7 +53,10 @@ exports.updateAPICount = async (portalID) => {
   
   exports.packageCondition = async (portalID) => {
     try{
+      console.log("at packageCondition");
       const user = await User.findOne( {portalID: portalID});
+      const today = new Date();
+
       // logger.info("At packageCondition user infos: "+ user);
       if (!user) {
         // Handle case where user is not found
@@ -63,19 +66,49 @@ exports.updateAPICount = async (portalID) => {
       const subscription = await Subscription.findOne( {user: user._id});
       //This user's package
       const user_package = await Package.findOne( {_id: subscription.package});
-      const today = new Date();
-      if (today >  (subscription.packageEndDate)) {
+      const user_payment_info = await Payment.findOne({portalID: portalID});
+
+      if(today >  (subscription.packageEndDate) 
+        && (user_payment_info.status!='cancelled' || user_payment_info.status!='due')){
+      console.log(`user package Name: ${user_package.packageName}`);
+        if(user_package.packageName == "Free"){
+          return false;
+        }
+        const updatedEndDate = new Date(today);
+
+        if(user_package.duration == 30){;     
+          updatedEndDate.setDate(today.getDate() + 30); //working as expected
+        }
+        if(user_package.duration == 365){
+          updatedEndDate.setDate(today.getDate() + 365);//checking this
+        }
+        subscription.packageEndDate = updatedEndDate;        
+        subscription.apiCallCount = 0; 
+        subscription.checkPhoneNumberApiCallCount = 0;
+
+        await subscription.save();
+      }
+      else if (today > (subscription.packageEndDate) && 
+                        (user_payment_info.status=='cancelled' || user_payment_info.status=='due')) {
         return false;
       }
+
+      if(user_payment_info.status=='cancelled'){
+        console.log(user_payment_info.status);
+        return false;
+      }
+      // if (today > (subscription.packageEndDate)) {
+      //   return false;
+      // }
       
       if(subscription && user_package){
         const totalAPICALLS = parseInt(subscription.apiCallCount) + parseInt(subscription.checkPhoneNumberApiCallCount)
-        console.log("Returning totalAPICALLS count:" + totalAPICALLS);
+        //console.log("Returning totalAPICALLS count:" + totalAPICALLS);
         if(totalAPICALLS < user_package.Limit){
-          console.log("Returning true when total API is:" + totalAPICALLS);
+          //console.log("Returning true when total API is:" + totalAPICALLS);
           return true;
         }else{
-          console.log("Returning false when total API is::" + totalAPICALLS);
+          //console.log("Returning false when total API is::" + totalAPICALLS);
           return false;
         }
       }else{

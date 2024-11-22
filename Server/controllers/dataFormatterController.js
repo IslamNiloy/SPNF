@@ -118,14 +118,13 @@ exports.phoneNumber = async (req, res) => {
 
 const formatPhoneNumber = (phoneNumber, country, country_text) => {
   const countryCode = getCountryCode(country, country_text);
-
   // Remove extension part if exists
   const extensionMatch = phoneNumber.match(/(ext\.?|extension)\s?(\d+)/i);
   const mainPhoneNumber = extensionMatch ? phoneNumber.replace(extensionMatch[0], '').trim() : phoneNumber;
-
+ 
   // Remove all non-digit characters from the main phone number
   const sanitizedPhoneNumber = mainPhoneNumber.replace(/\D+/g, '');
-
+ 
   // Check if the phone number length is within the valid range
   if (sanitizedPhoneNumber.length < MIN_PHONE_NUMBER_LENGTH || sanitizedPhoneNumber.length > MAX_PHONE_NUMBER_LENGTH) {
     return 'Invalid phone number length'
