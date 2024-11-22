@@ -130,6 +130,19 @@ const formatPhoneNumber = (phoneNumber, country, country_text) => {
     return 'Invalid phone number length'
   }
 
+  //code adding for german
+  if (countryCode === 'DE' || countryCode === '49') {
+    if (sanitizedPhoneNumber.startsWith('49')) {
+      const withoutCountryCode = sanitizedPhoneNumber.slice(2); // Remove the '49' prefix
+      if (withoutCountryCode.startsWith('49')) {
+        return `+49${withoutCountryCode.slice(2)}`;
+      } else {
+        return `+49${withoutCountryCode}`;
+      }
+    }
+  }
+  //code adding for german ends
+
   let parsedNumber = parsePhoneNumberFromString(sanitizedPhoneNumber, countryCode);
   if (!parsedNumber || !parsedNumber.isValid()) {
     // Attempt to format the number as it is typed
@@ -166,30 +179,23 @@ exports.getCountry = async (req, res) => {
 
 /////////////////////// Check Phone Number START //////////////////////////////////
 const checkPhoneNumber = (phoneNumber, country) => {
-
-  // Check if the phone number contains hyphens
   if (/-/.test(phoneNumber)) {
     return 'Hyphen in the Number';
   }
 
-  // Check if the phone number contains brackets
   if (/\(|\)/.test(phoneNumber)) {
     return 'Bracket in the Number';
   }
 
 
-  // Check if the phone number contains any other non-digit text (excluding the '+' symbol)
   if (/\D/.test(phoneNumber.replace('+', '').replace('.', '').replace('-', '').replace('*', ''))) {
     return 'Contains Text or Special Characters';
   }
 
-  // Check if the phone number contains non-numeric text (excluding the '+' symbol)
   if (/[^\d\+\s\-()]/.test(phoneNumber)) {
     return 'Contains Invalid Characters';
   }
 
-
-  // Check if the phone number contains spaces
   if (/\s/.test(phoneNumber)) {
     return 'Space in the Number';
   }
