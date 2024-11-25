@@ -118,30 +118,17 @@ exports.phoneNumber = async (req, res) => {
 
 const formatPhoneNumber = (phoneNumber, country, country_text) => {
   const countryCode = getCountryCode(country, country_text);
-  // Remove extension part if exists
-  const extensionMatch = phoneNumber.match(/(ext\.?|extension)\s?(\d+)/i);
-  const mainPhoneNumber = extensionMatch ? phoneNumber.replace(extensionMatch[0], '').trim() : phoneNumber;
- 
-  // Remove all non-digit characters from the main phone number
-  const sanitizedPhoneNumber = mainPhoneNumber.replace(/\D+/g, '');
- 
+
+  // Remove all text and leave only numbers and essential characters like '+', '()', and '-'
+  const sanitizedPhoneNumber = phoneNumber
+    .replace(/[^\d+()]/g, '') // Keep digits, '+' (for country codes), and parentheses
+    .replace(/\(0\)/g, '') // Remove optional (0) in phone numbers
+    .replace(/-/g, ''); // Optionally, remove dashes if not needed
+
   // Check if the phone number length is within the valid range
   if (sanitizedPhoneNumber.length < MIN_PHONE_NUMBER_LENGTH || sanitizedPhoneNumber.length > MAX_PHONE_NUMBER_LENGTH) {
-    return 'Invalid phone number length'
+    return 'Invalid phone number length';
   }
-
-  //code adding for german
-  if (countryCode === 'DE' || countryCode === '49') {
-    if (sanitizedPhoneNumber.startsWith('49')) {
-      const withoutCountryCode = sanitizedPhoneNumber.slice(2); // Remove the '49' prefix
-      if (withoutCountryCode.startsWith('49')) {
-        return `+49${withoutCountryCode.slice(2)}`;
-      } else {
-        return `+49${withoutCountryCode}`;
-      }
-    }
-  }
-  //code adding for german ends
 
   let parsedNumber = parsePhoneNumberFromString(sanitizedPhoneNumber, countryCode);
   if (!parsedNumber || !parsedNumber.isValid()) {
@@ -149,6 +136,18 @@ const formatPhoneNumber = (phoneNumber, country, country_text) => {
     parsedNumber = new AsYouType(countryCode).input(sanitizedPhoneNumber);
     parsedNumber = parsePhoneNumberFromString(parsedNumber, countryCode);
   }
+  
+    //code adding for german
+    if (countryCode === 'DE' || countryCode === '49') {
+      if (sanitizedPhoneNumber.startsWith('49')) {
+        const withoutCountryCode = sanitizedPhoneNumber.slice(2); // Remove the '49' prefix
+        if (withoutCountryCode.startsWith('49')) {
+          return `+49${withoutCountryCode.slice(2)}`;
+        } else {
+          return `+49${withoutCountryCode}`;
+        }
+      }
+    }
 
   if (parsedNumber && parsedNumber.isValid()) {
     return parsedNumber.formatInternational().replace(/\s+/g, '');
@@ -156,6 +155,62 @@ const formatPhoneNumber = (phoneNumber, country, country_text) => {
 
   return 'Invalid phone number';
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// const formatPhoneNumber = (phoneNumber, country, country_text) => {
+//   const countryCode = getCountryCode(country, country_text);
+//   // Remove extension part if exists
+//   const extensionMatch = phoneNumber.match(/(ext\.?|extension)\s?(\d+)/i);
+//   const mainPhoneNumber = extensionMatch ? phoneNumber.replace(extensionMatch[0], '').trim() : phoneNumber;
+ 
+//   // Remove all non-digit characters from the main phone number
+//   const sanitizedPhoneNumber = mainPhoneNumber.replace(/\D+/g, '');
+ 
+//   // Check if the phone number length is within the valid range
+//   if (sanitizedPhoneNumber.length < MIN_PHONE_NUMBER_LENGTH || sanitizedPhoneNumber.length > MAX_PHONE_NUMBER_LENGTH) {
+//     return 'Invalid phone number length'
+//   }
+
+//   //code adding for german
+//   if (countryCode === 'DE' || countryCode === '49') {
+//     if (sanitizedPhoneNumber.startsWith('49')) {
+//       const withoutCountryCode = sanitizedPhoneNumber.slice(2); // Remove the '49' prefix
+//       if (withoutCountryCode.startsWith('49')) {
+//         return `+49${withoutCountryCode.slice(2)}`;
+//       } else {
+//         return `+49${withoutCountryCode}`;
+//       }
+//     }
+//   }
+//   //code adding for german ends
+
+//   let parsedNumber = parsePhoneNumberFromString(sanitizedPhoneNumber, countryCode);
+//   if (!parsedNumber || !parsedNumber.isValid()) {
+//     // Attempt to format the number as it is typed
+//     parsedNumber = new AsYouType(countryCode).input(sanitizedPhoneNumber);
+//     parsedNumber = parsePhoneNumberFromString(parsedNumber, countryCode);
+//   }
+
+//   if (parsedNumber && parsedNumber.isValid()) {
+//     return parsedNumber.formatInternational().replace(/\s+/g, '');
+//   }
+
+//   return 'Invalid phone number';
+// };
 
 
 //Country code
